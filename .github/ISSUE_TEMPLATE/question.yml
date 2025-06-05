@@ -1,0 +1,22 @@
+name: Question or Support
+description: Ask a question or request support for beagl
+title: "[Question]: "
+labels: ["question"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help or want to ask a question about beagl? Please check the documentation and existing discussions first.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: Please clearly state your question or issue.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & details
+      description: Add any additional details, context, or screenshots to help us answer your question.
