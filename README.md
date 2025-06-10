@@ -46,6 +46,43 @@ Library configuration is stored in `libman.json` at the project root (or in the 
 
 For more details, see the [LibMan documentation](https://learn.microsoft.com/en-us/aspnet/core/client-side/libman/libman-cli).
 
+---
+
+## Entity Framework Core (EF Core) & SQLite
+
+This project uses [Entity Framework Core 8](https://learn.microsoft.com/en-us/ef/core/) with SQLite as the development database provider.
+
+### Installing EF Core Tools
+
+To use EF Core migrations and database commands, install the .NET EF CLI tool globally:
+
+```sh
+dotnet tool install --global dotnet-ef
+```
+
+### Common EF Core Commands
+
+- **Add a migration** (from the WebApp project folder):
+  ```sh
+  dotnet ef migrations add <MigrationName> --project ../Beagl.Infrastructure --startup-project .
+  ```
+- **Update the database** (apply migrations):
+  ```sh
+  dotnet ef database update --project ../Beagl.Infrastructure --startup-project .
+  ```
+- **Rollback the last migration**:
+  ```sh
+  dotnet ef database update <PreviousMigrationName> --project ../Beagl.Infrastructure --startup-project .
+  ```
+- **Remove the last migration** (if not applied to the database):
+  ```sh
+  dotnet ef migrations remove --project ../Beagl.Infrastructure --startup-project .
+  ```
+
+> Replace `<MigrationName>` with your desired migration name, and `<PreviousMigrationName>` with the name of the migration you want to roll back to.
+
+For more details, see the [EF Core CLI documentation](https://learn.microsoft.com/en-us/ef/core/cli/dotnet).
+
 ## Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
