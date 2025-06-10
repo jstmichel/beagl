@@ -10,7 +10,9 @@ public partial class InitialIdentity : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder?.CreateTable(
+        ArgumentNullException.ThrowIfNull(migrationBuilder);
+
+        migrationBuilder.CreateTable(
             name: "AspNetRoles",
             columns: table => new
             {
@@ -23,8 +25,7 @@ public partial class InitialIdentity : Migration
             {
                 table.PrimaryKey("PK_AspNetRoles", x => x.Id);
             });
-
-        migrationBuilder?.CreateTable(
+        migrationBuilder.CreateTable(
             name: "AspNetUsers",
             columns: table => new
             {
@@ -49,7 +50,7 @@ public partial class InitialIdentity : Migration
                 table.PrimaryKey("PK_AspNetUsers", x => x.Id);
             });
 
-        migrationBuilder?.CreateTable(
+        migrationBuilder.CreateTable(
             name: "AspNetRoleClaims",
             columns: table => new
             {
@@ -70,7 +71,7 @@ public partial class InitialIdentity : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder?.CreateTable(
+        migrationBuilder.CreateTable(
             name: "AspNetUserClaims",
             columns: table => new
             {
@@ -91,7 +92,7 @@ public partial class InitialIdentity : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder?.CreateTable(
+        migrationBuilder.CreateTable(
             name: "AspNetUserLogins",
             columns: table => new
             {
@@ -111,7 +112,7 @@ public partial class InitialIdentity : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder?.CreateTable(
+        migrationBuilder.CreateTable(
             name: "AspNetUserRoles",
             columns: table => new
             {
@@ -135,7 +136,7 @@ public partial class InitialIdentity : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder?.CreateTable(
+        migrationBuilder.CreateTable(
             name: "AspNetUserTokens",
             columns: table => new
             {
@@ -155,38 +156,38 @@ public partial class InitialIdentity : Migration
                     onDelete: ReferentialAction.Cascade);
             });
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "IX_AspNetRoleClaims_RoleId",
             table: "AspNetRoleClaims",
             column: "RoleId");
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "RoleNameIndex",
             table: "AspNetRoles",
             column: "NormalizedName",
             unique: true);
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "IX_AspNetUserClaims_UserId",
             table: "AspNetUserClaims",
             column: "UserId");
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "IX_AspNetUserLogins_UserId",
             table: "AspNetUserLogins",
             column: "UserId");
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "IX_AspNetUserRoles_RoleId",
             table: "AspNetUserRoles",
             column: "RoleId");
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "EmailIndex",
             table: "AspNetUsers",
             column: "NormalizedEmail");
 
-        migrationBuilder?.CreateIndex(
+        migrationBuilder.CreateIndex(
             name: "UserNameIndex",
             table: "AspNetUsers",
             column: "NormalizedUserName",
@@ -196,25 +197,27 @@ public partial class InitialIdentity : Migration
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder?.DropTable(
+        ArgumentNullException.ThrowIfNull(migrationBuilder);
+
+        migrationBuilder.DropTable(
             name: "AspNetRoleClaims");
 
-        migrationBuilder?.DropTable(
+        migrationBuilder.DropTable(
             name: "AspNetUserClaims");
 
-        migrationBuilder?.DropTable(
+        migrationBuilder.DropTable(
             name: "AspNetUserLogins");
 
-        migrationBuilder?.DropTable(
+        migrationBuilder.DropTable(
             name: "AspNetUserRoles");
 
-        migrationBuilder?.DropTable(
+        migrationBuilder.DropTable(
             name: "AspNetUserTokens");
 
-        migrationBuilder?.DropTable(
+        migrationBuilder.DropTable(
             name: "AspNetRoles");
 
-        migrationBuilder?.DropTable(
+        migrationBuilder.DropTable(
             name: "AspNetUsers");
     }
 }
