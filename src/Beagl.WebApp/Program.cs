@@ -19,6 +19,14 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddAuthorizationBuilder();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(8);
+    options.SlidingExpiration = true;
+});
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +42,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorComponents<App>();
 
