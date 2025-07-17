@@ -1,10 +1,6 @@
 name: Build and Publish Docker Image
 
 on:
-  push:
-    branches:
-      - chore/dockerize-and-versionize
-
   workflow_run:
     workflows: ["Versionize Release"]
     types:
