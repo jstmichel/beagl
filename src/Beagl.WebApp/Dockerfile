@@ -4,7 +4,7 @@ WORKDIR /src
 COPY src/Beagl.WebApp/Beagl.WebApp.csproj src/Beagl.WebApp/
 RUN dotnet restore src/Beagl.WebApp/Beagl.WebApp.csproj
 COPY . .
-RUN dotnet publish src/Beagl.WebApp/Beagl.WebApp.csproj -c Release -o /app/publish
+RUN dotnet publish src/Beagl.WebApp/Beagl.WebApp.csproj -c Release -o /app/publish --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
