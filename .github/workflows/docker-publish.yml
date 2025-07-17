@@ -1,7 +1,10 @@
-
 name: Build and Publish Docker Image
 
 on:
+  push:
+    branches:
+      - chore/dockerize-and-versionize
+
   workflow_run:
     workflows: ["Versionize Release"]
     types:
@@ -35,3 +38,4 @@ jobs:
         run: |
           docker build -t ghcr.io/${{ github.repository_owner }}/beagl-webapp:${{ steps.version.outputs.version }} -f src/Beagl.WebApp/Dockerfile .
           docker push ghcr.io/${{ github.repository_owner }}/beagl-webapp:${{ steps.version.outputs.version }}
+
