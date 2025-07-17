@@ -28,8 +28,19 @@ jobs:
       - name: Run Versionize
         run: versionize
 
+      - name: Check for changes after versionize
+        id: check_changes
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes detected"
+            echo "changes_detected=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected"
+            echo "changes_detected=true" >> $GITHUB_ENV
+
       - name: Push version bump and changelog
+        if: env.changes_detected == 'true'
         run: |
           git add .
-          git commit -m "chore(release): bump version and update changelog [skip ci]" || echo "No changes to commit"
+          git commit -m "chore(release): bump version and update changelog [skip ci]"
           git push origin HEAD
