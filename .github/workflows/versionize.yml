@@ -32,4 +32,4 @@ jobs:
         run: |
           git add .
           git commit -m "chore(release): bump version and update changelog [skip ci]" || echo "No changes to commit"
-          git push origin HEAD:${{ github.ref }}
+          git push origin HEAD
