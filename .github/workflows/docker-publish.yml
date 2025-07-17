@@ -31,7 +31,7 @@ jobs:
       - name: Extract version from project
         id: version
         run: |
-          VERSION=$(grep -m1 '<Version>' src/Beagl.WebApp/Beagl.WebApp.csproj | sed -E 's/.*<Version>(.*)<\\/Version>.*/\1/')
+          VERSION=$(grep -m1 '<Version>' src/Beagl.WebApp/Beagl.WebApp.csproj | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image

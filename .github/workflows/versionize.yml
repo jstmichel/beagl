@@ -3,7 +3,7 @@ name: Versionize Release
 on:
   push:
     branches:
-      - chore/dockerize-and-versionize
+      - main
 
 jobs:
   versionize:
