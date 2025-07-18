@@ -1,0 +1,46 @@
+name: Versionize Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  versionize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Versionize
+        run: dotnet tool install --global Versionize
+
+      - name: Configure git for versionize commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Versionize
+        run: versionize
+
+      - name: Check for changes after versionize
+        id: check_changes
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes detected"
+            echo "changes_detected=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected"
+            echo "changes_detected=true" >> $GITHUB_ENV
+
+      - name: Push version bump and changelog
+        if: env.changes_detected == 'true'
+        run: |
+          git add .
+          git commit -m "chore(release): bump version and update changelog [skip ci]"
+          git push origin HEAD
