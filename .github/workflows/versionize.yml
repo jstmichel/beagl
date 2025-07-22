@@ -3,7 +3,7 @@ name: Versionize Release
 on:
   push:
     branches:
-      - fix/github-actions-need-to-be-fix
+      - main
 
 jobs:
   versionize:
