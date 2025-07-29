@@ -37,9 +37,10 @@ jobs:
           else
             echo "Changes detected"
             echo "changes_detected=true" >> $GITHUB_ENV
+          fi
 
       - name: Push version bump and changelog
-        if: env.changes_detected == 'true'
+        if: ${{ github.env.changes_detected == 'true' }}
         run: |
           git add .
           git commit -m "chore(release): bump version and update changelog [skip ci]"
