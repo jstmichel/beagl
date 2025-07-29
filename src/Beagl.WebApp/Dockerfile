@@ -9,4 +9,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 80
+EXPOSE 443
+ENV ASPNETCORE_URLS="http://+:80;https://+:443"
 ENTRYPOINT ["dotnet", "Beagl.WebApp.dll"]
