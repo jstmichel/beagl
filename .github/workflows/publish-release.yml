@@ -1,0 +1,81 @@
+name: Publish new release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  versionize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Versionize
+        run: dotnet tool install --global Versionize
+
+      - name: Configure git for versionize commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Versionize
+        run: versionize
+
+      - name: Check for changes after versionize
+        id: check_changes
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes detected"
+            echo "changes_detected=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected"
+            echo "changes_detected=true" >> $GITHUB_ENV
+          fi
+
+      - name: Push version bump and changelog
+        if: ${{ github.env.changes_detected == 'true' }}
+        run: |
+          git add .
+          git commit -m "chore(release): bump version and update changelog [skip ci]"
+          git push origin HEAD
+
+      - name: Push tags
+        if: ${{ github.env.changes_detected == 'true' }}
+        run: |
+          git push origin --tags
+
+      - name: Set up Docker Buildx
+        if: ${{ github.env.changes_detected == 'true' }}
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: ${{ github.env.changes_detected == 'true' }}
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract version from project
+        if: ${{ github.env.changes_detected == 'true' }}
+        id: version
+        run: |
+          VERSION=$(grep -m1 '<Version>' src/Beagl.WebApp/Beagl.WebApp.csproj | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
+          if [ -z "$VERSION" ]; then
+            echo "Version not found in .csproj file. Using fallback version 'latest'."
+            VERSION="latest"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        if: ${{ github.env.changes_detected == 'true' }}
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/beagl:${{ steps.version.outputs.version }} -f src/Beagl.WebApp/Dockerfile .
+          docker push ghcr.io/${{ github.repository_owner }}/beagl:${{ steps.version.outputs.version }}
