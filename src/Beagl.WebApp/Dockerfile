@@ -8,7 +8,5 @@ RUN dotnet publish src/Beagl.WebApp/Beagl.WebApp.csproj -c Release -o /app/publi
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 80
-EXPOSE 443
-ENV ASPNETCORE_URLS="http://+:80;https://+:443"
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "Beagl.WebApp.dll"]
