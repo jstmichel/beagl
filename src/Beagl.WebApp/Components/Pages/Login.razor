@@ -2,12 +2,12 @@
 @page "/login"
 @using Beagl.WebApp.Components.Layout
 
-<PageTitle>Sign-in</PageTitle>
+<PageTitle>@L["Please sign in"]</PageTitle>
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Login> L
 
 <main class="form-signin w-100 m-auto">
     <form>
-        <img class="mb-4 d-block mx-auto" src="/images/logo-square.svg" alt="" width="128">
+        <img class="mb-4 d-block mx-auto" src="/images/logo-square.svg" alt="Logo" width="128">
         <h1 class="h3 mb-3 fw-normal text-center">@L["Please sign in"]</h1>
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
