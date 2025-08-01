@@ -10,6 +10,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents();
 
+// Add localization services
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 // Add EF Core DbContext with SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=beagl.db"));

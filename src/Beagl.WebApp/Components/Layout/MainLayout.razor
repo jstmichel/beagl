@@ -1,3 +1,26 @@
 ﻿@inherits LayoutComponentBase
+@inject Microsoft.Extensions.Localization.IStringLocalizer<MainLayout> L
+
+<nav class="navbar navbar-expand-lg border-bottom border-bottom-shadow" aria-label="Beagl navigation bar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="images/logo-bg-white.png" alt="Logo" height="60" />
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar" style="">
+            <ul class="navbar-nav mx-auto justify-content-center mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" ActiveClass="active" aria-current="page" href="/" Match="NavLinkMatch.All">@L["Home"]</NavLink>
+                </li>
+            </ul>
+            <div class="d-flex gap-2">
+                <NavLink class="btn btn-outline-primary" href="/login">@L["Sign In"]</NavLink>
+                <NavLink class="btn btn-primary" href="/register">@L["Register"]</NavLink>
+            </div>
+        </div>
+    </div>
+</nav>
 
 @Body
