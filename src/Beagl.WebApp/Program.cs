@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.WebApp.Components;
+using Beagl.WebApp;
 using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +33,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 WebApplication app = builder.Build();
 
+// Ensure database is created and migrations are applied at startup
+await app.ExecuteMigrationsAsync(builder.Configuration);
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -49,4 +53,4 @@ app.UseAuthorization();
 
 app.MapRazorComponents<App>();
 
-app.Run();
+await app.RunAsync().ConfigureAwait(false);

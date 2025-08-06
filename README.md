@@ -48,6 +48,27 @@ For more details, see the [LibMan documentation](https://learn.microsoft.com/en-
 
 ---
 
+## Seeding the Default Admin User with User Secrets
+
+To avoid storing sensitive data in source code, you should use [dotnet user-secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) for development. This allows you to provide the default admin user's credentials securely for seeding.
+
+### Setting User Secrets
+
+
+From the `src/Beagl.WebApp` folder, run:
+
+```sh
+dotnet user-secrets init
+dotnet user-secrets set "SeedData:SeedUser:Email" "admin@localhost"
+dotnet user-secrets set "SeedData:SeedUser:Password" "your-strong-password"
+```
+
+Replace `your-strong-password` with a secure password of your choice.
+
+Your application will read these values from configuration when seeding the database.
+
+---
+
 ## Entity Framework Core (EF Core) & SQLite
 
 This project uses [Entity Framework Core 8](https://learn.microsoft.com/en-us/ef/core/) with SQLite as the development database provider.
