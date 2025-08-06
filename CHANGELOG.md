@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://www.github.com/jstmichel/beagl/releases/tag/v0.2.1) (2025-08-06)
+
+### Bug Fixes
+
+* update image name and Dockerfile path in publish-release workflow ([7f2e302](https://www.github.com/jstmichel/beagl/commit/7f2e302f140132128398f0910662373543ed5648))
+
 <a name="0.2.0"></a>
 ## [0.2.0](https://www.github.com/jstmichel/beagl/releases/tag/v0.2.0) (2025-08-06)
 
