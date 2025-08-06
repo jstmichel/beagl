@@ -73,6 +73,7 @@ file_header_template = MIT License - Copyright (c) 2025 Jonathan St-Michel
 # Require XML documentation for publicly visible types and members
 dotnet_diagnostic.CS1591.severity = warning
 dotnet_diagnostic.CA1812.severity = none
+dotnet_diagnostic.CA2007.severity = none
 
 # (Optional) You can change 'warning' to 'error' to be stricter
 # dotnet_diagnostic.CS1591.severity = error

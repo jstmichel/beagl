@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
     <ProjectReference Include="..\Beagl.Infrastructure\Beagl.Infrastructure.csproj" />
@@ -24,6 +24,7 @@
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <AnalysisLevel>latest</AnalysisLevel>
     <Version>0.1.0</Version>
+    <UserSecretsId>465ec1fe-74d7-4aca-87f2-542872a4a5ec</UserSecretsId>
   </PropertyGroup>
 
 </Project>
