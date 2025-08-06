@@ -20,7 +20,7 @@ permissions:
   statuses: read
 
 env:
-  IMAGE_NAME: sapdsr-analytics
+  IMAGE_NAME: beagl-webapp
 
 jobs:
   build:
@@ -122,7 +122,7 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker build --tag $IMAGE_ID:$VERSION --tag $IMAGE_ID:latest --file ./Dockerfile --label "org.opencontainers.image.description=SAPDSR Analytiques est un logiciel développé en C# pour le service animalier Pierre-De Saurel et régions. Il permet d'analyser les données de transactions et les statistiques relatives aux citoyens et aux animaux. En se connectant à un système tiers, SAPDSR Analytiques facilite la gestion centralisée des informations, améliorant ainsi la prise de décisions et les services offerts." .
+          docker build --tag $IMAGE_ID:$VERSION --tag $IMAGE_ID:latest --file src/Beagl.WebApp/Dockerfile .
           docker push $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:latest
       continue-on-error: false
