@@ -40,13 +40,16 @@ public static class DatabaseInitializer
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Citizen);
 
         // Create default user
-        string adminEmail = configuration["SeedData:SeedUser:Email"] ?? string.Empty;
-        string adminPassword = configuration["SeedData:SeedUser:Password"] ?? string.Empty;
-        await CreateUserIfNotExistsAsync(
-            userManager,
-            adminEmail,
-            adminPassword,
-            RoleNames.Development);
+        string adminEmail = configuration["SeedData:SeedUser:Email"];
+        string adminPassword = configuration["SeedData:SeedUser:Password"];
+        if (!string.IsNullOrWhiteSpace(adminEmail) && !string.IsNullOrWhiteSpace(adminPassword))
+        {
+            await CreateUserIfNotExistsAsync(
+                userManager,
+                adminEmail,
+                adminPassword,
+                RoleNames.Development);
+        }
     }
 
     private static async Task CreateRoleIfNotExistsAsync(
