@@ -3,7 +3,7 @@ name: Build and release
 on:
   push:
     branches:
-      - main2
+      - main
 
 permissions:
   actions: read
@@ -50,7 +50,7 @@ jobs:
     - name: Versioning
       id: versionize
       run: |
-        if [[ "${GITHUB_REF}" == "refs/heads/main2" ]]; then
+        if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
           versionize --skip-dirty --aggregate-pre-releases
         elif [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
           versionize --pre-release alpha --skip-dirty
