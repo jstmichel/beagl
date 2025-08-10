@@ -54,7 +54,7 @@ jobs:
           versionize --skip-dirty --aggregate-pre-releases
         elif [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
           versionize --pre-release alpha --skip-dirty
-        elif [[ "${GITHUB_REF}" == refs/heads/beta/* ]]; then
+        elif [[ "${GITHUB_REF}" == "refs/heads/beta/*" ]]; then
           versionize --pre-release beta --skip-dirty
         fi
       continue-on-error: true
