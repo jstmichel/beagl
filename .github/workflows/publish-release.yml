@@ -1,83 +1,128 @@
-name: Publish new release
+name: Build and release
 
 on:
   push:
     branches:
-      - main
+      - main2
+
+permissions:
+  actions: read
+  checks: write
+  contents: write
+  deployments: write
+  issues: write
+  discussions: read
+  packages: write
+  pages: write
+  pull-requests: read
+  repository-projects: read
+  security-events: read
+  statuses: read
+
+env:
+  IMAGE_NAME: beagl-webapp
 
 jobs:
-  publish-release:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Fetch all history for versionize to work correctly
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
 
-      - name: Install Versionize
-        run: dotnet tool install --global Versionize
+    - name: Restore dependencies
+      run: dotnet restore
 
-      - name: Configure git for versionize commit
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+    - name: Setup git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Run Versionize
-        run: versionize
+    - name: Install Versionize
+      run: dotnet tool install --global Versionize
 
-      - name: Check for changes after versionize
-        id: check_changes
-        run: |
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "No changes detected"
-            echo "changes_detected=false" >> $GITHUB_ENV
-          else
-            echo "Changes detected"
-            echo "changes_detected=true" >> $GITHUB_ENV
-          fi
+    - name: Versioning
+      id: versionize
+      run: |
+        if [[ "${GITHUB_REF}" == "refs/heads/main2" ]]; then
+          versionize --skip-dirty --aggregate-pre-releases
+        elif [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
+          versionize --pre-release alpha --skip-dirty
+        elif [[ "${GITHUB_REF}" == refs/heads/beta/* ]]; then
+          versionize --pre-release beta --skip-dirty
+        fi
+      continue-on-error: true
 
-      - name: Push version bump and changelog
-        if: ${{ github.env.changes_detected == 'true' }}
-        run: |
-          git add .
-          git commit -m "chore(release): bump version and update changelog [skip ci]"
-          git push origin HEAD
+    - name: No release required
+      if: steps.versionize.outcome != 'success'
+      run: echo "Skipping Release. No release required."
 
-      - name: Push tags
-        if: ${{ github.env.changes_detected == 'true' }}
-        run: |
-          git push origin --tags
+    - name: Build
+      run: dotnet build --no-restore
 
-      - name: Set up Docker Buildx
-        if: ${{ github.env.changes_detected == 'true' }}
-        uses: docker/setup-buildx-action@v3
+    - name: Log in to GitHub Container Registry
+      if: steps.versionize.outcome == 'success'
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Log in to GitHub Container Registry
-        if: ${{ github.env.changes_detected == 'true' }}
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Push changes to GitHub
+      if: steps.versionize.outcome == 'success'
+      id: push-version
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+        tags: true
+        force: true
 
-      - name: Extract version from project
-        if: ${{ github.env.changes_detected == 'true' }}
-        id: version
-        run: |
-          VERSION=$(grep -m1 '<Version>' src/Beagl.WebApp/Beagl.WebApp.csproj | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
-          if [ -z "$VERSION" ]; then
-            echo "Version not found in .csproj file. Using fallback version 'latest'."
-            VERSION="latest"
-          fi
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+    - name: "Create release"
+      if: steps.versionize.outcome == 'success' && steps.push-version.outcome == 'success'
+      id: create_release
+      uses: "actions/github-script@v5"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        script: |
+          try {
+            const tags_url = context.payload.repository.tags_url + "?per_page=1"
+            const result = await github.request(tags_url)
+            const current_tag = result.data[0].name
+            core.setOutput("current_tag", current_tag)
+            await github.rest.repos.createRelease({
+              draft: false,
+              generate_release_notes: true,
+              name: current_tag,
+              owner: context.repo.owner,
+              prerelease: false,
+              repo: context.repo.repo,
+              tag_name: current_tag,
+            });
+          } catch (error) {
+            core.setFailed(error.message);
+          }
 
-      - name: Build and push Docker image
-        if: ${{ github.env.changes_detected == 'true' }}
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/beagl:${{ steps.version.outputs.version }} -f src/Beagl.WebApp/Dockerfile .
-          docker push ghcr.io/${{ github.repository_owner }}/beagl:${{ steps.version.outputs.version }}
+    - name: Build and push image to GitHub Container Registry
+      id: build-image
+      if: steps.versionize.outcome == 'success' && steps.create_release.outcome == 'success'
+      run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          VERSION=${{ steps.create_release.outputs.current_tag }}
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker build --tag $IMAGE_ID:$VERSION --tag $IMAGE_ID:latest --file src/Beagl.WebApp/Dockerfile .
+          docker push $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:latest
+      continue-on-error: false
