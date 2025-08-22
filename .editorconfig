@@ -78,4 +78,28 @@ dotnet_diagnostic.CA2007.severity = none
 # (Optional) You can change 'warning' to 'error' to be stricter
 # dotnet_diagnostic.CS1591.severity = error
 
+# Prefer using explicit tuple names
+dotnet_style_explicit_tuple_names = true:suggestion
+
+# Prefer switch expressions where possible
+csharp_style_prefer_switch_expression = true:suggestion
+
+# Prefer inlined variable declarations in out parameters
+csharp_style_inlined_variable_declaration = true:suggestion
+
+# Prefer using 'using' declarations instead of statements
+csharp_style_prefer_using_declaration = true:suggestion
+
+# Prefer simplified boolean expressions
+csharp_style_prefer_simplified_boolean_expressions = true:suggestion
+
+# Prefer simplified conditional expressions
+csharp_style_prefer_conditional_expression_over_assignment = true:suggestion
+
+# Prefer null propagation
+csharp_style_prefer_null_propagation = true:suggestion
+
+# Prefer collection expressions (C# 12+)
+csharp_style_prefer_collection_expression = true:suggestion
+
 # End of .editorconfig
