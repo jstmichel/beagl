@@ -1,11 +1,11 @@
 using Beagl.Infrastructure;
 
-namespace Beagl.WebApp;
+namespace Beagl.WebApp.Extensions;
 
 /// <summary>
 /// Provides extension methods for the <see cref="WebApplication"/> class to support application startup tasks.
 /// </summary>
-internal static class WebApplicationExtensions
+public static class WebApplicationExtensions
 {
     /// <summary>
     /// Applies any pending database migrations and seeds initial data using the provided configuration.

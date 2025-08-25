@@ -12,17 +12,21 @@ namespace Beagl.Infrastructure;
 public static class DatabaseInitializer
 {
     /// <summary>
-    /// Applies pending migrations and seeds default roles and users using configuration values.
+    /// Applies pending migrations (if <paramref name="migrate"/> is true) and seeds default roles and users using configuration values.
     /// </summary>
     /// <param name="serviceProvider">The application's service provider.</param>
     /// <param name="configuration">The configuration containing seed data.</param>
-    public static async Task InitializeAsync(IServiceProvider serviceProvider, IConfiguration configuration)
+    /// <param name="migrate">If true, applies pending migrations before seeding data.</param>
+    public static async Task InitializeAsync(IServiceProvider serviceProvider, IConfiguration configuration, bool migrate = true)
     {
         ArgumentNullException.ThrowIfNull(configuration);
 
         using IServiceScope scope = serviceProvider.CreateScope();
-        ApplicationDbContext db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await db.Database.MigrateAsync();
+        if (migrate)
+        {
+            ApplicationDbContext db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            await db.Database.MigrateAsync();
+        }
 
         UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
         RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -40,8 +44,8 @@ public static class DatabaseInitializer
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Citizen);
 
         // Create default user
-        string adminEmail = configuration["SeedData:SeedUser:Email"];
-        string adminPassword = configuration["SeedData:SeedUser:Password"];
+        string? adminEmail = configuration["SeedData:SeedUser:Email"];
+        string? adminPassword = configuration["SeedData:SeedUser:Password"];
         if (!string.IsNullOrWhiteSpace(adminEmail) && !string.IsNullOrWhiteSpace(adminPassword))
         {
             await CreateUserIfNotExistsAsync(
