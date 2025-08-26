@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="Beagl.WebApp.styles.css" />
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
-    <HeadOutlet />
 </head>
 
 <body>
-    <Routes />
+    <div class="d-flex align-items-center py-4">
+        @RenderBody()
+    </div>
+
     <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="_framework/blazor.web.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 
 </html>

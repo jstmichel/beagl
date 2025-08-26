@@ -23,6 +23,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <AnalysisLevel>latest</AnalysisLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>0.1.2</Version>
     <UserSecretsId>465ec1fe-74d7-4aca-87f2-542872a4a5ec</UserSecretsId>
   </PropertyGroup>
