@@ -138,4 +138,16 @@
   <data name="All rights reserved © Service animalier Pierre-De-Saurel et régions 2024" xml:space="preserve">
     <value>All rights reserved © Service animalier Pierre-De-Saurel et régions 2024</value>
   </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid email address.</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="EmailOrPasswordInvalid" xml:space="preserve">
+    <value>Email or password is invalid.</value>
+  </data>
 </root>

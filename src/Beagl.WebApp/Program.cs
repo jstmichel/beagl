@@ -1,6 +1,5 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.WebApp.Components;
 using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +8,9 @@ using Beagl.WebApp.Extensions;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddRazorPages()
+    .AddDataAnnotationsLocalization()
+    .AddViewLocalization();
 
 // Add localization services
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -51,7 +52,14 @@ app.UseAntiforgery();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+string[] supportedCultures = ["en", "fr"];
+RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
+
+app.MapRazorPages();
 
 await app.RunAsync().ConfigureAwait(false);

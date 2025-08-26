@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer L
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="Beagl.WebApp.styles.css" />
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg border-bottom border-bottom-shadow" aria-label="Beagl navigation bar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo-bg-white.png" alt="Logo" height="60" />
+            </a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="@L["Toggle navigation"]">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbar" style="">
+                <ul class="navbar-nav mx-auto justify-content-center mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a asp-page="/Index" class="nav-link @(IsActive("/Index"))">@L["Home"]</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <a asp-page="/Login" class="btn btn-outline-primary">@L["Sign In"]</a>
+                    <a asp-page="/Register" class="btn btn-primary">@L["Register"]</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>
+
+@functions {
+    public string IsActive(string page)
+    {
+        var currentPage = ViewContext.ActionDescriptor is Microsoft.AspNetCore.Mvc.RazorPages.CompiledPageActionDescriptor d
+            ? d.ViewEnginePath
+            : "";
+        return string.Equals(currentPage, page, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    }
+}

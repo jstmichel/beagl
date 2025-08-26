@@ -9,7 +9,7 @@ Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It i
 ## Technologies
 - .NET 8 (C#, default language version)
 - ASP.NET Core
-- Blazor
+- Razor pages
 - Entity Framework Core
 - Docker (for deployment)
 - Identity with EF Core for User and Roles
@@ -40,6 +40,7 @@ Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It i
 - **Error Handling:** Use exceptions for error conditions. Catch exceptions only when you can handle them meaningfully. Avoid swallowing exceptions. Use custom exception types where appropriate.
 - **Logging Practices:** Use the built-in ASP.NET Core logging framework (`ILogger<T>`). Log errors, warnings, and important events. Avoid logging sensitive information. Use structured logging for complex data.
 - **Other Standards:** Write unit and integration tests for all business logic. Avoid magic numbers and strings; use constants or enums. Document public APIs and endpoints. Ensure code is self-explanatory and maintainable.
+- Static methods are permitted in classes if they do not reference instance members and this usage does not produce warnings or errors.
 
 ## Build & Run
 - Build: `dotnet build beagl.sln`
@@ -56,6 +57,9 @@ Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It i
 - C# best practices
 - Layered architecture: Domain, Infrastructure, WebApp
 - Tests mirror structure of main projects
+- Use internal sealed classes per default
+- Use global namespaces in files
+- Use explicit types
 
 ## Design Patterns & Practices
 - Use design patterns recommended by Clean Code and Clean Architecture (Robert C. Martin)
