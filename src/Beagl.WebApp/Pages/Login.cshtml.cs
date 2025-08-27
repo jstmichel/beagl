@@ -1,4 +1,9 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using System.ComponentModel.DataAnnotations;
+using Beagl.Domain.Models.Results;
+using Beagl.Domain.Services;
+using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
@@ -8,7 +13,9 @@ namespace Beagl.WebApp.Pages;
 /// <summary>
 /// Represents the login page model for handling user authentication.
 /// </summary>
-internal sealed class LoginModel(IStringLocalizer<LoginModel> localizer) : PageModel
+internal sealed class LoginModel(
+    IStringLocalizer<LoginModel> localizer,
+    IAuthenticationService authenticationService) : PageModel
 {
     [BindProperty]
     [Required(ErrorMessage = "EmailRequired")]
@@ -27,11 +34,18 @@ internal sealed class LoginModel(IStringLocalizer<LoginModel> localizer) : PageM
     /// Validates the model and adds an error if authentication fails.
     /// </summary>
     /// <returns>The page result.</returns>
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
         if (!ModelState.IsValid)
         {
             return Page();
+        }
+
+        AuthenticationResult result = await authenticationService.SignInAsync(
+            Email, Password, RememberMe);
+        if (result.Succeeded)
+        {
+            return LocalRedirect(LocalRedirection.Index);
         }
 
         ModelState.AddModelError(string.Empty, localizer["EmailOrPasswordInvalid"]);
