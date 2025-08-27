@@ -1,3 +1,5 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using Beagl.Infrastructure;
 
 namespace Beagl.WebApp.Extensions;

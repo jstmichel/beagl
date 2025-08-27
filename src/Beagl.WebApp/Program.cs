@@ -4,6 +4,8 @@ using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Beagl.WebApp.Extensions;
+using Beagl.Domain.Services;
+using Beagl.Infrastructure.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromHours(8);
     options.SlidingExpiration = true;
 });
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 WebApplication app = builder.Build();
 
