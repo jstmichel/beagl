@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.2.0"></a>
+## [0.2.0](https://www.github.com/jstmichel/beagl/releases/tag/v0.2.0) (2025-08-27)
+
+### Features
+
+* Implement authentication service and related functionality ([#27](https://www.github.com/jstmichel/beagl/issues/27)) ([80cd6f7](https://www.github.com/jstmichel/beagl/commit/80cd6f7143fce5e196e2b57f93e4aabcbc4a8c2e))
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://www.github.com/jstmichel/beagl/releases/tag/v0.1.3) (2025-08-26)
 
