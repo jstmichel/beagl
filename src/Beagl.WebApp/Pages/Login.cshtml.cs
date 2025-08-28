@@ -48,7 +48,9 @@ internal sealed class LoginModel(
             return LocalRedirect(LocalRedirection.Index);
         }
 
-        ModelState.AddModelError(string.Empty, localizer["EmailOrPasswordInvalid"]);
+        ModelState.AddModelError(
+            string.Empty,
+            localizer["EmailOrPasswordInvalid"]);
         return Page();
     }
 }

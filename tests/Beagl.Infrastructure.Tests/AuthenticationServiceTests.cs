@@ -20,14 +20,14 @@ public sealed class AuthenticationServiceTests
         Mock<FakeSignInManager> signInManagerMock = new();
 
         signInManagerMock
-            .Setup(m => m.PasswordSignInAsync("user@example.com", "password", false, false))
+            .Setup(m => m.PasswordSignInAsync("user@example.com", "password", false, true))
             .ReturnsAsync(SignInResult.Success);
 
         AuthenticationService service = new(signInManagerMock.Object);
 
         // Act
         AuthenticationResult result = await service.SignInAsync(
-            "user@example.com", "password", permanent: false);
+            "user@example.com", "password", isPersistent: false);
 
         // Assert
         Assert.True(result.Succeeded);
@@ -40,14 +40,14 @@ public sealed class AuthenticationServiceTests
         Mock<FakeSignInManager> signInManagerMock = new();
 
         signInManagerMock
-            .Setup(m => m.PasswordSignInAsync("user@example.com", "wrongpassword", false, false))
+            .Setup(m => m.PasswordSignInAsync("user@example.com", "wrongpassword", false, true))
             .ReturnsAsync(SignInResult.Failed);
 
         AuthenticationService service = new(signInManagerMock.Object);
 
         // Act
         AuthenticationResult result = await service.SignInAsync(
-            "user@example.com", "wrongpassword", permanent: false);
+            "user@example.com", "wrongpassword", isPersistent: false);
 
         // Assert
         Assert.False(result.Succeeded);

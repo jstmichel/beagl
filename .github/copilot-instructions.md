@@ -95,5 +95,7 @@ Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It i
 - Currently uses SQLite for development and testing
 - Planned migration to PostgreSQL for production
 
----
-Update this file with any new features, conventions, or important context as the project evolves.
+## Commit Message Guidelines
+Use conventional commit messages, all in lower case (e.g., `feat: add login form partial`).
+Always include a brief summary of the change in the commit message.
+If a change is breaking, add `BREAKING CHANGE:` in the commit message body and describe the impact.

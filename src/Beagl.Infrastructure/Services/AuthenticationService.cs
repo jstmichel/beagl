@@ -13,13 +13,19 @@ namespace Beagl.Infrastructure.Services;
 /// Initializes a new instance of the <see cref="AuthenticationService"/> class.
 /// </remarks>
 /// <param name="signInManager">The ASP.NET Core Identity SignInManager.</param>
-public sealed class AuthenticationService(SignInManager<IdentityUser> signInManager) : IAuthenticationService
+public sealed class AuthenticationService(
+    SignInManager<IdentityUser> signInManager)
+    : IAuthenticationService
 {
+    private const bool _lockoutOnFailure = true;
     /// <inheritdoc />
-    public async Task<AuthenticationResult> SignInAsync(string email, string password, bool permanent)
+    public async Task<AuthenticationResult> SignInAsync(
+        string email,
+        string password,
+        bool isPersistent)
     {
         SignInResult result = await signInManager.PasswordSignInAsync(
-            email, password, isPersistent: permanent, lockoutOnFailure: false);
+            email, password, isPersistent, _lockoutOnFailure);
 
         return new AuthenticationResult
         {
