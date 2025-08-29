@@ -129,4 +129,7 @@
   <data name="Toggle navigation" xml:space="preserve">
     <value>Toggle navigation</value>
   </data>
+  <data name="Sign Out" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
 </root>

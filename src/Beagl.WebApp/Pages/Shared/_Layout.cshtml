@@ -30,7 +30,16 @@
                     </li>
                 </ul>
                 <div class="d-flex gap-2">
-                    <a asp-page="@LocalRedirection.Login" class="btn btn-outline-primary">@L["Sign In"]</a>
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form method="post" asp-page="/Logout" class="d-inline">
+                            <button type="submit" class="btn btn-outline-danger">@L["Sign Out"]</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-page="@LocalRedirection.Login" class="btn btn-outline-primary">@L["Sign In"]</a>
+                    }
                 </div>
             </div>
         </div>
