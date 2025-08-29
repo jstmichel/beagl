@@ -66,6 +66,22 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
+    - name: Test Beagl.Domain.Tests
+      run: dotnet test tests/Beagl.Domain.Tests/Beagl.Domain.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=domain.trx" --results-directory ./TestResults/Domain
+
+    - name: Test Beagl.Infrastructure.Tests
+      run: dotnet test tests/Beagl.Infrastructure.Tests/Beagl.Infrastructure.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=infrastructure.trx" --results-directory ./TestResults/Infrastructure
+
+    - name: Test Beagl.WebApp.Tests
+      run: dotnet test tests/Beagl.WebApp.Tests/Beagl.WebApp.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=webapp.trx" --results-directory ./TestResults/WebApp
+
+    - name: Upload all test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: ./TestResults
+
     - name: Log in to GitHub Container Registry
       if: steps.versionize.outcome == 'success'
       uses: docker/login-action@v3
