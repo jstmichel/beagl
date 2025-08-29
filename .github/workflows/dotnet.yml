@@ -1,6 +1,9 @@
 name: .NET Core Build and Test
 
 on:
+  push:
+    branches:
+      - develop
   pull_request:
     branches:
       - '**'
@@ -26,11 +29,11 @@ jobs:
         run: dotnet build ./beagl.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ./beagl.sln --no-build --configuration Release --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
+        run: dotnet test ./beagl.sln --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
 
-      - name: Upload test results
+      - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: ./TestResults
+          name: coverage-report
+          path: ./TestResults/**/coverage.cobertura.xml
