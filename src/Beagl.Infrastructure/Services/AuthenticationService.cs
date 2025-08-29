@@ -32,4 +32,7 @@ public sealed class AuthenticationService(
             Succeeded = result.Succeeded,
         };
     }
+
+    /// <inheritdoc />
+    public async Task SignOutAsync() => await signInManager.SignOutAsync();
 }

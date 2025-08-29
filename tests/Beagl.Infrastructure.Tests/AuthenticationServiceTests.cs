@@ -52,4 +52,23 @@ public sealed class AuthenticationServiceTests
         // Assert
         Assert.False(result.Succeeded);
     }
+
+    [Fact]
+    public async Task SignOutAsync_CallsSignInManagerSignOutAsync()
+    {
+        // Arrange
+        Mock<FakeSignInManager> signInManagerMock = new();
+        signInManagerMock
+            .Setup(m => m.SignOutAsync())
+            .Returns(Task.CompletedTask)
+            .Verifiable();
+
+        AuthenticationService service = new(signInManagerMock.Object);
+
+        // Act
+        await service.SignOutAsync();
+
+        // Assert
+        signInManagerMock.Verify(m => m.SignOutAsync(), Times.Once);
+    }
 }
