@@ -28,12 +28,18 @@ jobs:
       - name: Build solution
         run: dotnet build ./beagl.sln --configuration Release --no-restore
 
-      - name: Run tests
-        run: dotnet test ./beagl.sln --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
+      - name: Test Beagl.Domain.Tests
+        run: dotnet test tests/Beagl.Domain.Tests/Beagl.Domain.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=domain.trx" --results-directory ./TestResults/Domain
 
-      - name: Upload coverage report
+      - name: Test Beagl.Infrastructure.Tests
+        run: dotnet test tests/Beagl.Infrastructure.Tests/Beagl.Infrastructure.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=infrastructure.trx" --results-directory ./TestResults/Infrastructure
+
+      - name: Test Beagl.WebApp.Tests
+        run: dotnet test tests/Beagl.WebApp.Tests/Beagl.WebApp.Tests.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "trx;LogFileName=webapp.trx" --results-directory ./TestResults/WebApp
+
+      - name: Upload all test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
-          path: ./TestResults/**/coverage.cobertura.xml
+          name: test-results
+          path: ./TestResults
