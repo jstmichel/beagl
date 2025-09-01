@@ -15,6 +15,42 @@ Beagl is an open source application to help animal service organizations manage 
 2. Install dependencies
 3. Run the app
 
+---
+
+## Database Setup (PostgreSQL with Docker)
+
+You need Docker installed on your development machine. Download it from [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop).
+
+### 1. Create a `.env` file
+
+At the root of the repository, create a file named `.env` with the following content:
+
+```env
+POSTGRES_PASSWORD=your-strong-password
+```
+
+Replace `your-strong-password` with a secure password of your choice.
+
+### 2. Start the PostgreSQL database
+
+Run the following command from the repository root:
+
+```sh
+docker-compose up -d
+```
+
+This will start a PostgreSQL database container with the configuration from `docker-compose.yml`.
+
+### 3. Stop the database
+
+To stop the database, run:
+
+```sh
+docker-compose down
+```
+
+---
+
 ## Client-side Library Management (LibMan)
 
 This project uses [LibMan (Library Manager)](https://learn.microsoft.com/en-us/aspnet/core/client-side/libman/) to manage client-side libraries.
@@ -61,17 +97,21 @@ From the `src/Beagl.WebApp` folder, run:
 dotnet user-secrets init
 dotnet user-secrets set "SeedData:SeedUser:Email" "admin@localhost"
 dotnet user-secrets set "SeedData:SeedUser:Password" "your-strong-password"
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=beagl;Username=beagl_admin;Password=your-strong-password"
 ```
 
 Replace `your-strong-password` with a secure password of your choice.
 
 Your application will read these values from configuration when seeding the database.
 
+> Note: The `your-strong-password` value in your connection string must match the `POSTGRES_PASSWORD` value in your `.env` file.
+
 ---
 
-## Entity Framework Core (EF Core) & SQLite
 
-This project uses [Entity Framework Core 8](https://learn.microsoft.com/en-us/ef/core/) with SQLite as the development database provider.
+## Entity Framework Core (EF Core) & PostgreSQL
+
+This project uses [Entity Framework Core 8](https://learn.microsoft.com/en-us/ef/core/) with PostgreSQL as the development and production database provider.
 
 ### Installing EF Core Tools
 
