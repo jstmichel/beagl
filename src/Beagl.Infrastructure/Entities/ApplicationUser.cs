@@ -7,5 +7,8 @@ namespace Beagl.Infrastructure.Entities;
 /// </summary>
 public class ApplicationUser : Microsoft.AspNetCore.Identity.IdentityUser
 {
-    // Add custom properties for roles here if needed
+    /// <summary>
+    /// Gets or sets a value indicating whether the user is marked as deleted.
+    /// </summary>
+    public bool IsDeleted { get; set; }
 }
