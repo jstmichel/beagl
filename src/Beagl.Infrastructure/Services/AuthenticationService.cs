@@ -2,6 +2,7 @@
 
 using Beagl.Domain.Models.Results;
 using Beagl.Domain.Services;
+using Beagl.Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Beagl.Infrastructure.Services;
@@ -14,7 +15,7 @@ namespace Beagl.Infrastructure.Services;
 /// </remarks>
 /// <param name="signInManager">The ASP.NET Core Identity SignInManager.</param>
 public sealed class AuthenticationService(
-    SignInManager<IdentityUser> signInManager)
+    SignInManager<ApplicationUser> signInManager)
     : IAuthenticationService
 {
     private const bool _lockoutOnFailure = true;

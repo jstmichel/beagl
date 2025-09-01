@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Beagl.Domain.Entities;
+using Beagl.Infrastructure.Entities;
 
 namespace Beagl.Infrastructure;
 
@@ -30,8 +31,8 @@ public static class DatabaseInitializer
             await db.Database.MigrateAsync();
         }
 
-        UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-        RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        RoleManager<ApplicationRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
         // Create default roles
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Administrator);
@@ -59,25 +60,25 @@ public static class DatabaseInitializer
     }
 
     private static async Task CreateRoleIfNotExistsAsync(
-        RoleManager<IdentityRole> roleManager,
+    RoleManager<ApplicationRole> roleManager,
         string roleName)
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {
-            await roleManager.CreateAsync(new IdentityRole(roleName));
+            await roleManager.CreateAsync(new ApplicationRole { Name = roleName });
         }
     }
 
     private static async Task CreateUserIfNotExistsAsync(
-        UserManager<IdentityUser> userManager,
+    UserManager<ApplicationUser> userManager,
         string email,
         string password,
         string roleName)
     {
-        IdentityUser? user = await userManager.FindByEmailAsync(email);
+    ApplicationUser? user = await userManager.FindByEmailAsync(email);
         if (user == null)
         {
-            user = new IdentityUser
+            user = new ApplicationUser
             {
                 UserName = email,
                 Email = email,

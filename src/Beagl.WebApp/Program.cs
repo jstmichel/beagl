@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Beagl.WebApp.Extensions;
 using Beagl.Domain.Services;
 using Beagl.Infrastructure.Services;
+using Beagl.Infrastructure.Entities;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=beagl.db"));
 
 // Add ASP.NET Core Identity (without default UI), using EF Core for storage
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
