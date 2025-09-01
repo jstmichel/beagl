@@ -60,7 +60,7 @@ public static class DatabaseInitializer
     }
 
     private static async Task CreateRoleIfNotExistsAsync(
-    RoleManager<ApplicationRole> roleManager,
+        RoleManager<ApplicationRole> roleManager,
         string roleName)
     {
         if (!await roleManager.RoleExistsAsync(roleName))
@@ -70,12 +70,12 @@ public static class DatabaseInitializer
     }
 
     private static async Task CreateUserIfNotExistsAsync(
-    UserManager<ApplicationUser> userManager,
+        UserManager<ApplicationUser> userManager,
         string email,
         string password,
         string roleName)
     {
-    ApplicationUser? user = await userManager.FindByEmailAsync(email);
+        ApplicationUser? user = await userManager.FindByEmailAsync(email);
         if (user == null)
         {
             user = new ApplicationUser
