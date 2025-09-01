@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Beagl.Infrastructure.Entities;
 
 namespace Beagl.Infrastructure;
 
@@ -11,7 +12,7 @@ namespace Beagl.Infrastructure;
 /// <param name="options">The options to be used by a <see cref="DbContext"/>.</param>
 public class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options)
-    : IdentityDbContext(options)
+    : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
 {
 
     // Add your DbSet<T> properties here

@@ -92,8 +92,7 @@ Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It i
 - Board Member
 
 ## Data Sources
-- Currently uses SQLite for development and testing
-- Planned migration to PostgreSQL for production
+- Uses PostgreSQL for development and production
 
 ## Commit Message Guidelines
 Use conventional commit messages, all in lower case (e.g., `feat: add login form partial`).
