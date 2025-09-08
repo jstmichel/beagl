@@ -1,3 +1,30 @@
+/* Actions column width and nowrap */
+.actions-col {
+  width: 120px;
+  white-space: nowrap;
+}
+
+/* Table footer min height and alignment */
+.table-footer {
+  min-height: 48px;
+}
+.table {
+  border-radius: 0.75rem;
+  border: 1px solid #dee2e6;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.user-row:hover {
+  background: #f8f9fa;
+  transition: background 0.2s;
+}
+.btn-outline-primary, .btn-outline-danger {
+  min-width: 70px;
+}
+@media (max-width: 768px) {
+  .card { max-width: 100%; padding: 0.5rem; }
+  .table th, .table td { font-size: 0.95rem; }
+}
 html,
 body {
   height: 100%;
