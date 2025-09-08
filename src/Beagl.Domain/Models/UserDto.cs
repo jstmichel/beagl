@@ -12,17 +12,17 @@ public class UserDto
     /// <summary>
     /// Gets or sets the unique identifier for the user.
     /// </summary>
-    public string? Id { get; set; }
+    public required string Id { get; set; }
 
     /// <summary>
     /// Gets or sets the username.
     /// </summary>
-    public string UserName { get; set; } = string.Empty;
+    public string? UserName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the email address.
     /// </summary>
-    public string Email { get; set; } = string.Empty;
+    public string? Email { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the phone number.

@@ -9,7 +9,7 @@ namespace Beagl.Domain.Services;
 /// <summary>
 /// Defines CRUD operations for application users.
 /// </summary>
-public interface IUserService
+public interface IUserService : IPagedService<UserDto>
 {
     /// <summary>
     /// Gets all users in the system.
