@@ -1,5 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System;
 using System.Collections.ObjectModel;
 
 namespace Beagl.Domain.Models;
@@ -28,6 +29,12 @@ public class UserDto
     /// Gets or sets the phone number.
     /// </summary>
     public string? PhoneNumber { get; set; }
+
+
+    /// <summary>
+    /// Gets or sets the lockout end date for the user, if any.
+    /// </summary>
+    public DateTimeOffset? LockoutEnd { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the user is soft deleted.

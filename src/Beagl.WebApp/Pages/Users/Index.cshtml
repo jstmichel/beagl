@@ -8,7 +8,31 @@
 
 
 <div class="container py-5">
-    <h2 class="mb-4 text-center">User Management</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">User Management</h2>
+        <a asp-page="Create" class="btn btn-success" title="Create New User">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5V7.5H11.5a.5.5 0 0 1 0 1H8.5V11.5a.5.5 0 0 1-1 0V8.5H4.5a.5.5 0 0 1 0-1H7.5V4.5A.5.5 0 0 1 8 4z"/>
+            </svg>
+            Create New User
+        </a>
+    </div>
+    <form method="get" class="mb-4">
+        <div class="row g-2">
+            <div class="col-md-3">
+                <input type="text" name="username" class="form-control" placeholder="Filter by username" value="@Request.Query["username"]" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="email" class="form-control" placeholder="Filter by email" value="@Request.Query["email"]" />
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="phone" class="form-control" placeholder="Filter by phone" value="@Request.Query["phone"]" />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-outline-primary w-100">Filter</button>
+            </div>
+        </div>
+    </form>
     @if (Model.Users.Count == 0)
     {
         <div class="alert alert-info text-center">No users found.</div>
@@ -21,6 +45,7 @@
                     <tr>
                         <th>User Name</th>
                         <th>Email</th>
+                        <th>Lockout Date</th>
                         <th class="text-end actions-col" aria-label="Actions">Actions</th>
                     </tr>
                 </thead>
@@ -30,6 +55,7 @@
                     <tr>
                         <td class="py-3 fw-bold">@user.UserName</td>
                         <td class="py-3 text-muted">@user.Email</td>
+                        <td class="py-3 text-muted">@(user.LockoutEnd?.ToString("yyyy-MM-dd HH:mm") ?? "-")</td>
                         <td class="py-3 text-end actions-col">
                             <a asp-page="Edit" asp-route-id="Edit" class="btn btn-outline-primary btn-sm me-2" title="Edit" aria-label="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
