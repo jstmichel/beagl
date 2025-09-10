@@ -21,4 +21,9 @@ internal sealed class PaginationModel
     /// Gets or sets the query parameter name for the page number.
     /// </summary>
     public string PageParameter { get; set; } = "pageNumber";
+
+    /// <summary>
+    /// Gets or sets additional query string parameters to append to pagination links.
+    /// </summary>
+    public string? AdditionalQuery { get; set; }
 }

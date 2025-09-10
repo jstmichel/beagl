@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Beagl.WebApp.Pages.Shared.Models;
@@ -6,7 +7,8 @@ namespace Beagl.WebApp.Pages.Shared.Models;
 /// Abstract base class for paginated Razor Pages.
 /// Provides common pagination properties and methods.
 /// </summary>
-internal abstract class PaginatedPageModel : PageModel
+internal abstract class PaginatedPageModel<Data, Filter> : PageModel
+    where Filter : new()
 {
     /// <summary>
     /// The current page number.
@@ -27,6 +29,12 @@ internal abstract class PaginatedPageModel : PageModel
     /// The total number of items.
     /// </summary>
     public int TotalItems { get; set; }
+
+    /// <inheritdoc/>
+    [BindProperty(SupportsGet = true)]
+    public Filter FilterModel { get; set; } = new Filter();
+
+    public IList<Data> DataModel { get; protected set; } = [];
 
     /// <summary>
     /// Loads paginated data for the page.

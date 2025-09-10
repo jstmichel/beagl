@@ -51,19 +51,21 @@ public class UserService
     public Task<UserDto?> GetByIdAsync(string id) => throw new NotImplementedException();
 
     /// <inheritdoc/>
-    public async Task<(IList<UserDto> Users, int TotalCount)> GetPagedAsync(
-        int pageNumber, int pageSize)
+    public async Task<(IList<UserDto> Items, int TotalCount)> GetPagedAsync(
+        UserPagedFilterDto filter)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         IQueryable<ApplicationUser> query = userManager.Users;
         int totalCount = await query.CountAsync();
-        List<UserDto> users = await query
+        List<UserDto> items = await query
             .OrderBy(u => u.UserName)
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
+            .Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
             .Select(u => UserMapper.ToDto(u))
             .ToListAsync();
 
-        return (users, totalCount);
+        return (items, totalCount);
     }
 
     /// <summary>
