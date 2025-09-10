@@ -20,19 +20,16 @@ internal sealed class IndexModel(
         /// <summary>
         /// Gets or sets the username filter.
         /// </summary>
-    [Display(Name = nameof(Beagl.WebApp.Resources.IndexModel.Username), ResourceType = typeof(Beagl.WebApp.Resources.IndexModel))]
         public string? Username { get; set; }
 
         /// <summary>
         /// Gets or sets the email filter.
         /// </summary>
-    [Display(Name = nameof(Beagl.WebApp.Resources.IndexModel.Email), ResourceType = typeof(Beagl.WebApp.Resources.IndexModel))]
         public string? Email { get; set; }
 
         /// <summary>
         /// Gets or sets the phone filter.
         /// </summary>
-    [Display(Name = nameof(Beagl.WebApp.Resources.IndexModel.Phone), ResourceType = typeof(Beagl.WebApp.Resources.IndexModel))]
         public string? Phone { get; set; }
     }
 

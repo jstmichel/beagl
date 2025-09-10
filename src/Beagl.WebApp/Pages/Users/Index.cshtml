@@ -1,55 +1,56 @@
 ﻿@page
 @using Beagl.WebApp.Pages.Shared
 @model Beagl.WebApp.Pages.Users.IndexModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "User Management";
+    ViewData["Title"] = Localizer["User Management"];
 }
 
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">User Management</h2>
+        <h2 class="mb-0">@Localizer["User Management"]</h2>
         <div class="d-flex gap-2">
             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel" aria-controls="filterPanel">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                     <path d="M6 10.117V14a1 1 0 0 0 2 0v-3.883l3.447-2.276A1 1 0 0 0 12.447 7H3.553a1 1 0 0 0-.553 1.841L6 10.117z"/>
                 </svg>
-                Filters
+                @Localizer["Filters"]
             </button>
-            <a asp-page="Create" class="btn btn-success" title="Create New User">
+            <a asp-page="Create" class="btn btn-success" title="@Localizer["Create New User"]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5V7.5H11.5a.5.5 0 0 1 0 1H8.5V11.5a.5.5 0 0 1-1 0V8.5H4.5a.5.5 0 0 1 0-1H7.5V4.5A.5.5 0 0 1 8 4z"/>
                 </svg>
-                Create New User
+                @Localizer["Create New User"]
             </a>
         </div>
     </div>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="filterPanel" aria-labelledby="filterPanelLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="filterPanelLabel">Filters</h5>
+            <h5 class="offcanvas-title" id="filterPanelLabel">@Localizer["Filters"]</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <form method="get">
                 <div class="mb-3">
-                    <label asp-for="FilterModel.Username" class="form-label">Username</label>
+                    <label asp-for="FilterModel.Username" class="form-label">@Localizer["Username"]</label>
                     <input type="text" asp-for="FilterModel.Username" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for="FilterModel.Email" class="form-label">Email</label>
+                    <label asp-for="FilterModel.Email" class="form-label">@Localizer["Email"]</label>
                     <input type="text" asp-for="FilterModel.Email" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for="FilterModel.Phone" class="form-label">Phone</label>
+                    <label asp-for="FilterModel.Phone" class="form-label">@Localizer["Phone"]</label>
                     <input type="text" asp-for="FilterModel.Phone" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-outline-primary w-100">Apply Filters</button>
+                <button type="submit" class="btn btn-outline-primary w-100">@Localizer["Apply Filters"]</button>
             </form>
         </div>
     </div>
     @if (Model.DataModel.Count == 0)
     {
-        <div class="alert alert-info text-center">No users found.</div>
+        <div class="alert alert-info text-center">@Localizer["Not found."]</div>
     }
     else
     {
@@ -57,10 +58,10 @@
             <table class="table table-hover align-middle bg-white rounded shadow-sm">
                 <thead class="table-light">
                     <tr>
-                        <th>User Name</th>
-                        <th>Email</th>
-                        <th>Lockout Date</th>
-                        <th class="text-end actions-col" aria-label="Actions">Actions</th>
+                        <th>@Localizer["Username Header"]</th>
+                        <th>@Localizer["Email Header"]</th>
+                        <th>@Localizer["Lockout Date Header"]</th>
+                        <th class="text-end actions-col" aria-label="Actions">@Localizer["Actions Header"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,12 +72,12 @@
                         <td class="py-3 text-muted">@user.Email</td>
                         <td class="py-3 text-muted">@(user.LockoutEnd?.ToString("yyyy-MM-dd HH:mm") ?? "-")</td>
                         <td class="py-3 text-end actions-col">
-                            <a asp-page="Edit" asp-route-id="Edit" class="btn btn-outline-primary btn-sm me-2" title="Edit" aria-label="Edit">
+                            <a asp-page="Edit" asp-route-id="Edit" class="btn btn-outline-primary btn-sm me-2" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 3 10.707V13h2.293l7.5-7.5z"/>
                                 </svg>
                             </a>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user-id="@ViewData["UserId"]" data-user-name="@ViewData["UserName"]" title="Delete" aria-label="Delete">
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user-id="@user.Id" data-user-name="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5.5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6zm3 .5a.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1H14a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -90,7 +91,7 @@
                     <tr>
                         <td colspan="4">
                             <div class="d-flex justify-content-between align-items-center w-100 table-footer">
-                                <span class="fw-bold">Total Users: @Model.TotalItems</span>
+                                <span class="fw-bold">@Localizer["Total"] @Model.TotalItems</span>
                                 <div class="d-flex align-items-center" style="height: 100%;">
                                     @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
                                         CurrentPage = Model.CurrentPage,
@@ -113,17 +114,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="deleteModalLabel">@Localizer["Confirm Delete"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer["Close"]"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete user <strong id="deleteUserName"></strong>?
+                @Localizer["Deletion confirmation"] <strong id="deleteUserName"></strong>?
             </div>
             <div class="modal-footer">
                 <form method="post" asp-page-handler="Delete" id="deleteForm">
                     <input type="hidden" name="id" id="deleteUserId" />
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                    <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
                 </form>
             </div>
         </div>
