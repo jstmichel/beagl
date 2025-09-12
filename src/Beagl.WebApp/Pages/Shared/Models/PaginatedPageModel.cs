@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Beagl.WebApp.Pages.Shared.Models;
 
@@ -7,7 +6,7 @@ namespace Beagl.WebApp.Pages.Shared.Models;
 /// Abstract base class for paginated Razor Pages.
 /// Provides common pagination properties and methods.
 /// </summary>
-internal abstract class PaginatedPageModel<Data, Filter> : PageModel
+internal abstract class PaginatedPageModel<Data, Filter> : BasePageModel
     where Filter : new()
 {
     /// <summary>

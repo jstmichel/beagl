@@ -7,6 +7,21 @@
 }
 
 <div class="container py-5">
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul class="mb-0">
+            @foreach (var entry in ViewData.ModelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">@Localizer["User Management"]</h2>
         <div class="d-flex gap-2">
@@ -123,6 +138,10 @@
             <div class="modal-footer">
                 <form method="post" asp-page-handler="Delete" id="deleteForm">
                     <input type="hidden" name="id" id="deleteUserId" />
+                    <input type="hidden" name="FilterModel.Username" value="@Model.FilterModel?.Username" />
+                    <input type="hidden" name="FilterModel.Email" value="@Model.FilterModel?.Email" />
+                    <input type="hidden" name="FilterModel.Phone" value="@Model.FilterModel?.Phone" />
+                    <input type="hidden" name="pageNumber" value="@Model.CurrentPage" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
                     <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
                 </form>

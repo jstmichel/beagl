@@ -1,3 +1,5 @@
+using Beagl.Domain.Exceptions.Entities;
+using Beagl.Domain.Exceptions.Users;
 using Beagl.Domain.Models;
 using Beagl.Domain.Services;
 using Beagl.Infrastructure.Entities;
@@ -35,7 +37,21 @@ public class UserService
     /// </summary>
     /// <param name="id">The unique identifier of the user to delete.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task DeleteAsync(string id) => throw new NotImplementedException();
+    public async Task DeleteAsync(string id)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(id);
+
+        ApplicationUser? user = await userManager.FindByIdAsync(id)
+            ?? throw new EntityNotFoundException("User not found.");
+        int userCount = await userManager.Users.CountAsync();
+        if (userCount <= 1)
+            throw new LastUserDeleteException("Cannot delete the last user.");
+
+        IdentityResult result = await userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+            throw new EntityDeleteFailedException(
+                "Failed to delete user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+    }
 
     /// <summary>
     /// Retrieves all users in the system.
