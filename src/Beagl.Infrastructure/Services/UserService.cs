@@ -73,7 +73,12 @@ public class UserService
         ArgumentNullException.ThrowIfNull(filter);
 
         IQueryable<ApplicationUser> query = userManager.Users;
-        int totalCount = await GetUserCountAsync();
+
+        ApplyUserNameFilterToQuery(filter.Username, ref query);
+        ApplyEmailFilterToQuery(filter.Email, ref query);
+        ApplyPhoneFilterToQuery(filter.Phone, ref query);
+
+        int totalCount = await GetUserCountAsync(query);
         List<UserDto> items = await query
             .OrderBy(u => u.UserName)
             .Skip((filter.PageNumber - 1) * filter.PageSize)
@@ -82,6 +87,37 @@ public class UserService
             .ToListAsync();
 
         return (items, totalCount);
+    }
+
+    private static void ApplyPhoneFilterToQuery(
+        string? phone,
+        ref IQueryable<ApplicationUser> query)
+    {
+
+        if (!string.IsNullOrWhiteSpace(phone))
+        {
+            query = query.Where(u => u.PhoneNumber!.Contains(phone));
+        }
+    }
+
+    private static void ApplyEmailFilterToQuery(
+        string? email,
+        ref IQueryable<ApplicationUser> query)
+    {
+        if (!string.IsNullOrWhiteSpace(email))
+        {
+            query = query.Where(u => u.Email!.Contains(email));
+        }
+    }
+
+    private static void ApplyUserNameFilterToQuery(
+        string? username,
+        ref IQueryable<ApplicationUser> query)
+    {
+        if (!string.IsNullOrWhiteSpace(username))
+        {
+            query = query.Where(u => u.UserName!.Contains(username));
+        }
     }
 
     /// <summary>
@@ -102,5 +138,11 @@ public class UserService
     /// Gets the total number of users in the system.
     /// </summary>
     /// <returns>A task that returns the total user count.</returns>
-    public virtual async Task<int> GetUserCountAsync() => await userManager.Users.CountAsync();
+    public virtual async Task<int> GetUserCountAsync() => await GetUserCountAsync(userManager.Users);
+
+    /// <summary>
+    /// Gets the total number of users in the system.
+    /// </summary>
+    /// <returns>A task that returns the total user count.</returns>
+    public virtual async Task<int> GetUserCountAsync(IQueryable<ApplicationUser> query) => await query.CountAsync();
 }
