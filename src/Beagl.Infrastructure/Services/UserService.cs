@@ -14,7 +14,7 @@ namespace Beagl.Infrastructure.Services;
 /// Implements the <see cref="IUserService"/> interface for accessing and managing user data.
 /// </summary>
 public class UserService
-    (UserManager<ApplicationUser> userManager) : IUserService
+(UserManager<ApplicationUser> userManager) : IUserService
 {
     /// <summary>
     /// Creates a new user with the specified details, password, and role.
@@ -43,7 +43,7 @@ public class UserService
 
         ApplicationUser? user = await userManager.FindByIdAsync(id)
             ?? throw new EntityNotFoundException("User not found.");
-        int userCount = await userManager.Users.CountAsync();
+        int userCount = await GetUserCountAsync();
         if (userCount <= 1)
             throw new LastUserDeleteException("Cannot delete the last user.");
 
@@ -73,7 +73,7 @@ public class UserService
         ArgumentNullException.ThrowIfNull(filter);
 
         IQueryable<ApplicationUser> query = userManager.Users;
-        int totalCount = await query.CountAsync();
+        int totalCount = await GetUserCountAsync();
         List<UserDto> items = await query
             .OrderBy(u => u.UserName)
             .Skip((filter.PageNumber - 1) * filter.PageSize)
@@ -97,4 +97,10 @@ public class UserService
     /// <param name="user">The user data transfer object containing updated user details.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public Task UpdateAsync(UserDto user) => throw new NotImplementedException();
+
+    /// <summary>
+    /// Gets the total number of users in the system.
+    /// </summary>
+    /// <returns>A task that returns the total user count.</returns>
+    public virtual async Task<int> GetUserCountAsync() => await userManager.Users.CountAsync();
 }
