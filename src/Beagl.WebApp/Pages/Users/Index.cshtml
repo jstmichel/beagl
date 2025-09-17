@@ -92,7 +92,7 @@
                                     <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 3 10.707V13h2.293l7.5-7.5z"/>
                                 </svg>
                             </a>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-user-id="@user.Id" data-user-name="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]">
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@user.Id" data-entity-description="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5.5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6zm3 .5a.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1H14a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -124,41 +124,8 @@
     }
 </div>
 
-<!-- Single Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">@Localizer["Confirm Delete"]</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer["Close"]"></button>
-            </div>
-            <div class="modal-body">
-                @Localizer["Deletion confirmation"] <strong id="deleteUserName"></strong>?
-            </div>
-            <div class="modal-footer">
-                <form method="post" asp-page-handler="Delete" id="deleteForm">
-                    <input type="hidden" name="id" id="deleteUserId" />
-                    <input type="hidden" name="FilterModel.Username" value="@Model.FilterModel?.Username" />
-                    <input type="hidden" name="FilterModel.Email" value="@Model.FilterModel?.Email" />
-                    <input type="hidden" name="FilterModel.Phone" value="@Model.FilterModel?.Phone" />
-                    <input type="hidden" name="pageNumber" value="@Model.CurrentPage" />
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
-                    <button type="submit" class="btn btn-danger">@Localizer["Delete"]</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-<script>
-    var deleteModal = document.getElementById('deleteModal');
-    deleteModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var userId = button.getAttribute('data-user-id');
-        var userName = button.getAttribute('data-user-name');
-        document.getElementById('deleteUserId').value = userId;
-        document.getElementById('deleteUserName').textContent = userName;
-    });
-</script>
-}
+@await Html.PartialAsync("~/Pages/Shared/_DeleteModal.cshtml", new Beagl.WebApp.Pages.Shared.DeleteModalModel {
+    PageNumber = Model.CurrentPage,
+    FilterModel = Model.FilterModel,
+    BodyHtml = Localizer["Deletion confirmation"].Value + " <strong id=\"deleteDescription\"></strong>?"
+})
