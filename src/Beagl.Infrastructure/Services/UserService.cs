@@ -2,6 +2,7 @@
 
 using Beagl.Domain.Exceptions.Entities;
 using Beagl.Domain.Exceptions.Users;
+using Beagl.Domain.Extensions;
 using Beagl.Domain.Models;
 using Beagl.Domain.Services;
 using Beagl.Infrastructure.Entities;
@@ -17,7 +18,7 @@ namespace Beagl.Infrastructure.Services;
 /// </summary>
 public class UserService(
     UserManager<ApplicationUser> userManager
-) : IUserService //TODO: inherit from a paged service base class
+) : IUserService, IPagedService<UserDto, UserPagedFilterDto>
 {
     /// <summary>
     /// Creates a new user with the specified details, password, and role.
@@ -27,13 +28,6 @@ public class UserService(
     /// <param name="role">The role to assign to the new user.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public Task CreateAsync(UserDto user, string password, string role) => throw new NotImplementedException();
-
-    /// <summary>
-    /// Deactivates the user with the specified identifier.
-    /// </summary>
-    /// <param name="id">The unique identifier of the user to deactivate.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public Task DeactivateAsync(string id) => throw new NotImplementedException(); //TODO: not required should be removed
 
     /// <summary>
     /// Deletes the user with the specified identifier.
@@ -57,12 +51,6 @@ public class UserService(
     }
 
     /// <summary>
-    /// Retrieves all users in the system.
-    /// </summary>
-    /// <returns>A task that returns an enumerable collection of user data transfer objects.</returns>
-    public Task<IEnumerable<UserDto>> GetAllAsync() => throw new NotImplementedException(); //TODO: not required should be removed
-
-    /// <summary>
     /// Retrieves a user by their unique identifier.
     /// </summary>
     /// <param name="id">The unique identifier of the user.</param>
@@ -76,21 +64,17 @@ public class UserService(
         ArgumentNullException.ThrowIfNull(filter);
 
         IQueryable<ApplicationUser> query = userManager.Users;
-        ApplyFiltersToQuery(filter, ref query);
-        ApplyOrderingByUsernameToQuery(ref query);
+        query = ApplyFiltersToQuery(query, filter);
+        query = ApplyOrderingByUsernameToQuery(query);
         int totalCount = await GetUserCountAsync(query);
-        ApplyPagingToQuery(filter, ref query);
-        List<ApplicationUser> users = await query.ToListAsync();
 
-        List<UserDto> userDtos = [];
-        foreach (ApplicationUser user in users)
-        {
-            IList<string> roles = await userManager.GetRolesAsync(user);
-            UserDto dto = UserMapper.ToDto(user, roles);
-            userDtos.Add(dto);
-        }
+        List<ApplicationUser> users = await query
+            .Paginate(filter.PageNumber, filter.PageSize)
+            .ToListAsync();
 
-        return (userDtos, totalCount);
+        List<UserDto> userWithRolesDtos = await GetAndMapRolesToUsers(users);
+
+        return (userWithRolesDtos, totalCount);
     }
 
     /// <summary>
@@ -121,59 +105,74 @@ public class UserService(
     public virtual async Task<int> GetUserCountAsync(IQueryable<ApplicationUser> query)
         => await query.CountAsync();
 
-    private static void ApplyPagingToQuery(
-        PagedRequestDto filter,
-        ref IQueryable<ApplicationUser> query)
+    private async Task<List<UserDto>> GetAndMapRolesToUsers(
+        IList<ApplicationUser> users)
     {
-        int skip = (filter.PageNumber - 1) * filter.PageSize;
-        query = query.Skip(skip).Take(filter.PageSize);
-    }
+        List<UserDto> userDtos = [];
 
-    private static void ApplyOrderingByUsernameToQuery(
-        ref IQueryable<ApplicationUser> query)
-    {
-        query = query.OrderBy(u => u.UserName);
-    }
-
-    private static void ApplyFiltersToQuery(
-        UserPagedFilterDto filter,
-        ref IQueryable<ApplicationUser> query)
-    {
-        if (filter != null) //FIXME: should return an exception instead of a null check
+        foreach (ApplicationUser user in users)
         {
-            ApplyUserNameFilterToQuery(filter.Username, ref query);
-            ApplyEmailFilterToQuery(filter.Email, ref query);
-            ApplyPhoneFilterToQuery(filter.Phone, ref query);
+            IList<string> roles = await userManager.GetRolesAsync(user);
+            UserDto dto = UserMapper.ToDto(user, roles);
+            userDtos.Add(dto);
         }
+
+        return userDtos;
     }
 
-    private static void ApplyPhoneFilterToQuery(
-        string? phone,
-        ref IQueryable<ApplicationUser> query)
+    private static IQueryable<ApplicationUser> ApplyOrderingByUsernameToQuery(
+        IQueryable<ApplicationUser> query)
+    {
+        return query.OrderBy(u => u.UserName);
+    }
+
+    private static IQueryable<ApplicationUser> ApplyFiltersToQuery(
+        IQueryable<ApplicationUser> query,
+        UserPagedFilterDto filter)
+    {
+        ArgumentNullException.ThrowIfNull(query);
+        ArgumentNullException.ThrowIfNull(filter);
+
+        query = ApplyUserNameFilterToQuery(query, filter.Username);
+        query = ApplyEmailFilterToQuery(query, filter.Email);
+        query = ApplyPhoneFilterToQuery(query, filter.Phone);
+
+        return query;
+    }
+
+    private static IQueryable<ApplicationUser> ApplyPhoneFilterToQuery(
+        IQueryable<ApplicationUser> query,
+        string? phone)
     {
         if (!string.IsNullOrWhiteSpace(phone))
         {
             query = query.Where(u => u.PhoneNumber!.Contains(phone));
         }
+
+        return query;
     }
 
-    private static void ApplyEmailFilterToQuery(
-        string? email,
-        ref IQueryable<ApplicationUser> query)
+    private static IQueryable<ApplicationUser> ApplyEmailFilterToQuery(
+        IQueryable<ApplicationUser> query,
+        string? email)
     {
         if (!string.IsNullOrWhiteSpace(email))
         {
             query = query.Where(u => u.Email!.Contains(email));
         }
+
+        return query;
     }
 
-    private static void ApplyUserNameFilterToQuery(
-        string? username,
-        ref IQueryable<ApplicationUser> query)
+    private static IQueryable<ApplicationUser> ApplyUserNameFilterToQuery(
+        IQueryable<ApplicationUser> query,
+        string? username)
     {
         if (!string.IsNullOrWhiteSpace(username))
         {
             query = query.Where(u => u.UserName!.Contains(username));
         }
+
+        return query;
     }
 }

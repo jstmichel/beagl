@@ -1,6 +1,5 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Beagl.Domain.Models;
 
@@ -11,12 +10,6 @@ namespace Beagl.Domain.Services;
 /// </summary>
 public interface IUserService : IPagedService<UserDto, UserPagedFilterDto>
 {
-    /// <summary>
-    /// Gets all users in the system.
-    /// </summary>
-    /// <returns>A collection of users.</returns>
-    public Task<IEnumerable<UserDto>> GetAllAsync();
-
     /// <summary>
     /// Gets a user by their unique identifier.
     /// </summary>
@@ -39,13 +32,6 @@ public interface IUserService : IPagedService<UserDto, UserPagedFilterDto>
     /// <param name="user">The user to update.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public Task UpdateAsync(UserDto user);
-
-    /// <summary>
-    /// Deactivates a user account.
-    /// </summary>
-    /// <param name="id">The user's unique identifier.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public Task DeactivateAsync(string id);
 
     /// <summary>
     /// Deletes a user account.
