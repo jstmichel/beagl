@@ -1,3 +1,6 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
+using System.Collections.ObjectModel;
 using Beagl.Domain.Models;
 using Beagl.Infrastructure.Entities;
 
@@ -12,15 +15,12 @@ public static class UserMapper
     /// Maps an ApplicationUser entity to a UserDto.
     /// </summary>
     /// <param name="user">The ApplicationUser entity to map.</param>
+    /// <param name="roles">The roles assigned to the user.</param>
     /// <returns>A UserDto representing the user.</returns>
-    public static UserDto ToDto(ApplicationUser user)
+    public static UserDto ToDto(ApplicationUser user, IList<string> roles)
     {
-        if (user == null)
-        {
-            throw new ArgumentNullException(
-                nameof(user),
-                "user cannot be null");
-        }
+        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(roles);
 
         return new UserDto
         {
@@ -29,6 +29,7 @@ public static class UserMapper
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             IsDeleted = user.IsDeleted,
+            Roles = new Collection<string>(roles)
         };
     }
 
@@ -39,12 +40,7 @@ public static class UserMapper
     /// <returns>An ApplicationUser entity representing the DTO.</returns>
     public static ApplicationUser ToEntity(UserDto dto)
     {
-        if (dto == null)
-        {
-            throw new ArgumentNullException(
-                nameof(dto),
-                "dto cannot be null");
-        }
+        ArgumentNullException.ThrowIfNull(dto);
 
         return new ApplicationUser
         {

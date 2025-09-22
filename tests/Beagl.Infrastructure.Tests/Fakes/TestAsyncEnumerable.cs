@@ -1,3 +1,5 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
 

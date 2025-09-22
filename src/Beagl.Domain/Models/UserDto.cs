@@ -44,5 +44,5 @@ public class UserDto
     /// <summary>
     /// Gets the roles assigned to the user.
     /// </summary>
-    public ReadOnlyCollection<string> Roles { get; init; } = new ReadOnlyCollection<string>([]);
+    public Collection<string> Roles { get; init; } = [];
 }

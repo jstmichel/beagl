@@ -1,3 +1,5 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using Beagl.Domain.Exceptions.Entities;
 using Beagl.Domain.Exceptions.Users;
 using Beagl.Domain.Models;
