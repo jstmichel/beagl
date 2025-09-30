@@ -2,6 +2,7 @@
 
 using System.Collections.ObjectModel;
 using Beagl.Domain.Models;
+using Beagl.Domain.Models.DTOs;
 using Beagl.Infrastructure.Entities;
 
 namespace Beagl.Infrastructure.Mappers;
@@ -17,7 +18,7 @@ public static class UserMapper
     /// <param name="user">The ApplicationUser entity to map.</param>
     /// <param name="roles">The roles assigned to the user.</param>
     /// <returns>A UserDto representing the user.</returns>
-    public static UserDto ToDto(ApplicationUser user, IList<string> roles)
+    public static UserDto ToDto(ApplicationUser user, IList<RoleDto> roles)
     {
         ArgumentNullException.ThrowIfNull(user);
         ArgumentNullException.ThrowIfNull(roles);
@@ -29,7 +30,7 @@ public static class UserMapper
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             IsDeleted = user.IsDeleted,
-            Roles = new Collection<string>(roles)
+            Roles = new Collection<RoleDto>(roles)
         };
     }
 

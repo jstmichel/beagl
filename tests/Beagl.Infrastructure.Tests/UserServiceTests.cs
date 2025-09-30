@@ -5,7 +5,7 @@ using Beagl.Domain.Exceptions.Users;
 using Beagl.Domain.Models;
 using Beagl.Infrastructure.Entities;
 using Beagl.Infrastructure.Mappers;
-using Beagl.Infrastructure.Services;
+using Beagl.Infrastructure.Services.Implementations;
 using Beagl.Infrastructure.Tests.Fakes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

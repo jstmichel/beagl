@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using Beagl.Domain.Models.DTOs;
 
 namespace Beagl.Domain.Models;
 
@@ -44,5 +45,5 @@ public class UserDto
     /// <summary>
     /// Gets the roles assigned to the user.
     /// </summary>
-    public Collection<string> Roles { get; init; } = [];
+    public Collection<RoleDto> Roles { get; init; } = [];
 }

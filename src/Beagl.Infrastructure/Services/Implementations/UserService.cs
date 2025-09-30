@@ -4,13 +4,14 @@ using Beagl.Domain.Exceptions.Entities;
 using Beagl.Domain.Exceptions.Users;
 using Beagl.Domain.Extensions;
 using Beagl.Domain.Models;
+using Beagl.Domain.Models.DTOs;
 using Beagl.Domain.Services;
 using Beagl.Infrastructure.Entities;
 using Beagl.Infrastructure.Mappers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Beagl.Infrastructure.Services;
+namespace Beagl.Infrastructure.Services.Implementations;
 
 /// <summary>
 /// Provides user management operations such as creation, deletion, retrieval, and updates.
@@ -55,7 +56,13 @@ public class UserService(
     /// </summary>
     /// <param name="id">The unique identifier of the user.</param>
     /// <returns>A task that returns the user data transfer object if found; otherwise, null.</returns>
-    public Task<UserDto?> GetByIdAsync(string id) => throw new NotImplementedException();
+    public async Task<UserDto?> GetByIdAsync(string id)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(id);
+        ApplicationUser? user = await userManager.FindByIdAsync(id)
+            ?? throw new EntityNotFoundException("User not found.");
+        return await GetAndMapRolesToUser(user);
+    }
 
     /// <inheritdoc/>
     public async Task<(IList<UserDto> Items, int TotalCount)> GetPagedAsync(
@@ -112,12 +119,23 @@ public class UserService(
 
         foreach (ApplicationUser user in users)
         {
-            IList<string> roles = await userManager.GetRolesAsync(user);
-            UserDto dto = UserMapper.ToDto(user, roles);
+            UserDto dto = await GetAndMapRolesToUser(user);
             userDtos.Add(dto);
         }
 
         return userDtos;
+    }
+
+    private async Task<UserDto> GetAndMapRolesToUser(
+        ApplicationUser user)
+    {
+        //TODO: Extract the two below lines to RoleService or
+        // new method in UserService
+        IList<string> roleStrings = await userManager.GetRolesAsync(user);
+        IList<RoleDto> roles = [.. roleStrings.Select(r => new RoleDto { Name = r })];
+
+        UserDto dto = UserMapper.ToDto(user, roles);
+        return dto;
     }
 
     private static IQueryable<ApplicationUser> ApplyOrderingByUsernameToQuery(

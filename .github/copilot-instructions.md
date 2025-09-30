@@ -4,7 +4,7 @@
 Beagl is designed for animal centers as a centralized CRM. It enables employees to manage animal and owner data, and provides a self-service portal for animal owners to register their animals and pay annual fees. The main objective is to unify and centralize data that is currently spread across multiple systems.
 
 ## Project Overview
-Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It is organized into domain, infrastructure, and web application layers, with corresponding test projects.
+Beagl is a .NET solution using ASP.NET Core and Razor pages for web development. It is organized into domain, infrastructure, and web application layers, with corresponding test projects.
 
 ## Technologies
 - .NET 8 (C#, default language version)
@@ -18,7 +18,7 @@ Beagl is a .NET solution using ASP.NET Core and Blazor for web development. It i
 - `beagl.sln`: Solution file
 - `src/Beagl.Domain/`: Domain models and business logic
 - `src/Beagl.Infrastructure/`: Data access, EF Core migrations, database initialization
-- `src/Beagl.WebApp/`: Blazor web application, configuration, resources, components
+- `src/Beagl.WebApp/`: Razor pages web application, configuration, resources, components
 - `tests/`: Unit and integration tests for each layer
 
 ## Main Features & Workflows

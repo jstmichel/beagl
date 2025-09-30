@@ -1,0 +1,44 @@
+@page "/Users/Edit/{id}"
+@model Beagl.WebApp.Pages.Users.EditModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <h2 class="mb-5 text-center fw-bold">Edit User</h2>
+                <form method="post">
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <label asp-for="EditedUser.UserName" class="form-label fs-6">Username</label>
+                            <input asp-for="EditedUser.UserName" class="form-control form-control-lg" readonly />
+                            <span asp-validation-for="EditedUser.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="EditedUser.Email" class="form-label fs-6">Email</label>
+                            <input asp-for="EditedUser.Email" class="form-control form-control-lg" />
+                            <span asp-validation-for="EditedUser.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label fs-6">Roles</label>
+                            <select multiple class="form-select" name="EditedUser.Roles">
+                                @foreach (var role in Model.AvailableRoles)
+                                {
+                                 <option value="@role.Name" selected="@(Model.HasRole(role.Name) ? "selected" : null)">@role.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 justify-content-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">Save</button>
+                        <a asp-page="Index" class="btn btn-outline-secondary btn-lg px-5">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
