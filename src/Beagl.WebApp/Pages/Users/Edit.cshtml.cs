@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Beagl.Domain.Models;
 using Beagl.Domain.Services;
 using Beagl.Infrastructure.Services.Interfaces;
-using Beagl.Infrastructure.Entities;
 using Beagl.Domain.Exceptions.Entities;
 using Beagl.Domain.Models.DTOs;
 using System.Net;
+using Beagl.WebApp.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace Beagl.WebApp.Pages.Users;
 
@@ -29,7 +30,7 @@ internal sealed class EditModel(
     /// Gets or sets the user to edit.
     /// </summary>
     [BindProperty]
-    public UserDto? EditedUser { get; set; }
+    public EditUserViewModel? EditedUser { get; set; }
 
     /// <summary>
     /// List of available roles for dropdown selection.
@@ -45,8 +46,9 @@ internal sealed class EditModel(
     {
         try
         {
+            UserDto user = await userService.GetByIdAsync(id);
             AvailableRoles = GetAvailableRoles();
-            EditedUser = await userService.GetByIdAsync(id);
+            EditedUser = MapToEditUserViewModel(user);
         }
         catch (InvalidOperationException)
         {
@@ -64,15 +66,36 @@ internal sealed class EditModel(
         return Page();
     }
 
-    private List<RoleViewModel> GetAvailableRoles()
+    /// <summary>
+    /// Handles POST requests to update the user details and roles.
+    /// </summary>
+    /// <returns>The page result.</returns>
+    public async Task<IActionResult> OnPostAsync()
     {
-        IList<RoleDto> roles = roleService.GetAllRoles();
-        List<RoleViewModel> items = [.. roles.Select(role => new RoleViewModel
+        if (EditedUser == null)
         {
-            Name = role.Name
-        })];
+            return BadRequest();
+        }
 
-        return items;
+        try
+        {
+            UserDto user = MapToUserDto(EditedUser);
+            await userService.UpdateAsync(user);
+        }
+        catch (ArgumentException)
+        {
+            return BadRequest();
+        }
+        catch (EntityNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (InvalidOperationException)
+        {
+            return StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+
+        return RedirectToPage("Index");
     }
 
     /// <summary>
@@ -94,7 +117,46 @@ internal sealed class EditModel(
             throw new InvalidOperationException("Roles cannot be null.");
         }
 
-        return EditedUser.Roles.Any(r => r.Name == roleName);
+        return EditedUser.Roles.Any(r => r == roleName);
+    }
+
+    private static UserDto MapToUserDto(EditUserViewModel editedUser)
+    {
+        ArgumentNullException.ThrowIfNull(editedUser);
+
+        return new UserDto
+        {
+            Id = editedUser.Id,
+            UserName = editedUser.UserName,
+            Email = editedUser.Email,
+            PhoneNumber = editedUser.PhoneNumber,
+            Roles = new Collection<string>(editedUser.Roles)
+        };
+    }
+
+    private static EditUserViewModel MapToEditUserViewModel(UserDto user)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+
+        return new EditUserViewModel
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            Roles = [.. user.Roles]
+        };
+    }
+
+    private List<RoleViewModel> GetAvailableRoles()
+    {
+        IList<RoleDto> roles = roleService.GetAllRoles();
+        List<RoleViewModel> items = [.. roles.Select(role => new RoleViewModel
+        {
+            Name = role.Name
+        })];
+
+        return items;
     }
 
     /// <summary>

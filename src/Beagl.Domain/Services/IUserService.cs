@@ -14,8 +14,8 @@ public interface IUserService : IPagedService<UserDto, UserPagedFilterDto>
     /// Gets a user by their unique identifier.
     /// </summary>
     /// <param name="id">The user's unique identifier.</param>
-    /// <returns>The user, or null if not found.</returns>
-    public Task<UserDto?> GetByIdAsync(string id);
+    /// <returns>The user.</returns>
+    public Task<UserDto> GetByIdAsync(string id);
 
     /// <summary>
     /// Creates a new user with the specified password and role.

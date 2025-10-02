@@ -1,10 +1,10 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System.Collections.ObjectModel;
 using Beagl.Domain.Exceptions.Entities;
 using Beagl.Domain.Exceptions.Users;
 using Beagl.Domain.Extensions;
 using Beagl.Domain.Models;
-using Beagl.Domain.Models.DTOs;
 using Beagl.Domain.Services;
 using Beagl.Infrastructure.Entities;
 using Beagl.Infrastructure.Mappers;
@@ -56,11 +56,10 @@ public class UserService(
     /// </summary>
     /// <param name="id">The unique identifier of the user.</param>
     /// <returns>A task that returns the user data transfer object if found; otherwise, null.</returns>
-    public async Task<UserDto?> GetByIdAsync(string id)
+    public async Task<UserDto> GetByIdAsync(string id)
     {
         ArgumentException.ThrowIfNullOrEmpty(id);
-        ApplicationUser? user = await userManager.FindByIdAsync(id)
-            ?? throw new EntityNotFoundException("User not found.");
+        ApplicationUser user = await FindUserByIdAsync(id);
         return await GetAndMapRolesToUser(user);
     }
 
@@ -96,7 +95,45 @@ public class UserService(
     /// </summary>
     /// <param name="user">The user data transfer object containing updated user details.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task UpdateAsync(UserDto user) => throw new NotImplementedException();
+    public async Task UpdateAsync(UserDto user)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        ApplicationUser userEntity = await FindUserByIdAsync(user.Id);
+        await UpdatePhoneNumberAsync(user.PhoneNumber, userEntity);
+        await UpdateEmailAsync(user.Email, userEntity);
+        await UpdateRolesAsync(user.Roles, userEntity);
+    }
+
+    private async Task UpdateRolesAsync(Collection<string> roles, ApplicationUser userEntity)
+    {
+        await RemoveAllRolesAsync(userEntity);
+        await SetRolesAsync(roles, userEntity);
+    }
+
+    private async Task RemoveAllRolesAsync(ApplicationUser userEntity)
+    {
+        IList<string> currentRoles = await userManager.GetRolesAsync(userEntity);
+        IdentityResult result = await userManager.RemoveFromRolesAsync(userEntity, currentRoles);
+        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+    }
+
+    private async Task SetRolesAsync(Collection<string> roles, ApplicationUser userEntity)
+    {
+        IdentityResult result = await userManager.AddToRolesAsync(userEntity, roles);
+        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+    }
+
+    private async Task UpdateEmailAsync(string? email, ApplicationUser userEntity)
+    {
+        IdentityResult emailResult = await userManager.SetEmailAsync(userEntity, email ?? string.Empty);
+        IdentityUpdateFailedException.ThrowIfNotSucceeded(emailResult);
+    }
+
+    private async Task UpdatePhoneNumberAsync(string? phoneNumber, ApplicationUser userEntity)
+    {
+        IdentityResult phoneResult = await userManager.SetPhoneNumberAsync(userEntity, phoneNumber);
+        IdentityUpdateFailedException.ThrowIfNotSucceeded(phoneResult);
+    }
 
     /// <summary>
     /// Gets the total number of users in the system.
@@ -129,11 +166,7 @@ public class UserService(
     private async Task<UserDto> GetAndMapRolesToUser(
         ApplicationUser user)
     {
-        //TODO: Extract the two below lines to RoleService or
-        // new method in UserService
-        IList<string> roleStrings = await userManager.GetRolesAsync(user);
-        IList<RoleDto> roles = [.. roleStrings.Select(r => new RoleDto { Name = r })];
-
+        IList<string> roles = await userManager.GetRolesAsync(user);
         UserDto dto = UserMapper.ToDto(user, roles);
         return dto;
     }
@@ -192,5 +225,13 @@ public class UserService(
         }
 
         return query;
+    }
+
+    private async Task<ApplicationUser> FindUserByIdAsync(string id)
+    {
+        ApplicationUser? user = await userManager.FindByIdAsync(id)
+            ?? throw new EntityNotFoundException("User not found.");
+
+        return user;
     }
 }

@@ -13,6 +13,7 @@
                 <h2 class="mb-5 text-center fw-bold">Edit User</h2>
                 <form method="post">
                     <div class="row g-4">
+                        <input type="hidden" asp-for="EditedUser.Id" />
                         <div class="col-12 col-md-6">
                             <label asp-for="EditedUser.UserName" class="form-label fs-6">Username</label>
                             <input asp-for="EditedUser.UserName" class="form-control form-control-lg" readonly />
@@ -22,6 +23,11 @@
                             <label asp-for="EditedUser.Email" class="form-label fs-6">Email</label>
                             <input asp-for="EditedUser.Email" class="form-control form-control-lg" />
                             <span asp-validation-for="EditedUser.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="EditedUser.PhoneNumber" class="form-label fs-6">Phone Number</label>
+                            <input asp-for="EditedUser.PhoneNumber" class="form-control form-control-lg" />
+                            <span asp-validation-for="EditedUser.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label fs-6">Roles</label>
