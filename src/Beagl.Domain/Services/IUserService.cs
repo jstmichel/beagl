@@ -1,5 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System.Collections.Generic;
+using System.Security;
 using System.Threading.Tasks;
 using Beagl.Domain.Models;
 
@@ -22,9 +24,8 @@ public interface IUserService : IPagedService<UserDto, UserPagedFilterDto>
     /// </summary>
     /// <param name="user">The user to create.</param>
     /// <param name="password">The user's password.</param>
-    /// <param name="role">The role to assign.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task CreateAsync(UserDto user, string password, string role);
+    public Task CreateAsync(UserDto user, string password);
 
     /// <summary>
     /// Updates an existing user.

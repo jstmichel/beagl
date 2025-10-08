@@ -45,11 +45,10 @@ public static class UserMapper
 
         return new ApplicationUser
         {
-            Id = dto.Id,
             UserName = dto.UserName,
             Email = dto.Email,
             PhoneNumber = dto.PhoneNumber,
-            IsDeleted = dto.IsDeleted
+            IsDeleted = dto.IsDeleted,
         };
     }
 }

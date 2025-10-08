@@ -26,9 +26,53 @@ public class UserService(
     /// </summary>
     /// <param name="user">The user data transfer object containing user details.</param>
     /// <param name="password">The password for the new user.</param>
-    /// <param name="role">The role to assign to the new user.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task CreateAsync(UserDto user, string password, string role) => throw new NotImplementedException();
+    public async Task CreateAsync(UserDto user, string password)
+    {
+        ValidateUserForCreation(user, password);
+        await ValidateUsernameNotExistsAsync(user.UserName);
+        await ValidateEmailNotExistsAsync(user.Email);
+        await CreateUserAndSetRolesAsync(user, password);
+    }
+
+    private async Task ValidateUsernameNotExistsAsync(string? username)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(username);
+        ApplicationUser? existingUser = await userManager.FindByNameAsync(username);
+        if (existingUser != null)
+        {
+            throw new ArgumentException("Username already exists.");
+        }
+    }
+
+    private async Task ValidateEmailNotExistsAsync(string? email)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(email);
+        ApplicationUser? existingUser = await userManager.FindByEmailAsync(email);
+        if (existingUser != null)
+        {
+            throw new ArgumentException("Email already exists.");
+        }
+    }
+
+    private static void ValidateUserForCreation(UserDto user, string password)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(password);
+        ArgumentNullException.ThrowIfNull(user.Roles);
+        if (user.Roles.Count == 0)
+        {
+            throw new ArgumentException("At least one role must be specified.");
+        }
+    }
+
+    private async Task CreateUserAndSetRolesAsync(UserDto user, string password)
+    {
+        ApplicationUser newUser = UserMapper.ToEntity(user);
+        IdentityResult result = await userManager.CreateAsync(newUser, password);
+        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        await SetRolesAsync(user.Roles, newUser);
+    }
 
     /// <summary>
     /// Deletes the user with the specified identifier.
@@ -46,9 +90,7 @@ public class UserService(
             throw new LastUserDeleteException("Cannot delete the last user.");
 
         IdentityResult result = await userManager.DeleteAsync(user);
-        if (!result.Succeeded)
-            throw new EntityDeleteFailedException(
-                "Failed to delete user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
     }
 
     /// <summary>
@@ -98,6 +140,7 @@ public class UserService(
     public async Task UpdateAsync(UserDto user)
     {
         ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(user.Id);
         ApplicationUser userEntity = await FindUserByIdAsync(user.Id);
         await UpdatePhoneNumberAsync(user.PhoneNumber, userEntity);
         await UpdateEmailAsync(user.Email, userEntity);

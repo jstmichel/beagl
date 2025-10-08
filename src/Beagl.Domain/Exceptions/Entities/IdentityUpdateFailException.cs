@@ -1,3 +1,5 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;

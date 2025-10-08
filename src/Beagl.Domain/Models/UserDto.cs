@@ -13,7 +13,7 @@ public class UserDto
     /// <summary>
     /// Gets or sets the unique identifier for the user.
     /// </summary>
-    public required string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Gets or sets the username.

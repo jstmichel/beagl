@@ -137,6 +137,7 @@ internal sealed class EditModel(
     private static EditUserViewModel MapToEditUserViewModel(UserDto user)
     {
         ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(user.Id);
 
         return new EditUserViewModel
         {
@@ -157,13 +158,5 @@ internal sealed class EditModel(
         })];
 
         return items;
-    }
-
-    /// <summary>
-    /// Helper class for role dropdown items.
-    /// </summary>
-    internal sealed class RoleViewModel
-    {
-        public string Name { get; set; } = string.Empty;
     }
 }
