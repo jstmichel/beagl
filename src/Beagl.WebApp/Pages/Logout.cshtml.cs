@@ -1,3 +1,5 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using Beagl.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

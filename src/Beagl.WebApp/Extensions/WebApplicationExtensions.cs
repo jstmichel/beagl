@@ -7,7 +7,9 @@ namespace Beagl.WebApp.Extensions;
 /// <summary>
 /// Provides extension methods for the <see cref="WebApplication"/> class to support application startup tasks.
 /// </summary>
+#pragma warning disable CA1515 // Consider making public types internal
 public static class WebApplicationExtensions
+#pragma warning restore CA1515 // Consider making public types internal
 {
     /// <summary>
     /// Applies any pending database migrations and seeds initial data using the provided configuration.

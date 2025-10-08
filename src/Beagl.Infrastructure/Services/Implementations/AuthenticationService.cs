@@ -5,7 +5,7 @@ using Beagl.Domain.Services;
 using Beagl.Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Beagl.Infrastructure.Services;
+namespace Beagl.Infrastructure.Services.Implementations;
 
 /// <summary>
 /// Provides authentication operations using ASP.NET Core Identity.

@@ -2,7 +2,7 @@
 
 using Beagl.Domain.Models.Results;
 using Beagl.Infrastructure.Entities;
-using Beagl.Infrastructure.Services;
+using Beagl.Infrastructure.Services.Implementations;
 using Beagl.Infrastructure.Tests.Fakes;
 using Microsoft.AspNetCore.Identity;
 using Moq;

@@ -1,0 +1,49 @@
+@model Beagl.WebApp.Pages.Shared.DeleteModalModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+<!-- Reusable Delete Confirmation Modal -->
+<div class="modal fade" id="@Model.ModalId" tabindex="-1" aria-labelledby="@Model.ModalLabelId" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="@Model.ModalLabelId">@Localizer[Model.Title]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@Localizer[Model.CloseLabel]"></button>
+            </div>
+            <div class="modal-body">
+                @Html.Raw(Model.BodyHtml)
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-page-handler="@Model.Handler" id="@Model.FormId">
+                    <input type="hidden" name="id" id="@Model.EntityIdInputId" value="@Model.EntityId" />
+                    @if (Model.FilterModel != null)
+                    {
+                        foreach (var prop in Model.FilterModel.GetType().GetProperties())
+                        {
+                            var value = prop.GetValue(Model.FilterModel);
+                            <input type="hidden" name="FilterModel.@prop.Name" value="@value" />
+                        }
+                    }
+                    <input type="hidden" name="pageNumber" value="@Model.PageNumber" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer[Model.CancelLabel]</button>
+                    <button type="submit" class="btn btn-danger">@Localizer[Model.ConfirmLabel]</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteModal = document.getElementById('deleteModal');
+        if (!deleteModal) return;
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var entityId = button.getAttribute('data-entity-id');
+            var description = button.getAttribute('data-entity-description');
+            var idInput = document.getElementById('deleteEntityId');
+            var descSpan = document.getElementById('deleteDescription');
+            if (idInput) idInput.value = entityId;
+            if (descSpan) descSpan.textContent = description;
+        });
+    });
+</script>
