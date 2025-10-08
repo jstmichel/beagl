@@ -45,4 +45,24 @@ public class UserDto
     /// Gets the roles assigned to the user.
     /// </summary>
     public Collection<string> Roles { get; init; } = [];
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the user can be locked out.
+    /// </summary>
+    public bool LockoutEnabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether two-factor authentication is enabled for the user.
+    /// </summary>
+    public bool TwoFactorEnabled { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the user's email is confirmed.
+    /// </summary>
+    public bool EmailConfirmed { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the user's phone number is confirmed.
+    /// </summary>
+    public bool PhoneNumberConfirmed { get; set; }
 }

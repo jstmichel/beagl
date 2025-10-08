@@ -2,7 +2,6 @@
 
 using System.Collections.ObjectModel;
 using Beagl.Domain.Models;
-using Beagl.Domain.Models.DTOs;
 using Beagl.Infrastructure.Entities;
 
 namespace Beagl.Infrastructure.Mappers;
@@ -30,7 +29,12 @@ public static class UserMapper
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             IsDeleted = user.IsDeleted,
-            Roles = new Collection<string>(roles)
+            Roles = new Collection<string>(roles),
+            LockoutEnd = user.LockoutEnd,
+            LockoutEnabled = user.LockoutEnabled,
+            TwoFactorEnabled = user.TwoFactorEnabled,
+            EmailConfirmed = user.EmailConfirmed,
+            PhoneNumberConfirmed = user.PhoneNumberConfirmed,
         };
     }
 
@@ -49,6 +53,11 @@ public static class UserMapper
             Email = dto.Email,
             PhoneNumber = dto.PhoneNumber,
             IsDeleted = dto.IsDeleted,
+            LockoutEnd = dto.LockoutEnd,
+            LockoutEnabled = dto.LockoutEnabled,
+            TwoFactorEnabled = dto.TwoFactorEnabled,
+            EmailConfirmed = dto.EmailConfirmed,
+            PhoneNumberConfirmed = dto.PhoneNumberConfirmed,
         };
     }
 }
