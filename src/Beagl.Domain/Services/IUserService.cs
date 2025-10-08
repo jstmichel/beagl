@@ -1,7 +1,5 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System.Collections.Generic;
-using System.Security;
 using System.Threading.Tasks;
 using Beagl.Domain.Models;
 
@@ -10,15 +8,8 @@ namespace Beagl.Domain.Services;
 /// <summary>
 /// Defines CRUD operations for application users.
 /// </summary>
-public interface IUserService : IPagedService<UserDto, UserPagedFilterDto>
+public interface IUserService
 {
-    /// <summary>
-    /// Gets a user by their unique identifier.
-    /// </summary>
-    /// <param name="id">The user's unique identifier.</param>
-    /// <returns>The user.</returns>
-    public Task<UserDto> GetByIdAsync(string id);
-
     /// <summary>
     /// Creates a new user with the specified password and role.
     /// </summary>

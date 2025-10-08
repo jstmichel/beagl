@@ -20,9 +20,11 @@ namespace Beagl.WebApp.Pages.Users;
 /// Initializes a new instance of the <see cref="EditModel"/> class.
 /// </remarks>
 /// <param name="userService">The user service.</param>
+/// <param name="userQueryService">The user query service.</param>
 /// <param name="roleService">The role service.</param>
 internal sealed class EditModel(
     IUserService userService,
+    IUserQueryService userQueryService,
     IRoleService roleService) : PageModel
 {
 
@@ -46,7 +48,7 @@ internal sealed class EditModel(
     {
         try
         {
-            UserDto user = await userService.GetByIdAsync(id);
+            UserDto user = await userQueryService.GetByIdAsync(id);
             AvailableRoles = GetAvailableRoles();
             EditedUser = MapToEditUserViewModel(user);
         }

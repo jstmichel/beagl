@@ -4,6 +4,7 @@ using Beagl.Domain.Exceptions.Entities;
 using Beagl.Domain.Exceptions.Users;
 using Beagl.Domain.Models;
 using Beagl.Domain.Services;
+using Beagl.Infrastructure.Services.Interfaces;
 using Beagl.WebApp.Pages.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -14,8 +15,9 @@ namespace Beagl.WebApp.Pages.Users;
 /// Page model for the Users index page.
 /// </summary>
 internal sealed class IndexModel(
-    IUserService userService, IStringLocalizer<IndexModel> localizer) :
-    PaginatedPageModel<UserDto, IndexModel.UserFilterModel>
+    IUserService userService,
+    IUserQueryService userQueryService,
+    IStringLocalizer<IndexModel> localizer) : PaginatedPageModel<UserDto, IndexModel.UserFilterModel>
 {
     /// <summary>
     /// Model for filtering users in the user management view.
@@ -57,7 +59,7 @@ internal sealed class IndexModel(
     protected override async Task LoadPageAsync(int pageNumber = 1)
     {
         UserPagedFilterDto userPagedFilterDto = CreatePagedFilterDto(pageNumber);
-        (DataModel, TotalItems) = await userService.GetPagedAsync(userPagedFilterDto);
+        (DataModel, TotalItems) = await userQueryService.GetPagedAsync(userPagedFilterDto);
         SetPagination(pageNumber);
     }
 
