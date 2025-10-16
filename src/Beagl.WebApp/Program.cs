@@ -1,10 +1,11 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Beagl.WebApp.Extensions;
+using Beagl.Infrastructure.Core.Extensions;
 using Beagl.Infrastructure.UserManagement.Entities;
+using Beagl.WebApp.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

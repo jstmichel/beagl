@@ -1,8 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Domain.AnimalManagement;
 using Beagl.Domain.Core.Interfaces;
-using Beagl.Infrastructure.AnimalManagement.DTOs;
 
 namespace Beagl.Infrastructure.AnimalManagement.Mappers;
 

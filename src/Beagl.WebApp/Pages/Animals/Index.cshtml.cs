@@ -1,9 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Infrastructure.AnimalManagement.DTOs;
-using Beagl.WebApp.AnimalManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 using Beagl.WebApp.Pages.Shared.Models;
+using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.AnimalManagement.Services;
 
 namespace Beagl.WebApp.Pages.Animals;
 

@@ -3,11 +3,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
-using Beagl.WebApp.ViewModels;
 using System.Collections.ObjectModel;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
-using Beagl.Infrastructure.UserManagement.DTOs;
+using Beagl.Application.UserManagement.DTOs;
+using Beagl.Application.UserManagement.ViewModels;
 
 namespace Beagl.WebApp.Pages.Users;
 

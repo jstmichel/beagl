@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-namespace Beagl.Infrastructure.UserManagement.DTOs;
+namespace Beagl.Application.UserManagement.DTOs;
 
 /// <summary>
 /// Represents the result of an authentication attempt.

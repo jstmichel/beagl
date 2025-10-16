@@ -1,8 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System;
 using Beagl.Domain.Core.DTOs;
 
-namespace Beagl.Infrastructure.AnimalManagement.DTOs;
+namespace Beagl.Application.AnimalManagement.DTOs;
 
 /// <summary>
 /// Data transfer object for a medal assignment record.

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Beagl.Domain.AnimalManagement;
 using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Entities;
+using Beagl.Infrastructure.AnimalManagement.Models;
 
 namespace Beagl.Infrastructure;
 
@@ -19,17 +20,17 @@ public class ApplicationDbContext(
     /// <summary>
     /// Gets or sets the Animals table.
     /// </summary>
-    public DbSet<Animal> Animals { get; set; } = null!;
+    public DbSet<AnimalEntity> Animals { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the HealthRecords table.
     /// </summary>
-    public DbSet<HealthRecord> HealthRecords { get; set; } = null!;
+    public DbSet<HealthRecordEntity> HealthRecords { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the MedalRecords table.
     /// </summary>
-    public DbSet<MedalRecord> MedalRecords { get; set; } = null!;
+    public DbSet<MedalRecordEntity> MedalRecords { get; set; } = null!;
 
     /// <summary>
     /// Configures the model for Animal, HealthRecord, and complex types.
@@ -40,7 +41,7 @@ public class ApplicationDbContext(
         ArgumentNullException.ThrowIfNull(builder);
         base.OnModelCreating(builder);
 
-        builder.Entity<MedalRecord>(entity =>
+        builder.Entity<MedalRecordEntity>(entity =>
         {
             entity.Property(m => m.MedalNumber).IsRequired();
             entity.Property(m => m.AssignedDate).IsRequired();
@@ -58,7 +59,7 @@ public class ApplicationDbContext(
         });
 
         // Configure all value objects as owned types for Animal
-        builder.Entity<Animal>(entity =>
+        builder.Entity<AnimalEntity>(entity =>
         {
             entity.OwnsOne(a => a.OriginCityInfo, oci =>
             {
@@ -100,7 +101,7 @@ public class ApplicationDbContext(
             });
         });
 
-        builder.Entity<HealthRecord>(entity =>
+        builder.Entity<HealthRecordEntity>(entity =>
         {
             entity.OwnsOne(hr => hr.Weight, w =>
             {

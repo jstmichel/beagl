@@ -1,8 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System;
 using System.Collections.ObjectModel;
 
-namespace Beagl.Infrastructure.UserManagement.DTOs;
+namespace Beagl.Application.UserManagement.DTOs;
 
 /// <summary>
 /// Data transfer object for user data in the domain layer.

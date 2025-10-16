@@ -1,14 +1,16 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System;
+using System.Threading.Tasks;
+using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Domain.Core.Interfaces;
-using Beagl.Infrastructure.AnimalManagement.DTOs;
 
-namespace Beagl.WebApp.AnimalManagement.Services;
+namespace Beagl.Application.AnimalManagement.Services;
 
 /// <summary>
 /// Service layer for managing Animal aggregates.
 /// </summary>
-internal interface IAnimalService : IPagedService<AnimalDto, AnimalPagedFilterDto>
+public interface IAnimalService : IPagedService<AnimalDto, AnimalPagedFilterDto>
 {
     /// <summary>
     /// Creates a new animal.

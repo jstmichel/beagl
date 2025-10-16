@@ -1,10 +1,14 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Beagl.WebApp.ViewModels;
+namespace Beagl.Application.UserManagement.ViewModels;
 
-internal sealed class CreateUserViewModel
+/// <summary>
+/// View model for creating a new user.
+/// </summary>
+public sealed class CreateUserViewModel
 {
 
     /// <summary>
@@ -29,7 +33,7 @@ internal sealed class CreateUserViewModel
     /// <summary>
     /// Gets or sets the roles assigned to the user.
     /// </summary>
-    public List<string> Roles { get; set; } = [];
+    public Collection<string> Roles { get; } = [];
 
     /// <summary>
     /// Gets or sets the password for the new user.

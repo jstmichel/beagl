@@ -3,7 +3,7 @@
 using Beagl.Domain.Core.DTOs;
 using Beagl.Domain.Core.Interfaces;
 
-namespace Beagl.Infrastructure.AnimalManagement.DTOs;
+namespace Beagl.Application.AnimalManagement.DTOs;
 
 /// <summary>
 /// DTO for animal paging and filtering parameters.

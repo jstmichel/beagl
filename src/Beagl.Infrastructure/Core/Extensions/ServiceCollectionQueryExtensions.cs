@@ -2,13 +2,14 @@
 
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Beagl.WebApp.Extensions;
+namespace Beagl.Infrastructure.Core.Extensions;
 
 /// <summary>
 /// Extension methods for registering query services.
 /// </summary>
-internal static class ServiceCollectionQueryExtensions
+public static class ServiceCollectionQueryExtensions
 {
     /// <summary>
     /// Adds query services to the service collection.

@@ -15,11 +15,30 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// <remarks>
 /// Initializes a new instance of the <see cref="HealthRecord"/> class.
 /// </remarks>
-/// <param name="animal">The associated animal.</param>
-/// <param name="userId">The identifier of the user who created the record.</param>
-/// <param name="createdAt"></param>
-public sealed class HealthRecord(Animal animal, Guid userId, DateTime createdAt) : AuditedEntity(userId, createdAt)
+public sealed class HealthRecord : AuditedEntity
 {
+    private HealthRecord(Guid userId, DateTime createdAt, bool isSterilized, Weight? weight, DateTime? rabiesVaccinationDate)
+        : base(userId, createdAt)
+    {
+        IsSterilized = isSterilized;
+        Weight = weight;
+        RabiesVaccinationDate = rabiesVaccinationDate;
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="HealthRecord"/>.
+    /// </summary>
+    /// <param name="userId">The identifier of the user who created the record.</param>
+    /// <param name="createdAt">The date and time when the record was created.</param>
+    /// <param name="isSterilized">Indicates whether the animal is sterilized.</param>
+    /// <param name="weight">The weight of the animal.</param>
+    /// <param name="rabiesVaccinationDate">The date of the rabies vaccination.</param>
+    public static HealthRecord Create(Guid userId, DateTime createdAt, bool isSterilized = false, Weight? weight = null, DateTime? rabiesVaccinationDate = null)
+    {
+        // Add validation logic as needed
+        return new HealthRecord(userId, createdAt, isSterilized, weight, rabiesVaccinationDate);
+    }
+
     /// <summary>
     /// Gets whether the animal is sterilized.
     /// </summary>
@@ -36,33 +55,18 @@ public sealed class HealthRecord(Animal animal, Guid userId, DateTime createdAt)
     public DateTime? RabiesVaccinationDate { get; private set; }
 
     /// <summary>
-    /// Gets the foreign key to the associated animal.
+    /// Updates the weight of the animal.
     /// </summary>
-    public Guid AnimalId { get; private set; } = animal.Id;
-
-    /// <summary>
-    /// Gets the navigation property to the associated animal.
-    /// </summary>
-    public Animal? Animal { get; private set; } = animal ?? throw new ArgumentNullException(nameof(animal));
-
-    /// <summary>
-    /// For EF Core only.
-    /// </summary>
-    private HealthRecord() : this(default!, default!, default!) { }
-
-    /// <summary>
-    /// Updates the animal's weight.
-    /// </summary>
-    /// <param name="weight">The new weight.</param>
+    /// <param name="weight">The new weight value.</param>
     public void UpdateWeight(Weight weight)
     {
         Weight = weight ?? throw new ArgumentNullException(nameof(weight));
     }
 
     /// <summary>
-    /// Records a rabies vaccination.
+    /// Records a rabies vaccination date.
     /// </summary>
-    /// <param name="date">The date of vaccination.</param>
+    /// <param name="date">The date of the rabies vaccination.</param>
     public void RecordRabiesVaccination(DateTime date)
     {
         RabiesVaccinationDate = date;
@@ -71,6 +75,9 @@ public sealed class HealthRecord(Animal animal, Guid userId, DateTime createdAt)
     /// <summary>
     /// Marks the animal as sterilized.
     /// </summary>
+    /// <remarks>
+    /// This method updates the <see cref="IsSterilized"/> property to true.
+    /// </remarks>
     public void Sterilize()
     {
         IsSterilized = true;

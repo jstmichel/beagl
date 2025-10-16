@@ -1,21 +1,22 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.AnimalManagement.Services;
 using Beagl.Domain.AnimalManagement;
 using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.Core.Interfaces;
-using Beagl.Infrastructure.AnimalManagement.DTOs;
 using Beagl.Infrastructure.AnimalManagement.Mappers;
 using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
-using Beagl.WebApp.AnimalManagement.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Beagl.WebApp.Extensions;
+namespace Beagl.Infrastructure.Core.Extensions;
 
 /// <summary>
 /// Extension methods for registering infrastructure services.
 /// </summary>
-internal static class ServiceCollectionInfrastructureExtensions
+public static class ServiceCollectionInfrastructureExtensions
 {
     /// <summary>
     /// Adds infrastructure services to the service collection.

@@ -1,12 +1,15 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-namespace Beagl.WebApp.ViewModels;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Beagl.Application.UserManagement.ViewModels;
 
 /// <summary>
 /// ViewModel for editing user details in the UI.
 /// Contains only the fields required for user editing.
 /// </summary>
-internal sealed class EditUserViewModel
+public sealed class EditUserViewModel
 {
     /// <summary>
     /// Gets or sets the unique identifier for the user.
@@ -31,5 +34,5 @@ internal sealed class EditUserViewModel
     /// <summary>
     /// Gets or sets the roles assigned to the user.
     /// </summary>
-    public List<string> Roles { get; set; } = [];
+    public Collection<string> Roles { get; init; } = [];
 }

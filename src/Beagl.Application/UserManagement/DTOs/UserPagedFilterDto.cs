@@ -3,7 +3,7 @@
 using Beagl.Domain.Core.DTOs;
 using Beagl.Domain.Core.Interfaces;
 
-namespace Beagl.Infrastructure.UserManagement.DTOs;
+namespace Beagl.Application.UserManagement.DTOs;
 
 /// <summary>
 /// DTO for user paging and filtering parameters.

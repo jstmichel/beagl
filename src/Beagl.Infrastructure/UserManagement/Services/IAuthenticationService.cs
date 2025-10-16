@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Infrastructure.UserManagement.DTOs;
+using Beagl.Application.UserManagement.DTOs;
 
 namespace Beagl.Infrastructure.UserManagement.Services;
 

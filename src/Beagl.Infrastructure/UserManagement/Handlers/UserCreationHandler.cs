@@ -1,8 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System.Collections.ObjectModel;
+using Beagl.Application.UserManagement.DTOs;
 using Beagl.Domain.UserManagement.Exceptions;
-using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Beagl.Infrastructure.UserManagement.Mappers;

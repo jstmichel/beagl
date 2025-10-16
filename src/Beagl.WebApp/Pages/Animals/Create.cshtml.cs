@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Beagl.Infrastructure.AnimalManagement.DTOs;
+using Beagl.Application.AnimalManagement.DTOs;
 
 namespace Beagl.WebApp.Pages.Animals;
 

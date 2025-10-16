@@ -2,13 +2,14 @@
 
 using Beagl.Infrastructure.UserManagement.Handlers;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Beagl.WebApp.Extensions;
+namespace Beagl.Infrastructure.Core.Extensions;
 
 /// <summary>
 /// Extension methods for registering handler services.
 /// </summary>
-internal static class ServiceCollectionHandlerExtensions
+public static class ServiceCollectionHandlerExtensions
 {
     /// <summary>
     /// Adds handler services to the service collection.
