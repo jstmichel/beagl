@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-namespace Beagl.Application.Constants;
+namespace Beagl.WebApp.Constants;
 
 /// <summary>
 /// Constants for local redirection paths.

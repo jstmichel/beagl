@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-namespace Beagl.Domain.Core.DTOs;
+namespace Beagl.Application.Core.DTOs;
 
 /// <summary>
 /// DTO for paged request parameters.

@@ -1,9 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System;
-using System.Linq;
-
-namespace Beagl.Domain.Extensions;
+namespace Beagl.Infrastructure.Core.Extensions;
 
 /// <summary>
 /// Provides LINQ extension methods for applying paging to queries.

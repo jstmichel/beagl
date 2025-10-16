@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Beagl.Domain.Core.DTOs;
+namespace Beagl.Application.Core.DTOs;
 
 /// <summary>
 /// Base class for DTOs with audit fields.

@@ -2,7 +2,7 @@
 
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Domain.Core.Exceptions;
-using Beagl.Domain.Extensions;
+using Beagl.Infrastructure.Core.Extensions;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Mappers;

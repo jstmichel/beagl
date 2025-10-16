@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
-using Beagl.Domain.Core.DTOs;
+using Beagl.Application.Core.DTOs;
 
 namespace Beagl.Application.AnimalManagement.DTOs;
 
