@@ -10,4 +10,5 @@ internal sealed class LocalRedirection
     public const string Users = "/Users/Index";
     public const string UserCreation = "/Users/Create";
     public const string UserEdition = "/Users/Edit";
+    public const string Animals = "/Animals/Index";
 }

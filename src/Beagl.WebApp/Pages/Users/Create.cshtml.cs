@@ -1,11 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System.Collections.ObjectModel;
-using Beagl.Domain.Exceptions.Entities;
-using Beagl.Domain.Models;
-using Beagl.Domain.Models.DTOs;
-using Beagl.Domain.Services;
-using Beagl.Infrastructure.Services.Interfaces;
+using Beagl.Domain.UserManagement.Exceptions;
+using Beagl.Infrastructure.UserManagement.DTOs;
+using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

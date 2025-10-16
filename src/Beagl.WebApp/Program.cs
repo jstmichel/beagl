@@ -4,8 +4,7 @@ using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Beagl.WebApp.Extensions;
-using Beagl.Infrastructure.Entities;
-using Beagl.Infrastructure.Extensions;
+using Beagl.Infrastructure.UserManagement.Entities;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +42,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddInfrastructureServices();
 builder.Services.AddHandlerServices();
 builder.Services.AddQueryServices();
+builder.Services.AddMappers();
+builder.Services.AddRepositories();
+builder.Services.AddDomainServices();
+builder.Services.AddApplicationServices();
 
 WebApplication app = builder.Build();
 

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Beagl.Domain.Entities;
-using Beagl.Infrastructure.Entities;
+using Beagl.Domain.Core;
+using Beagl.Infrastructure.UserManagement.Entities;
 
 namespace Beagl.Infrastructure;
 

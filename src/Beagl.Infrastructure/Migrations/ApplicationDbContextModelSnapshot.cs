@@ -22,7 +22,90 @@ namespace Beagl.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Beagl.Infrastructure.Entities.ApplicationRole", b =>
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Animal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DistinctiveDescription")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsAnAssistanceDog")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsAnUnclawnedCat")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Species")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Entities.HealthRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AnimalId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsSterilized")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("RabiesVaccinationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.ToTable("HealthRecords");
+                });
+
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Entities.MedalRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AnimalId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AssignedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MedalNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.ToTable("MedalRecords");
+                });
+
+            modelBuilder.Entity("Beagl.Infrastructure.UserManagement.Entities.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -48,7 +131,7 @@ namespace Beagl.Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Beagl.Infrastructure.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Beagl.Infrastructure.UserManagement.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -221,9 +304,339 @@ namespace Beagl.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Animal", b =>
+                {
+                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Created", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("At")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("CreatedAt");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("CreatedByUserId");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Modified", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("At")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("ModifiedAt");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("ModifiedByUserId");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Breed", "Breed", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Primary")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PrimaryBreed");
+
+                            b1.Property<string>("Secondary")
+                                .HasColumnType("text")
+                                .HasColumnName("SecondaryBreed");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.DangerousDog", "DangerousDog", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Comment")
+                                .HasColumnType("text")
+                                .HasColumnName("DangerousDogComment");
+
+                            b1.Property<bool>("HasResponsibilityInsurance")
+                                .HasColumnType("boolean")
+                                .HasColumnName("HasDangerousDogInsurance");
+
+                            b1.Property<bool>("IsDangerous")
+                                .HasColumnType("boolean")
+                                .HasColumnName("IsDangerousDog");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Gender", "Gender", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Gender");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Microchip", "Microchip", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Microchip");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.OriginCityInfo", "OriginCityInfo", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("CityName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<bool>("ComesFromAnotherCity")
+                                .HasColumnType("boolean")
+                                .HasColumnName("ComesFromAnotherCity");
+
+                            b1.Property<bool>("HadJudgmentInThatCity")
+                                .HasColumnType("boolean")
+                                .HasColumnName("HadJudgmentInThatCity");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Photo", "Photo", b1 =>
+                        {
+                            b1.Property<Guid>("AnimalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Base64Png")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PhotoBase64Png");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.Navigation("Breed")
+                        .IsRequired();
+
+                    b.Navigation("Created")
+                        .IsRequired();
+
+                    b.Navigation("DangerousDog");
+
+                    b.Navigation("Gender")
+                        .IsRequired();
+
+                    b.Navigation("Microchip");
+
+                    b.Navigation("Modified");
+
+                    b.Navigation("OriginCityInfo");
+
+                    b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Entities.HealthRecord", b =>
+                {
+                    b.HasOne("Beagl.Domain.AnimalManagement.Animal", "Animal")
+                        .WithMany("HealthRecords")
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Created", b1 =>
+                        {
+                            b1.Property<Guid>("HealthRecordId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("At")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("CreatedAt");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("CreatedByUserId");
+
+                            b1.HasKey("HealthRecordId");
+
+                            b1.ToTable("HealthRecords");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HealthRecordId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Modified", b1 =>
+                        {
+                            b1.Property<Guid>("HealthRecordId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("At")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("ModifiedAt");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("ModifiedByUserId");
+
+                            b1.HasKey("HealthRecordId");
+
+                            b1.ToTable("HealthRecords");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HealthRecordId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Weight", "Weight", b1 =>
+                        {
+                            b1.Property<Guid>("HealthRecordId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Unit")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("WeightUnit");
+
+                            b1.Property<decimal>("Value")
+                                .HasColumnType("numeric")
+                                .HasColumnName("WeightValue");
+
+                            b1.HasKey("HealthRecordId");
+
+                            b1.ToTable("HealthRecords");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HealthRecordId");
+                        });
+
+                    b.Navigation("Animal");
+
+                    b.Navigation("Created")
+                        .IsRequired();
+
+                    b.Navigation("Modified");
+
+                    b.Navigation("Weight");
+                });
+
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Entities.MedalRecord", b =>
+                {
+                    b.HasOne("Beagl.Domain.AnimalManagement.Animal", "Animal")
+                        .WithMany("MedalRecords")
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.Entities.MedalRecord.Created#Audit", "Created", b1 =>
+                        {
+                            b1.Property<Guid>("MedalRecordId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("At")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("CreatedAt");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("CreatedByUserId");
+
+                            b1.HasKey("MedalRecordId");
+
+                            b1.ToTable("MedalRecords");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MedalRecordId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Modified", b1 =>
+                        {
+                            b1.Property<Guid>("MedalRecordId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("At")
+                                .HasColumnType("timestamp with time zone")
+                                .HasColumnName("ModifiedAt");
+
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("ModifiedByUserId");
+
+                            b1.HasKey("MedalRecordId");
+
+                            b1.ToTable("MedalRecords");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MedalRecordId");
+                        });
+
+                    b.Navigation("Animal");
+
+                    b.Navigation("Created")
+                        .IsRequired();
+
+                    b.Navigation("Modified");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Beagl.Infrastructure.Entities.ApplicationRole", null)
+                    b.HasOne("Beagl.Infrastructure.UserManagement.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -232,7 +645,7 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Beagl.Infrastructure.Entities.ApplicationUser", null)
+                    b.HasOne("Beagl.Infrastructure.UserManagement.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -241,7 +654,7 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Beagl.Infrastructure.Entities.ApplicationUser", null)
+                    b.HasOne("Beagl.Infrastructure.UserManagement.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -250,13 +663,13 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Beagl.Infrastructure.Entities.ApplicationRole", null)
+                    b.HasOne("Beagl.Infrastructure.UserManagement.Entities.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Beagl.Infrastructure.Entities.ApplicationUser", null)
+                    b.HasOne("Beagl.Infrastructure.UserManagement.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -265,11 +678,18 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Beagl.Infrastructure.Entities.ApplicationUser", null)
+                    b.HasOne("Beagl.Infrastructure.UserManagement.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Beagl.Domain.AnimalManagement.Animal", b =>
+                {
+                    b.Navigation("HealthRecords");
+
+                    b.Navigation("MedalRecords");
                 });
 #pragma warning restore 612, 618
         }

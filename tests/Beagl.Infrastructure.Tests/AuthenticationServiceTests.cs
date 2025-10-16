@@ -1,9 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Domain.Models.Results;
-using Beagl.Infrastructure.Entities;
-using Beagl.Infrastructure.Services.Implementations;
 using Beagl.Infrastructure.Tests.Fakes;
+using Beagl.Infrastructure.UserManagement.DTOs;
+using Beagl.Infrastructure.UserManagement.Entities;
+using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 
