@@ -22,11 +22,6 @@ internal sealed class IndexModel(
     }
 
     /// <summary>
-    /// Gets or sets the collection of animals.
-    /// </summary>
-    public IList<AnimalDto> Animals { get; private set; } = [];
-
-    /// <summary>
     /// Handles the GET request to load the list of animals.
     /// </summary>
     /// <returns>The page result.</returns>

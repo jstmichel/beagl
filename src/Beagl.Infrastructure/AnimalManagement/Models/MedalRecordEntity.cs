@@ -22,7 +22,7 @@ public class MedalRecordEntity
     /// <summary>
     /// Gets or sets the date the medal was assigned.
     /// </summary>
-    public DateTime AssignedDate { get; set; }
+    public DateTimeOffset AssignedDate { get; set; }
 
     /// <summary>
     /// Gets or sets the foreign key to the associated animal.

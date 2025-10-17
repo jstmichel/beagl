@@ -2,7 +2,9 @@
 
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Domain.AnimalManagement;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.Core.Interfaces;
+using Beagl.Domain.Core.ValueObjects;
 
 namespace Beagl.Infrastructure.AnimalManagement.Mappers;
 
@@ -18,20 +20,33 @@ public class AnimalMapper : IEntityMapper<Animal, AnimalDto>
     /// <returns>An Animal aggregate.</returns>
     public Animal CreateFromDto(AnimalDto dto)
     {
-        // ArgumentNullException.ThrowIfNull(dto);
+        ArgumentNullException.ThrowIfNull(dto);
 
-        // Animal animal = new(
-        //     dto.Name,
-        //     dto.Species ?? string.Empty,
-        //     new Breed(dto.Breed ?? string.Empty, string.Empty),
-        //     dto.Color ?? string.Empty,
-        //     Gender.Unknown,
-        //     dto.BirthDate ?? DateTime.MinValue
-        // );
-        // animal.SetCreatedAudit(dto.CreatedByUserId, dto.CreatedAt);
-        // UpdateFromDto(animal, dto);
-        // return animal;
-        return null!;
+        Breed breed = new(dto.Breed, string.Empty);
+        Gender gender = Gender.FromString(dto.Gender);
+        Photo? photo = dto.PhotoBase64 != null ? new Photo(dto.PhotoBase64) : null;
+        Microchip? microchip = dto.MicrochipNumber != null ? new Microchip(dto.MicrochipNumber) : null;
+        DangerousDog? dangerousDog = dto.IsDangerousDog ? new DangerousDog(true, false, null) : null;
+        OriginCityInfo? originCityInfo = new(dto.ComesFromAnotherCity, dto.CityName, dto.HadJudgmentInThatCity);
+
+        Animal animal = Animal.Create(
+            dto.Name,
+            dto.Species,
+            breed,
+            dto.Color,
+            gender,
+            dto.BirthDate,
+            dto.CreatedByUserId,
+            dto.CreatedAt,
+            photo,
+            microchip,
+            dangerousDog,
+            dto.IsAnAssistanceDog,
+            dto.IsAnUnclawnedCat,
+            originCityInfo
+        );
+
+        return animal;
     }
 
     /// <summary>

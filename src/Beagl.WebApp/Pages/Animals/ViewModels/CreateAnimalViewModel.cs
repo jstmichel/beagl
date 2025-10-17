@@ -1,24 +1,23 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System;
-using System.Collections.Generic;
-using Beagl.Application.Core.DTOs;
+using System.ComponentModel.DataAnnotations;
 
-namespace Beagl.Application.AnimalManagement.DTOs;
+namespace Beagl.WebApp.Pages.Animals.ViewModels;
 
 /// <summary>
-/// Data Transfer Object for Animal aggregate.
+/// ViewModel for creating an animal.
 /// </summary>
-public class AnimalDto : AuditedDtoBase
+public sealed class CreateAnimalViewModel
 {
     /// <summary>
     /// Gets or sets the unique identifier of the animal.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.Empty;
 
     /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
+    [Required]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
@@ -95,14 +94,4 @@ public class AnimalDto : AuditedDtoBase
     /// Gets a value indicating whether the animal had a judgment in that city.
     /// </summary>
     public bool HadJudgmentInThatCity { get; set; }
-
-    /// <summary>
-    /// Gets or sets the collection of health records for the animal.
-    /// </summary>
-    public ICollection<HealthRecordDto> HealthRecords { get; init; } = [];
-
-    /// <summary>
-    /// Gets or sets the collection of medal records for the animal.
-    /// </summary>
-    public ICollection<MedalRecordDto> MedalRecords { get; init; } = [];
 }

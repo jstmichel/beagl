@@ -48,7 +48,7 @@ public class AnimalEntity
     /// <summary>
     /// Gets or sets the date of birth of the animal.
     /// </summary>
-    public DateTime DateOfBirth { get; set; }
+    public DateTimeOffset DateOfBirth { get; set; }
 
     /// <summary>
     /// Gets or sets the photo of the animal as a value object.

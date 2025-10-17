@@ -9,7 +9,7 @@ namespace Beagl.Domain.Core;
 /// <summary>
 /// Represents an entity with audit information for creation and modification.
 /// </summary>
-public class AuditedEntity<TId>(TId userId, DateTime at) : Entity<TId>
+public class AuditedEntity<TId>(TId userId, DateTimeOffset at) : Entity<TId>
 {
     /// <summary>
     /// Gets the audit information for creation.
@@ -26,7 +26,7 @@ public class AuditedEntity<TId>(TId userId, DateTime at) : Entity<TId>
     /// </summary>
     /// <param name="userId">The user ID who modified the entity.</param>
     /// <param name="at">The date and time of modification.</param>
-    public void SetCreatedAudit(TId userId, DateTime at)
+    public void SetCreatedAudit(TId userId, DateTimeOffset at)
     {
         Contract.Requires(userId != null);
         Contract.Requires(at != default);
@@ -44,7 +44,7 @@ public class AuditedEntity<TId>(TId userId, DateTime at) : Entity<TId>
     /// </summary>
     /// <param name="userId">The user ID who modified the entity.</param>
     /// <param name="at">The date and time of modification.</param>
-    public void SetModifiedAudit(TId userId, DateTime at)
+    public void SetModifiedAudit(TId userId, DateTimeOffset at)
     {
         Contract.Requires(userId != null);
         Contract.Requires(at != default);
@@ -61,6 +61,6 @@ public class AuditedEntity<TId>(TId userId, DateTime at) : Entity<TId>
 /// </remarks>
 /// <param name="userId">The user ID who modified the entity.</param>
 /// <param name="at">The date and time of modification.</param>
-public class AuditedEntity(Guid userId, DateTime at) : AuditedEntity<Guid>(userId, at)
+public class AuditedEntity(Guid userId, DateTimeOffset at) : AuditedEntity<Guid>(userId, at)
 {
 }

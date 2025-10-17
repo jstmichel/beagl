@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.Core.Interfaces;
 using Beagl.Domain.AnimalManagement;
 using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.Core.Interfaces;
@@ -16,7 +17,8 @@ namespace Beagl.Application.AnimalManagement.Services;
 /// </summary>
 public sealed class AnimalService(
     IAnimalRepository animalRepository,
-    IEntityMapper<Animal, AnimalDto> animalMapper) : IAnimalService
+    IEntityMapper<Animal, AnimalDto> animalMapper,
+    ICurrentUserService currentUserService) : IAnimalService
 {
     /// <summary>
     /// Creates a new animal record.
@@ -25,6 +27,10 @@ public sealed class AnimalService(
     /// <returns>A task representing the asynchronous operation.</returns>
     public async Task CreateAsync(AnimalDto animalDto)
     {
+        ArgumentNullException.ThrowIfNull(animalDto);
+
+        animalDto.CreatedByUserId = currentUserService.UserId;
+        animalDto.CreatedAt = DateTime.UtcNow;
         Animal animal = animalMapper.CreateFromDto(animalDto);
         await animalRepository.AddAsync(animal);
     }

@@ -1,9 +1,11 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Application.Core.Interfaces;
 using Beagl.Infrastructure;
 using Beagl.Infrastructure.Core.Extensions;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.WebApp.Extensions;
+using Beagl.WebApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,6 +49,9 @@ builder.Services.AddMappers();
 builder.Services.AddRepositories();
 builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 WebApplication app = builder.Build();
 

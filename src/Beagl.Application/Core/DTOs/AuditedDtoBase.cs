@@ -12,7 +12,7 @@ public abstract class AuditedDtoBase
     /// <summary>
     /// Gets or sets the audit creation date.
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     /// Gets or sets the audit creator's user id.
@@ -22,7 +22,7 @@ public abstract class AuditedDtoBase
     /// <summary>
     /// Gets or sets the audit modification date.
     /// </summary>
-    public DateTime ModifiedAt { get; set; }
+    public DateTimeOffset ModifiedAt { get; set; }
 
     /// <summary>
     /// Gets or sets the audit modifier's user id.

@@ -30,7 +30,7 @@ public abstract class AggregateRoot : AggregateRoot<Guid>
 /// </remarks>
 /// <param name="userId">The identifier of the user who created the entity.</param>
 /// <param name="createdAt">The creation date and time.</param>
-public abstract class AuditedAggregateRoot<TId>(TId userId, DateTime createdAt) : AuditedEntity<TId>(userId, createdAt), IAggregateRoot
+public abstract class AuditedAggregateRoot<TId>(TId userId, DateTimeOffset createdAt) : AuditedEntity<TId>(userId, createdAt), IAggregateRoot
 {
 }
 
@@ -42,6 +42,6 @@ public abstract class AuditedAggregateRoot<TId>(TId userId, DateTime createdAt) 
 /// </remarks>
 /// <param name="userId">The identifier of the user who created the entity.</param>
 /// <param name="createdAt">The creation date and time.</param>
-public abstract class AuditedAggregateRoot(Guid userId, DateTime createdAt) : AuditedAggregateRoot<Guid>(userId, createdAt)
+public abstract class AuditedAggregateRoot(Guid userId, DateTimeOffset createdAt) : AuditedAggregateRoot<Guid>(userId, createdAt)
 {
 }

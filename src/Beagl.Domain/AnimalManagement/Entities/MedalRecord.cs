@@ -13,8 +13,8 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </remarks>
 public sealed class MedalRecord : AuditedEntity
 {
-    private MedalRecord(string medalNumber, DateTime assignedDate, Guid userId, string? reason)
-        : base(userId, DateTime.UtcNow)
+    private MedalRecord(string medalNumber, DateTimeOffset assignedDate, Guid userId, string? reason)
+        : base(userId, DateTimeOffset.UtcNow)
     {
         MedalNumber = medalNumber ?? throw new ArgumentNullException(nameof(medalNumber));
         AssignedDate = assignedDate;
@@ -28,7 +28,7 @@ public sealed class MedalRecord : AuditedEntity
     /// <param name="reason">The reason for the medal assignment (e.g., lost, replaced, new).</param>
     /// <param name="assignedDate">The date the medal was assigned.</param>
     /// <param name="userId">The identifier of the user who created the record.</param>
-    public static MedalRecord Create(string medalNumber, DateTime assignedDate, Guid userId, string? reason = null)
+    public static MedalRecord Create(string medalNumber, DateTimeOffset assignedDate, Guid userId, string? reason = null)
     {
         // Add validation logic as needed
         return new MedalRecord(medalNumber, assignedDate, userId, reason);
@@ -42,7 +42,7 @@ public sealed class MedalRecord : AuditedEntity
     /// <summary>
     /// Gets the date the medal was assigned.
     /// </summary>
-    public DateTime AssignedDate { get; private set; }
+    public DateTimeOffset AssignedDate { get; private set; }
 
     /// <summary>
     /// Gets the reason for the medal assignment.

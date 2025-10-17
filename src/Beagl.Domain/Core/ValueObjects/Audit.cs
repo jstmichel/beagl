@@ -8,7 +8,7 @@ namespace Beagl.Domain.Core.ValueObjects;
 /// Represents audit information for entity creation.
 /// </summary>
 /// <typeparam name="TId">The type of the user identifier.</typeparam>
-public class Audit<TId>(TId userId, DateTime at)
+public class Audit<TId>(TId userId, DateTimeOffset at)
 {
     /// <summary>
     /// Gets or sets the user ID who created the entity.
@@ -19,5 +19,5 @@ public class Audit<TId>(TId userId, DateTime at)
     /// <summary>
     /// Gets or sets the creation date and time.
     /// </summary>
-    public DateTime At { get; set; } = at;
+    public DateTimeOffset At { get; set; } = at;
 }

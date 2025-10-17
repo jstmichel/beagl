@@ -23,7 +23,7 @@ public class MedalRecordDto : AuditedDtoBase
     /// <summary>
     /// Gets or sets the date the medal was assigned.
     /// </summary>
-    public DateTime AssignedDate { get; set; }
+    public DateTimeOffset AssignedDate { get; set; }
 
     /// <summary>
     /// Gets or sets the reason for the medal assignment (e.g., lost, replaced, new).

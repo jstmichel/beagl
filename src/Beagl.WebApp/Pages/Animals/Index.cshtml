@@ -1,4 +1,5 @@
 @page "/Animals/Index"
+@using Beagl.Application.AnimalManagement.DTOs
 @model Beagl.WebApp.Pages.Animals.IndexModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
@@ -33,9 +34,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.Animals != null && Model.Animals.Any())
+                    @if (Model.DataModel != null && Model.DataModel.Any())
                     {
-                        foreach (var animal in Model.Animals)
+                        foreach (AnimalDto animal in Model.DataModel)
                         {
                             <tr>
                                 <td>@animal.Name</td>
@@ -43,7 +44,7 @@
                                 <td>@animal.Breed</td>
                                 <td>@animal.Color</td>
                                 <td>@animal.Gender</td>
-                                <td>@animal.BirthDate?.ToString("yyyy-MM-dd")</td>
+                                <td>@animal.BirthDate.ToString("yyyy-MM-dd")</td>
                                 <td>@animal.MicrochipNumber</td>
                                 <td>@animal.PermitNumber</td>
                                 <td>@(animal.IsDangerousDog ? "Yes" : "No")</td>

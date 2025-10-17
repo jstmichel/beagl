@@ -17,7 +17,7 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </remarks>
 public sealed class HealthRecord : AuditedEntity
 {
-    private HealthRecord(Guid userId, DateTime createdAt, bool isSterilized, Weight? weight, DateTime? rabiesVaccinationDate)
+    private HealthRecord(Guid userId, DateTimeOffset createdAt, bool isSterilized, Weight? weight, DateTimeOffset? rabiesVaccinationDate)
         : base(userId, createdAt)
     {
         IsSterilized = isSterilized;
@@ -33,7 +33,7 @@ public sealed class HealthRecord : AuditedEntity
     /// <param name="isSterilized">Indicates whether the animal is sterilized.</param>
     /// <param name="weight">The weight of the animal.</param>
     /// <param name="rabiesVaccinationDate">The date of the rabies vaccination.</param>
-    public static HealthRecord Create(Guid userId, DateTime createdAt, bool isSterilized = false, Weight? weight = null, DateTime? rabiesVaccinationDate = null)
+    public static HealthRecord Create(Guid userId, DateTimeOffset createdAt, bool isSterilized = false, Weight? weight = null, DateTimeOffset? rabiesVaccinationDate = null)
     {
         // Add validation logic as needed
         return new HealthRecord(userId, createdAt, isSterilized, weight, rabiesVaccinationDate);
@@ -52,34 +52,5 @@ public sealed class HealthRecord : AuditedEntity
     /// <summary>
     /// Gets the date of the last rabies vaccination.
     /// </summary>
-    public DateTime? RabiesVaccinationDate { get; private set; }
-
-    /// <summary>
-    /// Updates the weight of the animal.
-    /// </summary>
-    /// <param name="weight">The new weight value.</param>
-    public void UpdateWeight(Weight weight)
-    {
-        Weight = weight ?? throw new ArgumentNullException(nameof(weight));
-    }
-
-    /// <summary>
-    /// Records a rabies vaccination date.
-    /// </summary>
-    /// <param name="date">The date of the rabies vaccination.</param>
-    public void RecordRabiesVaccination(DateTime date)
-    {
-        RabiesVaccinationDate = date;
-    }
-
-    /// <summary>
-    /// Marks the animal as sterilized.
-    /// </summary>
-    /// <remarks>
-    /// This method updates the <see cref="IsSterilized"/> property to true.
-    /// </remarks>
-    public void Sterilize()
-    {
-        IsSterilized = true;
-    }
+    public DateTimeOffset? RabiesVaccinationDate { get; private set; }
 }

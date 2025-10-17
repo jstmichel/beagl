@@ -4,6 +4,8 @@ using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Domain.AnimalManagement;
 using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.Core.Interfaces;
+using Beagl.Infrastructure.AnimalManagement.Extensions;
+using Beagl.Infrastructure.AnimalManagement.Models;
 using Beagl.Infrastructure.Core.Helpers;
 
 namespace Beagl.Infrastructure.AnimalManagement.Repositories;
@@ -11,10 +13,16 @@ namespace Beagl.Infrastructure.AnimalManagement.Repositories;
 /// <summary>
 /// Concrete implementation of IAnimalRepository for managing Animal aggregates.
 /// </summary>
-public class AnimalRepository : IAnimalRepository
+public class AnimalRepository
+    (ApplicationDbContext dbContext) : IAnimalRepository
 {
     /// <inheritdoc/>
-    public Task AddAsync(Animal animal) => throw new NotImplementedException();
+    public Task AddAsync(Animal animal)
+    {
+        AnimalEntity entity = animal.ToEntity();
+        dbContext.Animals.Add(entity);
+        return dbContext.SaveChangesAsync();
+    }
 
     /// <inheritdoc/>
     public Task<Animal?> GetByIdAsync(Guid id) => throw new NotImplementedException();
