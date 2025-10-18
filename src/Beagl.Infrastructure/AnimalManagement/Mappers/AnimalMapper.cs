@@ -22,7 +22,6 @@ public class AnimalMapper : IEntityMapper<Animal, AnimalDto>
     {
         ArgumentNullException.ThrowIfNull(dto);
 
-        Breed breed = new(dto.Breed, string.Empty);
         Gender gender = Gender.FromString(dto.Gender);
         Photo? photo = dto.PhotoBase64 != null ? new Photo(dto.PhotoBase64) : null;
         Microchip? microchip = dto.MicrochipNumber != null ? new Microchip(dto.MicrochipNumber) : null;
@@ -31,20 +30,21 @@ public class AnimalMapper : IEntityMapper<Animal, AnimalDto>
 
         Animal animal = Animal.Create(
             dto.Name,
-            dto.Species,
-            breed,
-            dto.Color,
+            dto.SpeciesId,
+            dto.PrimaryBreedId,
+            dto.SecondaryBreedId,
+            dto.ColorId,
             gender,
             dto.BirthDate,
-            dto.CreatedByUserId,
-            dto.CreatedAt,
             photo,
             microchip,
             dangerousDog,
             dto.IsAnAssistanceDog,
             dto.IsAnUnclawnedCat,
-            originCityInfo
-        );
+            originCityInfo,
+            dto.DistinctiveDescription,
+            dto.CreatedByUserId,
+            dto.CreatedAt);
 
         return animal;
     }
@@ -55,50 +55,32 @@ public class AnimalMapper : IEntityMapper<Animal, AnimalDto>
     public AnimalDto ToDto(Animal entity)
     {
         ArgumentNullException.ThrowIfNull(entity);
-        // return new AnimalDto
-        // {
-        //     Id = entity.Id,
-        //     Name = entity.Name,
-        //     Species = entity.Species,
-        //     Breed = entity.Breed?.Primary,
-        //     Color = entity.Color,
-        //     DistinctiveDescription = entity.DistinctiveDescription,
-        //     Gender = entity.Gender.ToString(),
-        //     BirthDate = entity.DateOfBirth,
-        //     PhotoBase64 = entity.Photo?.Base64Png,
-        //     MicrochipNumber = entity.Microchip?.Value,
-        //     IsDangerousDog = entity.DangerousDog?.IsDangerous ?? false,
-        //     IsAnAssistanceDog = entity.IsAnAssistanceDog,
-        //     IsAnUnclawnedCat = entity.IsAnUnclawnedCat,
-        //     CityName = entity.OriginCityInfo?.CityName,
-        //     ComesFromAnotherCity = entity.OriginCityInfo?.ComesFromAnotherCity,
-        //     HadJudgmentInThatCity = entity.OriginCityInfo?.HadJudgmentInThatCity,
-        //     HealthRecords = entity.HealthRecords?.Select(hr => new HealthRecordDto
-        //     {
-        //         Id = hr.Id,
-        //         IsSterilized = hr.IsSterilized,
-        //         WeightValue = hr.Weight?.Value,
-        //         WeightUnit = hr.Weight?.Unit,
-        //         RabiesVaccinationDate = hr.RabiesVaccinationDate,
-        //         CreatedAt = hr.Created.At,
-        //         CreatedByUserId = hr.CreatedByUserId,
-        //         ModifiedAt = hr.Modified.At,
-        //         ModifiedByUserId = hr.ModifiedByUserId,
-        //     }).ToList() ?? [],
-        //     MedalRecords = entity.MedalRecords?.Select(mr => new MedalRecordDto
-        //     {
-        //         Id = mr.Id,
-        //         MedalNumber = mr.MedalNumber,
-        //         Reason = mr.Reason,
-        //         AssignedDate = mr.AssignedDate,
-        //         CreatedAt = mr.Created?.At,
-        //         CreatedByUserId = mr.Created?.UserId,
-        //         ModifiedAt = mr.Modified?.At,
-        //         ModifiedByUserId = mr.Modified?.UserId,
-        //     }).ToList() ?? [],
-        // };
-
-        return null!;
+        return new AnimalDto
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            SpeciesId = entity.SpeciesId,
+            PrimaryBreedId = entity.PrimaryBreedId,
+            SecondaryBreedId = entity.SecondaryBreedId,
+            ColorId = entity.ColorId,
+            DistinctiveDescription = entity.DistinctiveDescription ?? string.Empty,
+            Gender = entity.Gender.ToString(),
+            BirthDate = entity.DateOfBirth,
+            PhotoBase64 = entity.Photo?.Base64Png,
+            MicrochipNumber = entity.Microchip?.Value,
+            IsDangerousDog = entity.DangerousDog?.IsDangerous ?? false,
+            IsAnAssistanceDog = entity.IsAnAssistanceDog,
+            IsAnUnclawnedCat = entity.IsAnUnclawnedCat,
+            CityName = entity.OriginCityInfo?.CityName ?? string.Empty,
+            ComesFromAnotherCity = entity.OriginCityInfo?.ComesFromAnotherCity ?? false,
+            HadJudgmentInThatCity = entity.OriginCityInfo?.HadJudgmentInThatCity ?? false,
+            HealthRecords = [], // TODO: Map health records if available
+            MedalRecords = [],  // TODO: Map medal records if available
+            CreatedAt = entity.Created?.At ?? DateTimeOffset.MinValue,
+            CreatedByUserId = entity.Created?.UserId ?? Guid.Empty,
+            ModifiedAt = entity.Modified?.At,
+            ModifiedByUserId = entity.Modified?.UserId
+        };
     }
 
     /// <summary>

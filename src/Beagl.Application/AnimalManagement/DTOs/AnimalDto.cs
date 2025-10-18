@@ -21,20 +21,26 @@ public class AnimalDto : AuditedDtoBase
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Gets or sets the species of the animal.
-    /// </summary>
-    public string Species { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the breed of the animal.
+    /// Gets or sets the species ID of the animal.
     /// </summary>
-    public string Breed { get; set; } = string.Empty;
+    public Guid SpeciesId { get; set; }
 
     /// <summary>
-    /// Gets or sets the color of the animal.
+    /// Gets or sets the primary breed ID of the animal.
     /// </summary>
-    public string Color { get; set; } = string.Empty;
+    public Guid PrimaryBreedId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the secondary breed ID of the animal.
+    /// </summary>
+    public Guid? SecondaryBreedId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the color ID of the animal.
+    /// </summary>
+    public Guid ColorId { get; set; }
 
     /// <summary>
     /// Gets or sets the distinctive description of the animal.

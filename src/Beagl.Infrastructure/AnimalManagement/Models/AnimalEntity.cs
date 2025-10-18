@@ -20,20 +20,48 @@ public class AnimalEntity
     /// </summary>
     public string Name { get; set; } = default!;
 
-    /// <summary>
-    /// Gets or sets the species of the animal.
-    /// </summary>
-    public string Species { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets the breed information for the animal.
+    /// Gets or sets the foreign key for the species of the animal.
     /// </summary>
-    public Breed Breed { get; set; } = default!;
+    public Guid SpeciesId { get; set; }
 
     /// <summary>
-    /// Gets or sets the color of the animal.
+    /// Gets or sets the related species entity.
     /// </summary>
-    public string Color { get; set; } = default!;
+    public SpeciesModel? Species { get; set; }
+
+
+    /// <summary>
+    /// Gets or sets the foreign key for the primary breed of the animal.
+    /// </summary>
+    public Guid PrimaryBreedId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the related primary breed entity.
+    /// </summary>
+    public BreedModel? PrimaryBreed { get; set; }
+
+    /// <summary>
+    /// Gets or sets the foreign key for the secondary breed of the animal (optional).
+    /// </summary>
+    public Guid? SecondaryBreedId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the related secondary breed entity.
+    /// </summary>
+    public BreedModel? SecondaryBreed { get; set; }
+
+
+    /// <summary>
+    /// Gets or sets the foreign key for the color of the animal.
+    /// </summary>
+    public Guid ColorId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the related color entity.
+    /// </summary>
+    public ColorModel? Color { get; set; }
 
     /// <summary>
     /// Gets or sets the distinctive description of the animal.
@@ -83,12 +111,12 @@ public class AnimalEntity
     /// <summary>
     /// Gets the audit information for creation.
     /// </summary>
-    public Audit<Guid>? Created { get; set; }
+    public Audit<Guid> Created { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
 
     /// <summary>
     /// Gets the audit information for last modification.
     /// </summary>
-    public Audit<Guid>? Modified { get; set; }
+    public Audit<Guid>? Modified { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
 
     /// <summary>
     /// Gets or sets the collection of health records associated with the animal.

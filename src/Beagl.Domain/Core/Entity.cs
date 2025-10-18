@@ -32,10 +32,7 @@ public abstract class Entity<TId>
     /// <summary>
     /// Returns a hash code for the entity.
     /// </summary>
-    public override int GetHashCode()
-    {
-        return Id?.GetHashCode() ?? 0;
-    }
+    public override int GetHashCode() => Id?.GetHashCode() ?? 0;
 }
 
 /// <summary>

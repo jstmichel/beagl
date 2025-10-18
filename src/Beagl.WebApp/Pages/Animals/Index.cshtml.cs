@@ -11,7 +11,9 @@ namespace Beagl.WebApp.Pages.Animals;
 /// Page model for listing animals.
 /// </summary>
 internal sealed class IndexModel(
-    IAnimalService animalService) : PaginatedPageModel<AnimalDto, IndexModel.AnimalsFilterModel>
+    // IAnimalService animalService,
+    IAnimalQueryService animalQueryService)
+    : PaginatedPageModel<AnimalListDto, IndexModel.AnimalsFilterModel>
 {
     /// <summary>
     /// Model for filtering animals in the animal management view.
@@ -38,7 +40,7 @@ internal sealed class IndexModel(
     protected override async Task LoadPageAsync(int pageNumber = 1)
     {
         AnimalPagedFilterDto animalPagedFilterDto = CreatePagedFilterDto(pageNumber);
-        (DataModel, TotalItems) = await animalService.GetPagedAsync(animalPagedFilterDto);
+        (DataModel, TotalItems) = await animalQueryService.GetPagedAsync(animalPagedFilterDto);
         SetPagination(pageNumber);
     }
 

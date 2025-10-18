@@ -13,8 +13,7 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </remarks>
 public sealed class MedalRecord : AuditedEntity
 {
-    private MedalRecord(string medalNumber, DateTimeOffset assignedDate, Guid userId, string? reason)
-        : base(userId, DateTimeOffset.UtcNow)
+    private MedalRecord(string medalNumber, DateTimeOffset assignedDate, Guid userId, string? reason) : base(userId, assignedDate)
     {
         MedalNumber = medalNumber ?? throw new ArgumentNullException(nameof(medalNumber));
         AssignedDate = assignedDate;

@@ -33,6 +33,21 @@ public class ApplicationDbContext(
     public DbSet<MedalRecordEntity> MedalRecords { get; set; } = null!;
 
     /// <summary>
+    /// Gets or sets the Species table.
+    /// </summary>
+    public DbSet<SpeciesModel> Species { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the Colors table.
+    /// </summary>
+    public DbSet<ColorModel> Colors { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the Breeds table.
+    /// </summary>
+    public DbSet<BreedModel> Breeds { get; set; } = null!;
+
+    /// <summary>
     /// Configures the model for Animal, HealthRecord, and complex types.
     /// </summary>
     /// <param name="builder">The model builder.</param>
@@ -58,9 +73,31 @@ public class ApplicationDbContext(
             });
         });
 
-        // Configure all value objects as owned types for Animal
+        // Configure AnimalEntity relationships and owned types
         builder.Entity<AnimalEntity>(entity =>
         {
+            // Relationships
+            entity.HasOne(a => a.Species)
+                .WithMany()
+                .HasForeignKey(a => a.SpeciesId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(a => a.PrimaryBreed)
+                .WithMany()
+                .HasForeignKey(a => a.PrimaryBreedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(a => a.SecondaryBreed)
+                .WithMany()
+                .HasForeignKey(a => a.SecondaryBreedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(a => a.Color)
+                .WithMany()
+                .HasForeignKey(a => a.ColorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Owned value objects
             entity.OwnsOne(a => a.OriginCityInfo, oci =>
             {
                 oci.Property(x => x.ComesFromAnotherCity).HasColumnName("ComesFromAnotherCity");
@@ -77,11 +114,6 @@ public class ApplicationDbContext(
             entity.OwnsOne(a => a.Microchip, m =>
             {
                 m.Property(x => x.Value).HasColumnName("Microchip");
-            });
-            entity.OwnsOne(a => a.Breed, b =>
-            {
-                b.Property(p => p.Primary).HasColumnName("PrimaryBreed");
-                b.Property(p => p.Secondary).HasColumnName("SecondaryBreed");
             });
             entity.OwnsOne(a => a.DangerousDog, dd =>
             {

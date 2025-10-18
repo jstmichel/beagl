@@ -22,10 +22,10 @@ public abstract class AuditedDtoBase
     /// <summary>
     /// Gets or sets the audit modification date.
     /// </summary>
-    public DateTimeOffset ModifiedAt { get; set; }
+    public DateTimeOffset? ModifiedAt { get; set; }
 
     /// <summary>
     /// Gets or sets the audit modifier's user id.
     /// </summary>
-    public Guid ModifiedByUserId { get; set; }
+    public Guid? ModifiedByUserId { get; set; }
 }

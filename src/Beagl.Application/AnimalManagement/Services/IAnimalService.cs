@@ -3,14 +3,13 @@
 using System;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
-using Beagl.Domain.Core.Interfaces;
 
 namespace Beagl.Application.AnimalManagement.Services;
 
 /// <summary>
 /// Service layer for managing Animal aggregates.
 /// </summary>
-public interface IAnimalService : IPagedService<AnimalDto, AnimalPagedFilterDto>
+public interface IAnimalService
 {
     /// <summary>
     /// Creates a new animal.

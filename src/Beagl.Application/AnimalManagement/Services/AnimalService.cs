@@ -70,13 +70,4 @@ public sealed class AnimalService(
             await animalRepository.RemoveAsync(animal);
         }
     }
-
-    /// <inheritdoc/>
-    public async Task<(IList<AnimalDto> Items, int TotalCount)> GetPagedAsync(
-        AnimalPagedFilterDto filter)
-    {
-        (IList<Animal>? items, int totalCount) = await animalRepository.GetPagedAsync(filter);
-        List<AnimalDto> dtos = [.. items.Select(animalMapper.ToDto)];
-        return (dtos, totalCount);
-    }
 }

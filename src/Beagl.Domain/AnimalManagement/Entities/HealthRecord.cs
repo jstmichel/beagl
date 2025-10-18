@@ -17,8 +17,7 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </remarks>
 public sealed class HealthRecord : AuditedEntity
 {
-    private HealthRecord(Guid userId, DateTimeOffset createdAt, bool isSterilized, Weight? weight, DateTimeOffset? rabiesVaccinationDate)
-        : base(userId, createdAt)
+    private HealthRecord(Guid userId, DateTimeOffset createdAt, bool isSterilized, Weight? weight, DateTimeOffset? rabiesVaccinationDate) : base(userId, createdAt)
     {
         IsSterilized = isSterilized;
         Weight = weight;

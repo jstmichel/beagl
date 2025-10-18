@@ -26,17 +26,13 @@
                         <th>Gender</th>
                         <th>Birth Date</th>
                         <th>Microchip</th>
-                        <th>Permit</th>
-                        <th>Dangerous</th>
-                        <th>Assistance</th>
-                        <th>Unclawned Cat</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (Model.DataModel != null && Model.DataModel.Any())
                     {
-                        foreach (AnimalDto animal in Model.DataModel)
+                        foreach (AnimalListDto animal in Model.DataModel)
                         {
                             <tr>
                                 <td>@animal.Name</td>
@@ -46,10 +42,6 @@
                                 <td>@animal.Gender</td>
                                 <td>@animal.BirthDate.ToString("yyyy-MM-dd")</td>
                                 <td>@animal.MicrochipNumber</td>
-                                <td>@animal.PermitNumber</td>
-                                <td>@(animal.IsDangerousDog ? "Yes" : "No")</td>
-                                <td>@(animal.IsAnAssistanceDog ? "Yes" : "No")</td>
-                                <td>@(animal.IsAnUnclawnedCat ? "Yes" : "No")</td>
                                 <td>
                                     <a asp-page="Edit" asp-route-id="@animal.Id" class="btn btn-sm btn-outline-primary me-2">Edit</a>
                                     <form method="post" asp-page-handler="Delete" asp-route-id="@animal.Id" class="d-inline">
@@ -62,7 +54,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="12" class="text-center">No animals found.</td>
+                            <td colspan="8" class="text-center">No animals found.</td>
                         </tr>
                     }
                 </tbody>

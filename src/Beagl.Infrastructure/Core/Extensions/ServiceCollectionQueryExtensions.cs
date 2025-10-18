@@ -1,5 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Application.AnimalManagement.Services;
+using Beagl.Infrastructure.AnimalManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,7 @@ public static class ServiceCollectionQueryExtensions
     public static IServiceCollection AddQueryServices(this IServiceCollection services)
     {
         services.AddScoped<IUserQueryService, UserQueryService>();
+        services.AddScoped<IAnimalQueryService, AnimalQueryService>();
         return services;
     }
 }

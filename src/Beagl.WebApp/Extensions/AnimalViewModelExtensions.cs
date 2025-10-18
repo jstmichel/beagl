@@ -25,9 +25,9 @@ public static class AnimalViewModelExtensions
         {
             Id = viewModel.Id,
             Name = viewModel.Name,
-            Species = viewModel.Species,
-            Breed = viewModel.Breed,
-            Color = viewModel.Color,
+            // Species = viewModel.Species,
+            // Breed = viewModel.Breed,
+            // Color = viewModel.Color,
             DistinctiveDescription = viewModel.DistinctiveDescription,
             Gender = viewModel.Gender,
             BirthDate = viewModel.BirthDate,

@@ -2,14 +2,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Beagl.Domain.Core.Interfaces;
 
 namespace Beagl.Domain.AnimalManagement.Repositories;
 
 /// <summary>
 /// Repository interface for managing Animal aggregate roots.
 /// </summary>
-public interface IAnimalRepository : IPagedService<Animal, IPagedFilter>
+public interface IAnimalRepository
 {
     /// <summary>
     /// Adds a new Animal aggregate to the data store.
