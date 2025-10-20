@@ -18,7 +18,7 @@ public sealed class Color : Entity
     /// <summary>
     /// Gets the species ID this color is available for.
     /// </summary>
-    public int SpeciesId { get; }
+    public Guid SpeciesId { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Color"/> class.
@@ -26,7 +26,7 @@ public sealed class Color : Entity
     /// <param name="id">The unique identifier of the color.</param>
     /// <param name="name">The name of the color.</param>
     /// <param name="speciesId">The species ID this color is available for.</param>
-    public Color(Guid id, string name, int speciesId)
+    public Color(Guid id, string name, Guid speciesId)
     {
         Id = id;
         Name = name;

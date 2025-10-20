@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Beagl.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251017034806_UseDateTimeOffset")]
-    partial class UseDateTimeOffset
+    [Migration("20251019114445_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,9 +31,8 @@ namespace Beagl.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ColorId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
@@ -51,13 +50,68 @@ namespace Beagl.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Species")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("PrimaryBreedId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("SecondaryBreedId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SpeciesId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("PrimaryBreedId");
+
+                    b.HasIndex("SecondaryBreedId");
+
+                    b.HasIndex("SpeciesId");
+
                     b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.BreedModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("SpeciesId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpeciesId");
+
+                    b.ToTable("Breeds");
+                });
+
+            modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.ColorModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("SpeciesId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpeciesId");
+
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.HealthRecordEntity", b =>
@@ -106,6 +160,25 @@ namespace Beagl.Infrastructure.Migrations
                     b.HasIndex("AnimalId");
 
                     b.ToTable("MedalRecords");
+                });
+
+            modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.SpeciesModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Species");
                 });
 
             modelBuilder.Entity("Beagl.Infrastructure.UserManagement.Entities.ApplicationRole", b =>
@@ -309,27 +382,28 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.AnimalEntity", b =>
                 {
-                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Breed", "Breed", b1 =>
-                        {
-                            b1.Property<Guid>("AnimalEntityId")
-                                .HasColumnType("uuid");
+                    b.HasOne("Beagl.Infrastructure.AnimalManagement.Models.ColorModel", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.Property<string>("Primary")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("PrimaryBreed");
+                    b.HasOne("Beagl.Infrastructure.AnimalManagement.Models.BreedModel", "PrimaryBreed")
+                        .WithMany()
+                        .HasForeignKey("PrimaryBreedId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.Property<string>("Secondary")
-                                .HasColumnType("text")
-                                .HasColumnName("SecondaryBreed");
+                    b.HasOne("Beagl.Infrastructure.AnimalManagement.Models.BreedModel", "SecondaryBreed")
+                        .WithMany()
+                        .HasForeignKey("SecondaryBreedId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                            b1.HasKey("AnimalEntityId");
-
-                            b1.ToTable("Animals");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AnimalEntityId");
-                        });
+                    b.HasOne("Beagl.Infrastructure.AnimalManagement.Models.SpeciesModel", "Species")
+                        .WithMany()
+                        .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.DangerousDog", "DangerousDog", b1 =>
                         {
@@ -477,10 +551,10 @@ namespace Beagl.Infrastructure.Migrations
                                 .HasForeignKey("AnimalEntityId");
                         });
 
-                    b.Navigation("Breed")
-                        .IsRequired();
+                    b.Navigation("Color");
 
-                    b.Navigation("Created");
+                    b.Navigation("Created")
+                        .IsRequired();
 
                     b.Navigation("DangerousDog");
 
@@ -494,6 +568,34 @@ namespace Beagl.Infrastructure.Migrations
                     b.Navigation("OriginCityInfo");
 
                     b.Navigation("Photo");
+
+                    b.Navigation("PrimaryBreed");
+
+                    b.Navigation("SecondaryBreed");
+
+                    b.Navigation("Species");
+                });
+
+            modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.BreedModel", b =>
+                {
+                    b.HasOne("Beagl.Infrastructure.AnimalManagement.Models.SpeciesModel", "Species")
+                        .WithMany()
+                        .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Species");
+                });
+
+            modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.ColorModel", b =>
+                {
+                    b.HasOne("Beagl.Infrastructure.AnimalManagement.Models.SpeciesModel", "Species")
+                        .WithMany()
+                        .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Species");
                 });
 
             modelBuilder.Entity("Beagl.Infrastructure.AnimalManagement.Models.HealthRecordEntity", b =>
