@@ -3,13 +3,37 @@
 using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.Core.ValueObjects;
 
+
 namespace Beagl.Infrastructure.AnimalManagement.Models;
+
+/// <summary>
+/// Enum for animal species type.
+/// </summary>
+public enum SpeciesType
+{
+    /// <summary>
+    /// Represents an unknown or unspecified species.
+    /// </summary>
+    Unknown = 0,
+    /// <summary>
+    /// Represents a cat.
+    /// </summary>
+    Cat = 1,
+    /// <summary>
+    /// Represents a dog.
+    /// </summary>
+    Dog = 2
+}
 
 /// <summary>
 /// Persistence model for Animal aggregate, using value objects.
 /// </summary>
 public class AnimalModel
 {
+    /// <summary>
+    /// Gets or sets the species type (discriminator for TPT).
+    /// </summary>
+    public SpeciesType SpeciesType { get; set; } = SpeciesType.Unknown;
     /// <summary>
     /// Gets or sets the unique identifier for the animal.
     /// </summary>
@@ -20,18 +44,6 @@ public class AnimalModel
     /// </summary>
     public string Name { get; set; } = default!;
 
-
-    /// <summary>
-    /// Gets or sets the foreign key for the species of the animal.
-    /// </summary>
-    public Guid SpeciesId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the related species entity.
-    /// </summary>
-    public SpeciesModel? Species { get; set; }
-
-
     /// <summary>
     /// Gets or sets the foreign key for the primary breed of the animal.
     /// </summary>
@@ -41,17 +53,6 @@ public class AnimalModel
     /// Gets or sets the related primary breed entity.
     /// </summary>
     public BreedModel? PrimaryBreed { get; set; }
-
-    /// <summary>
-    /// Gets or sets the foreign key for the secondary breed of the animal (optional).
-    /// </summary>
-    public Guid? SecondaryBreedId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the related secondary breed entity.
-    /// </summary>
-    public BreedModel? SecondaryBreed { get; set; }
-
 
     /// <summary>
     /// Gets or sets the foreign key for the color of the animal.
@@ -87,26 +88,6 @@ public class AnimalModel
     /// Gets or sets the microchip information for the animal.
     /// </summary>
     public Microchip? Microchip { get; set; }
-
-    /// <summary>
-    /// Gets or sets the dangerous dog status and related information.
-    /// </summary>
-    public DangerousDog? DangerousDog { get; set; }
-
-    /// <summary>
-    /// Gets or sets whether the animal is an assistance dog.
-    /// </summary>
-    public bool IsAnAssistanceDog { get; set; }
-
-    /// <summary>
-    /// Gets or sets whether the animal is an unclawned cat.
-    /// </summary>
-    public bool IsAnUnclawnedCat { get; set; }
-
-    /// <summary>
-    /// Gets or sets the origin city information for the animal.
-    /// </summary>
-    public OriginCityInfo? OriginCityInfo { get; set; }
 
     /// <summary>
     /// Gets the audit information for creation.

@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Beagl.Domain.Core;
 using Beagl.Infrastructure.UserManagement.Entities;
-using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Infrastructure.AnimalManagement.Models;
 
 namespace Beagl.Infrastructure;
@@ -62,32 +61,28 @@ public static class DatabaseInitializer
 
         ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        Guid catId = await CreateSpeciesIfNotExistsAsync(dbContext, "Chat");
-        Guid dogId = await CreateSpeciesIfNotExistsAsync(dbContext, "Chien");
+        await AddCatColorsIfNoneExistsAsync(dbContext);
+        await AddDogColorsIfNoneExistsAsync(dbContext);
 
-        await AddCatColorsIfNoneExistsAsync(dbContext, catId);
-        await AddDogColorsIfNoneExistsAsync(dbContext, dogId);
-
-        await AddCatBreedsIfNoneExistsAsync(dbContext, catId);
-        await AddDogBreedsIfNoneExistsAsync(dbContext, dogId);
+        await AddCatBreedsIfNoneExistsAsync(dbContext);
+        await AddDogBreedsIfNoneExistsAsync(dbContext);
     }
 
     private static async Task AddDogBreedsIfNoneExistsAsync(
-        ApplicationDbContext dbContext,
-        Guid dogSpeciesId)
+        ApplicationDbContext dbContext)
     {
-        if (!await dbContext.Breeds.AnyAsync(b => b.SpeciesId == dogSpeciesId))
+        if (!await dbContext.Breeds.AnyAsync(b => b.SpeciesType == SpeciesType.Dog))
         {
             BreedModel[] breeds =
             [
-                new BreedModel { Id = Guid.NewGuid(), Name = "Labrador Retriever", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Berger Allemand", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Golden Retriever", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Bulldog Français", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Beagle", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Caniche", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Rottweiler", SpeciesId = dogSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Yorkshire Terrier", SpeciesId = dogSpeciesId }
+                new BreedModel { Id = Guid.NewGuid(), Name = "Labrador Retriever" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Berger Allemand" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Golden Retriever" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Bulldog Français" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Beagle" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Caniche" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Rottweiler" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Yorkshire Terrier" }
             ];
 
             dbContext.Breeds.AddRange(breeds);
@@ -96,21 +91,20 @@ public static class DatabaseInitializer
     }
 
     private static async Task AddCatBreedsIfNoneExistsAsync(
-        ApplicationDbContext dbContext,
-        Guid catSpeciesId)
+        ApplicationDbContext dbContext)
     {
-        if (!await dbContext.Breeds.AnyAsync(b => b.SpeciesId == catSpeciesId))
+        if (!await dbContext.Breeds.AnyAsync(b => b.SpeciesType == SpeciesType.Cat))
         {
             BreedModel[] breeds =
             [
-                new BreedModel { Id = Guid.NewGuid(), Name = "Siamois", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Maine Coon", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Chartreux", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Persan", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Sacré de Birmanie", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "British Shorthair", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Bengal", SpeciesId = catSpeciesId },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Sphynx", SpeciesId = catSpeciesId }
+                new BreedModel { Id = Guid.NewGuid(), Name = "Siamois" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Maine Coon" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Chartreux" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Persan" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Sacré de Birmanie" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "British Shorthair" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Bengal" },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Sphynx" }
             ];
 
             dbContext.Breeds.AddRange(breeds);
@@ -119,19 +113,18 @@ public static class DatabaseInitializer
     }
 
     private static async Task AddDogColorsIfNoneExistsAsync(
-        ApplicationDbContext dbContext,
-        Guid dogSpeciesId)
+        ApplicationDbContext dbContext)
     {
-        if (!await dbContext.Colors.AnyAsync(c => c.SpeciesId == dogSpeciesId))
+        if (!await dbContext.Colors.AnyAsync(c => c.SpeciesType == SpeciesType.Dog))
         {
             ColorModel[] colors =
             [
-                new ColorModel { Id = Guid.NewGuid(), Name = "Noir", SpeciesId = dogSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Blanc", SpeciesId = dogSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Marron", SpeciesId = dogSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Doré", SpeciesId = dogSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Gris", SpeciesId = dogSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Tacheté", SpeciesId = dogSpeciesId }
+                new ColorModel { Id = Guid.NewGuid(), Name = "Noir", SpeciesType = SpeciesType.Dog },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Blanc", SpeciesType = SpeciesType.Dog },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Marron", SpeciesType = SpeciesType.Dog },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Doré", SpeciesType = SpeciesType.Dog },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Gris", SpeciesType = SpeciesType.Dog },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Tacheté", SpeciesType = SpeciesType.Dog }
             ];
 
             dbContext.Colors.AddRange(colors);
@@ -140,43 +133,23 @@ public static class DatabaseInitializer
     }
 
     private static async Task AddCatColorsIfNoneExistsAsync(
-        ApplicationDbContext dbContext,
-        Guid catSpeciesId)
+        ApplicationDbContext dbContext)
     {
-        if (!await dbContext.Colors.AnyAsync(c => c.SpeciesId == catSpeciesId))
+        if (!await dbContext.Colors.AnyAsync(c => c.SpeciesType == SpeciesType.Cat))
         {
             ColorModel[] colors =
             [
-                new ColorModel { Id = Guid.NewGuid(), Name = "Noir", SpeciesId = catSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Blanc", SpeciesId = catSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Gris", SpeciesId = catSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Rouge", SpeciesId = catSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Tigré", SpeciesId = catSpeciesId },
-                new ColorModel { Id = Guid.NewGuid(), Name = "Calico", SpeciesId = catSpeciesId }
+                new ColorModel { Id = Guid.NewGuid(), Name = "Noir", SpeciesType = SpeciesType.Cat },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Blanc", SpeciesType = SpeciesType.Cat },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Gris", SpeciesType = SpeciesType.Cat },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Rouge", SpeciesType = SpeciesType.Cat },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Tigré", SpeciesType = SpeciesType.Cat },
+                new ColorModel { Id = Guid.NewGuid(), Name = "Calico", SpeciesType = SpeciesType.Cat }
             ];
 
             dbContext.Colors.AddRange(colors);
             await dbContext.SaveChangesAsync();
         }
-    }
-
-    private static async Task<Guid> CreateSpeciesIfNotExistsAsync(
-        ApplicationDbContext dbContext,
-        string speciesName)
-    {
-        SpeciesModel? species = await dbContext.Set<SpeciesModel>()
-            .FirstOrDefaultAsync(s => s.Name == speciesName);
-
-        if (species == null)
-        {
-            Guid speciesId = Guid.NewGuid();
-            species = new SpeciesModel { Id = speciesId, Name = speciesName, IsActive = true };
-            dbContext.Set<SpeciesModel>().Add(species);
-            await dbContext.SaveChangesAsync();
-            return speciesId;
-        }
-
-        return species.Id;
     }
 
     private static async Task CreateRoleIfNotExistsAsync(

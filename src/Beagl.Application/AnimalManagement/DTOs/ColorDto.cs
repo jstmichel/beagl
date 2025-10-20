@@ -15,11 +15,6 @@ public sealed class ColorDto
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the species ID associated with this color.
-    /// </summary>
-    public Guid SpeciesId { get; set; }
-
-    /// <summary>
     /// Gets or sets the name of the color.
     /// </summary>
     public string Name { get; set; } = string.Empty;

@@ -1,12 +1,5 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.AnimalManagement.DTOs;
-using Beagl.Application.AnimalManagement.Services;
-using Beagl.Domain.AnimalManagement;
-using Beagl.Domain.AnimalManagement.Repositories;
-using Beagl.Domain.Core.Interfaces;
-using Beagl.Infrastructure.AnimalManagement.Mappers;
-using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +31,6 @@ public static class ServiceCollectionInfrastructureExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddMappers(this IServiceCollection services)
     {
-        services.AddScoped<IEntityMapper<Animal, AnimalDto>, AnimalMapper>();
         return services;
     }
 
@@ -59,7 +51,6 @@ public static class ServiceCollectionInfrastructureExtensions
     /// <returns></returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IAnimalService, AnimalService>();
         return services;
     }
 
@@ -70,7 +61,6 @@ public static class ServiceCollectionInfrastructureExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IAnimalRepository, AnimalRepository>();
         return services;
     }
 }

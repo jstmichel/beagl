@@ -21,9 +21,14 @@ public class ApplicationDbContext(
     public DbSet<AnimalModel> Animals { get; set; } = null!;
 
     /// <summary>
-    /// Gets or sets the Species table.
+    /// Gets or sets the Dogs table.
     /// </summary>
-    public DbSet<SpeciesModel> Species { get; set; } = null!;
+    public DbSet<DogModel> Dogs { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the Cats table.
+    /// </summary>
+    public DbSet<CatModel> Cats { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the Colors table.
@@ -47,20 +52,9 @@ public class ApplicationDbContext(
         // Configure AnimalModel relationships and owned types
         builder.Entity<AnimalModel>(entity =>
         {
-            // Relationships
-            entity.HasOne(a => a.Species)
-                .WithMany()
-                .HasForeignKey(a => a.SpeciesId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             entity.HasOne(a => a.PrimaryBreed)
                 .WithMany()
                 .HasForeignKey(a => a.PrimaryBreedId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            entity.HasOne(a => a.SecondaryBreed)
-                .WithMany()
-                .HasForeignKey(a => a.SecondaryBreedId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(a => a.Color)
@@ -69,11 +63,6 @@ public class ApplicationDbContext(
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Owned value objects
-            entity.OwnsOne(a => a.OriginCityInfo, oci =>
-            {
-                oci.Property(x => x.ComesFromAnotherCity).HasColumnName("ComesFromAnotherCity");
-                oci.Property(x => x.HadJudgmentInThatCity).HasColumnName("HadJudgmentInThatCity");
-            });
             entity.OwnsOne(a => a.Gender, g =>
             {
                 g.Property(x => x.Value).HasColumnName("Gender");
@@ -86,12 +75,6 @@ public class ApplicationDbContext(
             {
                 m.Property(x => x.Value).HasColumnName("Microchip");
             });
-            entity.OwnsOne(a => a.DangerousDog, dd =>
-            {
-                dd.Property(p => p.IsDangerous).HasColumnName("IsDangerousDog");
-                dd.Property(p => p.HasResponsibilityInsurance).HasColumnName("HasDangerousDogInsurance");
-                dd.Property(p => p.Comment).HasColumnName("DangerousDogComment");
-            });
             entity.OwnsOne(hr => hr.Created, a =>
             {
                 a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
@@ -101,6 +84,32 @@ public class ApplicationDbContext(
             {
                 a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
+            });
+
+            entity.HasDiscriminator(a => a.SpeciesType)
+                .HasValue<AnimalModel>(SpeciesType.Unknown)
+                .HasValue<DogModel>(SpeciesType.Dog)
+                .HasValue<CatModel>(SpeciesType.Cat);
+        });
+
+        builder.Entity<DogModel>(entity =>
+        {
+            entity.HasOne(a => a.SecondaryBreed)
+                .WithMany()
+                .HasForeignKey(a => a.SecondaryBreedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.OwnsOne(a => a.OriginCityInfo, oci =>
+            {
+                oci.Property(x => x.ComesFromAnotherCity).HasColumnName("ComesFromAnotherCity");
+                oci.Property(x => x.HadJudgmentInThatCity).HasColumnName("HadJudgmentInThatCity");
+            });
+
+            entity.OwnsOne(a => a.DangerousDog, dd =>
+            {
+                dd.Property(p => p.IsDangerous).HasColumnName("IsDangerousDog");
+                dd.Property(p => p.HasResponsibilityInsurance).HasColumnName("HasDangerousDogInsurance");
+                dd.Property(p => p.Comment).HasColumnName("DangerousDogComment");
             });
         });
     }

@@ -15,11 +15,6 @@ public sealed class BreedDto
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the species ID associated with this breed.
-    /// </summary>
-    public Guid SpeciesId { get; set; }
-
-    /// <summary>
     /// Gets or sets the name of the breed.
     /// </summary>
     public string Name { get; set; } = string.Empty;

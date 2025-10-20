@@ -25,13 +25,7 @@ public class ColorModel
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the foreign key to the species this color is available for.
+    /// Gets or sets the species type this color is available for.
     /// </summary>
-    [ForeignKey("Species")]
-    public Guid SpeciesId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the related species entity.
-    /// </summary>
-    public SpeciesModel? Species { get; set; }
+    public SpeciesType SpeciesType { get; set; }
 }

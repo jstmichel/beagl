@@ -22,7 +22,6 @@ public sealed class ColorQueryService(ApplicationDbContext dbContext) : IColorQu
             .Select(c => new ColorDto
             {
                 Id = c.Id,
-                SpeciesId = c.SpeciesId,
                 Name = c.Name
             })
             .ToListAsync();
