@@ -22,6 +22,10 @@ public static class ServiceCollectionQueryExtensions
     {
         services.AddScoped<IUserQueryService, UserQueryService>();
         services.AddScoped<IAnimalQueryService, AnimalQueryService>();
+        services.AddScoped<ISpeciesQueryService, SpeciesQueryService>();
+        services.AddScoped<IBreedQueryService, BreedQueryService>();
+        services.AddScoped<IColorQueryService, ColorQueryService>();
+
         return services;
     }
 }

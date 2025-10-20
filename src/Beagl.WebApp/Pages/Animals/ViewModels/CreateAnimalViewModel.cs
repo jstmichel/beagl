@@ -21,6 +21,29 @@ public sealed class CreateAnimalViewModel
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
+    /// Gets or sets the selected species ID.
+    /// </summary>
+    [Required]
+    public Guid SpeciesId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the selected primary breed ID.
+    /// </summary>
+    [Required]
+    public Guid BreedPrimaryId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the selected secondary breed ID (optional).
+    /// </summary>
+    public Guid? BreedSecondaryId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the selected color ID.
+    /// </summary>
+    [Required]
+    public Guid ColorId { get; set; }
+
+    /// <summary>
     /// Gets or sets the species of the animal.
     /// </summary>
     public string Species { get; set; } = string.Empty;

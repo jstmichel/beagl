@@ -34,21 +34,34 @@
                             <input asp-for="Animal.Name" class="form-control form-control-lg" />
                             <span asp-validation-for="Animal.Name" class="text-danger"></span>
                         </div>
-                        @* <div class="col-12 col-md-6">
-                            <label asp-for="Animal.Species" class="form-label fs-6">Species</label>
-                            <input asp-for="Animal.Species" class="form-control form-control-lg" />
-                            <span asp-validation-for="Animal.Species" class="text-danger"></span>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Animal.SpeciesId" class="form-label fs-6">Species</label>
+                            <select asp-for="Animal.SpeciesId" class="form-select form-select-lg" asp-items="@(new SelectList(Model.SpeciesList, "Id", "Name"))">
+                                <option value="">Select species...</option>
+                            </select>
+                            <span asp-validation-for="Animal.SpeciesId" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label asp-for="Animal.Breed" class="form-label fs-6">Breed</label>
-                            <input asp-for="Animal.Breed" class="form-control form-control-lg" />
-                            <span asp-validation-for="Animal.Breed" class="text-danger"></span>
+                            <label asp-for="Animal.BreedPrimaryId" class="form-label fs-6">Primary Breed</label>
+                            <select asp-for="Animal.BreedPrimaryId" class="form-select form-select-lg" asp-items="@(new SelectList(Model.BreedList, "Id", "Name"))">
+                                <option value="">Select primary breed...</option>
+                            </select>
+                            <span asp-validation-for="Animal.BreedPrimaryId" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label asp-for="Animal.Color" class="form-label fs-6">Color</label>
-                            <input asp-for="Animal.Color" class="form-control form-control-lg" />
-                            <span asp-validation-for="Animal.Color" class="text-danger"></span>
-                        </div> *@
+                            <label asp-for="Animal.BreedSecondaryId" class="form-label fs-6">Secondary Breed (optional)</label>
+                            <select asp-for="Animal.BreedSecondaryId" class="form-select form-select-lg" asp-items="@(new SelectList(Model.BreedList, "Id", "Name"))">
+                                <option value="">Select secondary breed...</option>
+                            </select>
+                            <span asp-validation-for="Animal.BreedSecondaryId" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Animal.ColorId" class="form-label fs-6">Color</label>
+                            <select asp-for="Animal.ColorId" class="form-select form-select-lg" asp-items="@(new SelectList(Model.ColorList, "Id", "Name"))">
+                                <option value="">Select color...</option>
+                            </select>
+                            <span asp-validation-for="Animal.ColorId" class="text-danger"></span>
+                        </div>
                         <div class="col-12 col-md-6">
                             <label asp-for="Animal.Gender" class="form-label fs-6">Gender</label>
                             <input asp-for="Animal.Gender" class="form-control form-control-lg" />
