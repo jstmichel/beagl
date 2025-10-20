@@ -21,7 +21,7 @@ public class AnimalRepository
     /// <inheritdoc/>
     public Task AddAsync(Animal animal)
     {
-        AnimalEntity entity = animal.ToEntity();
+        AnimalModel entity = animal.ToEntity();
         dbContext.Animals.Add(entity);
         return dbContext.SaveChangesAsync();
     }
@@ -38,12 +38,12 @@ public class AnimalRepository
         AnimalPagedFilterDto animalFilter =
             FilterCastingHelper.CastFilterTo<AnimalPagedFilterDto>(filter);
 
-        IQueryable<AnimalEntity> query = dbContext.Animals;
+        IQueryable<AnimalModel> query = dbContext.Animals;
         //query = ApplyFiltersToQuery(query, animalFilter);
         //query = ApplyOrderingByUsernameToQuery(query);
         int totalCount = 1; //await GetCountAsync(query);
 
-        List<AnimalEntity> animals = await query
+        List<AnimalModel> animals = await query
              .Paginate(animalFilter.PageNumber, animalFilter.PageSize)
              .ToListAsync();
 

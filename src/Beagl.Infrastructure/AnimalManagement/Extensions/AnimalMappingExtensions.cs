@@ -12,15 +12,15 @@ namespace Beagl.Infrastructure.AnimalManagement.Extensions;
 public static class AnimalMappingExtensions
 {
     /// <summary>
-    /// Maps an <see cref="Animal"/> aggregate to an <see cref="AnimalEntity"/> persistence model.
+    /// Maps an <see cref="Animal"/> aggregate to an <see cref="AnimalModel"/> persistence model.
     /// </summary>
     /// <param name="animal">The domain aggregate to map.</param>
     /// <returns>The mapped persistence model.</returns>
-    public static AnimalEntity ToEntity(this Animal animal)
+    public static AnimalModel ToEntity(this Animal animal)
     {
         ArgumentNullException.ThrowIfNull(animal);
         animal.Created.At = animal.Created.At.ToUniversalTime();
-        AnimalEntity entity = new()
+        AnimalModel entity = new()
         {
             Id = animal.Id,
             Name = animal.Name,
@@ -49,11 +49,11 @@ public static class AnimalMappingExtensions
     }
 
     /// <summary>
-    /// Maps an <see cref="AnimalEntity"/> persistence model to an <see cref="Animal"/> aggregate.
+    /// Maps an <see cref="AnimalModel"/> persistence model to an <see cref="Animal"/> aggregate.
     /// </summary>
     /// <param name="entity">The persistence model to map.</param>
     /// <returns>The mapped domain aggregate.</returns>
-    public static Animal ToDomain(this AnimalEntity entity)
+    public static Animal ToDomain(this AnimalModel entity)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
@@ -81,11 +81,11 @@ public static class AnimalMappingExtensions
     }
 
     /// <summary>
-    /// Maps an <see cref="AnimalEntity"/> persistence model to an <see cref="Animal"/> aggregate.
+    /// Maps an <see cref="AnimalModel"/> persistence model to an <see cref="Animal"/> aggregate.
     /// </summary>
     /// <param name="entity">The persistence model to map.</param>
     /// <returns>The mapped domain aggregate.</returns>
-    public static AnimalListDto ToListDto(this AnimalEntity entity)
+    public static AnimalListDto ToListDto(this AnimalModel entity)
     {
         ArgumentNullException.ThrowIfNull(entity);
 

@@ -8,7 +8,7 @@ namespace Beagl.Infrastructure.AnimalManagement.Models;
 /// <summary>
 /// Persistence model for Animal aggregate, using value objects.
 /// </summary>
-public class AnimalEntity
+public class AnimalModel
 {
     /// <summary>
     /// Gets or sets the unique identifier for the animal.
@@ -117,14 +117,4 @@ public class AnimalEntity
     /// Gets the audit information for last modification.
     /// </summary>
     public Audit<Guid>? Modified { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
-
-    /// <summary>
-    /// Gets or sets the collection of health records associated with the animal.
-    /// </summary>
-    public ICollection<HealthRecordEntity> HealthRecords { get; } = [];
-
-    /// <summary>
-    /// Gets or sets the collection of medal records associated with the animal.
-    /// </summary>
-    public ICollection<MedalRecordEntity> MedalRecords { get; } = [];
 }

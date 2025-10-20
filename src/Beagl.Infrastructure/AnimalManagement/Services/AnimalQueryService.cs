@@ -18,7 +18,7 @@ public sealed class AnimalQueryService (
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        IQueryable<AnimalEntity> query = dbContext.Animals;
+        IQueryable<AnimalModel> query = dbContext.Animals;
         int totalCount = await query.CountAsync();
         IList<AnimalListDto> items = await query
             .Skip((filter.PageNumber - 1) * filter.PageSize)

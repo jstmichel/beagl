@@ -2,8 +2,6 @@
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Beagl.Domain.AnimalManagement;
-using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.AnimalManagement.Models;
 
@@ -20,17 +18,7 @@ public class ApplicationDbContext(
     /// <summary>
     /// Gets or sets the Animals table.
     /// </summary>
-    public DbSet<AnimalEntity> Animals { get; set; } = null!;
-
-    /// <summary>
-    /// Gets or sets the HealthRecords table.
-    /// </summary>
-    public DbSet<HealthRecordEntity> HealthRecords { get; set; } = null!;
-
-    /// <summary>
-    /// Gets or sets the MedalRecords table.
-    /// </summary>
-    public DbSet<MedalRecordEntity> MedalRecords { get; set; } = null!;
+    public DbSet<AnimalModel> Animals { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the Species table.
@@ -56,25 +44,8 @@ public class ApplicationDbContext(
         ArgumentNullException.ThrowIfNull(builder);
         base.OnModelCreating(builder);
 
-        builder.Entity<MedalRecordEntity>(entity =>
-        {
-            entity.Property(m => m.MedalNumber).IsRequired();
-            entity.Property(m => m.AssignedDate).IsRequired();
-            entity.Property(m => m.Reason);
-            entity.OwnsOne(hr => hr.Created, a =>
-            {
-                a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
-                a.Property(p => p.At).HasColumnName("CreatedAt");
-            });
-            entity.OwnsOne(hr => hr.Modified, a =>
-            {
-                a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
-                a.Property(p => p.At).HasColumnName("ModifiedAt");
-            });
-        });
-
-        // Configure AnimalEntity relationships and owned types
-        builder.Entity<AnimalEntity>(entity =>
+        // Configure AnimalModel relationships and owned types
+        builder.Entity<AnimalModel>(entity =>
         {
             // Relationships
             entity.HasOne(a => a.Species)
@@ -120,25 +91,6 @@ public class ApplicationDbContext(
                 dd.Property(p => p.IsDangerous).HasColumnName("IsDangerousDog");
                 dd.Property(p => p.HasResponsibilityInsurance).HasColumnName("HasDangerousDogInsurance");
                 dd.Property(p => p.Comment).HasColumnName("DangerousDogComment");
-            });
-            entity.OwnsOne(hr => hr.Created, a =>
-            {
-                a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
-                a.Property(p => p.At).HasColumnName("CreatedAt");
-            });
-            entity.OwnsOne(hr => hr.Modified, a =>
-            {
-                a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
-                a.Property(p => p.At).HasColumnName("ModifiedAt");
-            });
-        });
-
-        builder.Entity<HealthRecordEntity>(entity =>
-        {
-            entity.OwnsOne(hr => hr.Weight, w =>
-            {
-                w.Property(p => p.Value).HasColumnName("WeightValue");
-                w.Property(p => p.Unit).HasColumnName("WeightUnit");
             });
             entity.OwnsOne(hr => hr.Created, a =>
             {
