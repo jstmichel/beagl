@@ -12,8 +12,6 @@ namespace Beagl.WebApp.Pages.Animals;
 /// Page model for creating a new animal.
 /// </summary>
 internal sealed class CreateModel(
-    // IAnimalService animalService,
-    ISpeciesQueryService speciesQueryService,
     IBreedQueryService breedQueryService,
     IColorQueryService colorQueryService) : PageModel
 {
@@ -43,7 +41,6 @@ internal sealed class CreateModel(
     /// </summary>
     public async Task<IActionResult> OnGetAsync()
     {
-        SpeciesList = await speciesQueryService.GetAllAsync();
         BreedList = await breedQueryService.GetAllAsync();
         ColorList = await colorQueryService.GetAllAsync();
         return Page();

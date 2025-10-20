@@ -52,6 +52,7 @@ public class ApplicationDbContext(
         // Configure AnimalModel relationships and owned types
         builder.Entity<AnimalModel>(entity =>
         {
+            entity.ToTable("Animals");
             entity.HasOne(a => a.PrimaryBreed)
                 .WithMany()
                 .HasForeignKey(a => a.PrimaryBreedId)
@@ -85,15 +86,12 @@ public class ApplicationDbContext(
                 a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
-
-            entity.HasDiscriminator(a => a.SpeciesType)
-                .HasValue<AnimalModel>(SpeciesType.Unknown)
-                .HasValue<DogModel>(SpeciesType.Dog)
-                .HasValue<CatModel>(SpeciesType.Cat);
         });
 
+        // Configure TPT inheritance for DogModel
         builder.Entity<DogModel>(entity =>
         {
+            entity.ToTable("Dogs");
             entity.HasOne(a => a.SecondaryBreed)
                 .WithMany()
                 .HasForeignKey(a => a.SecondaryBreedId)
@@ -111,6 +109,13 @@ public class ApplicationDbContext(
                 dd.Property(p => p.HasResponsibilityInsurance).HasColumnName("HasDangerousDogInsurance");
                 dd.Property(p => p.Comment).HasColumnName("DangerousDogComment");
             });
+        });
+
+        // Configure TPT inheritance for CatModel
+        builder.Entity<CatModel>(entity =>
+        {
+            entity.ToTable("Cats");
+            // Add any Cat-specific configuration here if needed
         });
     }
 }
