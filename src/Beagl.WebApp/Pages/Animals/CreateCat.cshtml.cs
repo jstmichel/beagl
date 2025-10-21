@@ -11,7 +11,7 @@ namespace Beagl.WebApp.Pages.Animals;
 /// <summary>
 /// Page model for creating a new animal.
 /// </summary>
-internal sealed class CreateModel(
+internal sealed class CreateCatModel(
     IBreedQueryService breedQueryService,
     IColorQueryService colorQueryService) : PageModel
 {
@@ -19,12 +19,7 @@ internal sealed class CreateModel(
     /// Gets or sets the animal DTO for binding.
     /// </summary>
     [BindProperty]
-    public CreateAnimalViewModel Animal { get; set; } = new();
-
-    /// <summary>
-    /// Gets the list of species for the dropdown.
-    /// </summary>
-    public IList<SpeciesDto> SpeciesList { get; private set; } = [];
+    public CreateCatViewModel Cat { get; set; } = new();
 
     /// <summary>
     /// Gets the list of breeds for the dropdown.
@@ -46,29 +41,29 @@ internal sealed class CreateModel(
         return Page();
     }
 
-    // /// <summary>
-    // /// Handles the POST request to create a new animal.
-    // /// </summary>
-    // /// <returns>A redirect to the animal index page on success, or the current page on failure.</returns>
-    // public async Task<IActionResult> OnPostAsync()
-    // {
-    //     if (!ModelState.IsValid)
-    //     {
-    //         return Page();
-    //     }
+    /// <summary>
+    /// Handles the POST request to create a new animal.
+    /// </summary>
+    /// <returns>A redirect to the animal index page on success, or the current page on failure.</returns>
+    public IActionResult OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
+            return Page();
+        }
 
-    //     try
-    //     {
-    //         await CreateAsync();
-    //     }
-    //     catch (ArgumentNullException)
-    //     {
-    //         ModelState.AddModelError(string.Empty, "Invalid animal data provided.");
-    //         return Page();
-    //     }
+        // try
+        // {
+        //     //await CreateAsync();
+        // }
+        // catch (ArgumentNullException)
+        // {
+        //     ModelState.AddModelError(string.Empty, "Invalid animal data provided.");
+        //     return Page();
+        // }
 
-    //     return RedirectToPage("/Animals/Index");
-    // }
+        return RedirectToPage("/Animals/Index");
+    }
 
     // private async Task CreateAsync()
     // {
