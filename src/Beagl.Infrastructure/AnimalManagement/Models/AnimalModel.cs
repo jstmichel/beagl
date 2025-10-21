@@ -7,25 +7,6 @@ using Beagl.Domain.Core.ValueObjects;
 namespace Beagl.Infrastructure.AnimalManagement.Models;
 
 /// <summary>
-/// Enum for animal species type.
-/// </summary>
-public enum SpeciesType
-{
-    /// <summary>
-    /// Represents an unknown or unspecified species.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
-    /// Represents a cat.
-    /// </summary>
-    Cat = 1,
-    /// <summary>
-    /// Represents a dog.
-    /// </summary>
-    Dog = 2
-}
-
-/// <summary>
 /// Persistence model for Animal aggregate, using value objects.
 /// </summary>
 public class AnimalModel
@@ -88,6 +69,11 @@ public class AnimalModel
     /// Gets or sets the microchip information for the animal.
     /// </summary>
     public Microchip? Microchip { get; set; }
+
+    /// <summary>
+    /// Gets or sets the weight of the animal as a value object.
+    /// </summary>
+    public Weight Weight { get; set; } = new Weight(0m);
 
     /// <summary>
     /// Gets the audit information for creation.

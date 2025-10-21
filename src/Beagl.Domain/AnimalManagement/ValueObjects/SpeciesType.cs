@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-namespace Beagl.Domain.AnimalManagement.Entities;
+namespace Beagl.Domain.AnimalManagement.ValueObjects;
 
 /// <summary>
 /// Enum for animal species type.

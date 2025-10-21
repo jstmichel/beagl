@@ -37,6 +37,9 @@ namespace Beagl.Infrastructure.Migrations
                     b.Property<string>("DistinctiveDescription")
                         .HasColumnType("text");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -334,15 +337,15 @@ namespace Beagl.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Gender", "Gender", b1 =>
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Microchip", "Microchip", b1 =>
                         {
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("Value")
+                            b1.Property<string>("value")
                                 .IsRequired()
                                 .HasColumnType("text")
-                                .HasColumnName("Gender");
+                                .HasColumnName("Microchip");
 
                             b1.HasKey("AnimalModelId");
 
@@ -352,15 +355,18 @@ namespace Beagl.Infrastructure.Migrations
                                 .HasForeignKey("AnimalModelId");
                         });
 
-                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Microchip", "Microchip", b1 =>
+                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Weight", "Weight", b1 =>
                         {
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("Microchip");
+                            b1.Property<int>("Unit")
+                                .HasColumnType("integer")
+                                .HasColumnName("WeightUnit");
+
+                            b1.Property<decimal>("Value")
+                                .HasColumnType("numeric")
+                                .HasColumnName("Weight");
 
                             b1.HasKey("AnimalModelId");
 
@@ -375,7 +381,7 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("Base64Png")
+                            b1.Property<string>("base64Png")
                                 .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("PhotoBase64Png");
@@ -393,11 +399,11 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<DateTimeOffset>("At")
+                            b1.Property<DateTimeOffset>("at")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("CreatedAt");
 
-                            b1.Property<Guid>("UserId")
+                            b1.Property<Guid>("userId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("CreatedByUserId");
 
@@ -414,11 +420,11 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<DateTimeOffset>("At")
+                            b1.Property<DateTimeOffset>("at")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("ModifiedAt");
 
-                            b1.Property<Guid>("UserId")
+                            b1.Property<Guid>("userId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("ModifiedByUserId");
 
@@ -435,9 +441,6 @@ namespace Beagl.Infrastructure.Migrations
                     b.Navigation("Created")
                         .IsRequired();
 
-                    b.Navigation("Gender")
-                        .IsRequired();
-
                     b.Navigation("Microchip");
 
                     b.Navigation("Modified");
@@ -445,6 +448,9 @@ namespace Beagl.Infrastructure.Migrations
                     b.Navigation("Photo");
 
                     b.Navigation("PrimaryBreed");
+
+                    b.Navigation("Weight")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -525,15 +531,15 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("DogModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("Comment")
+                            b1.Property<string>("comment")
                                 .HasColumnType("text")
                                 .HasColumnName("DangerousDogComment");
 
-                            b1.Property<bool>("HasResponsibilityInsurance")
+                            b1.Property<bool>("hasResponsibilityInsurance")
                                 .HasColumnType("boolean")
                                 .HasColumnName("HasDangerousDogInsurance");
 
-                            b1.Property<bool>("IsDangerous")
+                            b1.Property<bool>("isDangerous")
                                 .HasColumnType("boolean")
                                 .HasColumnName("IsDangerousDog");
 
@@ -550,15 +556,15 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("DogModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("CityName")
+                            b1.Property<string>("cityName")
                                 .IsRequired()
                                 .HasColumnType("text");
 
-                            b1.Property<bool>("ComesFromAnotherCity")
+                            b1.Property<bool>("comesFromAnotherCity")
                                 .HasColumnType("boolean")
                                 .HasColumnName("ComesFromAnotherCity");
 
-                            b1.Property<bool>("HadJudgmentInThatCity")
+                            b1.Property<bool>("hadJudgmentInThatCity")
                                 .HasColumnType("boolean")
                                 .HasColumnName("HadJudgmentInThatCity");
 

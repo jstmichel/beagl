@@ -2,6 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 
 namespace Beagl.Infrastructure.AnimalManagement.Models;
 

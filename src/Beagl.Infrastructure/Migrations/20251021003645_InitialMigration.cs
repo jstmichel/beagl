@@ -195,10 +195,12 @@ namespace Beagl.Infrastructure.Migrations
                     PrimaryBreedId = table.Column<Guid>(type: "uuid", nullable: false),
                     ColorId = table.Column<Guid>(type: "uuid", nullable: false),
                     DistinctiveDescription = table.Column<string>(type: "text", nullable: true),
-                    Gender = table.Column<string>(type: "text", nullable: false),
+                    Gender = table.Column<int>(type: "integer", nullable: false),
                     DateOfBirth = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     PhotoBase64Png = table.Column<string>(type: "text", nullable: true),
                     Microchip = table.Column<string>(type: "text", nullable: true),
+                    Weight = table.Column<decimal>(type: "numeric", nullable: false),
+                    WeightUnit = table.Column<int>(type: "integer", nullable: false),
                     CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     ModifiedByUserId = table.Column<Guid>(type: "uuid", nullable: true),
@@ -250,7 +252,7 @@ namespace Beagl.Infrastructure.Migrations
                     DangerousDogComment = table.Column<string>(type: "text", nullable: true),
                     IsAnAssistanceDog = table.Column<bool>(type: "boolean", nullable: false),
                     ComesFromAnotherCity = table.Column<bool>(type: "boolean", nullable: true),
-                    OriginCityInfo_CityName = table.Column<string>(type: "text", nullable: true),
+                    OriginCityInfo_cityName = table.Column<string>(type: "text", nullable: true),
                     HadJudgmentInThatCity = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>

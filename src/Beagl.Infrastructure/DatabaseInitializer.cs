@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Beagl.Domain.Core;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.AnimalManagement.Models;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 
 namespace Beagl.Infrastructure;
 

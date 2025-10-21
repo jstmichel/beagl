@@ -11,9 +11,6 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// Base aggregate root for all animals.
 /// </summary>
 /// <remarks>
-/// Protected constructor for derived classes.
-/// </remarks>
-/// <remarks>
 /// Protected constructor for derived animal classes.
 /// </remarks>
 /// <param name="name">The animal's name.</param>

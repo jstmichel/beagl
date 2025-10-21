@@ -30,9 +30,9 @@ public sealed class AnimalQueryService (
                 // Species = a.Species,
                 // Breed = a.Breed.Primary,
                 // Color = a.Color,
-                Gender = a.Gender.Value,
+                //Gender = a.Gender,
                 BirthDate = a.DateOfBirth,
-                MicrochipNumber = a.Microchip!.Value
+                MicrochipNumber = a.Microchip!.value,
             })
             .ToListAsync();
             return (items, totalCount);
