@@ -76,14 +76,14 @@ public static class DatabaseInitializer
         {
             BreedModel[] breeds =
             [
-                new BreedModel { Id = Guid.NewGuid(), Name = "Labrador Retriever" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Berger Allemand" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Golden Retriever" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Bulldog Français" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Beagle" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Caniche" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Rottweiler" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Yorkshire Terrier" }
+                new BreedModel { Id = Guid.NewGuid(), Name = "Labrador Retriever", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Berger Allemand", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Golden Retriever", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Bulldog Français", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Beagle", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Caniche", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Rottweiler", SpeciesType = SpeciesType.Dog },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Yorkshire Terrier", SpeciesType = SpeciesType.Dog }
             ];
 
             dbContext.Breeds.AddRange(breeds);
@@ -98,14 +98,14 @@ public static class DatabaseInitializer
         {
             BreedModel[] breeds =
             [
-                new BreedModel { Id = Guid.NewGuid(), Name = "Siamois" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Maine Coon" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Chartreux" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Persan" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Sacré de Birmanie" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "British Shorthair" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Bengal" },
-                new BreedModel { Id = Guid.NewGuid(), Name = "Sphynx" }
+                new BreedModel { Id = Guid.NewGuid(), Name = "Siamois", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Maine Coon", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Chartreux", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Persan", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Sacré de Birmanie", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "British Shorthair", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Bengal", SpeciesType = SpeciesType.Cat },
+                new BreedModel { Id = Guid.NewGuid(), Name = "Sphynx", SpeciesType = SpeciesType.Cat }
             ];
 
             dbContext.Breeds.AddRange(breeds);

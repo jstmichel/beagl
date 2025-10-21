@@ -30,7 +30,7 @@ internal class CreateAnimalViewModel
     /// <summary>
     /// Gets or sets the distinctive description of the animal.
     /// </summary>
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the gender of the animal.

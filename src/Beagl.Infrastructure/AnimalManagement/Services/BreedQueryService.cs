@@ -2,6 +2,7 @@
 
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Infrastructure.AnimalManagement.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,9 +18,10 @@ namespace Beagl.Infrastructure.AnimalManagement.Services;
 public sealed class BreedQueryService(ApplicationDbContext dbContext) : IBreedQueryService
 {
     /// <inheritdoc/>
-    public async Task<IList<BreedDto>> GetAllAsync()
+    public async Task<IList<BreedDto>> GetAllBySpeciesAsync(SpeciesType species)
     {
         return await dbContext.Breeds
+            .Where(b => b.SpeciesType == species)
             .Select(b => new BreedDto
             {
                 Id = b.Id,

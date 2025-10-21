@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 
 namespace Beagl.Application.AnimalManagement.Services;
 
@@ -15,5 +16,5 @@ public interface IBreedQueryService
     /// Gets all available breeds for dropdowns.
     /// </summary>
     /// <returns>List of breed DTOs.</returns>
-    public Task<IList<BreedDto>> GetAllAsync();
+    public Task<IList<BreedDto>> GetAllBySpeciesAsync(SpeciesType species);
 }

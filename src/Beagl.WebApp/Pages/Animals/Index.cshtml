@@ -11,9 +11,82 @@
     <div class="row mb-4">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <h2 class="fw-bold">Animals</h2>
-            <a asp-page="CreateCat" class="btn btn-primary btn-lg">Add Cat</a>
-            <a asp-page="CreateDog" class="btn btn-primary btn-lg">Add Dog</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="dropdown" aria-expanded="false">Add Animal</button>
+                <button type="button" class="btn btn-primary btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="#" id="createCatChoice">Create Cat</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/Animals/CreateDog">Create Dog</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <!-- Create Cat Modal -->
+        <div class="modal fade" id="createCatModal" tabindex="-1" aria-labelledby="createCatModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createCatModalLabel">Create Cat</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="createCatModalBody">
+                        <!-- Form will be loaded here via AJAX -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var createCatChoice = document.getElementById('createCatChoice');
+            var createCatModal = document.getElementById('createCatModal');
+            createCatChoice.addEventListener('click', function (e) {
+                e.preventDefault();
+                var catModal = new bootstrap.Modal(createCatModal);
+                catModal.show();
+            });
+            createCatModal.addEventListener('show.bs.modal', function () {
+                fetch('/Animals/Index?handler=CreateCatPartial')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('createCatModalBody').innerHTML = html;
+                    });
+            });
+            // Optional: handle form submission via AJAX
+            document.addEventListener('submit', function (e) {
+                var form = e.target;
+                if (form.closest('#createCatModalBody')) {
+                    e.preventDefault();
+                    var formData = new FormData(form);
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        // Try to parse as JSON
+                        return response.json().catch(() => null);
+                    })
+                    .then(data => {
+                        if (data && data.success) {
+                            // Close modal and reload page
+                            var modal = bootstrap.Modal.getInstance(document.getElementById('createCatModal'));
+                            modal.hide();
+                            location.reload();
+                        } else {
+                            // If not JSON, fallback to HTML (validation errors)
+                            response.text().then(html => {
+                                document.getElementById('createCatModalBody').innerHTML = html;
+                            });
+                        }
+                    });
+                }
+            });
+        });
+        </script>
     </div>
     <div class="row">
         <div class="col-12">

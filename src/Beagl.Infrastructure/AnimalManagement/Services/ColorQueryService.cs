@@ -2,6 +2,7 @@
 
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beagl.Infrastructure.AnimalManagement.Services;
@@ -16,9 +17,10 @@ namespace Beagl.Infrastructure.AnimalManagement.Services;
 public sealed class ColorQueryService(ApplicationDbContext dbContext) : IColorQueryService
 {
     /// <inheritdoc/>
-    public async Task<IList<ColorDto>> GetAllAsync()
+    public async Task<IList<ColorDto>> GetAllBySpeciesAsync(SpeciesType species)
     {
         return await dbContext.Colors
+            .Where(c => c.SpeciesType == species)
             .Select(c => new ColorDto
             {
                 Id = c.Id,

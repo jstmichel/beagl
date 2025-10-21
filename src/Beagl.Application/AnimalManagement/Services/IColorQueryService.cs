@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 
 namespace Beagl.Application.AnimalManagement.Services;
 
@@ -15,5 +16,5 @@ public interface IColorQueryService
     /// Gets all available colors for dropdowns.
     /// </summary>
     /// <returns>List of color DTOs.</returns>
-    public Task<IList<ColorDto>> GetAllAsync();
+    public Task<IList<ColorDto>> GetAllBySpeciesAsync(SpeciesType species);
 }
