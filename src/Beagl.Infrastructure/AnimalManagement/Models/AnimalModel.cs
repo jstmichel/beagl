@@ -73,7 +73,7 @@ public class AnimalModel
     /// <summary>
     /// Gets or sets the weight of the animal as a value object.
     /// </summary>
-    public Weight Weight { get; set; } = new Weight(0m);
+    public required Weight Weight { get; set; }
 
     /// <summary>
     /// Gets the audit information for creation.

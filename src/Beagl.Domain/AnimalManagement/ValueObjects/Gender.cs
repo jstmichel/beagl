@@ -24,3 +24,19 @@ public enum Gender
     /// </summary>
     Female = 2,
 }
+
+/// <summary>
+/// Helper methods for the <see cref="Gender"/> enum.
+/// </summary>
+public static class GenderHelper
+{
+    /// <summary>
+    /// Converts an integer to a <see cref="Gender"/> enum value.
+    /// </summary>
+    public static Gender FromInt(int value)
+    {
+        if (!Enum.IsDefined(typeof(Gender), value))
+            throw new ArgumentException("Invalid gender value.", nameof(value));
+        return (Gender)value;
+    }
+}

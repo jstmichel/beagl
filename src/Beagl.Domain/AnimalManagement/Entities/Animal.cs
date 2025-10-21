@@ -22,6 +22,7 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// <param name="microchip">Optional microchip.</param>
 /// <param name="createdByUserId">Identifier of the user who created the animal.</param>
 /// <param name="createdAt">Date and time when the animal was created.</param>
+/// <param name="distinctiveDescription">Distinctive description of the animal.</param>
 /// <param name="modifiedByUserId">Optional identifier of the user who last modified the animal.</param>
 /// <param name="modifiedAt">Optional date and time when the animal was last modified.</param>
 /// <param name="speciesType">Species type of the animal.</param>
@@ -33,6 +34,7 @@ public abstract class Animal(string name,
     DateTimeOffset birthDate,
     Photo? photo,
     Microchip? microchip,
+    string distinctiveDescription,
     Guid createdByUserId,
     DateTimeOffset createdAt,
     Guid? modifiedByUserId = null,
@@ -79,4 +81,9 @@ public abstract class Animal(string name,
     /// Gets the species type of the animal.
     /// </summary>
     public SpeciesType SpeciesType { get; protected set; } = speciesType;
+
+    /// <summary>
+    /// Gets or sets the distinctive description of the animal.
+    /// </summary>
+    public string? DistinctiveDescription { get; set; } = distinctiveDescription;
 }

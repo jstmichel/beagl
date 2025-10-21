@@ -66,11 +66,11 @@ public class ApplicationDbContext(
             // Owned value objects
             entity.OwnsOne(a => a.Photo, p =>
             {
-                p.Property(x => x.base64Png).HasColumnName("PhotoBase64Png");
+                p.Property(x => x.Base64Png).HasColumnName("PhotoBase64Png");
             });
             entity.OwnsOne(a => a.Microchip, m =>
             {
-                m.Property(x => x.value).HasColumnName("Microchip");
+                m.Property(x => x.Value).HasColumnName("Microchip");
             });
             entity.OwnsOne(hr => hr.Weight, a =>
             {
@@ -79,13 +79,13 @@ public class ApplicationDbContext(
             });
             entity.OwnsOne(hr => hr.Created, a =>
             {
-                a.Property(p => p.userId).HasColumnName("CreatedByUserId");
-                a.Property(p => p.at).HasColumnName("CreatedAt");
+                a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
+                a.Property(p => p.At).HasColumnName("CreatedAt");
             });
             entity.OwnsOne(hr => hr.Modified, a =>
             {
-                a.Property(p => p.userId).HasColumnName("ModifiedByUserId");
-                a.Property(p => p.at).HasColumnName("ModifiedAt");
+                a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
+                a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
         });
 
@@ -100,15 +100,15 @@ public class ApplicationDbContext(
 
             entity.OwnsOne(a => a.OriginCityInfo, oci =>
             {
-                oci.Property(x => x.comesFromAnotherCity).HasColumnName("ComesFromAnotherCity");
-                oci.Property(x => x.hadJudgmentInThatCity).HasColumnName("HadJudgmentInThatCity");
+                oci.Property(x => x.ComesFromAnotherCity).HasColumnName("ComesFromAnotherCity");
+                oci.Property(x => x.HadJudgmentInThatCity).HasColumnName("HadJudgmentInThatCity");
             });
 
             entity.OwnsOne(a => a.DangerousDog, dd =>
             {
-                dd.Property(p => p.isDangerous).HasColumnName("IsDangerousDog");
-                dd.Property(p => p.hasResponsibilityInsurance).HasColumnName("HasDangerousDogInsurance");
-                dd.Property(p => p.comment).HasColumnName("DangerousDogComment");
+                dd.Property(p => p.IsDangerous).HasColumnName("IsDangerousDog");
+                dd.Property(p => p.HasResponsibilityInsurance).HasColumnName("HasDangerousDogInsurance");
+                dd.Property(p => p.Comment).HasColumnName("DangerousDogComment");
             });
         });
 

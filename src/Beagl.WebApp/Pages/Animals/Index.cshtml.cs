@@ -15,7 +15,8 @@ namespace Beagl.WebApp.Pages.Animals;
 internal sealed class IndexModel(
     IAnimalQueryService animalQueryService,
     IBreedQueryService breedQueryService,
-    IColorQueryService colorQueryService) : PaginatedPageModel<AnimalListDto, IndexModel.AnimalsFilterModel>
+    IColorQueryService colorQueryService,
+    ICatService catService) : PaginatedPageModel<AnimalListDto, IndexModel.AnimalsFilterModel>
 {
     /// <summary>
     /// Serves the CreateCat form partial for the modal dialog via AJAX.
@@ -35,7 +36,17 @@ internal sealed class IndexModel(
             return Partial("_CreateCatPartial", model);
         }
 
-        // TODO: Save the new cat using model.Cat
+        _ = await catService.CreateCatAsync(new CreateCatDto
+        {
+            Name = model.Cat.Name,
+            BreedPrimaryId = model.Cat.BreedPrimaryId,
+            ColorId = model.Cat.ColorId,
+            Description = model.Cat.Description,
+            Gender = model.Cat.Gender,
+            BirthDate = model.Cat.BirthDate,
+            PhotoBase64 = model.Cat.PhotoBase64,
+            MicrochipNumber = model.Cat.MicrochipNumber
+        });
 
         return new JsonResult(new { success = true });
     }

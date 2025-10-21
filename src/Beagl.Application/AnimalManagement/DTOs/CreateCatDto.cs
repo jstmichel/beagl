@@ -1,30 +1,27 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System.ComponentModel.DataAnnotations;
+using System;
 
-namespace Beagl.WebApp.Pages.Animals.ViewModels;
+namespace Beagl.Application.AnimalManagement.DTOs;
 
 /// <summary>
-/// ViewModel for creating a cat.
+/// Data transfer object for creating a new cat.
 /// </summary>
-internal sealed class CreateCatViewModel
+public class CreateCatDto
 {
     /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
-    [Required]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the selected primary breed ID.
     /// </summary>
-    [Required]
     public Guid BreedPrimaryId { get; set; }
 
     /// <summary>
     /// Gets or sets the selected color ID.
     /// </summary>
-    [Required]
     public Guid ColorId { get; set; }
 
     /// <summary>
@@ -35,13 +32,11 @@ internal sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets the gender of the animal.
     /// </summary>
-    [Required]
-    public int Gender { get; set; } = 0;
+    public int Gender { get; set; }
 
     /// <summary>
     /// Gets or sets the birth date of the animal.
     /// </summary>
-    [Required]
     public DateTimeOffset BirthDate { get; set; }
 
     /// <summary>
@@ -57,6 +52,5 @@ internal sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets whether the cat is an unclawned cat.
     /// </summary>
-    [Required]
     public bool IsAnUnclawnedCat { get; set; }
 }

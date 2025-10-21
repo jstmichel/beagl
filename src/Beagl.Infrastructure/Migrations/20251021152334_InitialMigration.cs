@@ -252,7 +252,7 @@ namespace Beagl.Infrastructure.Migrations
                     DangerousDogComment = table.Column<string>(type: "text", nullable: true),
                     IsAnAssistanceDog = table.Column<bool>(type: "boolean", nullable: false),
                     ComesFromAnotherCity = table.Column<bool>(type: "boolean", nullable: true),
-                    OriginCityInfo_cityName = table.Column<string>(type: "text", nullable: true),
+                    OriginCityInfo_CityName = table.Column<string>(type: "text", nullable: true),
                     HadJudgmentInThatCity = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>

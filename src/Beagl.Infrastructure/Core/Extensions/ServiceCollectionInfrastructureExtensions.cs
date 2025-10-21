@@ -1,5 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Application.AnimalManagement.Services;
+using Beagl.Infrastructure.AnimalManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,6 +53,7 @@ public static class ServiceCollectionInfrastructureExtensions
     /// <returns></returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddScoped<ICatService, CatService>();
         return services;
     }
 

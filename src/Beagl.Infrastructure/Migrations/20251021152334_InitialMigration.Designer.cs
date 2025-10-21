@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Beagl.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251021003645_InitialMigration")]
+    [Migration("20251021152334_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -345,7 +345,7 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("value")
+                            b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("Microchip");
@@ -384,7 +384,7 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("base64Png")
+                            b1.Property<string>("Base64Png")
                                 .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("PhotoBase64Png");
@@ -402,11 +402,11 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<DateTimeOffset>("at")
+                            b1.Property<DateTimeOffset>("At")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("CreatedAt");
 
-                            b1.Property<Guid>("userId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("CreatedByUserId");
 
@@ -423,11 +423,11 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("AnimalModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<DateTimeOffset>("at")
+                            b1.Property<DateTimeOffset>("At")
                                 .HasColumnType("timestamp with time zone")
                                 .HasColumnName("ModifiedAt");
 
-                            b1.Property<Guid>("userId")
+                            b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("ModifiedByUserId");
 
@@ -534,15 +534,15 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("DogModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("comment")
+                            b1.Property<string>("Comment")
                                 .HasColumnType("text")
                                 .HasColumnName("DangerousDogComment");
 
-                            b1.Property<bool>("hasResponsibilityInsurance")
+                            b1.Property<bool>("HasResponsibilityInsurance")
                                 .HasColumnType("boolean")
                                 .HasColumnName("HasDangerousDogInsurance");
 
-                            b1.Property<bool>("isDangerous")
+                            b1.Property<bool>("IsDangerous")
                                 .HasColumnType("boolean")
                                 .HasColumnName("IsDangerousDog");
 
@@ -559,15 +559,15 @@ namespace Beagl.Infrastructure.Migrations
                             b1.Property<Guid>("DogModelId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("cityName")
+                            b1.Property<string>("CityName")
                                 .IsRequired()
                                 .HasColumnType("text");
 
-                            b1.Property<bool>("comesFromAnotherCity")
+                            b1.Property<bool>("ComesFromAnotherCity")
                                 .HasColumnType("boolean")
                                 .HasColumnName("ComesFromAnotherCity");
 
-                            b1.Property<bool>("hadJudgmentInThatCity")
+                            b1.Property<bool>("HadJudgmentInThatCity")
                                 .HasColumnType("boolean")
                                 .HasColumnName("HadJudgmentInThatCity");
 

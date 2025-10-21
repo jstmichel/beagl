@@ -7,7 +7,7 @@ namespace Beagl.WebApp.Pages.Animals.ViewModels;
 /// <summary>
 /// ViewModel for creating an animal.
 /// </summary>
-internal class CreateAnimalViewModel
+internal sealed class CreateAnimalViewModel
 {
     /// <summary>
     /// Gets or sets the name of the animal.
@@ -36,7 +36,7 @@ internal class CreateAnimalViewModel
     /// Gets or sets the gender of the animal.
     /// </summary>
     [Required]
-    public string Gender { get; set; } = string.Empty;
+    public int Gender { get; set; } = 0;
 
     /// <summary>
     /// Gets or sets the birth date of the animal.
