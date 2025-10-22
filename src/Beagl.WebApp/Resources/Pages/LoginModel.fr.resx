@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Sign-in" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="Please sign in" xml:space="preserve">
+    <value>Veuillez vous connecter</value>
+  </data>
+  <data name="Email address" xml:space="preserve">
+    <value>Adresse courriel</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Se souvenir de moi</value>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>Se connecter</value>
+  </data>
+  <data name="All rights reserved © Service animalier Pierre-De-Saurel et régions 2024" xml:space="preserve">
+    <value>Tous droits réservés © Service animalier Pierre-De-Saurel et régions 2024</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Le courriel est requis.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Adresse courriel invalide.</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Le mot de passe est requis.</value>
+  </data>
+  <data name="EmailOrPasswordInvalid" xml:space="preserve">
+    <value>Le courriel ou le mot de passe est invalide.</value>
+  </data>
+</root>

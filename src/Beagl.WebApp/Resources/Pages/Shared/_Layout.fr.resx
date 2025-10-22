@@ -118,33 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Home" xml:space="preserve">
-    <value>Home</value>
+    <value>Accueil</value>
   </data>
   <data name="Sign In" xml:space="preserve">
-    <value>Sign In</value>
+    <value>Se connecter</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>S'inscrire</value>
   </data>
   <data name="Toggle navigation" xml:space="preserve">
-    <value>Toggle navigation</value>
-  </data>
-  <data name="Sign Out" xml:space="preserve">
-    <value>Sign Out</value>
+    <value>Basculer la navigation</value>
   </data>
     <data name="Navigation" xml:space="preserve">
       <value>Navigation</value>
     </data>
     <data name="Users" xml:space="preserve">
-      <value>Users</value>
+      <value>Utilisateurs</value>
     </data>
     <data name="Animals" xml:space="preserve">
-      <value>Animals</value>
+      <value>Animaux</value>
     </data>
-  <data name="Previous" xml:space="preserve">
-    <value>Previous</value>
+  <data name="Sign Out" xml:space="preserve">
+    <value>Se déconnecter</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Next</value>
-  </data>
+    <data name="Previous" xml:space="preserve">
+      <value>Précédent</value>
+    </data>
+    <data name="Next" xml:space="preserve">
+      <value>Suivant</value>
+    </data>
 </root>

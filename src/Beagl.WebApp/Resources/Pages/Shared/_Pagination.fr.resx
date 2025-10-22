@@ -117,34 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Sign In" xml:space="preserve">
-    <value>Sign In</value>
-  </data>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
-  </data>
-  <data name="Toggle navigation" xml:space="preserve">
-    <value>Toggle navigation</value>
-  </data>
-  <data name="Sign Out" xml:space="preserve">
-    <value>Sign Out</value>
-  </data>
-    <data name="Navigation" xml:space="preserve">
-      <value>Navigation</value>
-    </data>
-    <data name="Users" xml:space="preserve">
-      <value>Users</value>
-    </data>
-    <data name="Animals" xml:space="preserve">
-      <value>Animals</value>
-    </data>
   <data name="Previous" xml:space="preserve">
-    <value>Previous</value>
+    <value>Précédent</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Suivant</value>
   </data>
 </root>

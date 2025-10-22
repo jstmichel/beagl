@@ -176,4 +176,13 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Roles Header" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Status Header" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Unconfirmed" xml:space="preserve">
+    <value>Unconfirmed</value>
+  </data>
 </root>
