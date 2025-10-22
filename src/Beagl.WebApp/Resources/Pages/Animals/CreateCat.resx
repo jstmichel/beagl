@@ -26,4 +26,28 @@
   <data name="Create" xml:space="preserve"><value>Create</value></data>
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="Image file is too large." xml:space="preserve"><value>Image file is too large (10mb).</value></data>
+  <data name="Error_Required_Name" xml:space="preserve">
+    <value>Please enter the cat's name.</value>
+  </data>
+  <data name="Error_Required_BreedPrimaryId" xml:space="preserve">
+    <value>Please select a breed.</value>
+  </data>
+  <data name="Error_Required_ColorId" xml:space="preserve">
+    <value>Please select a color.</value>
+  </data>
+  <data name="Error_Required_Gender" xml:space="preserve">
+    <value>Please select a gender.</value>
+  </data>
+  <data name="Error_Required_BirthDate" xml:space="preserve">
+    <value>Please enter the cat's birth date.</value>
+  </data>
+  <data name="Error_Required_Weight" xml:space="preserve">
+    <value>Please enter the cat's weight.</value>
+  </data>
+  <data name="Error_Required_WeightUnit" xml:space="preserve">
+    <value>Please select a weight unit.</value>
+  </data>
+  <data name="Error_Required_IsAnUnclawnedCat" xml:space="preserve">
+    <value>Please specify if the cat is unclawned.</value>
+  </data>
 </root>

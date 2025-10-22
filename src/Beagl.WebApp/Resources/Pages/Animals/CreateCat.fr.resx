@@ -11,7 +11,7 @@
   <data name="Birth Date" xml:space="preserve"><value>Date de naissance</value></data>
   <data name="Breed" xml:space="preserve"><value>Race</value></data>
   <data name="Select Breed" xml:space="preserve"><value>Sélectionner la race</value></data>
-  <data name="Is Unclawned Cat" xml:space="preserve"><value>Chat non dégriffé</value></data>
+  <data name="Is Unclawned Cat" xml:space="preserve"><value>Chat dégriffé</value></data>
   <data name="Gender" xml:space="preserve"><value>Sexe</value></data>
   <data name="Unknown" xml:space="preserve"><value>Inconnu</value></data>
   <data name="Male" xml:space="preserve"><value>Mâle</value></data>
@@ -26,4 +26,28 @@
   <data name="Create" xml:space="preserve"><value>Créer</value></data>
   <data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
   <data name="Image file is too large." xml:space="preserve"><value>Le fichier image est trop volumineux (10mo).</value></data>
+  <data name="Error_Required_Name" xml:space="preserve">
+    <value>Veuillez entrer le nom du chat.</value>
+  </data>
+  <data name="Error_Required_BreedPrimaryId" xml:space="preserve">
+    <value>Veuillez sélectionner une race.</value>
+  </data>
+  <data name="Error_Required_ColorId" xml:space="preserve">
+    <value>Veuillez sélectionner une couleur.</value>
+  </data>
+  <data name="Error_Required_Gender" xml:space="preserve">
+    <value>Veuillez sélectionner un sexe.</value>
+  </data>
+  <data name="Error_Required_BirthDate" xml:space="preserve">
+    <value>Veuillez entrer la date de naissance du chat.</value>
+  </data>
+  <data name="Error_Required_Weight" xml:space="preserve">
+    <value>Veuillez entrer le poids du chat.</value>
+  </data>
+  <data name="Error_Required_WeightUnit" xml:space="preserve">
+    <value>Veuillez sélectionner une unité de poids.</value>
+  </data>
+  <data name="Error_Required_IsAnUnclawnedCat" xml:space="preserve">
+    <value>Veuillez indiquer si le chat est non dégriffé.</value>
+  </data>
 </root>

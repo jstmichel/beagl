@@ -12,19 +12,19 @@ public sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
-    [Required(ErrorMessage = "Please enter the cat's name.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_Name")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the selected primary breed ID.
     /// </summary>
-    [Required(ErrorMessage = "Please select a breed.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_BreedPrimaryId")]
     public Guid? BreedPrimaryId { get; set; }
 
     /// <summary>
     /// Gets or sets the selected color ID.
     /// </summary>
-    [Required(ErrorMessage = "Please select a color.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_ColorId")]
     public Guid? ColorId { get; set; }
 
     /// <summary>
@@ -35,13 +35,13 @@ public sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets the gender of the animal.
     /// </summary>
-    [Required(ErrorMessage = "Please select a gender.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_Gender")]
     public int Gender { get; set; } = 0;
 
     /// <summary>
     /// Gets or sets the birth date of the animal.
     /// </summary>
-    [Required(ErrorMessage = "Please enter the cat's birth date.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_BirthDate")]
     public DateTimeOffset? BirthDate { get; set; }
 
     /// <summary>
@@ -57,18 +57,18 @@ public sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets the weight of the cat in pounds.
     /// </summary>
-    [Required(ErrorMessage = "Please enter the cat's weight.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_Weight")]
     public decimal Weight { get; set; }
 
     /// <summary>
     /// Gets or sets the weight unit.
     /// </summary>
-    [Required(ErrorMessage = "Please select a weight unit.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_WeightUnit")]
     public int WeightUnit { get; set; } = 0;
 
     /// <summary>
     /// Gets or sets whether the cat is an unclawned cat.
     /// </summary>
-    [Required(ErrorMessage = "Please specify if the cat is unclawned.")]
+    [Required(ErrorMessageResourceType = typeof(Resources.Pages.Animals.CreateCat), ErrorMessageResourceName = "Error_Required_IsAnUnclawnedCat")]
     public bool IsAnUnclawnedCat { get; set; }
 }
