@@ -2,95 +2,88 @@
 
 using System;
 using Beagl.Domain.AnimalManagement.ValueObjects;
-using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
+
 
 namespace Beagl.Domain.AnimalManagement.Entities;
 
 /// <summary>
-/// Base aggregate root for all animals.
+/// Persistence model for Animal aggregate, using value objects.
 /// </summary>
-/// <remarks>
-/// Protected constructor for derived animal classes.
-/// </remarks>
-/// <param name="name">The animal's name.</param>
-/// <param name="primaryBreedId">Primary breed identifier.</param>
-/// <param name="colorId">Color identifier.</param>
-/// <param name="gender">Gender of the animal.</param>
-/// <param name="birthDate">Birth date of the animal.</param>
-/// <param name="photo">Optional photo.</param>
-/// <param name="microchip">Optional microchip.</param>
-/// <param name="createdByUserId">Identifier of the user who created the animal.</param>
-/// <param name="createdAt">Date and time when the animal was created.</param>
-/// <param name="distinctiveDescription">Distinctive description of the animal.</param>
-/// <param name="weight">Weight of the animal.</param>
-/// <param name="modifiedByUserId">Optional identifier of the user who last modified the animal.</param>
-/// <param name="modifiedAt">Optional date and time when the animal was last modified.</param>
-/// <param name="speciesType">Species type of the animal.</param>
-public abstract class Animal(string name,
-    SpeciesType speciesType,
-    Guid primaryBreedId,
-    Guid colorId,
-    Gender gender,
-    DateTimeOffset birthDate,
-    Photo? photo,
-    Microchip? microchip,
-    string distinctiveDescription,
-    Weight weight,
-    Guid createdByUserId,
-    DateTimeOffset createdAt,
-    Guid? modifiedByUserId = null,
-    DateTimeOffset? modifiedAt = null)
-        : AuditedAggregateRoot<Guid>(createdByUserId, createdAt, modifiedByUserId.GetValueOrDefault(), modifiedAt)
+public class Animal
 {
+    /// <summary>
+    /// Gets or sets the unique identifier for the animal.
+    /// </summary>
+    public Guid Id { get; set; }
 
     /// <summary>
-    /// Gets the name of the animal.
+    /// Gets or sets the species type (discriminator for TPT).
     /// </summary>
-    public string Name { get; protected set; } = name;
+    public SpeciesType SpeciesType { get; set; } = SpeciesType.Unknown;
 
     /// <summary>
-    /// Gets the primary breed identifier.
+    /// Gets or sets the name of the animal.
     /// </summary>
-    public Guid PrimaryBreedId { get; protected set; } = primaryBreedId;
+    public string Name { get; set; } = default!;
 
     /// <summary>
-    /// Gets the color identifier.
+    /// Gets or sets the foreign key for the primary breed of the animal.
     /// </summary>
-    public Guid ColorId { get; protected set; } = colorId;
+    public Guid PrimaryBreedId { get; set; }
 
     /// <summary>
-    /// Gets the gender of the animal.
+    /// Gets or sets the related primary breed entity.
     /// </summary>
-    public Gender Gender { get; protected set; } = gender;
+    public Breed? PrimaryBreed { get; set; }
 
     /// <summary>
-    /// Gets the birth date of the animal.
+    /// Gets or sets the foreign key for the color of the animal.
     /// </summary>
-    public DateTimeOffset BirthDate { get; protected set; } = birthDate;
+    public Guid ColorId { get; set; }
 
     /// <summary>
-    /// Gets the photo of the animal as a value object.
+    /// Gets or sets the related color entity.
     /// </summary>
-    public Photo? Photo { get; protected set; } = photo;
-
-    /// <summary>
-    /// Gets the microchip of the animal as a value object.
-    /// </summary>
-    public Microchip? Microchip { get; protected set; } = microchip;
-
-    /// <summary>
-    /// Gets the weight of the animal.
-    /// </summary>
-    public Weight Weight { get; protected set; } = weight;
-
-    /// <summary>
-    /// Gets the species type of the animal.
-    /// </summary>
-    public SpeciesType SpeciesType { get; protected set; } = speciesType;
+    public Color? Color { get; set; }
 
     /// <summary>
     /// Gets or sets the distinctive description of the animal.
     /// </summary>
-    public string? DistinctiveDescription { get; set; } = distinctiveDescription;
+    public string? DistinctiveDescription { get; set; }
+
+    /// <summary>
+    /// Gets or sets the gender of the animal.
+    /// </summary>
+    public Gender Gender { get; set; } = Gender.Unknown;
+
+    /// <summary>
+    /// Gets or sets the date of birth of the animal.
+    /// </summary>
+    public DateTimeOffset DateOfBirth { get; set; }
+
+    /// <summary>
+    /// Gets or sets the photo of the animal as a value object.
+    /// </summary>
+    public Photo? Photo { get; set; }
+
+    /// <summary>
+    /// Gets or sets the microchip information for the animal.
+    /// </summary>
+    public Microchip? Microchip { get; set; }
+
+    /// <summary>
+    /// Gets or sets the weight of the animal as a value object.
+    /// </summary>
+    public required Weight Weight { get; set; }
+
+    /// <summary>
+    /// Gets the audit information for creation.
+    /// </summary>
+    public Audit<Guid> Created { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
+
+    /// <summary>
+    /// Gets the audit information for last modification.
+    /// </summary>
+    public Audit<Guid>? Modified { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
 }

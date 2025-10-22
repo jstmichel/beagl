@@ -20,20 +20,23 @@ public sealed class CatService(
     {
         ArgumentNullException.ThrowIfNull(createCatDto);
 
-        Cat newCat = new(
-            name: createCatDto.Name,
-            primaryBreedId: createCatDto.BreedPrimaryId,
-            colorId: createCatDto.ColorId,
-            distinctiveDescription: createCatDto.Description ?? string.Empty,
-            gender: GenderHelper.FromInt(createCatDto.Gender),
-            birthDate: createCatDto.BirthDate,
-            isAnUnclawnedCat: createCatDto.IsAnUnclawnedCat,
-            photo: Photo.From(createCatDto.PhotoBase64),
-            microchip: Microchip.From(createCatDto.MicrochipNumber),
-            weight: Weight.From(createCatDto.Weight, WeightUnitHelper.FromInt(createCatDto.WeightUnit)),
-            createdByUserId: Guid.Empty, //TODO: Replace with actual user ID
-            createdAt: DateTimeOffset.UtcNow.ToUniversalTime()
-        );
+        Cat newCat = new()
+        {
+            Id = Guid.NewGuid(),
+            SpeciesType = SpeciesType.Cat,
+            Name = createCatDto.Name,
+            PrimaryBreedId = createCatDto.BreedPrimaryId,
+            ColorId = createCatDto.ColorId,
+            DistinctiveDescription = createCatDto.Description ?? string.Empty,
+            Gender = GenderHelper.FromInt(createCatDto.Gender),
+            DateOfBirth = createCatDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
+            IsAnUnclawnedCat = createCatDto.IsAnUnclawnedCat,
+            Photo = Photo.From(createCatDto.PhotoBase64),
+            Microchip = Microchip.From(createCatDto.MicrochipNumber),
+            Weight = Weight.From(createCatDto.Weight, WeightUnitHelper.FromInt(createCatDto.WeightUnit)),
+            Created = Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
+            Modified = null,
+        };
 
         Guid catId = await catRepository.CreateAsync(newCat);
         return catId;

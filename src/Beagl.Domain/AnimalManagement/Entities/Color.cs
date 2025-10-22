@@ -1,35 +1,33 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
-using Beagl.Domain.Core;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 
 namespace Beagl.Domain.AnimalManagement.Entities;
 
 /// <summary>
-/// Represents a color available for animals in the domain.
+/// Represents a color available for animals, related to a species.
 /// </summary>
-public sealed class Color : Entity
+[Table("Colors")]
+public class Color
 {
     /// <summary>
-    /// Gets the name of the color.
+    /// Gets or sets the unique identifier for the color.
     /// </summary>
-    public string Name { get; }
+    [Key]
+    public Guid Id { get; set; }
 
     /// <summary>
-    /// Gets the species ID this color is available for.
+    /// Gets or sets the name of the color.
     /// </summary>
-    public Guid SpeciesId { get; }
+    [Required]
+    [MaxLength(64)]
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Color"/> class.
+    /// Gets or sets the species type this color is available for.
     /// </summary>
-    /// <param name="id">The unique identifier of the color.</param>
-    /// <param name="name">The name of the color.</param>
-    /// <param name="speciesId">The species ID this color is available for.</param>
-    public Color(Guid id, string name, Guid speciesId)
-    {
-        Id = id;
-        Name = name;
-        SpeciesId = speciesId;
-    }
+    public SpeciesType SpeciesType { get; set; }
 }

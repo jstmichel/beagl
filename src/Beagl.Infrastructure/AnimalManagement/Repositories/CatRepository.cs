@@ -2,8 +2,6 @@
 
 using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Domain.AnimalManagement.Repositories;
-using Beagl.Infrastructure.AnimalManagement.Mappers;
-using Beagl.Infrastructure.AnimalManagement.Models;
 
 namespace Beagl.Infrastructure.AnimalManagement.Repositories;
 
@@ -20,12 +18,8 @@ internal sealed class CatRepository(
     /// <returns>The unique identifier (Guid) of the created Cat.</returns>
     public async Task<Guid> CreateAsync(Cat cat)
     {
-        CatModel catModel = CatMapper.ToModel(cat);
-        catModel.Id = Guid.NewGuid();
-
-        dbContext.Cats.Add(catModel);
+        dbContext.Cats.Add(cat);
         await dbContext.SaveChangesAsync();
-
-        return catModel.Id;
+        return cat.Id;
     }
 }

@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Beagl.Infrastructure.UserManagement.Entities;
-using Beagl.Infrastructure.AnimalManagement.Models;
+using Beagl.Domain.AnimalManagement.Entities;
 
 namespace Beagl.Infrastructure;
 
@@ -18,27 +18,27 @@ public class ApplicationDbContext(
     /// <summary>
     /// Gets or sets the Animals table.
     /// </summary>
-    public DbSet<AnimalModel> Animals { get; set; } = null!;
+    public DbSet<Animal> Animals { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the Dogs table.
     /// </summary>
-    public DbSet<DogModel> Dogs { get; set; } = null!;
+    public DbSet<Dog> Dogs { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the Cats table.
     /// </summary>
-    public DbSet<CatModel> Cats { get; set; } = null!;
+    public DbSet<Cat> Cats { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the Colors table.
     /// </summary>
-    public DbSet<ColorModel> Colors { get; set; } = null!;
+    public DbSet<Color> Colors { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the Breeds table.
     /// </summary>
-    public DbSet<BreedModel> Breeds { get; set; } = null!;
+    public DbSet<Breed> Breeds { get; set; } = null!;
 
     /// <summary>
     /// Configures the model for Animal, HealthRecord, and complex types.
@@ -49,8 +49,8 @@ public class ApplicationDbContext(
         ArgumentNullException.ThrowIfNull(builder);
         base.OnModelCreating(builder);
 
-        // Configure AnimalModel relationships and owned types
-        builder.Entity<AnimalModel>(entity =>
+        // Configure Animal relationships and owned types
+        builder.Entity<Animal>(entity =>
         {
             entity.ToTable("Animals");
             entity.HasOne(a => a.PrimaryBreed)
@@ -89,8 +89,8 @@ public class ApplicationDbContext(
             });
         });
 
-        // Configure TPT inheritance for DogModel
-        builder.Entity<DogModel>(entity =>
+        // Configure TPT inheritance for Dog
+        builder.Entity<Dog>(entity =>
         {
             entity.ToTable("Dogs");
             entity.HasOne(a => a.SecondaryBreed)
@@ -112,8 +112,8 @@ public class ApplicationDbContext(
             });
         });
 
-        // Configure TPT inheritance for CatModel
-        builder.Entity<CatModel>(entity =>
+        // Configure TPT inheritance for Cat
+        builder.Entity<Cat>(entity =>
         {
             entity.ToTable("Cats");
             // Add any Cat-specific configuration here if needed

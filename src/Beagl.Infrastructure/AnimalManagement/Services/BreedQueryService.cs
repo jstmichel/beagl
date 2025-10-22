@@ -3,7 +3,6 @@
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Domain.AnimalManagement.ValueObjects;
-using Beagl.Infrastructure.AnimalManagement.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beagl.Infrastructure.AnimalManagement.Services;

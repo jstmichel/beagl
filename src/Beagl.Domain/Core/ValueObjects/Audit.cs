@@ -34,10 +34,10 @@ public static class Audit
     /// <param name="userId">The user identifier.</param>
     /// <param name="at">The timestamp of the audit.</param>
     /// <returns>An Audit value object or null if any input is invalid.</returns>
-    public static Audit<TId>? From<TId>(TId? userId, DateTimeOffset? at)
+    public static Audit<TId> From<TId>(TId? userId, DateTimeOffset? at)
     {
         if (userId is null || at is null)
-            return null;
+            return new Audit<TId>(default!, DateTimeOffset.MinValue);
         return new Audit<TId>(userId, at.Value);
     }
 }
