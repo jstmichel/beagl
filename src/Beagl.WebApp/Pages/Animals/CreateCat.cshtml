@@ -1,15 +1,16 @@
 @page "/Animals/CreateCat"
 @model Beagl.WebApp.Pages.Animals.CreateCatModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Create Cat";
+    ViewData["Title"] = Localizer["Create Cat"];
 }
 
 <div class="container py-5">
-    <h2 class="fw-bold mb-4">Create Cat</h2>
+    <h2 class="fw-bold mb-4">@Localizer["Create Cat"]</h2>
     @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
     {
         <div class="alert alert-danger">
-            <div class="fw-bold mb-2">Please fix the following errors:</div>
+            <div class="fw-bold mb-2">@Localizer["Please fix the following errors:"]</div>
             <ul class="mb-0">
                 @foreach (var entry in ViewData.ModelState)
                 {
@@ -26,7 +27,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="catDetailsHeading">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#catDetailsCollapse" aria-expanded="true" aria-controls="catDetailsCollapse">
-                        Cat Details
+                        @Localizer["Cat Details"]
                     </button>
                 </h2>
                 <div id="catDetailsCollapse" class="accordion-collapse collapse show" aria-labelledby="catDetailsHeading" data-bs-parent="#catAccordion">
@@ -49,17 +50,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label asp-for="Input.Name" class="form-label">Name</label>
+                                    <label asp-for="Input.Name" class="form-label">@Localizer["Name"]</label>
                                     <input asp-for="Input.Name" class="form-control" />
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Input.BirthDate" class="form-label">Birth Date</label>
+                                    <label asp-for="Input.BirthDate" class="form-label">@Localizer["Birth Date"]</label>
                                     <input asp-for="Input.BirthDate" type="date" class="form-control" min="1900-01-01" max="@DateTime.Today.ToString("yyyy-MM-dd")" />
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Input.BreedPrimaryId" class="form-label">Breed</label>
+                                    <label asp-for="Input.BreedPrimaryId" class="form-label">@Localizer["Breed"]</label>
                                     <select asp-for="Input.BreedPrimaryId" class="form-select">
-                                        <option value="">Select Breed</option>
+                                        <option value="">@Localizer["Select Breed"]</option>
                                         @foreach (var breed in Model.BreedList)
                                         {
                                             <option value="@breed.Id">@breed.Name</option>
@@ -68,22 +69,22 @@
                                 </div>
                                 <div class="form-check mb-3">
                                     <input asp-for="Input.IsAnUnclawnedCat" class="form-check-input" type="checkbox" />
-                                    <label asp-for="Input.IsAnUnclawnedCat" class="form-check-label">Is Unclawned Cat</label>
+                                    <label asp-for="Input.IsAnUnclawnedCat" class="form-check-label">@Localizer["Is Unclawned Cat"]</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label asp-for="Input.Gender" class="form-label">Gender</label>
+                                    <label asp-for="Input.Gender" class="form-label">@Localizer["Gender"]</label>
                                     <select asp-for="Input.Gender" class="form-select">
-                                        <option value="0">Unknown</option>
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
+                                        <option value="0">@Localizer["Unknown"]</option>
+                                        <option value="1">@Localizer["Male"]</option>
+                                        <option value="2">@Localizer["Female"]</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Input.ColorId" class="form-label">Color</label>
+                                    <label asp-for="Input.ColorId" class="form-label">@Localizer["Color"]</label>
                                     <select asp-for="Input.ColorId" class="form-select">
-                                        <option value="">Select Color</option>
+                                        <option value="">@Localizer["Select Color"]</option>
                                         @foreach (var color in Model.ColorList)
                                         {
                                             <option value="@color.Id">@color.Name</option>
@@ -91,16 +92,16 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Input.MicrochipNumber" class="form-label">Microchip Number</label>
+                                    <label asp-for="Input.MicrochipNumber" class="form-label">@Localizer["Microchip Number"]</label>
                                     <input asp-for="Input.MicrochipNumber" class="form-control" />
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Input.Weight" class="form-label">Weight</label>
+                                    <label asp-for="Input.Weight" class="form-label">@Localizer["Weight"]</label>
                                     <div class="input-group">
                                         <input asp-for="Input.Weight" class="form-control" />
                                         <select asp-for="Input.WeightUnit" class="form-select" style="max-width: 100px;">
-                                            <option value="1">lbs</option>
-                                            <option value="0">kg</option>
+                                            <option value="1">@Localizer["lbs"]</option>
+                                            <option value="0">@Localizer["kg"]</option>
                                         </select>
                                     </div>
                                 </div>
@@ -112,7 +113,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="catDescriptionHeading">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catDescriptionCollapse" aria-expanded="false" aria-controls="catDescriptionCollapse">
-                        Description
+                        @Localizer["Description"]
                     </button>
                 </h2>
                 <div id="catDescriptionCollapse" class="accordion-collapse collapse" aria-labelledby="catDescriptionHeading" data-bs-parent="#catAccordion">
@@ -129,13 +130,14 @@
             </div>
         </div>
         <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a asp-page="Index" class="btn btn-secondary ms-2">Cancel</a>
+            <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
+            <a asp-page="Index" class="btn btn-secondary ms-2">@Localizer["Cancel"]</a>
         </div>
     </form>
 </div>
 <!-- Photo input moved to left column -->
 <script>
+    var fileTooLargeMsg = '@Localizer["Image file is too large."]';
     document.addEventListener('DOMContentLoaded', function () {
         var photoInput = document.getElementById('photoInput');
         var photoPreview = document.getElementById('photoPreview');
@@ -168,7 +170,7 @@
                     var err = document.createElement('div');
                     err.id = 'photoErrorMsg';
                     err.className = 'text-danger mt-2';
-                    err.innerText = 'Image file is too large (max 2MB).';
+                    err.innerText = fileTooLargeMsg;
                     photoPreviewContainer.parentNode.appendChild(err);
                     photoInput.value = '';
                     photoPreview.src = '';
