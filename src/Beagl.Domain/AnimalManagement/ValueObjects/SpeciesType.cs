@@ -1,5 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System;
+
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
 
 /// <summary>
@@ -21,4 +23,20 @@ public enum SpeciesType
     /// Represents a dog.
     /// </summary>
     Dog = 2
+}
+
+/// <summary>
+/// Helper methods for the <see cref="SpeciesType"/> enum.
+/// </summary>
+public static class SpeciesTypeHelper
+{
+    /// <summary>
+    /// Converts an integer to a <see cref="SpeciesType"/> enum value.
+    /// </summary>
+    public static SpeciesType FromInt(int value)
+    {
+        if (!Enum.IsDefined(typeof(SpeciesType), value))
+            return SpeciesType.Unknown;
+        return (SpeciesType)value;
+    }
 }

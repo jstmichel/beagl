@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Beagl.WebApp.Pages.Shared.Models;
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.WebApp.Pages.Animals.ViewModels;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -11,7 +12,7 @@ namespace Beagl.WebApp.Pages.Animals;
 /// Page model for listing animals.
 /// </summary>
 internal sealed class IndexModel(
-    IAnimalQueryService animalQueryService) : PaginatedPageModel<AnimalListDto, IndexModel.AnimalsFilterModel>
+    IAnimalQueryService animalQueryService) : PaginatedPageModel<ListAnimalsViewModel, IndexModel.AnimalsFilterModel>
 {
     /// <summary>
     /// Handles the GET request to load the list of animals.
@@ -30,8 +31,26 @@ internal sealed class IndexModel(
     protected override async Task LoadPageAsync(int pageNumber = 1)
     {
         AnimalPagedFilterDto animalPagedFilterDto = CreatePagedFilterDto(pageNumber);
-        (DataModel, TotalItems) = await animalQueryService.GetPagedAsync(animalPagedFilterDto);
+        (IList<AnimalListDto>? dto, TotalItems) = await animalQueryService.GetPagedAsync(animalPagedFilterDto);
+        DataModel = MapDtoToViewModel(dto);
         SetPagination(pageNumber);
+    }
+
+    private static List<ListAnimalsViewModel> MapDtoToViewModel(IList<AnimalListDto>? dto)
+    {
+        if (dto == null) return [];
+
+        return [.. dto.Select(animal => new ListAnimalsViewModel
+        {
+            Id = animal.Id,
+            Name = animal.Name,
+            Species = animal.Species,
+            Breed = animal.Breed,
+            Color = animal.Color,
+            Gender = animal.Gender,
+            BirthDate = animal.BirthDate,
+            MicrochipNumber = animal.MicrochipNumber
+        })];
     }
 
     private AnimalPagedFilterDto CreatePagedFilterDto(int pageNumber) =>

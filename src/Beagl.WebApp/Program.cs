@@ -49,6 +49,7 @@ builder.Services.AddMappers();
 builder.Services.AddRepositories();
 builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
+builder.Services.AddWebAppServices();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();

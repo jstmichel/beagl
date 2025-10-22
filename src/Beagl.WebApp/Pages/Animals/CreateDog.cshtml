@@ -67,6 +67,10 @@
                                         }
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label asp-for="Input.MicrochipNumber" class="form-label">@Localizer["Microchip Number"]</label>
+                                    <input asp-for="Input.MicrochipNumber" class="form-control" />
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
@@ -88,8 +92,14 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label asp-for="Input.MicrochipNumber" class="form-label">@Localizer["Microchip Number"]</label>
-                                    <input asp-for="Input.MicrochipNumber" class="form-control" />
+                                    <label asp-for="Input.BreedSecondaryId" class="form-label">@Localizer["Breed Secondary"]</label>
+                                    <select asp-for="Input.BreedSecondaryId" class="form-select">
+                                        <option value="">@Localizer["Select Secondary Breed if any"]</option>
+                                        @foreach (var breed in Model.BreedList)
+                                        {
+                                            <option value="@breed.Id">@breed.Name</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label asp-for="Input.Weight" class="form-label">@Localizer["Weight"]</label>

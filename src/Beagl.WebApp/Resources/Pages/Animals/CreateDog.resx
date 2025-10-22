@@ -46,4 +46,10 @@
   <data name="Error_Required_WeightUnit" xml:space="preserve">
     <value>Please select a weight unit.</value>
   </data>
+  <data name="Breed Secondary" xml:space="preserve">
+    <value>Breed Secondary</value>
+  </data>
+  <data name="Select Secondary Breed if any" xml:space="preserve">
+    <value>Select Secondary Breed if any</value>
+  </data>
 </root>

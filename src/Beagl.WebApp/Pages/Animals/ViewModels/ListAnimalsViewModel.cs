@@ -1,15 +1,14 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System;
 using Beagl.Application.Core.DTOs;
 using Beagl.Domain.AnimalManagement.ValueObjects;
 
-namespace Beagl.Application.AnimalManagement.DTOs;
+namespace Beagl.WebApp.Pages.Animals.ViewModels;
 
 /// <summary>
 /// Data Transfer Object for Animal aggregate.
 /// </summary>
-public class AnimalListDto : AuditedDtoBase
+public class ListAnimalsViewModel : AuditedDtoBase
 {
     /// <summary>
     /// Gets or sets the unique identifier of the animal.

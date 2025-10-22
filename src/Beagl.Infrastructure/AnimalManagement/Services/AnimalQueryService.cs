@@ -3,6 +3,7 @@
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Domain.AnimalManagement.Entities;
+using Beagl.Domain.AnimalManagement.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beagl.Infrastructure.AnimalManagement.Services;
@@ -20,21 +21,25 @@ public sealed class AnimalQueryService (
 
         IQueryable<Animal> query = dbContext.Animals;
         int totalCount = await query.CountAsync();
-        IList<AnimalListDto> items = await query
-            .Skip((filter.PageNumber - 1) * filter.PageSize)
-            .Take(filter.PageSize)
+
+        IQueryable<AnimalListDto> projected = query
             .Select(a => new AnimalListDto
             {
                 Id = a.Id,
                 Name = a.Name,
-                // Species = a.Species,
-                // Breed = a.Breed.Primary,
-                // Color = a.Color,
-                //Gender = a.Gender,
+                Breed = a.PrimaryBreed != null ? a.PrimaryBreed.Name : string.Empty,
+                Color = a.Color != null ? a.Color.Name : string.Empty,
                 BirthDate = a.DateOfBirth,
-                MicrochipNumber = a.Microchip!.Value,
-            })
+                MicrochipNumber = a.Microchip != null ? a.Microchip.Value : null,
+                Species = a.SpeciesType,
+                Gender = a.Gender,
+            });
+
+        IList<AnimalListDto> items = await projected
+            .Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
             .ToListAsync();
-            return (items, totalCount);
+
+        return (items, totalCount);
     }
 }
