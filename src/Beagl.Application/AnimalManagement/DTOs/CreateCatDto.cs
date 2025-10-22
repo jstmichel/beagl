@@ -40,6 +40,16 @@ public class CreateCatDto
     public DateTimeOffset BirthDate { get; set; }
 
     /// <summary>
+    /// Gets or sets the weight of the cat in pounds.
+    /// </summary>
+    public decimal Weight { get; set; }
+
+    /// <summary>
+    /// Gets or sets the weight unit.
+    /// </summary>
+    public int WeightUnit { get; set; }
+
+    /// <summary>
     /// Gets or sets the photo as a base64-encoded PNG image.
     /// </summary>
     public string? PhotoBase64 { get; set; }

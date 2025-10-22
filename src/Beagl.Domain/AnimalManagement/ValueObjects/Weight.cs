@@ -29,10 +29,10 @@ public class Weight
     /// <param name="value">The weight value.</param>
     /// <param name="unit">The weight unit.</param>
     /// <returns>A Weight value object or null if the input is invalid.</returns>
-    public static Weight? From(decimal? value, WeightUnit? unit = null)
+    public static Weight From(decimal? value, WeightUnit? unit = null)
     {
         if (value is null || value <= 0)
-            return null;
+            return new Weight(0, WeightUnit.Kilograms);
         return new Weight(value.Value, unit ?? WeightUnit.Kilograms);
     }
 }

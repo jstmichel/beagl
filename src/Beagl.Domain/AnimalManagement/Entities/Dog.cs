@@ -24,6 +24,7 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// <param name="photo">Optional photo.</param>
 /// <param name="microchip">Optional microchip.</param>
 /// <param name="distinctiveDescription">Distinctive description of the dog.</param>
+/// <param name="weight">Weight of the dog.</param>
 /// <param name="createdByUserId">The user ID of the creator.</param>
 /// <param name="createdAt">The creation date and time.</param>
 /// <param name="modifiedByUserId">The user ID of the modifier.</param>
@@ -41,10 +42,11 @@ public sealed class Dog(
     Photo? photo,
     Microchip? microchip,
     string distinctiveDescription,
+    Weight weight,
     Guid createdByUserId,
     DateTimeOffset createdAt,
     Guid? modifiedByUserId = null,
-    DateTimeOffset? modifiedAt = null) : Animal(name, SpeciesType.Dog, primaryBreedId, colorId, gender, birthDate, photo, microchip, distinctiveDescription, createdByUserId, createdAt, modifiedByUserId, modifiedAt)
+    DateTimeOffset? modifiedAt = null) : Animal(name, SpeciesType.Dog, primaryBreedId, colorId, gender, birthDate, photo, microchip, distinctiveDescription, weight, createdByUserId, createdAt, modifiedByUserId, modifiedAt)
 {
 
     /// <summary>

@@ -1,6 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Domain.AnimalManagement.Repositories;
+using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
@@ -64,6 +66,7 @@ public static class ServiceCollectionInfrastructureExtensions
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
+        services.AddScoped<ICatRepository, CatRepository>();
         return services;
     }
 }

@@ -18,7 +18,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" href="#" id="createCatChoice">Create Cat</a>
+                        <a class="dropdown-item" href="/Animals/CreateCat">Create Cat</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="/Animals/CreateDog">Create Dog</a>
@@ -26,67 +26,7 @@
                 </ul>
             </div>
         </div>
-        <!-- Create Cat Modal -->
-        <div class="modal fade" id="createCatModal" tabindex="-1" aria-labelledby="createCatModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createCatModalLabel">Create Cat</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="createCatModalBody">
-                        <!-- Form will be loaded here via AJAX -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var createCatChoice = document.getElementById('createCatChoice');
-            var createCatModal = document.getElementById('createCatModal');
-            createCatChoice.addEventListener('click', function (e) {
-                e.preventDefault();
-                var catModal = new bootstrap.Modal(createCatModal);
-                catModal.show();
-            });
-            createCatModal.addEventListener('show.bs.modal', function () {
-                fetch('/Animals/Index?handler=CreateCatPartial')
-                    .then(response => response.text())
-                    .then(html => {
-                        document.getElementById('createCatModalBody').innerHTML = html;
-                    });
-            });
-            // Optional: handle form submission via AJAX
-            document.addEventListener('submit', function (e) {
-                var form = e.target;
-                if (form.closest('#createCatModalBody')) {
-                    e.preventDefault();
-                    var formData = new FormData(form);
-                    fetch(form.action, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        // Try to parse as JSON
-                        return response.json().catch(() => null);
-                    })
-                    .then(data => {
-                        if (data && data.success) {
-                            // Close modal and reload page
-                            var modal = bootstrap.Modal.getInstance(document.getElementById('createCatModal'));
-                            modal.hide();
-                            location.reload();
-                        } else {
-                            // If not JSON, fallback to HTML (validation errors)
-                            response.text().then(html => {
-                                document.getElementById('createCatModalBody').innerHTML = html;
-                            });
-                        }
-                    });
-                }
-            });
-        });
-        </script>
+        <!-- Modal and AJAX for Create Cat removed. -->
     </div>
     <div class="row">
         <div class="col-12">

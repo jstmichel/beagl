@@ -20,7 +20,7 @@ public class Audit<TId>(TId userId, DateTimeOffset at)
     /// <summary>
     /// Gets the timestamp of the audit.
     /// </summary>
-	public DateTimeOffset At { get; private set; } = at;
+	public DateTimeOffset At { get; private set; } = at.ToUniversalTime();
 }
 
 /// <summary>

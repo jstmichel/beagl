@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Beagl.WebApp.Pages.Shared.Models;
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
-using Beagl.WebApp.Pages.Animals.ViewModels;
-using Beagl.Domain.AnimalManagement.ValueObjects;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -13,44 +11,8 @@ namespace Beagl.WebApp.Pages.Animals;
 /// Page model for listing animals.
 /// </summary>
 internal sealed class IndexModel(
-    IAnimalQueryService animalQueryService,
-    IBreedQueryService breedQueryService,
-    IColorQueryService colorQueryService,
-    ICatService catService) : PaginatedPageModel<AnimalListDto, IndexModel.AnimalsFilterModel>
+    IAnimalQueryService animalQueryService) : PaginatedPageModel<AnimalListDto, IndexModel.AnimalsFilterModel>
 {
-    /// <summary>
-    /// Serves the CreateCat form partial for the modal dialog via AJAX.
-    /// </summary>
-    public async Task<IActionResult> OnGetCreateCatPartialAsync()
-    {
-        CreateCatPartialModel model = await BuildCreateCatPartialModel();
-        return Partial("_CreateCatPartial", model);
-    }
-
-    public async Task<IActionResult> OnPostCreateCatAsync(CreateCatPartialModel model)
-    {
-        if (!ModelState.IsValid)
-        {
-            model.BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
-            model.ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
-            return Partial("_CreateCatPartial", model);
-        }
-
-        _ = await catService.CreateCatAsync(new CreateCatDto
-        {
-            Name = model.Cat.Name,
-            BreedPrimaryId = model.Cat.BreedPrimaryId,
-            ColorId = model.Cat.ColorId,
-            Description = model.Cat.Description,
-            Gender = model.Cat.Gender,
-            BirthDate = model.Cat.BirthDate,
-            PhotoBase64 = model.Cat.PhotoBase64,
-            MicrochipNumber = model.Cat.MicrochipNumber
-        });
-
-        return new JsonResult(new { success = true });
-    }
-
     /// <summary>
     /// Handles the GET request to load the list of animals.
     /// </summary>
@@ -78,26 +40,6 @@ internal sealed class IndexModel(
             PageNumber = pageNumber,
             PageSize = PageSize,
         };
-
-    private async Task<CreateCatPartialModel> BuildCreateCatPartialModel()
-    {
-        return new CreateCatPartialModel
-        {
-            Cat = new(),
-            BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Cat),
-            ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Cat)
-        };
-    }
-
-    /// <summary>
-    /// Model for the CreateCat partial view.
-    /// </summary>
-    internal sealed class CreateCatPartialModel
-    {
-        public CreateCatViewModel Cat { get; set; } = new();
-        public IList<BreedDto> BreedList { get; set; } = [];
-        public IList<ColorDto> ColorList { get; set; } = [];
-    }
 
     /// <summary>
     /// Model for filtering animals in the animal management view.
