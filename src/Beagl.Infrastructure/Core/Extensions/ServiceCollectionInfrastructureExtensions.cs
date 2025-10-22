@@ -56,6 +56,7 @@ public static class ServiceCollectionInfrastructureExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<ICatService, CatService>();
+        services.AddScoped<IDogService, DogService>();
         return services;
     }
 
@@ -67,6 +68,7 @@ public static class ServiceCollectionInfrastructureExtensions
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<ICatRepository, CatRepository>();
+        services.AddScoped<IDogRepository, DogRepository>();
         return services;
     }
 }

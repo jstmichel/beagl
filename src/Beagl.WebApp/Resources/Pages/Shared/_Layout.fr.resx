@@ -147,4 +147,16 @@
     <data name="Next" xml:space="preserve">
       <value>Suivant</value>
     </data>
-</root>
+    <data name="User List" xml:space="preserve">
+      <value>Liste des utilisateurs</value>
+    </data>
+    <data name="Animals List" xml:space="preserve">
+      <value>Liste des animaux</value>
+    </data>
+    <data name="Add Cat" xml:space="preserve">
+      <value>Ajouter un chat</value>
+    </data>
+    <data name="Add Dog" xml:space="preserve">
+      <value>Ajouter un chien</value>
+    </data>
+  </root>

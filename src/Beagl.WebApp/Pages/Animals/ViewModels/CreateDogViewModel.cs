@@ -6,26 +6,31 @@ using Beagl.WebApp.Resources.Pages.Animals;
 namespace Beagl.WebApp.Pages.Animals.ViewModels;
 
 /// <summary>
-/// ViewModel for creating a cat.
+/// ViewModel for creating a dog.
 /// </summary>
-public sealed class CreateCatViewModel
+public sealed class CreateDogViewModel
 {
     /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Name")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Name")]
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the selected primary breed ID.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_BreedPrimaryId")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_BreedPrimaryId")]
     public Guid? BreedPrimaryId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the selected secondary breed ID.
+    /// </summary>
+    public Guid? BreedSecondaryId { get; set; }
 
     /// <summary>
     /// Gets or sets the selected color ID.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_ColorId")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_ColorId")]
     public Guid? ColorId { get; set; }
 
     /// <summary>
@@ -36,13 +41,13 @@ public sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets the gender of the animal.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Gender")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Gender")]
     public int Gender { get; set; } = 0;
 
     /// <summary>
     /// Gets or sets the birth date of the animal.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_BirthDate")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_BirthDate")]
     public DateTimeOffset? BirthDate { get; set; }
 
     /// <summary>
@@ -56,20 +61,14 @@ public sealed class CreateCatViewModel
     public string? MicrochipNumber { get; set; }
 
     /// <summary>
-    /// Gets or sets the weight of the cat in pounds.
+    /// Gets or sets the weight of the dog in pounds.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Weight")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Weight")]
     public decimal Weight { get; set; }
 
     /// <summary>
     /// Gets or sets the weight unit.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_WeightUnit")]
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_WeightUnit")]
     public int WeightUnit { get; set; } = 0;
-
-    /// <summary>
-    /// Gets or sets whether the cat is an unclawned cat.
-    /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_IsAnUnclawnedCat")]
-    public bool IsAnUnclawnedCat { get; set; }
 }

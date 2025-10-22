@@ -31,4 +31,14 @@ public sealed class LocalRedirection
     /// Gets the roles management page path.
     /// </summary>
     public const string Animals = "/Animals/Index";
+
+    /// <summary>
+    /// Gets the roles management page path.
+    /// </summary>
+    public const string CreateCat = "/Animals/CreateCat";
+
+    /// <summary>
+    /// Gets the roles management page path.
+    /// </summary>
+    public const string CreateDog = "/Animals/CreateDog";
 }

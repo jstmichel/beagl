@@ -21,7 +21,7 @@ namespace Beagl.WebApp.Resources.Pages.Animals
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CreateCat
+    public class CreateDog
     {
 
         private static global::System.Resources.ResourceManager resourceMan;
@@ -29,7 +29,7 @@ namespace Beagl.WebApp.Resources.Pages.Animals
         private static global::System.Globalization.CultureInfo resourceCulture;
 
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CreateCat()
+        internal CreateDog()
         {
         }
 
@@ -43,7 +43,7 @@ namespace Beagl.WebApp.Resources.Pages.Animals
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Beagl.WebApp.Resources.Pages.Animals.CreateCat", typeof(CreateCat).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Beagl.WebApp.Resources.Pages.Animals.CreateDog", typeof(CreateDog).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -101,10 +101,5 @@ namespace Beagl.WebApp.Resources.Pages.Animals
         /// Looks up a localized string similar to Weight Unit.
         /// </summary>
         public static string Error_Required_WeightUnit => ResourceManager.GetString("Error_Required_WeightUnit", resourceCulture);
-
-        /// <summary>
-        /// Looks up a localized string similar to Is An Unclawned Cat.
-        /// </summary>
-        public static string Error_Required_IsAnUnclawnedCat => ResourceManager.GetString("Error_Required_IsAnUnclawnedCat", resourceCulture);
     }
 }

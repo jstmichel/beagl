@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Create Dog" xml:space="preserve"><value>Create Dog</value></data>
+  <data name="Please fix the following errors:" xml:space="preserve"><value>Please fix the following errors:</value></data>
+  <data name="Dog Details" xml:space="preserve"><value>Dog Details</value></data>
+  <data name="Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Birth Date" xml:space="preserve"><value>Birth Date</value></data>
+  <data name="Breed" xml:space="preserve"><value>Breed</value></data>
+  <data name="Select Breed" xml:space="preserve"><value>Select Breed</value></data>
+  <data name="Gender" xml:space="preserve"><value>Gender</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="Male" xml:space="preserve"><value>Male</value></data>
+  <data name="Female" xml:space="preserve"><value>Female</value></data>
+  <data name="Color" xml:space="preserve"><value>Color</value></data>
+  <data name="Select Color" xml:space="preserve"><value>Select Color</value></data>
+  <data name="Microchip Number" xml:space="preserve"><value>Microchip Number</value></data>
+  <data name="Weight" xml:space="preserve"><value>Weight</value></data>
+  <data name="lbs" xml:space="preserve"><value>lbs</value></data>
+  <data name="kg" xml:space="preserve"><value>kg</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Create" xml:space="preserve"><value>Create</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Image file is too large." xml:space="preserve"><value>Image file is too large (10mb).</value></data>
+  <data name="Error_Required_Name" xml:space="preserve">
+    <value>Please enter the dog's name.</value>
+  </data>
+  <data name="Error_Required_BreedPrimaryId" xml:space="preserve">
+    <value>Please select a breed.</value>
+  </data>
+  <data name="Error_Required_ColorId" xml:space="preserve">
+    <value>Please select a color.</value>
+  </data>
+  <data name="Error_Required_Gender" xml:space="preserve">
+    <value>Please select a gender.</value>
+  </data>
+  <data name="Error_Required_BirthDate" xml:space="preserve">
+    <value>Please enter the dog's birth date.</value>
+  </data>
+  <data name="Error_Required_Weight" xml:space="preserve">
+    <value>Please enter the dog's weight.</value>
+  </data>
+  <data name="Error_Required_WeightUnit" xml:space="preserve">
+    <value>Please select a weight unit.</value>
+  </data>
+</root>
