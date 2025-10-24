@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+  </resheader>
+  <data name="Create Citizen" xml:space="preserve"><value>Créer un citoyen</value></data>
+  <data name="Please fix the following errors:" xml:space="preserve"><value>Veuillez corriger les erreurs suivantes :</value></data>
+  <data name="Citizen Details" xml:space="preserve"><value>Détails du citoyen</value></data>
+  <data name="Name" xml:space="preserve"><value>Nom</value></data>
+  <data name="Communication Preferences" xml:space="preserve"><value>Préférences de communication</value></data>
+  <data name="Phone Number" xml:space="preserve"><value>Téléphone</value></data>
+  <data name="Cell Phone" xml:space="preserve"><value>Téléphone cellulaire</value></data>
+  <data name="Communication Preference" xml:space="preserve"><value>Préférence de communication</value></data>
+  <data name="Select Preference" xml:space="preserve"><value>Sélectionner la préférence</value></data>
+  <data name="Phone" xml:space="preserve"><value>Téléphone</value></data>
+  <data name="Email" xml:space="preserve"><value>Courriel</value></data>
+  <data name="Language Preference" xml:space="preserve"><value>Préférence de langue</value></data>
+  <data name="Select Language" xml:space="preserve"><value>Sélectionner la langue</value></data>
+  <data name="French" xml:space="preserve"><value>Français</value></data>
+  <data name="English" xml:space="preserve"><value>Anglais</value></data>
+  <data name="Address" xml:space="preserve"><value>Adresse</value></data>
+  <data name="Street Address" xml:space="preserve"><value>Adresse</value></data>
+  <data name="No." xml:space="preserve"><value>No</value></data>
+  <data name="Street Name" xml:space="preserve"><value>Rue</value></data>
+  <data name="Apt." xml:space="preserve"><value>App.</value></data>
+  <data name="City" xml:space="preserve"><value>Ville</value></data>
+  <data name="Province" xml:space="preserve"><value>Province</value></data>
+  <data name="Quebec" xml:space="preserve"><value>Québec</value></data>
+  <data name="Country" xml:space="preserve"><value>Pays</value></data>
+  <data name="Canada" xml:space="preserve"><value>Canada</value></data>
+  <data name="Postal Code" xml:space="preserve"><value>Code postal</value></data>
+  <data name="PostOfficeBox" xml:space="preserve"><value>Boîte postale</value></data>
+  <data name="Create" xml:space="preserve"><value>Créer</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
+  <data name="Civility" xml:space="preserve"><value>Civilité</value></data>
+  <data name="Mr." xml:space="preserve"><value>M.</value></data>
+  <data name="Mrs." xml:space="preserve"><value>Mme</value></data>
+  <data name="Ms." xml:space="preserve"><value>Mlle</value></data>
+  <data name="Mx." xml:space="preserve"><value>Mx</value></data>
+  <data name="Dr." xml:space="preserve"><value>Dr</value></data>
+  <data name="Prof." xml:space="preserve"><value>Prof</value></data>
+  <data name="FirstName_Required" xml:space="preserve"><value>Le prénom est requis.</value></data>
+  <data name="LastName_Required" xml:space="preserve"><value>Le nom de famille est requis.</value></data>
+  <data name="CommunicationPreference_Required" xml:space="preserve"><value>La préférence de communication est requise.</value></data>
+  <data name="LanguagePreference_Required" xml:space="preserve"><value>La préférence de langue est requise.</value></data>
+  <data name="StreetNumber_Required" xml:space="preserve"><value>Le numéro civique est requis.</value></data>
+  <data name="StreetName_Required" xml:space="preserve"><value>Le nom de la rue est requis.</value></data>
+  <data name="City_Required" xml:space="preserve"><value>La ville est requise.</value></data>
+  <data name="Province_Required" xml:space="preserve"><value>La province est requise.</value></data>
+  <data name="Country_Required" xml:space="preserve"><value>Le pays est requis.</value></data>
+  <data name="PostalCode_Required" xml:space="preserve"><value>Le code postal est requis.</value></data>
+</root>

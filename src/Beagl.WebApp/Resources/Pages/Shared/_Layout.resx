@@ -153,6 +153,15 @@
   <data name="Animals List" xml:space="preserve">
     <value>Animals List</value>
   </data>
+    <data name="Citizens" xml:space="preserve">
+      <value>Citizens</value>
+    </data>
+    <data name="Add Citizen" xml:space="preserve">
+      <value>Add Citizen</value>
+    </data>
+    <data name="Citizens List" xml:space="preserve">
+      <value>Citizens List</value>
+    </data>
   <data name="Add Cat" xml:space="preserve">
     <value>Add Cat</value>
   </data>

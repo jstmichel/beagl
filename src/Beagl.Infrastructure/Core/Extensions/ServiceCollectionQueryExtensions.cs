@@ -1,7 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Application.CitizenManagement.Services;
 using Beagl.Infrastructure.AnimalManagement.Services;
+using Beagl.Infrastructure.CitizenManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,7 @@ public static class ServiceCollectionQueryExtensions
         services.AddScoped<IAnimalQueryService, AnimalQueryService>();
         services.AddScoped<IBreedQueryService, BreedQueryService>();
         services.AddScoped<IColorQueryService, ColorQueryService>();
+        services.AddScoped<ICitizenQueryService, CitizenQueryService>();
 
         return services;
     }

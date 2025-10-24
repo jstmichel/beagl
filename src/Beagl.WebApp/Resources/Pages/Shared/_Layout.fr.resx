@@ -153,6 +153,15 @@
     <data name="Animals List" xml:space="preserve">
       <value>Liste des animaux</value>
     </data>
+      <data name="Citizens" xml:space="preserve">
+        <value>Citoyens</value>
+      </data>
+      <data name="Add Citizen" xml:space="preserve">
+        <value>Ajouter un citoyen</value>
+      </data>
+      <data name="Citizens List" xml:space="preserve">
+        <value>Liste des citoyens</value>
+      </data>
     <data name="Add Cat" xml:space="preserve">
       <value>Ajouter un chat</value>
     </data>
