@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="../Beagl.Application/Beagl.Application.csproj" />
     <ProjectReference Include="..\Beagl.Domain\Beagl.Domain.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,38 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Beagl.Application.UserManagement.ViewModels;
+
+/// <summary>
+/// ViewModel for editing user details in the UI.
+/// Contains only the fields required for user editing.
+/// </summary>
+public sealed class EditUserViewModel
+{
+    /// <summary>
+    /// Gets or sets the unique identifier for the user.
+    /// </summary>
+    public required string Id { get; set; }
+
+    /// <summary>
+    /// Gets the username.
+    /// </summary>
+    public string? UserName { get; init; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the email address.
+    /// </summary>
+    public string? Email { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the phone number.
+    /// </summary>
+    public string? PhoneNumber { get; set; }
+
+    /// <summary>
+    /// Gets or sets the roles assigned to the user.
+    /// </summary>
+    public Collection<string> Roles { get; init; } = [];
+}

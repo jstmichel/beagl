@@ -3,7 +3,7 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = Localizer["Create User"];
 }
 
 <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
@@ -25,31 +25,31 @@
     <div class="col-12 col-md-10 col-lg-8 col-xl-7 mx-auto">
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-body p-5">
-                <h2 class="mb-5 text-center fw-bold">Create User</h2>
+                <h2 class="mb-5 text-center fw-bold">@Localizer["Create User"]</h2>
                 <form method="post">
                     <div class="row g-4">
                         <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.UserName" class="form-label fs-6">Username</label>
+                            <label asp-for="NewUser.UserName" class="form-label fs-6">@Localizer["Username"]</label>
                             <input asp-for="NewUser.UserName" class="form-control form-control-lg" />
                             <span asp-validation-for="NewUser.UserName" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.Email" class="form-label fs-6">Email</label>
+                            <label asp-for="NewUser.Email" class="form-label fs-6">@Localizer["Email"]</label>
                             <input asp-for="NewUser.Email" class="form-control form-control-lg" />
                             <span asp-validation-for="NewUser.Email" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.PhoneNumber" class="form-label fs-6">Phone Number</label>
+                            <label asp-for="NewUser.PhoneNumber" class="form-label fs-6">@Localizer["Phone Number"]</label>
                             <input asp-for="NewUser.PhoneNumber" class="form-control form-control-lg" />
                             <span asp-validation-for="NewUser.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.Password" class="form-label fs-6">Password</label>
+                            <label asp-for="NewUser.Password" class="form-label fs-6">@Localizer["Password"]</label>
                             <input asp-for="NewUser.Password" class="form-control form-control-lg" type="password" autocomplete="new-password" />
                             <span asp-validation-for="NewUser.Password" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label fs-6">Roles</label>
+                            <label class="form-label fs-6">@Localizer["Roles"]</label>
                             <select multiple class="form-select" name="NewUser.Roles">
                                 @foreach (var role in Model.AvailableRoles)
                                 {
@@ -59,8 +59,8 @@
                         </div>
                     </div>
                     <div class="d-flex gap-3 justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">Create</button>
-                        <a asp-page="Index" class="btn btn-outline-secondary btn-lg px-5">Cancel</a>
+                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">@Localizer["Create"]</button>
+                        <a asp-page="Index" class="btn btn-outline-secondary btn-lg px-5">@Localizer["Cancel"]</a>
                     </div>
                 </form>
             </div>

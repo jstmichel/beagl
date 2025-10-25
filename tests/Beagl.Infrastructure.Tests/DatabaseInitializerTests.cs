@@ -3,12 +3,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Beagl.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Beagl.Infrastructure.Entities;
+using Beagl.Domain.Core;
+using Beagl.Infrastructure.UserManagement.Entities;
 
 namespace Beagl.Infrastructure.Tests;
 

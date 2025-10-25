@@ -1,0 +1,80 @@
+@page "/Animals/Index"
+@using Beagl.Application.AnimalManagement.DTOs
+@using Beagl.WebApp.Pages.Animals.ViewModels
+@model Beagl.WebApp.Pages.Animals.IndexModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Beagl.WebApp.Services.IStaticDataLocalizerService StaticDataLocalizer
+
+@{
+    ViewData["Title"] = Localizer["Animals"];
+}
+
+<div class="container-fluid py-5">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h2 class="fw-bold">@Localizer["Animals"]</h2>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="dropdown" aria-expanded="false">@Localizer["Add Animal"]</button>
+                <button type="button" class="btn btn-primary btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">@Localizer["Toggle Dropdown"]</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="/Animals/CreateCat">@Localizer["Create Cat"]</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/Animals/CreateDog">@Localizer["Create Dog"]</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Modal and AJAX for Create Cat removed. -->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover table-bordered align-middle bg-white rounded-4 overflow-hidden">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["Name"]</th>
+                        <th>@Localizer["Species"]</th>
+                        <th>@Localizer["Breed"]</th>
+                        <th>@Localizer["Color"]</th>
+                        <th>@Localizer["Gender"]</th>
+                        <th>@Localizer["Birth Date"]</th>
+                        <th>@Localizer["Microchip"]</th>
+                        <th>@Localizer["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.DataModel != null && Model.DataModel.Any())
+                    {
+                        foreach (ListAnimalsViewModel animal in Model.DataModel)
+                        {
+                            <tr>
+                                <td>@animal.Name</td>
+                                <td>@StaticDataLocalizer.LocalizeSpecies(animal.Species)</td>
+                                <td>@animal.Breed</td>
+                                <td>@animal.Color</td>
+                                <td>@StaticDataLocalizer.LocalizeGender(animal.Gender)</td>
+                                <td>@animal.BirthDate.ToString("yyyy-MM-dd")</td>
+                                <td>@animal.MicrochipNumber</td>
+                                <td>
+                                    <a asp-page="Edit" asp-route-id="@animal.Id" class="btn btn-sm btn-outline-primary me-2">@Localizer["Edit"]</a>
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@animal.Id" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">@Localizer["Delete"]</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center">@Localizer["No animals found."]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

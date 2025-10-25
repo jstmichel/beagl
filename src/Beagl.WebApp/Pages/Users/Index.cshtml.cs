@@ -1,10 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Domain.Exceptions.Entities;
-using Beagl.Domain.Exceptions.Users;
-using Beagl.Domain.Models;
-using Beagl.Domain.Services;
-using Beagl.Infrastructure.Services.Interfaces;
+using Beagl.Application.UserManagement.DTOs;
+using Beagl.Domain.Core.Exceptions;
+using Beagl.Domain.UserManagement.Exceptions;
+using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Pages.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;

@@ -1,0 +1,89 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
+using System;
+using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.Core.ValueObjects;
+
+
+namespace Beagl.Domain.AnimalManagement.Entities;
+
+/// <summary>
+/// Persistence model for Animal aggregate, using value objects.
+/// </summary>
+public class Animal
+{
+    /// <summary>
+    /// Gets or sets the unique identifier for the animal.
+    /// </summary>
+    public Guid Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the species type (discriminator for TPT).
+    /// </summary>
+    public SpeciesType SpeciesType { get; set; } = SpeciesType.Unknown;
+
+    /// <summary>
+    /// Gets or sets the name of the animal.
+    /// </summary>
+    public string Name { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the foreign key for the primary breed of the animal.
+    /// </summary>
+    public Guid PrimaryBreedId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the related primary breed entity.
+    /// </summary>
+    public Breed? PrimaryBreed { get; set; }
+
+    /// <summary>
+    /// Gets or sets the foreign key for the color of the animal.
+    /// </summary>
+    public Guid ColorId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the related color entity.
+    /// </summary>
+    public Color? Color { get; set; }
+
+    /// <summary>
+    /// Gets or sets the distinctive description of the animal.
+    /// </summary>
+    public string? DistinctiveDescription { get; set; }
+
+    /// <summary>
+    /// Gets or sets the gender of the animal.
+    /// </summary>
+    public Gender Gender { get; set; } = Gender.Unknown;
+
+    /// <summary>
+    /// Gets or sets the date of birth of the animal.
+    /// </summary>
+    public DateTimeOffset DateOfBirth { get; set; }
+
+    /// <summary>
+    /// Gets or sets the photo of the animal as a value object.
+    /// </summary>
+    public Photo? Photo { get; set; }
+
+    /// <summary>
+    /// Gets or sets the microchip information for the animal.
+    /// </summary>
+    public Microchip? Microchip { get; set; }
+
+    /// <summary>
+    /// Gets or sets the weight of the animal as a value object.
+    /// </summary>
+    public required Weight Weight { get; set; }
+
+    /// <summary>
+    /// Gets the audit information for creation.
+    /// </summary>
+    public Audit<Guid> Created { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
+
+    /// <summary>
+    /// Gets the audit information for last modification.
+    /// </summary>
+    public Audit<Guid>? Modified { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
+}

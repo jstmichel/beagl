@@ -1,7 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Microsoft.Extensions.Configuration;
-using Moq;
 using Beagl.WebApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 
