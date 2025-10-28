@@ -38,13 +38,13 @@
                                     <label class="form-label">@Localizer["Name"]</label>
                                     <div class="input-group mb-3">
                                         <select class="form-select" style="max-width: 140px;" asp-for="Input.Civility">
-                                            <option value="">@Localizer["Civility"]</option>
-                                            <option value="Mr">@Localizer["Mr."]</option>
-                                            <option value="Mrs">@Localizer["Mrs."]</option>
-                                            <option value="Ms">@Localizer["Ms."]</option>
-                                            <option value="Mx">@Localizer["Mx."]</option>
-                                            <option value="Dr">@Localizer["Dr."]</option>
-                                            <option value="Prof">@Localizer["Prof."]</option>
+                                            <option value="0">@Localizer["Civility"]</option>
+                                            <option value="1">@Localizer["Mr."]</option>
+                                            <option value="2">@Localizer["Mrs."]</option>
+                                            <option value="3">@Localizer["Ms."]</option>
+                                            <option value="4">@Localizer["Mx."]</option>
+                                            <option value="5">@Localizer["Dr."]</option>
+                                            <option value="6">@Localizer["Prof."]</option>
                                         </select>
                                         <input type="text" class="form-control" aria-label="First name" placeholder="@Localizer["First Name"]" asp-for="Input.FirstName">
                                         <input type="text" class="form-control" aria-label="Last name" placeholder="@Localizer["Last Name"]" asp-for="Input.LastName">
@@ -82,18 +82,18 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="CommunicationPreference">@Localizer["Communication Preference"]</label>
                                     <select class="form-select" id="CommunicationPreference" asp-for="Input.CommunicationPreference">
-                                        <option value="">@Localizer["Select Preference"]</option>
-                                        <option value="Phone">@Localizer["Phone"]</option>
-                                        <option value="CellPhone">@Localizer["Cell Phone"]</option>
-                                        <option value="Email">@Localizer["Email"]</option>
+                                        <option value="0">@Localizer["Select Preference"]</option>
+                                        <option value="1">@Localizer["Phone"]</option>
+                                        <option value="2">@Localizer["Cell Phone"]</option>
+                                        <option value="3">@Localizer["Email"]</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="LanguagePreference">@Localizer["Language Preference"]</label>
                                     <select class="form-select" id="LanguagePreference" asp-for="Input.LanguagePreference">
-                                        <option value="">@Localizer["Select Language"]</option>
-                                        <option value="fr">@Localizer["French"]</option>
-                                        <option value="en">@Localizer["English"]</option>
+                                        <option value="0">@Localizer["Select Language"]</option>
+                                        <option value="1">@Localizer["French"]</option>
+                                        <option value="2">@Localizer["English"]</option>
                                     </select>
                                 </div>
                             </div>

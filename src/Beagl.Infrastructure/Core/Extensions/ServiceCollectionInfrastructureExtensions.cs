@@ -3,8 +3,10 @@
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.Domain.AnimalManagement.Repositories;
+using Beagl.Domain.CitizenManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Services;
+using Beagl.Infrastructure.CitizenManagement.Repositories;
 using Beagl.Infrastructure.CitizenManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
@@ -72,6 +74,7 @@ public static class ServiceCollectionInfrastructureExtensions
     {
         services.AddScoped<ICatRepository, CatRepository>();
         services.AddScoped<IDogRepository, DogRepository>();
+        services.AddScoped<ICitizenRepository, CitizenRepository>();
         return services;
     }
 }

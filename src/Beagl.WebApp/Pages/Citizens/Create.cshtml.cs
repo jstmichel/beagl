@@ -40,21 +40,21 @@ internal sealed class CreateCitizenModel(
         return new()
         {
             Civility = Input.Civility,
-            FirstName = Input.FirstName,
-            LastName = Input.LastName,
+            FirstName = Input.FirstName!,
+            LastName = Input.LastName!,
             Phone = Input.Phone,
             CellPhone = Input.CellPhone,
             CommunicationPreference = Input.CommunicationPreference,
             LanguagePreference = Input.LanguagePreference,
             Email = Input.Email,
-            StreetNumber = Input.StreetNumber,
-            StreetName = Input.StreetName,
+            StreetNumber = Input.StreetNumber!,
+            StreetName = Input.StreetName!,
             Appartment = Input.Appartment,
-            City = Input.City,
-            Province = Input.Province,
-            PostalCode = Input.PostalCode,
-            Country = Input.Country,
-            PostOfficeBox = Input.PostOfficeBox,
+            City = Input.City!,
+            Province = Input.Province!,
+            PostalCode = Input.PostalCode!,
+            Country = Input.Country!,
+            PostOfficeBox = Input.PostOfficeBox!,
         };
     }
 }

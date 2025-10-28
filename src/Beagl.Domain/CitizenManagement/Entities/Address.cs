@@ -72,7 +72,7 @@ public sealed class Address
     /// <summary>
     /// Parameterless constructor for EF Core.
     /// </summary>
-    public Address() { }
+    private Address() { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Address"/> class.

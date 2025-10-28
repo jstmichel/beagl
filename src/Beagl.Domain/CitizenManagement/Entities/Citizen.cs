@@ -13,6 +13,43 @@ namespace Beagl.Domain.CitizenManagement.Entities;
 public class Citizen
 {
     /// <summary>
+    /// Private parameterless constructor for EF Core.
+    /// </summary>
+    private Citizen() { }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Citizen"/> class.
+    /// </summary>
+    /// <param name="person">The name of the citizen.</param>
+    /// <param name="phone">The phone number.</param>
+    /// <param name="cellPhone">The cell phone number.</param>
+    /// <param name="communicationPreference">The communication preference.</param>
+    /// <param name="languagePreference">The language preference.</param>
+    /// <param name="email">The email address.</param>
+    /// <param name="address">The address.</param>
+    /// <param name="created">The audit information for creation.</param>
+    public Citizen(
+        PersonName person,
+        string? phone,
+        string? cellPhone,
+        CommunicationPreference communicationPreference,
+        LanguagePreference languagePreference,
+        string? email,
+        Address address,
+        Audit<Guid> created)
+    {
+        Id = Guid.NewGuid();
+        Person = person;
+        Phone = phone;
+        CellPhone = cellPhone;
+        CommunicationPreference = communicationPreference;
+        LanguagePreference = languagePreference;
+        Email = email;
+        Addresses = [address];
+        Created = created;
+    }
+
+    /// <summary>
     /// Gets or sets the unique identifier for the citizen.
     /// </summary>
     public Guid Id { get; set; }
@@ -23,9 +60,9 @@ public class Citizen
     public PersonName Person { get; set; } = default!;
 
     /// <summary>
-	/// Gets or sets the phone number.
-	/// </summary>
-	public string? Phone { get; set; }
+    /// Gets or sets the phone number.
+    /// </summary>
+    public string? Phone { get; set; }
 
     /// <summary>
     /// Gets or sets the cell phone number.
@@ -33,8 +70,8 @@ public class Citizen
     public string? CellPhone { get; set; }
 
     /// <summary>
-	/// Gets or sets the communication preference (Phone, CellPhone, Email).
-	/// </summary>
+    /// Gets or sets the communication preference (Phone, CellPhone, Email).
+    /// </summary>
     public CommunicationPreference CommunicationPreference { get; set; } = CommunicationPreference.None;
 
     /// <summary>
@@ -43,12 +80,12 @@ public class Citizen
     public LanguagePreference LanguagePreference { get; set; } = LanguagePreference.None;
 
     /// <summary>
-	/// Gets or sets the email address.
-	/// </summary>
-	public string? Email { get; set; }
+    /// Gets or sets the email address.
+    /// </summary>
+    public string? Email { get; set; }
 
     /// <summary>
-    /// Gets or sets the list of addresses associated with the citizen.
+    /// Gets the list of addresses associated with the citizen.
     /// </summary>
     public ICollection<Address> Addresses { get; } = [];
 

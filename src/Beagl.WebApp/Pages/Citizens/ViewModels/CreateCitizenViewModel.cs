@@ -14,7 +14,7 @@ public class CreateCitizenViewModel
 	/// Civility (e.g., Mr., Mrs., Ms., etc.)
 	/// </summary>
 	[Display(Name = "Civility")]
-	public string? Civility { get; set; }
+	public int Civility { get; set; }
 
 	/// <summary>
 	/// First name of the citizen.
@@ -49,14 +49,14 @@ public class CreateCitizenViewModel
 	/// </summary>
 	[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "CommunicationPreference_Required")]
 	[Display(Name = "Communication Preference")]
-    public string? CommunicationPreference { get; set; }
+    public int CommunicationPreference { get; set; }
 
 	/// <summary>
 	/// Language preference (fr, en).
 	/// </summary>
 	[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "LanguagePreference_Required")]
 	[Display(Name = "Language Preference")]
-    public string? LanguagePreference { get; set; }
+    public int LanguagePreference { get; set; }
 
 	/// <summary>
 	/// Email address.

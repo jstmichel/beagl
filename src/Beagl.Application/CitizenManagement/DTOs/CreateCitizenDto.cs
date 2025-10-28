@@ -10,17 +10,17 @@ public class CreateCitizenDto
     /// <summary>
 	/// Civility (e.g., Mr., Mrs., Ms., etc.)
 	/// </summary>
-	public string? Civility { get; set; }
+	public int Civility { get; set; } = default!;
 
 	/// <summary>
 	/// First name of the citizen.
 	/// </summary>
-	public string? FirstName { get; set; }
+	public string FirstName { get; set; } = default!;
 
 	/// <summary>
 	/// Last name of the citizen.
 	/// </summary>
-	public string? LastName { get; set; }
+	public string LastName { get; set; } = default!;
 
 	/// <summary>
 	/// Phone number.
@@ -35,12 +35,12 @@ public class CreateCitizenDto
 	/// <summary>
 	/// Communication preference (Phone, CellPhone, Email).
 	/// </summary>
-    public string? CommunicationPreference { get; set; }
+    public int CommunicationPreference { get; set; } = default!;
 
 	/// <summary>
 	/// Language preference (fr, en).
 	/// </summary>
-    public string? LanguagePreference { get; set; }
+    public int LanguagePreference { get; set; } = default!;
 
 	/// <summary>
 	/// Email address.
@@ -50,12 +50,12 @@ public class CreateCitizenDto
     /// <summary>
 	/// Street number.
 	/// </summary>
-    public string? StreetNumber { get; set; }
+    public string StreetNumber { get; set; } = default!;
 
 	/// <summary>
 	/// Street name.
 	/// </summary>
-	public string? StreetName { get; set; }
+	public string StreetName { get; set; } = default!;
 
 	/// <summary>
 	/// Apartment number.
@@ -65,22 +65,22 @@ public class CreateCitizenDto
 	/// <summary>
 	/// City.
 	/// </summary>
-    public string? City { get; set; }
+    public string City { get; set; } = default!;
 
 	/// <summary>
 	/// Province.
 	/// </summary>
-    public string? Province { get; set; }
+    public string Province { get; set; } = default!;
 
 	/// <summary>
 	/// Country.
 	/// </summary>
-    public string? Country { get; set; }
+    public string Country { get; set; } = default!;
 
 	/// <summary>
 	/// Postal code.
 	/// </summary>
-	public string? PostalCode { get; set; }
+	public string PostalCode { get; set; } = default!;
 
 	/// <summary>
 	/// Post office box.
