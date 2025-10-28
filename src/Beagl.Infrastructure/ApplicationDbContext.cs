@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Domain.CitizenManagement.Entities;
-using Beagl.Domain.CitizenManagement.ValueObjects;
-using Beagl.Domain.Core.ValueObjects;
 
 namespace Beagl.Infrastructure;
 
@@ -60,9 +58,48 @@ public class ApplicationDbContext(
     protected override void OnModelCreating(ModelBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
+
         base.OnModelCreating(builder);
 
-        // Configure Animal relationships and owned types
+        ConfigureBreedEntity(builder);
+        ConfigureColorEntity(builder);
+        ConfigureAnimalEntity(builder);
+        ConfigureCitizenEntity(builder);
+        ConfigureAddressEntity(builder);
+        ConfigureDogEntity(builder);
+        ConfigureCatEntity(builder);
+    }
+
+    private static void ConfigureBreedEntity(ModelBuilder builder)
+    {
+        builder.Entity<Breed>(entity =>
+        {
+            entity.ToTable("Breeds");
+            entity.HasKey(b => b.Id);
+            entity.Property(b => b.Name)
+                .IsRequired()
+                .HasMaxLength(64);
+            entity.Property(b => b.SpeciesType)
+                .IsRequired();
+        });
+    }
+
+    private static void ConfigureColorEntity(ModelBuilder builder)
+    {
+        builder.Entity<Color>(entity =>
+        {
+            entity.ToTable("Colors");
+            entity.HasKey(c => c.Id);
+            entity.Property(c => c.Name)
+                .IsRequired()
+                .HasMaxLength(64);
+            entity.Property(c => c.SpeciesType)
+                .IsRequired();
+        });
+    }
+
+    private static void ConfigureAnimalEntity(ModelBuilder builder)
+    {
         builder.Entity<Animal>(entity =>
         {
             entity.ToTable("Animals");
@@ -76,7 +113,6 @@ public class ApplicationDbContext(
                 .HasForeignKey(a => a.ColorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Owned value objects
             entity.OwnsOne(a => a.Photo, p =>
             {
                 p.Property(x => x.Base64Png).HasColumnName("PhotoBase64Png");
@@ -101,8 +137,10 @@ public class ApplicationDbContext(
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
         });
+    }
 
-        // Configure Citizen entity
+    private static void ConfigureCitizenEntity(ModelBuilder builder)
+    {
         builder.Entity<Citizen>(entity =>
         {
             entity.ToTable("Citizens");
@@ -134,8 +172,10 @@ public class ApplicationDbContext(
                 .HasForeignKey(a => a.CitizenId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+    }
 
-        // Configure Address entity
+    private static void ConfigureAddressEntity(ModelBuilder builder)
+    {
         builder.Entity<Address>(entity =>
         {
             entity.ToTable("Addresses");
@@ -148,8 +188,10 @@ public class ApplicationDbContext(
             entity.Property(a => a.PostalCode).IsRequired();
             entity.Property(a => a.AddedDate).IsRequired();
         });
+    }
 
-        // Configure TPT inheritance for Dog
+    private static void ConfigureDogEntity(ModelBuilder builder)
+    {
         builder.Entity<Dog>(entity =>
         {
             entity.ToTable("Dogs");
@@ -171,12 +213,13 @@ public class ApplicationDbContext(
                 dd.Property(p => p.Comment).HasColumnName("DangerousDogComment");
             });
         });
+    }
 
-        // Configure TPT inheritance for Cat
+    private static void ConfigureCatEntity(ModelBuilder builder)
+    {
         builder.Entity<Cat>(entity =>
         {
             entity.ToTable("Cats");
-            // Add any Cat-specific configuration here if needed
         });
     }
 }
