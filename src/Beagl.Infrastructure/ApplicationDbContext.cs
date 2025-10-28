@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Domain.AnimalManagement.Entities;
+using Beagl.Domain.CitizenManagement.Entities;
+using Beagl.Domain.CitizenManagement.ValueObjects;
+using Beagl.Domain.Core.ValueObjects;
 
 namespace Beagl.Infrastructure;
 
@@ -39,6 +42,16 @@ public class ApplicationDbContext(
     /// Gets or sets the Breeds table.
     /// </summary>
     public DbSet<Breed> Breeds { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the Citizens table.
+    /// </summary>
+    public DbSet<Citizen> Citizens { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the Addresses table.
+    /// </summary>
+    public DbSet<Address> Addresses { get; set; } = null!;
 
     /// <summary>
     /// Configures the model for Animal, HealthRecord, and complex types.
@@ -87,6 +100,53 @@ public class ApplicationDbContext(
                 a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
+        });
+
+        // Configure Citizen entity
+        builder.Entity<Citizen>(entity =>
+        {
+            entity.ToTable("Citizens");
+            entity.HasKey(c => c.Id);
+
+            // PersonName as owned type
+            entity.OwnsOne(c => c.Person, pn =>
+            {
+                pn.Property(p => p.Civility).HasColumnName("Civility");
+                pn.Property(p => p.FirstName).HasColumnName("FirstName");
+                pn.Property(p => p.LastName).HasColumnName("LastName");
+            });
+
+            // Audit as owned types
+            entity.OwnsOne(c => c.Created, a =>
+            {
+                a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
+                a.Property(p => p.At).HasColumnName("CreatedAt");
+            });
+            entity.OwnsOne(c => c.Modified, a =>
+            {
+                a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
+                a.Property(p => p.At).HasColumnName("ModifiedAt");
+            });
+
+            // One-to-many: Citizen - Addresses
+            entity.HasMany(c => c.Addresses)
+                .WithOne(a => a.Citizen)
+                .HasForeignKey(a => a.CitizenId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Configure Address entity
+        builder.Entity<Address>(entity =>
+        {
+            entity.ToTable("Addresses");
+            entity.HasKey(a => a.AddressId);
+            entity.Property(a => a.StreetNumber).IsRequired();
+            entity.Property(a => a.StreetName).IsRequired();
+            entity.Property(a => a.City).IsRequired();
+            entity.Property(a => a.Province).IsRequired();
+            entity.Property(a => a.Country).IsRequired();
+            entity.Property(a => a.PostalCode).IsRequired();
+            entity.Property(a => a.AddedDate).IsRequired();
         });
 
         // Configure TPT inheritance for Dog

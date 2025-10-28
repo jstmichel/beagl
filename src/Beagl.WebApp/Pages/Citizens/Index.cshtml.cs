@@ -44,7 +44,8 @@ internal sealed class IndexModel(
         {
             Id = citizen.Id,
             Name = citizen.Name,
-            PhoneNumbers = citizen.PhoneNumbers,
+            Phone = citizen.Phone,
+            CellPhone = citizen.CellPhone,
             Email = citizen.Email,
             AnimalsCount = citizen.AnimalsCount
         })];

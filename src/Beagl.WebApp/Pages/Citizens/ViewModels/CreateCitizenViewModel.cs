@@ -54,7 +54,7 @@ public class CreateCitizenViewModel
 	/// <summary>
 	/// Language preference (fr, en).
 	/// </summary>
-	//[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "LanguagePreference_Required")]
+	[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "LanguagePreference_Required")]
 	[Display(Name = "Language Preference")]
     public string? LanguagePreference { get; set; }
 
