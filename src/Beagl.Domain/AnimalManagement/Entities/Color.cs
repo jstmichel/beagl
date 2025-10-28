@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.Domain.AnimalManagement.Entities;
 

@@ -2,7 +2,7 @@
 
 using System;
 using Beagl.Application.Core.DTOs;
-using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.Application.AnimalManagement.DTOs;
 

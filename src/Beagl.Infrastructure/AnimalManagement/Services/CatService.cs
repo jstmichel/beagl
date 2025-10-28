@@ -2,7 +2,9 @@
 
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Application.Core.Helpers;
 using Beagl.Domain.AnimalManagement.Entities;
+using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.Core.ValueObjects;
@@ -28,12 +30,12 @@ public sealed class CatService(
             PrimaryBreedId = createCatDto.BreedPrimaryId,
             ColorId = createCatDto.ColorId,
             DistinctiveDescription = createCatDto.Description ?? string.Empty,
-            Gender = GenderHelper.FromInt(createCatDto.Gender),
+            Gender = EnumHelper.FromInt<Gender>(createCatDto.Gender),
             DateOfBirth = createCatDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
             IsAnUnclawnedCat = createCatDto.IsAnUnclawnedCat,
             Photo = Photo.From(createCatDto.PhotoBase64),
             Microchip = Microchip.From(createCatDto.MicrochipNumber),
-            Weight = Weight.From(createCatDto.Weight, WeightUnitHelper.FromInt(createCatDto.WeightUnit)),
+            Weight = Weight.From(createCatDto.Weight, EnumHelper.FromInt<WeightUnit>(createCatDto.WeightUnit)),
             Created = Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
             Modified = null,
         };

@@ -1,6 +1,6 @@
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
-using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 using Microsoft.AspNetCore.Mvc;

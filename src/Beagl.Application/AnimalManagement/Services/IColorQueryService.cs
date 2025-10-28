@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
-using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.Application.AnimalManagement.Services;
 

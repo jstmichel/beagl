@@ -1,5 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Domain.CitizenManagement.Enums;
+
 namespace Beagl.Domain.CitizenManagement.ValueObjects;
 
 /// <summary>

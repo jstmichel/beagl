@@ -2,7 +2,9 @@
 
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Application.Core.Helpers;
 using Beagl.Domain.AnimalManagement.Entities;
+using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.Core.ValueObjects;
@@ -28,11 +30,11 @@ public sealed class DogService(
             PrimaryBreedId = createDogDto.BreedPrimaryId,
             ColorId = createDogDto.ColorId,
             DistinctiveDescription = createDogDto.Description ?? string.Empty,
-            Gender = GenderHelper.FromInt(createDogDto.Gender),
+            Gender = EnumHelper.FromInt<Gender>(createDogDto.Gender),
             DateOfBirth = createDogDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
             Photo = Photo.From(createDogDto.PhotoBase64),
             Microchip = Microchip.From(createDogDto.MicrochipNumber),
-            Weight = Weight.From(createDogDto.Weight, WeightUnitHelper.FromInt(createDogDto.WeightUnit)),
+            Weight = Weight.From(createDogDto.Weight, EnumHelper.FromInt<WeightUnit>(createDogDto.WeightUnit)),
             Created = Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
             Modified = null,
         };

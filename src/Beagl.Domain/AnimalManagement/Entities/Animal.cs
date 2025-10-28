@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.Core.ValueObjects;
 

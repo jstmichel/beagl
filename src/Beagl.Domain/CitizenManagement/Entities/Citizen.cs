@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Beagl.Domain.CitizenManagement.Enums;
 using Beagl.Domain.CitizenManagement.ValueObjects;
 using Beagl.Domain.Core.ValueObjects;
 

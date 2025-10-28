@@ -4,6 +4,7 @@ using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.Application.Core.Helpers;
 using Beagl.Domain.CitizenManagement.Entities;
+using Beagl.Domain.CitizenManagement.Enums;
 using Beagl.Domain.CitizenManagement.Repositories;
 using Beagl.Domain.CitizenManagement.ValueObjects;
 using Beagl.Domain.Core.ValueObjects;

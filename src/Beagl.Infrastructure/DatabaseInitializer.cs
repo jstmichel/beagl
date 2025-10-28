@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Beagl.Domain.Core;
 using Beagl.Infrastructure.UserManagement.Entities;
-using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.AnimalManagement.Entities;
+using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.Infrastructure;
 
