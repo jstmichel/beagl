@@ -22,22 +22,26 @@ public sealed class DogService(
     {
         ArgumentNullException.ThrowIfNull(createDogDto);
 
-        Dog newDog = new()
-        {
-            Id = Guid.NewGuid(),
-            SpeciesType = SpeciesType.Dog,
-            Name = createDogDto.Name,
-            PrimaryBreedId = createDogDto.BreedPrimaryId,
-            ColorId = createDogDto.ColorId,
-            DistinctiveDescription = createDogDto.Description ?? string.Empty,
-            Gender = EnumHelper.FromInt<Gender>(createDogDto.Gender),
-            DateOfBirth = createDogDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
-            Photo = Photo.From(createDogDto.PhotoBase64),
-            Microchip = Microchip.From(createDogDto.MicrochipNumber),
-            Weight = Weight.From(createDogDto.Weight, EnumHelper.FromInt<WeightUnit>(createDogDto.WeightUnit)),
-            Created = Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
-            Modified = null,
-        };
+        Dog newDog = new(
+            SpeciesType.Dog,
+            createDogDto.Name,
+            createDogDto.BreedPrimaryId,
+            null,
+            createDogDto.ColorId,
+            null,
+            createDogDto.Description ?? string.Empty,
+            EnumHelper.FromInt<Gender>(createDogDto.Gender),
+            createDogDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
+            Photo.From(createDogDto.PhotoBase64),
+            Microchip.From(createDogDto.MicrochipNumber),
+            Weight.From(createDogDto.Weight, EnumHelper.FromInt<WeightUnit>(createDogDto.WeightUnit)),
+            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
+            createDogDto.BreedSecondaryId,
+            null, //TODO: Missing fields
+            null, //TODO: Missing fields
+            false, //TODO: Missing fields
+            null //TODO: Missing fields
+        );
 
         Guid dogId = await dogRepository.CreateAsync(newDog);
         return dogId;

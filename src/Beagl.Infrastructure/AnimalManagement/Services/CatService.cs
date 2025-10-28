@@ -22,23 +22,22 @@ public sealed class CatService(
     {
         ArgumentNullException.ThrowIfNull(createCatDto);
 
-        Cat newCat = new()
-        {
-            Id = Guid.NewGuid(),
-            SpeciesType = SpeciesType.Cat,
-            Name = createCatDto.Name,
-            PrimaryBreedId = createCatDto.BreedPrimaryId,
-            ColorId = createCatDto.ColorId,
-            DistinctiveDescription = createCatDto.Description ?? string.Empty,
-            Gender = EnumHelper.FromInt<Gender>(createCatDto.Gender),
-            DateOfBirth = createCatDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
-            IsAnUnclawnedCat = createCatDto.IsAnUnclawnedCat,
-            Photo = Photo.From(createCatDto.PhotoBase64),
-            Microchip = Microchip.From(createCatDto.MicrochipNumber),
-            Weight = Weight.From(createCatDto.Weight, EnumHelper.FromInt<WeightUnit>(createCatDto.WeightUnit)),
-            Created = Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
-            Modified = null,
-        };
+        Cat newCat = new(
+            SpeciesType.Cat,
+            createCatDto.Name,
+            createCatDto.BreedPrimaryId,
+            null,
+            createCatDto.ColorId,
+            null,
+            createCatDto.Description ?? string.Empty,
+            EnumHelper.FromInt<Gender>(createCatDto.Gender),
+            createCatDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
+            Photo.From(createCatDto.PhotoBase64),
+            Microchip.From(createCatDto.MicrochipNumber),
+            Weight.From(createCatDto.Weight, EnumHelper.FromInt<WeightUnit>(createCatDto.WeightUnit)),
+            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()),  //TODO: Replace with actual user ID
+            createCatDto.IsAnUnclawnedCat
+        );
 
         Guid catId = await catRepository.CreateAsync(newCat);
         return catId;

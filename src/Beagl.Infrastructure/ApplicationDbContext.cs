@@ -146,7 +146,6 @@ public class ApplicationDbContext(
             entity.ToTable("Citizens");
             entity.HasKey(c => c.Id);
 
-            // PersonName as owned type
             entity.OwnsOne(c => c.Person, pn =>
             {
                 pn.Property(p => p.Civility).HasColumnName("Civility");
@@ -154,7 +153,6 @@ public class ApplicationDbContext(
                 pn.Property(p => p.LastName).HasColumnName("LastName");
             });
 
-            // Audit as owned types
             entity.OwnsOne(c => c.Created, a =>
             {
                 a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
@@ -166,7 +164,6 @@ public class ApplicationDbContext(
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
 
-            // One-to-many: Citizen - Addresses
             entity.HasMany(c => c.Addresses)
                 .WithOne(a => a.Citizen)
                 .HasForeignKey(a => a.CitizenId)
@@ -179,7 +176,7 @@ public class ApplicationDbContext(
         builder.Entity<Address>(entity =>
         {
             entity.ToTable("Addresses");
-            entity.HasKey(a => a.AddressId);
+            entity.HasKey(a => a.Id);
             entity.Property(a => a.StreetNumber).IsRequired();
             entity.Property(a => a.StreetName).IsRequired();
             entity.Property(a => a.City).IsRequired();

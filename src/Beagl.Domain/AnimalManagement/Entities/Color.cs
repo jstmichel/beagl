@@ -8,20 +8,38 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// <summary>
 /// Represents a color available for animals, related to a species.
 /// </summary>
-public class Color
+public sealed class Color
 {
     /// <summary>
     /// Gets or sets the unique identifier for the color.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
     /// <summary>
     /// Gets or sets the name of the color.
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the species type this color is available for.
     /// </summary>
-    public SpeciesType SpeciesType { get; set; }
+    public SpeciesType SpeciesType { get; private set; }
+
+    /// <summary>
+    /// Private parameterless constructor for EF Core.
+    /// </summary>
+    private Color() { }
+
+    /// <summary>
+    /// Public constructor to create a new Color instance.
+    /// </summary>
+    /// <param name="name">The name of the color.</param>
+    /// <param name="speciesType">The species type this color is available for.</param>
+    /// <returns>A new instance of <see cref="Color"/>.</returns>
+    public Color(string name, SpeciesType speciesType)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        SpeciesType = speciesType;
+    }
 }

@@ -16,75 +16,128 @@ public class Animal
     /// <summary>
     /// Gets or sets the unique identifier for the animal.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
     /// <summary>
     /// Gets or sets the species type (discriminator for TPT).
     /// </summary>
-    public SpeciesType SpeciesType { get; set; } = SpeciesType.Unknown;
+    public SpeciesType SpeciesType { get; private set; } = SpeciesType.Unknown;
 
     /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
-    public string Name { get; set; } = default!;
+    public string Name { get; private set; } = default!;
 
     /// <summary>
     /// Gets or sets the foreign key for the primary breed of the animal.
     /// </summary>
-    public Guid PrimaryBreedId { get; set; }
+    public Guid PrimaryBreedId { get; private set; }
 
     /// <summary>
     /// Gets or sets the related primary breed entity.
     /// </summary>
-    public Breed? PrimaryBreed { get; set; }
+    public Breed? PrimaryBreed { get; private set; }
 
     /// <summary>
     /// Gets or sets the foreign key for the color of the animal.
     /// </summary>
-    public Guid ColorId { get; set; }
+    public Guid ColorId { get; private set; }
 
     /// <summary>
     /// Gets or sets the related color entity.
     /// </summary>
-    public Color? Color { get; set; }
+    public Color? Color { get; private set; }
 
     /// <summary>
     /// Gets or sets the distinctive description of the animal.
     /// </summary>
-    public string? DistinctiveDescription { get; set; }
+    public string? DistinctiveDescription { get; private set; }
 
     /// <summary>
     /// Gets or sets the gender of the animal.
     /// </summary>
-    public Gender Gender { get; set; } = Gender.Unknown;
+    public Gender Gender { get; private set; } = Gender.Unknown;
 
     /// <summary>
     /// Gets or sets the date of birth of the animal.
     /// </summary>
-    public DateTimeOffset DateOfBirth { get; set; }
+    public DateTimeOffset DateOfBirth { get; private set; }
 
     /// <summary>
     /// Gets or sets the photo of the animal as a value object.
     /// </summary>
-    public Photo? Photo { get; set; }
+    public Photo? Photo { get; private set; }
 
     /// <summary>
     /// Gets or sets the microchip information for the animal.
     /// </summary>
-    public Microchip? Microchip { get; set; }
+    public Microchip? Microchip { get; private set; }
 
     /// <summary>
     /// Gets or sets the weight of the animal as a value object.
     /// </summary>
-    public required Weight Weight { get; set; }
+    public Weight Weight { get; private set; } = default!;
 
     /// <summary>
     /// Gets the audit information for creation.
     /// </summary>
-    public Audit<Guid> Created { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
+    public Audit<Guid> Created { get; private set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
 
     /// <summary>
     /// Gets the audit information for last modification.
     /// </summary>
-    public Audit<Guid>? Modified { get; set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
+    public Audit<Guid>? Modified { get; private set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
+
+    /// <summary>
+    /// Private parameterless constructor for EF Core.
+    /// </summary>
+    protected Animal() { }
+
+    /// <summary>
+    /// Public constructor to create a new Animal aggregate with all fields.
+    /// </summary>
+    /// <param name="speciesType">The species type.</param>
+    /// <param name="name">The name of the animal.</param>
+    /// <param name="primaryBreedId">The primary breed ID.</param>
+    /// <param name="primaryBreed">The primary breed entity.</param>
+    /// <param name="colorId">The color ID.</param>
+    /// <param name="color">The color entity.</param>
+    /// <param name="distinctiveDescription">The distinctive description.</param>
+    /// <param name="gender">The gender.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <param name="photo">The photo value object.</param>
+    /// <param name="microchip">The microchip value object.</param>
+    /// <param name="weight">The weight value object.</param>
+    /// <param name="created">The creation audit info.</param>
+    public Animal(
+        SpeciesType speciesType,
+        string name,
+        Guid primaryBreedId,
+        Breed? primaryBreed,
+        Guid colorId,
+        Color? color,
+        string? distinctiveDescription,
+        Gender gender,
+        DateTimeOffset dateOfBirth,
+        Photo? photo,
+        Microchip? microchip,
+        Weight weight,
+        Audit<Guid> created)
+    {
+        Id = Guid.NewGuid();
+        SpeciesType = speciesType;
+        Name = name;
+        PrimaryBreedId = primaryBreedId;
+        PrimaryBreed = primaryBreed;
+        ColorId = colorId;
+        Color = color;
+        DistinctiveDescription = distinctiveDescription;
+        Gender = gender;
+        DateOfBirth = dateOfBirth;
+        Photo = photo;
+        Microchip = microchip;
+        Weight = weight;
+        Created = created;
+        Modified = null;
+    }
 }
