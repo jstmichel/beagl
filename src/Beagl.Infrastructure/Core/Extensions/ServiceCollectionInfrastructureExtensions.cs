@@ -1,9 +1,13 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Application.CitizenManagement.Services;
 using Beagl.Domain.AnimalManagement.Repositories;
+using Beagl.Domain.CitizenManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Services;
+using Beagl.Infrastructure.CitizenManagement.Repositories;
+using Beagl.Infrastructure.CitizenManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,6 +61,7 @@ public static class ServiceCollectionInfrastructureExtensions
     {
         services.AddScoped<ICatService, CatService>();
         services.AddScoped<IDogService, DogService>();
+        services.AddScoped<ICitizenService, CitizenService>();
         return services;
     }
 
@@ -69,6 +74,7 @@ public static class ServiceCollectionInfrastructureExtensions
     {
         services.AddScoped<ICatRepository, CatRepository>();
         services.AddScoped<IDogRepository, DogRepository>();
+        services.AddScoped<ICitizenRepository, CitizenRepository>();
         return services;
     }
 }

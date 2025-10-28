@@ -18,14 +18,19 @@ public class ListCitizensViewModel
     public required string Name { get; init; }
 
     /// <summary>
-    /// Gets the phone numbers of the citizen.
+	/// Phone number.
+	/// </summary>
+	public string? Phone { get; set; }
+
+    /// <summary>
+    /// Cell phone number.
     /// </summary>
-    public IEnumerable<string> PhoneNumbers { get; init; } = [];
+    public string? CellPhone { get; set; }
 
     /// <summary>
     /// Gets the email address of the citizen.
     /// </summary>
-    public string Email { get; init; } = string.Empty;
+    public string? Email { get; init; } = string.Empty;
 
     /// <summary>
     /// Gets the number of animals associated with the citizen.
