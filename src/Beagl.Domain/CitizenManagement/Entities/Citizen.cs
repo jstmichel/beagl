@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Beagl.Domain.CitizenManagement.Enums;
 using Beagl.Domain.CitizenManagement.ValueObjects;
+using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
 
 namespace Beagl.Domain.CitizenManagement.Entities;
@@ -11,13 +12,8 @@ namespace Beagl.Domain.CitizenManagement.Entities;
 /// <summary>
 /// Persistence model for Citizen aggregate.
 /// </summary>
-public sealed class Citizen
+public sealed class Citizen : AuditedAggregateRoot
 {
-    /// <summary>
-    /// Gets or sets the unique identifier for the citizen.
-    /// </summary>
-    public Guid Id { get; private set; }
-
     /// <summary>
     /// Gets or sets the name of the citizen.
     /// </summary>
@@ -54,16 +50,6 @@ public sealed class Citizen
     public ICollection<Address> Addresses { get; } = [];
 
     /// <summary>
-    /// Gets the audit information for creation.
-    /// </summary>
-    public Audit<Guid> Created { get; private set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
-
-    /// <summary>
-    /// Gets the audit information for last modification.
-    /// </summary>
-    public Audit<Guid>? Modified { get; private set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
-
-    /// <summary>
     /// Private parameterless constructor for EF Core.
     /// </summary>
     private Citizen() { }
@@ -88,8 +74,8 @@ public sealed class Citizen
         string? email,
         Address address,
         Audit<Guid> created)
+        : base(created)
     {
-        Id = Guid.NewGuid();
         Person = person;
         Phone = phone;
         CellPhone = cellPhone;
@@ -97,6 +83,5 @@ public sealed class Citizen
         LanguagePreference = languagePreference;
         Email = email;
         Addresses = [address];
-        Created = created;
     }
 }

@@ -2,19 +2,15 @@
 
 using System;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Domain.Core;
 
 namespace Beagl.Domain.AnimalManagement.Entities;
 
 /// <summary>
 /// Represents a breed available for animals, related to a species.
 /// </summary>
-public sealed class Breed
+public sealed class Breed : Entity
 {
-    /// <summary>
-    /// Gets or sets the unique identifier for the breed.
-    /// </summary>
-    public Guid Id { get; private set; }
-
     /// <summary>
     /// Gets or sets the name of the breed.
     /// </summary>

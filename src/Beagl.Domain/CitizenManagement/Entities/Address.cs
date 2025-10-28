@@ -1,19 +1,16 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using Beagl.Domain.Core;
+using Beagl.Domain.Core.ValueObjects;
 
 namespace Beagl.Domain.CitizenManagement.Entities;
 
 /// <summary>
 /// Represents a postal address for a citizen, including metadata for ordering.
 /// </summary>
-public sealed class Address
+public sealed class Address : Entity
 {
-    /// <summary>
-    /// Gets or sets the unique identifier for the address.
-    /// </summary>
-    public Guid Id { get; private set; }
-
     /// <summary>
     /// Gets or sets the street number.
     /// </summary>
@@ -57,7 +54,7 @@ public sealed class Address
     /// <summary>
     /// Gets or sets the date the address was added (used for ordering).
     /// </summary>
-    public DateTime AddedDate { get; private set; } = DateTime.UtcNow.ToUniversalTime();
+    public Audit<Guid> Created { get; private set; } = default!;
 
     /// <summary>
     /// Gets or sets the citizen id (foreign key).
@@ -85,7 +82,8 @@ public sealed class Address
         string province,
         string country,
         string postalCode,
-        string? postOfficeBox)
+        string? postOfficeBox,
+        Audit<Guid> created)
     {
         Id = Guid.NewGuid();
         StreetNumber = streetNumber;
@@ -96,6 +94,6 @@ public sealed class Address
         Country = country;
         PostalCode = postalCode;
         PostOfficeBox = postOfficeBox;
-        AddedDate = DateTime.UtcNow.ToUniversalTime();
+        Created = created;
     }
 }

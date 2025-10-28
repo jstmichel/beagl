@@ -45,6 +45,4 @@ public sealed class Cat : Animal
     {
         IsAnUnclawnedCat = isAnUnclawnedCat;
     }
-
-
 }

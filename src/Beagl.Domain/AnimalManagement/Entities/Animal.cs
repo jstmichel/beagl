@@ -3,6 +3,7 @@
 using System;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
 
 
@@ -11,13 +12,8 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// <summary>
 /// Persistence model for Animal aggregate, using value objects.
 /// </summary>
-public class Animal
+public class Animal : AuditedAggregateRoot
 {
-    /// <summary>
-    /// Gets or sets the unique identifier for the animal.
-    /// </summary>
-    public Guid Id { get; private set; }
-
     /// <summary>
     /// Gets or sets the species type (discriminator for TPT).
     /// </summary>
@@ -79,16 +75,6 @@ public class Animal
     public Weight Weight { get; private set; } = default!;
 
     /// <summary>
-    /// Gets the audit information for creation.
-    /// </summary>
-    public Audit<Guid> Created { get; private set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
-
-    /// <summary>
-    /// Gets the audit information for last modification.
-    /// </summary>
-    public Audit<Guid>? Modified { get; private set; } = new Audit<Guid>(Guid.Empty, DateTimeOffset.MinValue);
-
-    /// <summary>
     /// Private parameterless constructor for EF Core.
     /// </summary>
     protected Animal() { }
@@ -123,6 +109,7 @@ public class Animal
         Microchip? microchip,
         Weight weight,
         Audit<Guid> created)
+        : base(created)
     {
         Id = Guid.NewGuid();
         SpeciesType = speciesType;
@@ -137,7 +124,5 @@ public class Animal
         Photo = photo;
         Microchip = microchip;
         Weight = weight;
-        Created = created;
-        Modified = null;
     }
 }

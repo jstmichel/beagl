@@ -2,6 +2,7 @@
 
 using System;
 using Beagl.Domain.Core.Interfaces;
+using Beagl.Domain.Core.ValueObjects;
 
 namespace Beagl.Domain.Core;
 
@@ -33,24 +34,26 @@ public abstract class AuditedAggregateRoot<TId> : AuditedEntity<TId>, IAggregate
     /// <summary>
     /// Initializes a new instance of the <see cref="AuditedAggregateRoot{TId}"/> class.
     /// </summary>
-    /// <param name="createdByUserId">The identifier of the user who created the entity.</param>
-    /// <param name="createdAt">The date and time when the entity was created.</param>
-    protected AuditedAggregateRoot(TId createdByUserId, DateTimeOffset createdAt)
-        : base(createdByUserId, createdAt)
+    /// <param name="created">The audit information for creation.</param>
+    protected AuditedAggregateRoot(Audit<TId> created)
+        : base(created)
     {
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuditedAggregateRoot{TId}"/> class.
     /// </summary>
-    /// <param name="createdByUserId">The identifier of the user who created the entity.</param>
-    /// <param name="createdAt">The date and time when the entity was created.</param>
-    /// <param name="modifiedByUserId">The identifier of the user who last modified the entity.</param>
-    /// <param name="modifiedAt">The date and time when the entity was last modified.</param>
-    protected AuditedAggregateRoot(TId createdByUserId, DateTimeOffset createdAt, TId? modifiedByUserId, DateTimeOffset? modifiedAt)
-        : base(createdByUserId, createdAt, modifiedByUserId, modifiedAt)
+    /// <param name="created">The audit information for creation.</param>
+    /// <param name="modified">The audit information for last modification.</param>
+    protected AuditedAggregateRoot(Audit<TId> created, Audit<TId>? modified = null)
+        : base(created, modified)
     {
     }
+
+    /// <summary>
+    /// Private parameterless constructor for EF Core.
+    /// </summary>
+    protected AuditedAggregateRoot() { }
 }
 
 /// <summary>
@@ -65,10 +68,9 @@ public abstract class AuditedAggregateRoot : AuditedAggregateRoot<Guid>
     /// Initializes a new instance of the <see cref="AuditedAggregateRoot"/> class
     /// where the modified values default to the created values.
     /// </summary>
-    /// <param name="createdByUserId">The identifier of the user who created the entity.</param>
-    /// <param name="createdAt">The date and time when the entity was created.</param>
-    protected AuditedAggregateRoot(Guid createdByUserId, DateTimeOffset createdAt)
-        : base(createdByUserId, createdAt)
+    /// <param name="created">The audit information for creation.</param>
+    protected AuditedAggregateRoot(Audit<Guid> created)
+        : base(created)
     {
     }
 
@@ -76,12 +78,15 @@ public abstract class AuditedAggregateRoot : AuditedAggregateRoot<Guid>
     /// Initializes a new instance of the <see cref="AuditedAggregateRoot"/> class
     /// with explicit modified values.
     /// </summary>
-    /// <param name="createdByUserId">The identifier of the user who created the entity.</param>
-    /// <param name="createdAt">The date and time when the entity was created.</param>
-    /// <param name="modifiedByUserId">The identifier of the user who last modified the entity.</param>
-    /// <param name="modifiedAt">The date and time when the entity was last modified.</param>
-    protected AuditedAggregateRoot(Guid createdByUserId, DateTimeOffset createdAt, Guid? modifiedByUserId, DateTimeOffset? modifiedAt)
-        : base(createdByUserId, createdAt, modifiedByUserId.GetValueOrDefault(), modifiedAt)
+    /// <param name="created">The audit information for creation.</param>
+    /// <param name="modified">The audit information for last modification.</param>
+    protected AuditedAggregateRoot(Audit<Guid> created, Audit<Guid>? modified = null)
+        : base(created, modified)
     {
     }
+
+    /// <summary>
+    /// Private parameterless constructor for EF Core.
+    /// </summary>
+    protected AuditedAggregateRoot() { }
 }

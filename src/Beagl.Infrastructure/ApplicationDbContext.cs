@@ -183,7 +183,11 @@ public class ApplicationDbContext(
             entity.Property(a => a.Province).IsRequired();
             entity.Property(a => a.Country).IsRequired();
             entity.Property(a => a.PostalCode).IsRequired();
-            entity.Property(a => a.AddedDate).IsRequired();
+            entity.OwnsOne(a => a.Created, a =>
+            {
+                a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
+                a.Property(p => p.At).HasColumnName("CreatedAt");
+            });
         });
     }
 

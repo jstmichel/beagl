@@ -41,7 +41,8 @@ public class CitizenService(
                 createCitizenDto.Province,
                 createCitizenDto.Country,
                 createCitizenDto.PostalCode,
-                createCitizenDto.PostOfficeBox
+                createCitizenDto.PostOfficeBox,
+                Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime())
             ),
             Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()));
 
