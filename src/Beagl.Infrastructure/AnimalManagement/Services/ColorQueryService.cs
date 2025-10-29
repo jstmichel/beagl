@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.AnimalManagement.Mappers;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Domain.AnimalManagement.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +22,7 @@ public sealed class ColorQueryService(ApplicationDbContext dbContext) : IColorQu
     {
         return await dbContext.Colors
             .Where(c => c.SpeciesType == species)
-            .Select(c => new ColorDto
-            {
-                Id = c.Id,
-                Name = c.Name
-            })
+            .Select(c => c.ToDto())
             .ToListAsync();
     }
 }
