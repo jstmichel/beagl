@@ -5,6 +5,7 @@ using Beagl.WebApp.Pages.Shared.Models;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.Application.CitizenManagement.DTOs;
+using Beagl.WebApp.Mappers;
 
 namespace Beagl.WebApp.Pages.Citizens;
 
@@ -32,23 +33,14 @@ internal sealed class IndexModel(
     {
         CitizenPagedFilterDto citizensPagedFilterDto = CreatePagedFilterDto(pageNumber);
         (IList<CitizenListDto>? dto, TotalItems) = await citizenQueryService.GetPagedAsync(citizensPagedFilterDto);
-        DataModel = MapDtoToViewModel(dto);
+        DataModel = MapDtoToViewModelList(dto);
         SetPagination(pageNumber);
     }
 
-    private static List<ListCitizensViewModel> MapDtoToViewModel(IList<CitizenListDto>? dto)
+    private static List<ListCitizensViewModel> MapDtoToViewModelList(IList<CitizenListDto>? dto)
     {
         if (dto == null) return [];
-
-        return [.. dto.Select(citizen => new ListCitizensViewModel
-        {
-            Id = citizen.Id,
-            Name = citizen.Name,
-            Phone = citizen.Phone,
-            CellPhone = citizen.CellPhone,
-            Email = citizen.Email,
-            AnimalsCount = citizen.AnimalsCount
-        })];
+        return [.. dto.Select(citizen => citizen.ToViewModel())];
     }
 
     private CitizenPagedFilterDto CreatePagedFilterDto(int pageNumber) =>

@@ -1,8 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.AnimalManagement.Mappers;
 using Beagl.Application.AnimalManagement.Services;
-using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.AnimalManagement.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beagl.Infrastructure.AnimalManagement.Services;
@@ -21,11 +22,7 @@ public sealed class BreedQueryService(ApplicationDbContext dbContext) : IBreedQu
     {
         return await dbContext.Breeds
             .Where(b => b.SpeciesType == species)
-            .Select(b => new BreedDto
-            {
-                Id = b.Id,
-                Name = b.Name
-            })
+            .Select(b => b.ToDto())
             .ToListAsync();
     }
 }

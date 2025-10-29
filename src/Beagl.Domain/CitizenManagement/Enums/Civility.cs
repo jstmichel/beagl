@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-namespace Beagl.Domain.CitizenManagement.ValueObjects;
+namespace Beagl.Domain.CitizenManagement.Enums;
 
 /// <summary>
 /// Represents the civility (title) of a person.

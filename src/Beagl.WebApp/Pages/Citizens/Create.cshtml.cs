@@ -1,6 +1,7 @@
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -28,33 +29,9 @@ internal sealed class CreateCitizenModel(
             return Page();
         }
 
-        CreateCitizenDto createCitizenDto = MapToDto();
-
+        CreateCitizenDto createCitizenDto = Input.ToDto();
         _ = citizenService.CreateAsync(createCitizenDto);
 
         return RedirectToPage(LocalRedirection.Citizens);
-    }
-
-    private CreateCitizenDto MapToDto()
-    {
-        return new()
-        {
-            Civility = Input.Civility,
-            FirstName = Input.FirstName!,
-            LastName = Input.LastName!,
-            Phone = Input.Phone,
-            CellPhone = Input.CellPhone,
-            CommunicationPreference = Input.CommunicationPreference,
-            LanguagePreference = Input.LanguagePreference,
-            Email = Input.Email,
-            StreetNumber = Input.StreetNumber!,
-            StreetName = Input.StreetName!,
-            Appartment = Input.Appartment,
-            City = Input.City!,
-            Province = Input.Province!,
-            PostalCode = Input.PostalCode!,
-            Country = Input.Country!,
-            PostOfficeBox = Input.PostOfficeBox!,
-        };
     }
 }

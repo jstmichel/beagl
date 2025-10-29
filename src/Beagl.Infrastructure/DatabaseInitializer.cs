@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Beagl.Domain.Core;
 using Beagl.Infrastructure.UserManagement.Entities;
-using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.AnimalManagement.Entities;
+using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.Infrastructure;
 
@@ -76,14 +76,14 @@ public static class DatabaseInitializer
         {
             Breed[] breeds =
             [
-                new Breed { Id = Guid.NewGuid(), Name = "Labrador Retriever", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Berger Allemand", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Golden Retriever", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Bulldog Français", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Beagle", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Caniche", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Rottweiler", SpeciesType = SpeciesType.Dog },
-                new Breed { Id = Guid.NewGuid(), Name = "Yorkshire Terrier", SpeciesType = SpeciesType.Dog }
+                new Breed("Labrador Retriever", SpeciesType.Dog),
+                new Breed("Berger Allemand", SpeciesType.Dog),
+                new Breed("Golden Retriever", SpeciesType.Dog),
+                new Breed("Bulldog Français", SpeciesType.Dog),
+                new Breed("Beagle", SpeciesType.Dog),
+                new Breed("Caniche", SpeciesType.Dog),
+                new Breed("Rottweiler", SpeciesType.Dog),
+                new Breed("Yorkshire Terrier", SpeciesType.Dog)
             ];
 
             dbContext.Breeds.AddRange(breeds);
@@ -98,14 +98,14 @@ public static class DatabaseInitializer
         {
             Breed[] breeds =
             [
-                new Breed { Id = Guid.NewGuid(), Name = "Siamois", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "Maine Coon", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "Chartreux", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "Persan", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "Sacré de Birmanie", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "British Shorthair", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "Bengal", SpeciesType = SpeciesType.Cat },
-                new Breed { Id = Guid.NewGuid(), Name = "Sphynx", SpeciesType = SpeciesType.Cat }
+                new Breed("Siamois", SpeciesType.Cat),
+                new Breed("Maine Coon", SpeciesType.Cat),
+                new Breed("Chartreux", SpeciesType.Cat),
+                new Breed("Persan", SpeciesType.Cat),
+                new Breed("Sacré de Birmanie", SpeciesType.Cat),
+                new Breed("British Shorthair", SpeciesType.Cat),
+                new Breed("Bengal", SpeciesType.Cat),
+                new Breed("Sphynx", SpeciesType.Cat)
             ];
 
             dbContext.Breeds.AddRange(breeds);
@@ -120,12 +120,12 @@ public static class DatabaseInitializer
         {
             Color[] colors =
             [
-                new Color { Id = Guid.NewGuid(), Name = "Noir", SpeciesType = SpeciesType.Dog },
-                new Color { Id = Guid.NewGuid(), Name = "Blanc", SpeciesType = SpeciesType.Dog },
-                new Color { Id = Guid.NewGuid(), Name = "Marron", SpeciesType = SpeciesType.Dog },
-                new Color { Id = Guid.NewGuid(), Name = "Doré", SpeciesType = SpeciesType.Dog },
-                new Color { Id = Guid.NewGuid(), Name = "Gris", SpeciesType = SpeciesType.Dog },
-                new Color { Id = Guid.NewGuid(), Name = "Tacheté", SpeciesType = SpeciesType.Dog }
+                new Color("Noir", SpeciesType.Dog),
+                new Color("Blanc", SpeciesType.Dog),
+                new Color("Marron", SpeciesType.Dog),
+                new Color("Doré", SpeciesType.Dog),
+                new Color("Gris", SpeciesType.Dog),
+                new Color("Tacheté", SpeciesType.Dog)
             ];
 
             dbContext.Colors.AddRange(colors);
@@ -140,12 +140,12 @@ public static class DatabaseInitializer
         {
             Color[] colors =
             [
-                new Color { Id = Guid.NewGuid(), Name = "Noir", SpeciesType = SpeciesType.Cat },
-                new Color { Id = Guid.NewGuid(), Name = "Blanc", SpeciesType = SpeciesType.Cat },
-                new Color { Id = Guid.NewGuid(), Name = "Gris", SpeciesType = SpeciesType.Cat },
-                new Color { Id = Guid.NewGuid(), Name = "Rouge", SpeciesType = SpeciesType.Cat },
-                new Color { Id = Guid.NewGuid(), Name = "Tigré", SpeciesType = SpeciesType.Cat },
-                new Color { Id = Guid.NewGuid(), Name = "Calico", SpeciesType = SpeciesType.Cat }
+                new Color("Noir", SpeciesType.Cat),
+                new Color("Blanc", SpeciesType.Cat),
+                new Color("Gris", SpeciesType.Cat),
+                new Color("Rouge", SpeciesType.Cat),
+                new Color("Tigré", SpeciesType.Cat),
+                new Color("Calico", SpeciesType.Cat)
             ];
 
             dbContext.Colors.AddRange(colors);

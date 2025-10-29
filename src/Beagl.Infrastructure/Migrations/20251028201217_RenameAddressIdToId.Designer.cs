@@ -3,6 +3,7 @@ using System;
 using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Beagl.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251028201217_RenameAddressIdToId")]
+    partial class RenameAddressIdToId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,6 +107,9 @@ namespace Beagl.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Appartment")
                         .HasColumnType("text");
@@ -533,31 +539,7 @@ namespace Beagl.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Created", b1 =>
-                        {
-                            b1.Property<Guid>("AddressId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<DateTimeOffset>("At")
-                                .HasColumnType("timestamp with time zone")
-                                .HasColumnName("CreatedAt");
-
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("CreatedByUserId");
-
-                            b1.HasKey("AddressId");
-
-                            b1.ToTable("Addresses");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AddressId");
-                        });
-
                     b.Navigation("Citizen");
-
-                    b.Navigation("Created")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Citizen", b =>
