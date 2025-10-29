@@ -5,6 +5,7 @@ using Beagl.WebApp.Pages.Shared.Models;
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.WebApp.Pages.Animals.ViewModels;
+using Beagl.WebApp.Mappers;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -32,25 +33,14 @@ internal sealed class IndexModel(
     {
         AnimalPagedFilterDto animalPagedFilterDto = CreatePagedFilterDto(pageNumber);
         (IList<AnimalListDto>? dto, TotalItems) = await animalQueryService.GetPagedAsync(animalPagedFilterDto);
-        DataModel = MapDtoToViewModel(dto);
+        DataModel = MapDtoToViewModelList(dto);
         SetPagination(pageNumber);
     }
 
-    private static List<ListAnimalsViewModel> MapDtoToViewModel(IList<AnimalListDto>? dto)
+    private static List<ListAnimalsViewModel> MapDtoToViewModelList(IList<AnimalListDto>? dto)
     {
         if (dto == null) return [];
-
-        return [.. dto.Select(animal => new ListAnimalsViewModel
-        {
-            Id = animal.Id,
-            Name = animal.Name,
-            Species = animal.Species,
-            Breed = animal.Breed,
-            Color = animal.Color,
-            Gender = animal.Gender,
-            BirthDate = animal.BirthDate,
-            MicrochipNumber = animal.MicrochipNumber
-        })];
+        return [.. dto.Select(animal => animal.ToViewModel())];
     }
 
     private AnimalPagedFilterDto CreatePagedFilterDto(int pageNumber) =>

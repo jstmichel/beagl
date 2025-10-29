@@ -2,6 +2,7 @@ using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -42,20 +43,8 @@ internal sealed class CreateCatModel(
             return Page();
         }
 
-        _ = await catService.CreateCatAsync(new CreateCatDto
-        {
-            Name = Input.Name,
-            BreedPrimaryId = Input.BreedPrimaryId!.Value,
-            ColorId = Input.ColorId!.Value,
-            Description = Input.Description,
-            Gender = Input.Gender,
-            BirthDate = Input.BirthDate!.Value,
-            PhotoBase64 = Input.PhotoBase64,
-            MicrochipNumber = Input.MicrochipNumber,
-            IsAnUnclawnedCat = Input.IsAnUnclawnedCat,
-            Weight = Input.Weight,
-            WeightUnit = Input.WeightUnit,
-        });
+        CreateCatDto catDto = Input.ToDto();
+        _ = await catService.CreateCatAsync(catDto);
 
         return RedirectToPage(LocalRedirection.Animals);
     }
