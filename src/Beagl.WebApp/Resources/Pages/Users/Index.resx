@@ -130,10 +130,10 @@
     <value>User Management</value>
   </data>
   <data name="Filters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filter</value>
   </data>
   <data name="Create New User" xml:space="preserve">
-    <value>Create New User</value>
+    <value>Add</value>
   </data>
   <data name="Apply Filters" xml:space="preserve">
     <value>Apply</value>

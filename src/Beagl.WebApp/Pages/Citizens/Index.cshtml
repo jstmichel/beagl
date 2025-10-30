@@ -29,17 +29,17 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-hover table-striped table-sm table-bordered align-middle bg-white rounded-4 overflow-hidden">
+            <table class="table table-hover table-sm table-bordered align-middle bg-white">
                 <thead class="table-light">
                     <tr>
-                        <th>@Localizer["Name"]</th>
-                        <th>@Localizer["Phone"]</th>
-                        <th>@Localizer["Cell Phone"]</th>
-                        <th>@Localizer["Email"]</th>
-                        <th>@Localizer["Animal Count"]</th>
+                        <th class="fw-bold">@Localizer["Name"]</th>
+                        <th class="fw-bold">@Localizer["Phone"]</th>
+                        <th class="fw-bold">@Localizer["Cell Phone"]</th>
+                        <th class="fw-bold">@Localizer["Email"]</th>
+                        <th class="fw-bold">@Localizer["Animal Count"]</th>
                         @if (hasActions)
                         {
-                            <th>@Localizer["Actions"]</th>
+                            <th class="fw-bold">@Localizer["Actions"]</th>
                         }
                     </tr>
                 </thead>

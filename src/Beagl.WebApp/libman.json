@@ -11,6 +11,10 @@
         "js/bootstrap.bundle.min.js",
         "js/bootstrap.bundle.min.js.map"
       ]
+    },
+    {
+      "library": "bootstrap-icons@1.13.1",
+      "destination": "wwwroot/lib/bootstrap-icons"
     }
   ]
 }

@@ -1,6 +1,10 @@
+/* Smoke grey for icons */
+.icon-smoke-grey {
+  color: #3e4143 !important;
+}
 /* Actions column width and nowrap */
 .actions-col {
-  width: 120px;
+  width: 70px;
   white-space: nowrap;
 }
 
@@ -8,12 +12,12 @@
 .table-footer {
   min-height: 48px;
 }
-.table {
+/* .table {
   border-radius: 0.75rem;
   border: 1px solid #dee2e6;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
+} */
 .user-row:hover {
   background: #f8f9fa;
   transition: background 0.2s;
@@ -28,6 +32,7 @@
 html,
 body {
   height: 100%;
+  color: #3e4143 !important;
 }
 
 /* Bottom-only shadow for navbar */

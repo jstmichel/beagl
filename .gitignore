@@ -120,4 +120,7 @@ Desktop.ini
 # Visual Studio Code Server
 .vscode-server/
 
+src/Beagl.WebApp/wwwroot/lib/bootstrap-icons/icons/*
+src/Beagl.WebApp/wwwroot/lib/bootstrap-icons/bootstrap-icons.svg
+
 # End of .gitignore
