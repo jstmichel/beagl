@@ -6,12 +6,15 @@ using Beagl.WebApp.Pages.Citizens.ViewModels;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.WebApp.Mappers;
+using Microsoft.AspNetCore.Authorization;
+using Beagl.WebApp.Constants;
 
 namespace Beagl.WebApp.Pages.Citizens;
 
 /// <summary>
 /// Page model for listing citizens.
 /// </summary>
+[Authorize(Policy = Policies.Citizens.CanView)]
 internal sealed class IndexModel(
     ICitizenQueryService citizenQueryService) : PaginatedPageModel<ListCitizensViewModel, IndexModel.CitizenFilterModel>
 {

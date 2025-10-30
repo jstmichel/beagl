@@ -34,12 +34,13 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthorizationBuilder();
+builder.Services.AddAuthorizationBuilder().AddPolicies();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromHours(8);
     options.SlidingExpiration = true;
+    options.LoginPath = "/Login";
 });
 
 builder.Services.AddInfrastructureServices();

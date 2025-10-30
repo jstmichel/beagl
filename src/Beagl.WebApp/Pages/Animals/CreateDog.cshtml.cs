@@ -4,6 +4,7 @@ using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Animals.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,6 +13,7 @@ namespace Beagl.WebApp.Pages.Animals;
 /// <summary>
 /// Page model for creating a new dog.
 /// </summary>
+[Authorize(Policy = Policies.Animals.CanCreate)]
 internal sealed class CreateDogModel(
     IBreedQueryService breedQueryService,
     IColorQueryService colorQueryService,

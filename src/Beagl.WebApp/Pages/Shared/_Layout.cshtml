@@ -1,6 +1,24 @@
 ﻿@using Beagl.WebApp.Constants
+@using Beagl.WebApp.Services
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer L
+@inject IAuthorizationService AuthorizationService
+
+@{
+    bool canViewUsers = (await AuthorizationService.AuthorizeAsync(User, Policies.Users.CanView)).Succeeded;
+    bool canCreateUsers = (await AuthorizationService.AuthorizeAsync(User, Policies.Users.CanCreate)).Succeeded;
+    bool canViewAnimals = (await AuthorizationService.AuthorizeAsync(User, Policies.Animals.CanView)).Succeeded;
+    bool canCreateAnimals = (await AuthorizationService.AuthorizeAsync(User, Policies.Animals.CanCreate)).Succeeded;
+    bool canViewCitizens = (await AuthorizationService.AuthorizeAsync(User, Policies.Citizens.CanView)).Succeeded;
+    bool canCreateCitizens = (await AuthorizationService.AuthorizeAsync(User, Policies.Citizens.CanCreate)).Succeeded;
+
+    bool hasUsersPermissions = canViewUsers || canCreateUsers;
+    bool hasAnimalsPermissions = canViewAnimals || canCreateAnimals;
+    bool hasCitizensPermissions = canViewCitizens || canCreateCitizens;
+
+    bool showSideMenu = hasUsersPermissions || hasAnimalsPermissions || hasCitizensPermissions;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,62 +68,95 @@
     <div class="flex-grow-1 d-flex flex-column main-content" style="overflow-y:auto;">
         <div class="container-fluid px-2 my-4 flex-grow-1">
             <div class="row gx-3 min-vh-100 align-items-stretch">
-                <div class="col-md-2 d-flex flex-column h-100">
-                    <div class="container py-5">
-                        <div class="card shadow-sm h-100 mb-2 rounded-4 bg-white">
-                            <div class="card-body p-3 d-flex flex-column">
-                                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                                    <span class="fs-4">@L["Navigation"]</span>
-                                </a>
-                                <hr />
-                                <ul class="nav nav-pills flex-column mb-auto sidebar-nav">
-                                    <li class="mt-3 mb-1 ps-2 text-uppercase small fw-bold text-secondary" style="letter-spacing: 0.05em;">
-                                        @L["Users"]
-                                    </li>
-                                    <li class="nav-item">
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-0 ms-0">
-                                            <li>
-                                                <a asp-page="@LocalRedirection.Users" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Users))">@L["User List"]</a>
+                @if(showSideMenu)
+                {
+                    <div class="col-md-2 d-flex flex-column h-100">
+                        <div class="container py-5">
+                            <div class="card shadow-sm h-100 mb-2 rounded-4 bg-white">
+                                <div class="card-body p-3 d-flex flex-column">
+                                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                                        <span class="fs-4">@L["Navigation"]</span>
+                                    </a>
+                                    <hr />
+                                    <ul class="nav nav-pills flex-column mb-auto sidebar-nav">
+                                        @if (hasUsersPermissions)
+                                        {
+                                            <li class="mt-3 mb-1 ps-2 text-uppercase small fw-bold text-secondary" style="letter-spacing: 0.05em;">
+                                                @L["Users"]
                                             </li>
-                                        </ul>
-                                    </li>
-                                    <li class="mt-3 mb-1 ps-2 text-uppercase small fw-bold text-secondary" style="letter-spacing: 0.05em;">
-                                        @L["Citizens"]
-                                    </li>
-                                    <li>
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-0 ms-0">
-                                            <li>
-                                                <a asp-page="@LocalRedirection.Citizens" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Citizens))">@L["Citizens List"]</a>
+                                            <li class="nav-item">
+                                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-0 ms-0">
+                                                    @if (canViewUsers)
+                                                    {
+                                                        <li>
+                                                            <a asp-page="@LocalRedirection.Users" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Users))">@L["User List"]</a>
+                                                        </li>
+                                                    }
+                                                </ul>
                                             </li>
-                                            <li>
-                                                <a asp-page="@LocalRedirection.AddCitizens" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.AddCitizens))">@L["Add Citizen"]</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="mt-3 mb-1 ps-2 text-uppercase small fw-bold text-secondary" style="letter-spacing: 0.05em;">
-                                        @L["Animals"]
-                                    </li>
-                                    <li>
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-0 ms-0">
-                                            <li>
-                                                <a asp-page="@LocalRedirection.Animals" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Animals))">@L["Animals List"]</a>
+                                        }
+                                        @if (hasCitizensPermissions)
+                                        {
+                                            <li class="mt-3 mb-1 ps-2 text-uppercase small fw-bold text-secondary" style="letter-spacing: 0.05em;">
+                                                @L["Citizens"]
                                             </li>
                                             <li>
-                                                <a asp-page="@LocalRedirection.CreateCat" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateCat))">@L["Add Cat"]</a>
+                                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-0 ms-0">
+                                                    @if (canViewCitizens)
+                                                    {
+                                                        <li>
+                                                            <a asp-page="@LocalRedirection.Citizens" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Citizens))">@L["Citizens List"]</a>
+                                                        </li>
+                                                    }
+                                                    @if (canCreateCitizens)
+                                                    {
+                                                        <li>
+                                                            <a asp-page="@LocalRedirection.AddCitizens" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.AddCitizens))">@L["Add Citizen"]</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                        @if (hasAnimalsPermissions)
+                                        {
+                                            <li class="mt-3 mb-1 ps-2 text-uppercase small fw-bold text-secondary" style="letter-spacing: 0.05em;">
+                                                @L["Animals"]
                                             </li>
                                             <li>
-                                                <a asp-page="@LocalRedirection.CreateDog" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateDog))">@L["Add Dog"]</a>
+                                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-0 ms-0">
+                                                    @if (canViewAnimals)
+                                                    {
+                                                        <li>
+                                                            <a asp-page="@LocalRedirection.Animals" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Animals))">@L["Animals List"]</a>
+                                                        </li>
+                                                    }
+                                                    @if (canCreateAnimals)
+                                                    {
+                                                        <li>
+                                                            <a asp-page="@LocalRedirection.CreateCat" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateCat))">@L["Add Cat"]</a>
+                                                        </li>
+                                                        <li>
+                                                            <a asp-page="@LocalRedirection.CreateDog" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateDog))">@L["Add Dog"]</a>
+                                                        </li>
+                                                    }
+                                                </ul>
                                             </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-10">
-                    @RenderBody()
-                </div>
+                    <div class="col-md-10">
+                        @RenderBody()
+                    </div>
+                }
+                else
+                {
+                    <div class="col-12">
+                        @RenderBody()
+                    </div>
+                }
             </div>
         </div>
     </div>

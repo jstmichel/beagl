@@ -34,7 +34,7 @@ internal sealed class LoginModel(
     /// Validates the model and adds an error if authentication fails.
     /// </summary>
     /// <returns>The page result.</returns>
-    public async Task<IActionResult> OnPost()
+    public async Task<IActionResult> OnPost(string? returnUrl = null)
     {
         if (!ModelState.IsValid)
         {
@@ -45,7 +45,7 @@ internal sealed class LoginModel(
             Email, Password, RememberMe);
         if (result.Succeeded)
         {
-            return LocalRedirect(LocalRedirection.Index);
+            return LocalRedirect(returnUrl ?? LocalRedirection.Index);
         }
 
         ModelState.AddModelError(

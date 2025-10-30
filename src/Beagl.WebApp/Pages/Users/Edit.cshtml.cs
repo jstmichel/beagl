@@ -8,6 +8,8 @@ using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
+using Beagl.WebApp.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Beagl.WebApp.Pages.Users;
 
@@ -20,6 +22,7 @@ namespace Beagl.WebApp.Pages.Users;
 /// <param name="userService">The user service.</param>
 /// <param name="userQueryService">The user query service.</param>
 /// <param name="roleService">The role service.</param>
+[Authorize(Policy = Policies.Users.CanEdit)]
 internal sealed class EditModel(
     IUserService userService,
     IUserQueryService userQueryService,

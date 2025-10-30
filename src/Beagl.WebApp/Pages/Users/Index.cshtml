@@ -1,9 +1,18 @@
 ﻿@page
+@using Beagl.WebApp.Constants
 @using Beagl.WebApp.Pages.Shared
+@using Microsoft.AspNetCore.Authorization
 @model Beagl.WebApp.Pages.Users.IndexModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject IAuthorizationService AuthorizationService
+
 @{
     ViewData["Title"] = Localizer["User Management"];
+
+    bool canCreate = (await AuthorizationService.AuthorizeAsync(User, Policies.Users.CanCreate)).Succeeded;
+    bool canEdit = (await AuthorizationService.AuthorizeAsync(User, Policies.Users.CanEdit)).Succeeded;
+    bool canDelete = (await AuthorizationService.AuthorizeAsync(User, Policies.Users.CanDelete)).Succeeded;
+    bool hasActions = canEdit || canDelete;
 }
 
 <div class="container py-5">
@@ -31,12 +40,15 @@
                 </svg>
                 @Localizer["Filters"]
             </button>
-            <a asp-page="/Users/Create" class="btn btn-success" title="@Localizer["Create New User"]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5V7.5H11.5a.5.5 0 0 1 0 1H8.5V11.5a.5.5 0 0 1-1 0V8.5H4.5a.5.5 0 0 1 0-1H7.5V4.5A.5.5 0 0 1 8 4z"/>
-                </svg>
-                @Localizer["Create New User"]
-            </a>
+            @if (canCreate)
+            {
+                <a asp-page="/Users/Create" class="btn btn-success" title="@Localizer["Create New User"]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5V7.5H11.5a.5.5 0 0 1 0 1H8.5V11.5a.5.5 0 0 1-1 0V8.5H4.5a.5.5 0 0 1 0-1H7.5V4.5A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    @Localizer["Create New User"]
+                </a>
+            }
         </div>
     </div>
 
@@ -78,7 +90,10 @@
                         <th>@Localizer["Lockout Date Header"]</th>
                         <th>@Localizer["Roles Header"]</th>
                         <th>@Localizer["Status Header"]</th>
-                        <th class="text-end actions-col" aria-label="Actions">@Localizer["Actions Header"]</th>
+                        @if (hasActions)
+                        {
+                            <th class="text-end actions-col" aria-label="Actions">@Localizer["Actions Header"]</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -107,25 +122,34 @@
                                 <span class="badge bg-success">2FA</span>
                             }
                         </td>
-                        <td class="py-3 text-end actions-col">
-                            <a asp-page="Edit" class="btn btn-outline-primary btn-sm me-2" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 3 10.707V13h2.293l7.5-7.5z"/>
-                                </svg>
-                            </a>
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@user.Id" data-entity-description="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5.5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6zm3 .5a.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6z"/>
-                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1H14a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                </svg>
-                            </button>
-                        </td>
+                        @if (hasActions)
+                        {
+                            <td class="py-3 text-end actions-col">
+                                @if (canEdit)
+                                {
+                                    <a asp-page="Edit" class="btn btn-outline-primary btn-sm me-2" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 3 10.707V13h2.293l7.5-7.5z"/>
+                                        </svg>
+                                    </a>
+                                }
+                                @if (canDelete)
+                                {
+                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@user.Id" data-entity-description="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5.5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6zm3 .5a.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6z"/>
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1H14a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                        </svg>
+                                    </button>
+                                }
+                            </td>
+                        }
                     </tr>
                 }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="@(hasActions ? 6 : 5)">
                             <div class="d-flex justify-content-between align-items-center w-100 table-footer">
                                 <span class="fw-bold">@Localizer["Total"] @Model.TotalItems</span>
                                 <div class="d-flex align-items-center" style="height: 100%;">

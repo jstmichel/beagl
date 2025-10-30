@@ -62,6 +62,7 @@ public static class ServiceCollectionInfrastructureExtensions
         services.AddScoped<ICatService, CatService>();
         services.AddScoped<IDogService, DogService>();
         services.AddScoped<ICitizenService, CitizenService>();
+
         return services;
     }
 

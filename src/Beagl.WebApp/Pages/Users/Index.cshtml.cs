@@ -4,7 +4,9 @@ using Beagl.Application.UserManagement.DTOs;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
+using Beagl.WebApp.Constants;
 using Beagl.WebApp.Pages.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
@@ -13,6 +15,7 @@ namespace Beagl.WebApp.Pages.Users;
 /// <summary>
 /// Page model for the Users index page.
 /// </summary>
+[Authorize(Policy = Policies.Users.CanView)]
 internal sealed class IndexModel(
     IUserService userService,
     IUserQueryService userQueryService,

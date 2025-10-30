@@ -6,12 +6,15 @@ using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 using Beagl.WebApp.Mappers;
+using Beagl.WebApp.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Beagl.WebApp.Pages.Animals;
 
 /// <summary>
 /// Page model for listing animals.
 /// </summary>
+[Authorize(Policy = Policies.Animals.CanView)]
 internal sealed class IndexModel(
     IAnimalQueryService animalQueryService) : PaginatedPageModel<ListAnimalsViewModel, IndexModel.AnimalsFilterModel>
 {
