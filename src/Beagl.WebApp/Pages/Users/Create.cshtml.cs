@@ -5,6 +5,8 @@ using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
 using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
+using Beagl.WebApp.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,6 +15,7 @@ namespace Beagl.WebApp.Pages.Users;
 /// <summary>
 /// Page model for creating a new user.
 /// </summary>
+[Authorize(Policy = Policies.Users.CanCreate)]
 internal sealed class CreateModel(
     IUserService userService,
     IRoleService roleService) : PageModel

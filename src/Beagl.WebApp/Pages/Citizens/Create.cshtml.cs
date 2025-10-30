@@ -3,6 +3,7 @@ using Beagl.Application.CitizenManagement.Services;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,6 +12,7 @@ namespace Beagl.WebApp.Pages.Citizens;
 /// <summary>
 /// Page model for creating a new citizen.
 /// </summary>
+[Authorize(Policy = Policies.Citizens.CanCreate)]
 internal sealed class CreateCitizenModel(
     ICitizenService citizenService) : PageModel
 {
