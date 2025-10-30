@@ -42,7 +42,7 @@
             </button>
             @if (canCreate)
             {
-                <a asp-page="/Users/Create" class="btn btn-success" title="@Localizer["Create New User"]">
+                <a asp-page="/Users/Create" class="btn btn-success btn-lg" title="@Localizer["Create New User"]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5V7.5H11.5a.5.5 0 0 1 0 1H8.5V11.5a.5.5 0 0 1-1 0V8.5H4.5a.5.5 0 0 1 0-1H7.5V4.5A.5.5 0 0 1 8 4z"/>
                     </svg>
@@ -82,7 +82,7 @@
     else
     {
         <div class="table-responsive">
-            <table class="table table-hover align-middle bg-white rounded shadow-sm">
+            <table class="table table-hover table-striped table-sm align-middle bg-white rounded shadow-sm">
                 <thead class="table-light">
                     <tr>
                         <th>@Localizer["Username Header"]</th>
@@ -100,10 +100,10 @@
                 @foreach (var user in Model.DataModel)
                 {
                     <tr>
-                        <td class="py-3 fw-bold">@user.UserName</td>
-                        <td class="py-3 text-muted">@user.Email</td>
-                        <td class="py-3 text-muted">@(user.LockoutEnd?.ToString("yyyy-MM-dd HH:mm") ?? string.Empty)</td>
-                        <td class="py-3 text-muted">
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@(user.LockoutEnd?.ToString("yyyy-MM-dd HH:mm") ?? string.Empty)</td>
+                        <td>
                             @if (user.Roles != null && user.Roles.Count > 0)
                             {
                                 foreach (var role in user.Roles)
@@ -112,7 +112,7 @@
                                 }
                             }
                         </td>
-                        <td class="py-3 text-muted">
+                        <td>
                             @if (!user.EmailConfirmed)
                             {
                                 <span class="badge bg-danger me-1">@Localizer["Unconfirmed"]</span>
@@ -124,7 +124,7 @@
                         </td>
                         @if (hasActions)
                         {
-                            <td class="py-3 text-end actions-col">
+                            <td class="text-end actions-col">
                                 @if (canEdit)
                                 {
                                     <a asp-page="Edit" class="btn btn-outline-primary btn-sm me-2" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id">
