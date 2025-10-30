@@ -16,37 +16,16 @@
 }
 
 <div class="container py-5">
-    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
-    {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-            @foreach (var entry in ViewData.ModelState)
-            {
-                foreach (var error in entry.Value.Errors)
-                {
-                    <li>@error.ErrorMessage</li>
-                }
-            }
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">@Localizer["User Management"]</h2>
-        <div class="d-flex gap-2">
-            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel" aria-controls="filterPanel">
-                <i class="bi bi-funnel"></i>&nbsp;
-                @Localizer["Filters"]
-            </button>
-            @if (canCreate)
-            {
-                <a asp-page="/Users/Create" class="btn btn-primary btn-sm" title="@Localizer["Create New User"]">
-                    <i class="bi bi-plus-lg"></i>&nbsp;
-                    @Localizer["Create New User"]
-                </a>
-            }
-        </div>
-    </div>
+    @await Html.PartialAsync("~/Pages/Shared/_ValidationSummary.cshtml")
+    @await Html.PartialAsync("~/Pages/Shared/_HeaderWithActions.cshtml", new HeaderWithActionsModel {
+        Title = Localizer["User Management"].Value,
+        FilterButtonText = Localizer["Filters"].Value,
+        CreateAction = new ButtonAction {
+            Text = Localizer["Create New User"].Value,
+            Link = LocalRedirection.CreateUser,
+            IsShown = canCreate
+        }
+    })
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="filterPanel" aria-labelledby="filterPanelLabel">
         <div class="offcanvas-header">
@@ -71,6 +50,7 @@
             </form>
         </div>
     </div>
+
     @if (Model.DataModel.Count == 0)
     {
         <div class="alert alert-info text-center">@Localizer["Not found."]</div>
@@ -79,6 +59,17 @@
     {
         <div class="table-responsive">
             <table class="table table-hover table-sm table-bordered align-middle bg-white">
+                <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 15%;">
+                    <col class="width: 15%;">
+                    <col class="width: 30%;">
+                    if (hasActions)
+                    {
+                        <col class="tight">
+                    }
+                </colgroup>
                 <thead class="table-light">
                     <tr>
                         <th class="fw-bold">@Localizer["Username Header"]</th>
@@ -88,7 +79,7 @@
                         <th class="fw-bold">@Localizer["Status Header"]</th>
                         @if (hasActions)
                         {
-                            <th class="fw-bold actions-col" aria-label="Actions">@Localizer["Actions Header"]</th>
+                            <th class="fw-bold" aria-label="Actions">@Localizer["Actions Header"]</th>
                         }
                     </tr>
                 </thead>
@@ -120,17 +111,17 @@
                         </td>
                         @if (hasActions)
                         {
-                            <td class="actions-col">
+                            <td>
                                 @if (canEdit)
                                 {
                                         <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id" class="text-decoration-none p-1">
-                                            <i class="bi bi-pencil-square fs-6 icon-smoke-grey"></i>
+                                            <i class="bi bi-pencil-square fs-6 btn-darker-text"></i>
                                         </a>
                                 }
                                 @if (canDelete)
                                 {
                                     <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@user.Id" data-entity-description="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" style="cursor:pointer;" class="p-1">
-                                        <i class="bi bi-trash3 fs-6 icon-smoke-grey"></i>
+                                        <i class="bi bi-trash3 fs-6"></i>
                                     </span>
                                 }
                             </td>
@@ -138,24 +129,18 @@
                     </tr>
                 }
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="@(hasActions ? 6 : 5)">
-                            <div class="d-flex justify-content-between align-items-center w-100 table-footer">
-                                <span class="fw-bold">@Localizer["Total"] @Model.TotalItems</span>
-                                <div class="d-flex align-items-center" style="height: 100%;">
-                                    @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
-                                        CurrentPage = Model.CurrentPage,
-                                        TotalPages = Model.TotalPages,
-                                        PageParameter = "pageNumber",
-                                        AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
-                                    })
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tfoot>
             </table>
+            <div class="d-flex justify-content-between align-items-center w-100 table-footer mt-1">
+                <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
+                <div class="d-flex align-items-center" style="height: 100%;">
+                    @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
+                        CurrentPage = Model.CurrentPage,
+                        TotalPages = Model.TotalPages,
+                        PageParameter = "pageNumber",
+                        AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                    })
+                </div>
+            </div>
         </div>
     }
 </div>

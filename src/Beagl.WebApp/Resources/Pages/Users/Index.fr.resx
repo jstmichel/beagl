@@ -160,7 +160,7 @@
     <value>Supprimer</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>Total d'utilisateurs :</value>
+    <value>utilisateur(s)</value>
   </data>
   <data name="Deletion confirmation" xml:space="preserve">
     <value>Êtes-vous sûr de vouloir supprimer l'utilisateur</value>

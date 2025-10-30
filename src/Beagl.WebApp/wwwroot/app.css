@@ -2,11 +2,6 @@
 .icon-smoke-grey {
   color: #3e4143 !important;
 }
-/* Actions column width and nowrap */
-.actions-col {
-  width: 70px;
-  white-space: nowrap;
-}
 
 /* Table footer min height and alignment */
 .table-footer {

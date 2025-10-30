@@ -1,0 +1,44 @@
+@model Beagl.WebApp.Pages.Shared.HeaderWithActionsModel
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">@Model.Title</h2>
+    <div class="d-flex gap-2">
+        @if (Model.ShowFilterButton)
+        {
+            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel" aria-controls="filterPanel">
+                <i class="bi bi-funnel"></i>&nbsp;
+                @Model.FilterButtonText
+            </button>
+        }
+        @if (Model.CreateAction.IsShown)
+        {
+            if (Model.SubCreateActions != null && Model.SubCreateActions.Any())
+            {
+                <div class="btn-group">
+                    <a class="btn btn-primary btn-sm dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false" title="@Model.CreateAction.Text" aria-label="@Model.CreateAction.Text">
+                        <i class="bi bi-plus-lg"></i>&nbsp;
+                        @Model.CreateAction.Text
+                    </a>
+                    <ul class="dropdown-menu">
+                        @foreach (var action in Model.SubCreateActions)
+                        {
+                            if (action.IsShown)
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="@action.Link">@action.Text</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a asp-page="@Model.CreateAction.Link" class="btn btn-primary btn-sm" title="@Model.CreateAction.Text" aria-label="@Model.CreateAction.Text">
+                    <i class="bi bi-plus-lg"></i>&nbsp;
+                    @Model.CreateAction.Text
+                </a>
+            }
+        }
+    </div>
+</div>

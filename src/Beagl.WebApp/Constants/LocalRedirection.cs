@@ -28,6 +28,11 @@ public sealed class LocalRedirection
     public const string Users = "/Users/Index";
 
     /// <summary>
+    /// Gets the create user page path.
+    /// </summary>
+    public const string CreateUser = "/Users/Create";
+
+    /// <summary>
     /// Gets the roles management page path.
     /// </summary>
     public const string Animals = "/Animals/Index";

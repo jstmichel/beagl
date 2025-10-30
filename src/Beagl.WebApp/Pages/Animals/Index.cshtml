@@ -2,6 +2,7 @@
 @using Beagl.Application.AnimalManagement.DTOs
 @using Beagl.WebApp.Constants
 @using Beagl.WebApp.Pages.Animals.ViewModels
+@using Beagl.WebApp.Pages.Shared
 @using Microsoft.AspNetCore.Authorization
 @model Beagl.WebApp.Pages.Animals.IndexModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
@@ -18,31 +19,74 @@
 }
 
 <div class="container-fluid py-5">
-    <div class="row mb-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h2 class="fw-bold">@Localizer["Animals"]</h2>
-            @if (canCreate)
-            {
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="dropdown" aria-expanded="false">@Localizer["Add Animal"]</button>
-                    <button type="button" class="btn btn-primary btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="visually-hidden">@Localizer["Toggle Dropdown"]</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="/Animals/CreateCat">@Localizer["Create Cat"]</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/Animals/CreateDog">@Localizer["Create Dog"]</a>
-                        </li>
-                    </ul>
-                </div>
+    @await Html.PartialAsync("~/Pages/Shared/_ValidationSummary.cshtml")
+    @await Html.PartialAsync("~/Pages/Shared/_HeaderWithActions.cshtml", new Beagl.WebApp.Pages.Shared.HeaderWithActionsModel {
+        Title = Localizer["Animals"].Value,
+        FilterButtonText = Localizer["Filters"].Value,
+        CreateAction = new ButtonAction {
+            Text = Localizer["Add Animal"].Value,
+            Link = string.Empty,
+            IsShown = canCreate
+        },
+        SubCreateActions = new List<ButtonAction> {
+            new ButtonAction {
+                Text = Localizer["Create Cat"].Value,
+                Link = LocalRedirection.CreateCat,
+                IsShown = canCreate
+            },
+            new ButtonAction {
+                Text = Localizer["Create Dog"].Value,
+                Link = LocalRedirection.CreateDog,
+                IsShown = canCreate
             }
+        }
+    })
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterPanel" aria-labelledby="filterPanelLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="filterPanelLabel">@Localizer["Filters"]</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form method="get">
+                @* <div class="mb-3">
+                    <label asp-for="FilterModel.Username" class="form-label">@Localizer["Username"]</label>
+                    <input type="text" asp-for="FilterModel.Username" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.Email" class="form-label">@Localizer["Email"]</label>
+                    <input type="text" asp-for="FilterModel.Email" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.Phone" class="form-label">@Localizer["Phone"]</label>
+                    <input type="text" asp-for="FilterModel.Phone" class="form-control" />
+                </div> *@
+                <button type="submit" class="btn btn-outline-primary w-100">@Localizer["Apply Filters"]</button>
+            </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
+
+    @if (Model.DataModel.Count == 0)
+    {
+        <div class="alert alert-info text-center">@Localizer["Not found."]</div>
+    }
+    else
+    {
+        <div class="table-responsive">
             <table class="table table-hover table-sm table-bordered align-middle bg-white">
+                <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 15%;">
+                    <col class="width: 15%;">
+                    <col class="width: 30%;">
+                    <col class="tight">
+                    <col class="tight">
+                    @if (hasActions)
+                    {
+                        <col class="tight">
+                    }
+                </colgroup>
                 <thead class="table-light">
                     <tr>
                         <th class="fw-bold">@Localizer["Name"]</th>
@@ -59,44 +103,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.DataModel != null && Model.DataModel.Any())
-                    {
-                        foreach (ListAnimalsViewModel animal in Model.DataModel)
-                        {
-                            <tr>
-                                <td>@animal.Name</td>
-                                <td>@StaticDataLocalizer.LocalizeSpecies(animal.Species)</td>
-                                <td>@animal.Breed</td>
-                                <td>@animal.Color</td>
-                                <td>@StaticDataLocalizer.LocalizeGender(animal.Gender)</td>
-                                <td>@animal.BirthDate.ToString("yyyy-MM-dd")</td>
-                                <td>@animal.MicrochipNumber</td>
-                                @if (hasActions)
-                                {
-                                    <td>
-                                        @if (canEdit)
-                                        {
-                                            <a asp-page="Edit" asp-route-id="@animal.Id" class="btn btn-sm btn-outline-primary me-2">@Localizer["Edit"]</a>
-                                        }
-                                        @if (canDelete)
-                                        {
-                                            <form method="post" asp-page-handler="Delete" asp-route-id="@animal.Id" class="d-inline">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">@Localizer["Delete"]</button>
-                                            </form>
-                                        }
-                                    </td>
-                                }
-                            </tr>
-                        }
-                    }
-                    else
+                    @foreach (ListAnimalsViewModel animal in Model.DataModel)
                     {
                         <tr>
-                            <td colspan="@(hasActions ? 8 : 7)" class="text-center">@Localizer["No animals found."]</td>
+                            <td>@animal.Name</td>
+                            <td>@StaticDataLocalizer.LocalizeSpecies(animal.Species)</td>
+                            <td>@animal.Breed</td>
+                            <td>@animal.Color</td>
+                            <td>@StaticDataLocalizer.LocalizeGender(animal.Gender)</td>
+                            <td>@animal.BirthDate.ToString("yyyy-MM-dd")</td>
+                            <td>@animal.MicrochipNumber</td>
+                            @if (hasActions)
+                            {
+                                <td>
+                                    @if (canEdit)
+                                    {
+                                        <a asp-page="Edit" title="@Localizer["Edit"]" aria-label="@Localizer["Edit"]" asp-route-id="@animal.Id" class="text-decoration-none p-1">
+                                            <i class="bi bi-pencil-square fs-6 btn-darker-text"></i>
+                                        </a>
+                                    }
+                                    @if (canDelete)
+                                    {
+                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" style="cursor:pointer;" class="p-1">
+                                            <i class="bi bi-trash3 fs-6"></i>
+                                        </span>
+                                    }
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
             </table>
+            <div class="d-flex justify-content-between align-items-center w-100 table-footer mt-1">
+                <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
+                <div class="d-flex align-items-center" style="height: 100%;">
+                    @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
+                        CurrentPage = Model.CurrentPage,
+                        TotalPages = Model.TotalPages,
+                        PageParameter = "pageNumber",
+                        //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                    })
+                </div>
+            </div>
         </div>
-    </div>
+    }
 </div>
+
+@await Html.PartialAsync("~/Pages/Shared/_DeleteModal.cshtml", new Beagl.WebApp.Pages.Shared.DeleteModalModel {
+    PageNumber = Model.CurrentPage,
+    FilterModel = Model.FilterModel,
+    BodyHtml = Localizer["Deletion confirmation"].Value + " <strong id=\"deleteDescription\"></strong>?"
+})
