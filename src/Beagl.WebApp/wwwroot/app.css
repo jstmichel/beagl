@@ -1,19 +1,27 @@
-/* Actions column width and nowrap */
-.actions-col {
-  width: 120px;
-  white-space: nowrap;
+.card.user-hover {
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.card.user-hover:hover {
+    box-shadow: 0 1.5rem 3rem rgba(0,0,0,0.25), 0 0.5rem 1rem rgba(0,0,0,0.18);
+    transform: translateY(-8px) scale(1.04);
+    z-index: 2;
+}
+
+/* Smoke grey for icons */
+.icon-smoke-grey {
+  color: #3e4143 !important;
 }
 
 /* Table footer min height and alignment */
 .table-footer {
   min-height: 48px;
 }
-.table {
+/* .table {
   border-radius: 0.75rem;
   border: 1px solid #dee2e6;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
+} */
 .user-row:hover {
   background: #f8f9fa;
   transition: background 0.2s;
@@ -28,6 +36,7 @@
 html,
 body {
   height: 100%;
+  color: #3e4143 !important;
 }
 
 /* Bottom-only shadow for navbar */

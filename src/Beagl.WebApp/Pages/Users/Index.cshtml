@@ -16,41 +16,16 @@
 }
 
 <div class="container py-5">
-    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
-    {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-            @foreach (var entry in ViewData.ModelState)
-            {
-                foreach (var error in entry.Value.Errors)
-                {
-                    <li>@error.ErrorMessage</li>
-                }
-            }
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">@Localizer["User Management"]</h2>
-        <div class="d-flex gap-2">
-            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterPanel" aria-controls="filterPanel">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
-                    <path d="M6 10.117V14a1 1 0 0 0 2 0v-3.883l3.447-2.276A1 1 0 0 0 12.447 7H3.553a1 1 0 0 0-.553 1.841L6 10.117z"/>
-                </svg>
-                @Localizer["Filters"]
-            </button>
-            @if (canCreate)
-            {
-                <a asp-page="/Users/Create" class="btn btn-success" title="@Localizer["Create New User"]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-1" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5V7.5H11.5a.5.5 0 0 1 0 1H8.5V11.5a.5.5 0 0 1-1 0V8.5H4.5a.5.5 0 0 1 0-1H7.5V4.5A.5.5 0 0 1 8 4z"/>
-                    </svg>
-                    @Localizer["Create New User"]
-                </a>
-            }
-        </div>
-    </div>
+    @await Html.PartialAsync("~/Pages/Shared/_ValidationSummary.cshtml")
+    @await Html.PartialAsync("~/Pages/Shared/_HeaderWithActions.cshtml", new HeaderWithActionsModel {
+        Title = Localizer["User Management"].Value,
+        FilterButtonText = Localizer["Filters"].Value,
+        CreateAction = new ButtonAction {
+            Text = Localizer["Create New User"].Value,
+            Link = LocalRedirection.CreateUser,
+            IsShown = canCreate
+        }
+    })
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="filterPanel" aria-labelledby="filterPanelLabel">
         <div class="offcanvas-header">
@@ -75,96 +50,91 @@
             </form>
         </div>
     </div>
+
     @if (Model.DataModel.Count == 0)
     {
         <div class="alert alert-info text-center">@Localizer["Not found."]</div>
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-hover align-middle bg-white rounded shadow-sm">
-                <thead class="table-light">
-                    <tr>
-                        <th>@Localizer["Username Header"]</th>
-                        <th>@Localizer["Email Header"]</th>
-                        <th>@Localizer["Lockout Date Header"]</th>
-                        <th>@Localizer["Roles Header"]</th>
-                        <th>@Localizer["Status Header"]</th>
-                        @if (hasActions)
-                        {
-                            <th class="text-end actions-col" aria-label="Actions">@Localizer["Actions Header"]</th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var user in Model.DataModel)
-                {
-                    <tr>
-                        <td class="py-3 fw-bold">@user.UserName</td>
-                        <td class="py-3 text-muted">@user.Email</td>
-                        <td class="py-3 text-muted">@(user.LockoutEnd?.ToString("yyyy-MM-dd HH:mm") ?? string.Empty)</td>
-                        <td class="py-3 text-muted">
-                            @if (user.Roles != null && user.Roles.Count > 0)
-                            {
-                                foreach (var role in user.Roles)
-                                {
-                                    <span class="badge bg-secondary me-1">@role</span>
-                                }
-                            }
-                        </td>
-                        <td class="py-3 text-muted">
-                            @if (!user.EmailConfirmed)
-                            {
-                                <span class="badge bg-danger me-1">@Localizer["Unconfirmed"]</span>
-                            }
-                            @if (user.TwoFactorEnabled)
-                            {
-                                <span class="badge bg-success">2FA</span>
-                            }
-                        </td>
-                        @if (hasActions)
-                        {
-                            <td class="py-3 text-end actions-col">
-                                @if (canEdit)
-                                {
-                                    <a asp-page="Edit" class="btn btn-outline-primary btn-sm me-2" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 3 10.707V13h2.293l7.5-7.5z"/>
-                                        </svg>
-                                    </a>
-                                }
-                                @if (canDelete)
-                                {
-                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@user.Id" data-entity-description="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5.5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6zm3 .5a.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6z"/>
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1H14a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                        </svg>
-                                    </button>
-                                }
-                            </td>
-                        }
-                    </tr>
-                }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="@(hasActions ? 6 : 5)">
-                            <div class="d-flex justify-content-between align-items-center w-100 table-footer">
-                                <span class="fw-bold">@Localizer["Total"] @Model.TotalItems</span>
-                                <div class="d-flex align-items-center" style="height: 100%;">
-                                    @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
-                                        CurrentPage = Model.CurrentPage,
-                                        TotalPages = Model.TotalPages,
-                                        PageParameter = "pageNumber",
-                                        AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
-                                    })
+        <div class="row g-4">
+            @foreach (var user in Model.DataModel)
+            {
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm user-hover">
+                        <div class="card-body d-flex flex-column justify-content-between h-100">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="card-title mb-1 fw-bold">@user.UserName</h5>
+                                        <div class="text-muted small">@user.Email</div>
+                                        @if (user.Roles != null && user.Roles.Count > 0)
+                                        {
+                                            <div class="mt-1">
+                                                @foreach (var role in user.Roles)
+                                                {
+                                                    <span class="badge bg-secondary me-1">@role</span>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                    @{
+                                        bool isLocked = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow;
+                                    }
+                                    @if (isLocked)
+                                    {
+                                        <span class="badge bg-danger align-self-start ms-2">@Localizer["Inactive"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success align-self-start ms-2">@Localizer["Active"]</span>
+                                    }
                                 </div>
                             </div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                        </div>
+                        <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                @if (!user.EmailConfirmed)
+                                {
+                                    <span class="badge bg-danger me-1">@Localizer["Unconfirmed"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success me-1">@Localizer["Confirmed"]</span>
+                                }
+                            </div>
+                            @if (hasActions)
+                            {
+                                <div class="btn-group btn-group-sm" role="group" aria-label="User actions">
+                                    @if (canEdit)
+                                    {
+                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@user.Id" class="btn btn-outline-secondary">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    }
+                                    @if (canDelete)
+                                    {
+                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@user.Id" data-entity-description="@user.UserName" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary">
+                                            <i class="bi bi-trash3"></i>
+                                        </span>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="d-flex justify-content-between align-items-center w-100 mt-4">
+            <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
+            <div class="d-flex align-items-center" style="height: 100%;">
+                @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
+                    CurrentPage = Model.CurrentPage,
+                    TotalPages = Model.TotalPages,
+                    PageParameter = "pageNumber",
+                    AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                })
+            </div>
         </div>
     }
 </div>

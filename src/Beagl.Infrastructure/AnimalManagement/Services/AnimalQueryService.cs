@@ -19,7 +19,12 @@ public sealed class AnimalQueryService (
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        IQueryable<Animal> query = dbContext.Animals;
+        IQueryable<Animal> query = dbContext
+            .Animals
+            .Include(a => a.PrimaryBreed)
+            .Include(a => a.Color)
+            .AsNoTracking();
+
         int totalCount = await query.CountAsync();
 
         IQueryable<AnimalListDto> projected = query

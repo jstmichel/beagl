@@ -130,10 +130,10 @@
     <value>User Management</value>
   </data>
   <data name="Filters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filter</value>
   </data>
   <data name="Create New User" xml:space="preserve">
-    <value>Create New User</value>
+    <value>Add</value>
   </data>
   <data name="Apply Filters" xml:space="preserve">
     <value>Apply</value>
@@ -162,7 +162,7 @@
     <value>Delete</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>Total Users:</value>
+    <value>User(s)</value>
   </data>
   <data name="Deletion confirmation" xml:space="preserve">
     <value>Are you sure you want to delete user</value>
