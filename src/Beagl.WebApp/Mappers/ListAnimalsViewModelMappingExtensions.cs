@@ -24,11 +24,16 @@ internal static class ListAnimalsViewModelMappingExtensions
             Id = dto.Id,
             Name = dto.Name,
             Species = dto.Species,
-            Breed = dto.Breed,
+            PrimaryBreed = dto.PrimaryBreed,
             Color = dto.Color,
             Gender = dto.Gender,
             BirthDate = dto.BirthDate,
-            MicrochipNumber = dto.MicrochipNumber
+            MicrochipNumber = dto.MicrochipNumber,
+            Base64PngImage = dto.Base64PngImage,
+            DistinctiveDescription = dto.DistinctiveDescription,
+            Weight = dto.Weight,
+            WeightUnit = dto.WeightUnit,
+            PermitNumber = dto.PermitNumber
         };
     }
 }

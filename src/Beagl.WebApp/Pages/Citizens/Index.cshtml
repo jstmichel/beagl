@@ -1,4 +1,5 @@
 @page "/Citizens/Index"
+@using Beagl.Domain.CitizenManagement.Entities
 @using Beagl.WebApp.Constants
 @using Beagl.WebApp.Pages.Citizens.ViewModels
 @using Beagl.WebApp.Pages.Shared
@@ -60,7 +61,59 @@
     }
     else
     {
-        <div class="table-responsive">
+        <div class="row g-4">
+            @foreach (ListCitizensViewModel citizen in Model.DataModel)
+            {
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm user-hover">
+                        <div class="card-body d-flex flex-column justify-content-between h-100">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="card-title mb-1 fw-bold">@citizen.Name</h5>
+                                        <div class="text-muted small">@citizen.Email</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+
+                            </div>
+                            @if (hasActions)
+                            {
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Citizen actions">
+                                    @if (canEdit)
+                                    {
+                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@citizen.Id" class="btn btn-outline-secondary">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    }
+                                    @if (canDelete)
+                                    {
+                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@citizen.Id" data-entity-description="@citizen.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary">
+                                            <i class="bi bi-trash3"></i>
+                                        </span>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="d-flex justify-content-between align-items-center w-100 table-footer mt-1">
+            <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
+            <div class="d-flex align-items-center" style="height: 100%;">
+                @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
+                    CurrentPage = Model.CurrentPage,
+                    TotalPages = Model.TotalPages,
+                    PageParameter = "pageNumber",
+                    //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                })
+            </div>
+        </div>
+        @* <div class="table-responsive">
             <table class="table table-hover table-sm table-bordered align-middle bg-white">
                 <colgroup>
                     <col style="width: 20%;">
@@ -127,7 +180,7 @@
                     })
                 </div>
             </div>
-        </div>
+        </div> *@
     }
 </div>
 
