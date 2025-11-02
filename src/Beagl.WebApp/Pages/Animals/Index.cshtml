@@ -18,6 +18,29 @@
     bool hasActions = canEdit || canDelete;
 }
 
+<style>
+.card-img-top.square-img {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+    background: #f8f9fa;
+    display: block;
+}
+.card.animal-bg {
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
+}
+.card.animal-bg .card-body,
+.card.animal-bg .card-footer,
+.card.animal-bg .card-img-top {
+    position: relative;
+    z-index: 1;
+}
+</style>
+
 <div class="container-fluid py-5">
     @await Html.PartialAsync("~/Pages/Shared/_ValidationSummary.cshtml")
     @await Html.PartialAsync("~/Pages/Shared/_HeaderWithActions.cshtml", new Beagl.WebApp.Pages.Shared.HeaderWithActionsModel {
@@ -72,78 +95,99 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-hover table-sm table-bordered align-middle bg-white">
-                <colgroup>
-                    <col style="width: 20%;">
-                    <col style="width: 20%;">
-                    <col style="width: 15%;">
-                    <col class="width: 15%;">
-                    <col class="width: 30%;">
-                    <col class="tight">
-                    <col class="tight">
-                    @if (hasActions)
-                    {
-                        <col class="tight">
-                    }
-                </colgroup>
-                <thead class="table-light">
-                    <tr>
-                        <th class="fw-bold">@Localizer["Name"]</th>
-                        <th class="fw-bold">@Localizer["Species"]</th>
-                        <th class="fw-bold">@Localizer["Breed"]</th>
-                        <th class="fw-bold">@Localizer["Color"]</th>
-                        <th class="fw-bold">@Localizer["Gender"]</th>
-                        <th class="fw-bold">@Localizer["Birth Date"]</th>
-                        <th class="fw-bold">@Localizer["Microchip"]</th>
-                        @if (hasActions)
-                        {
-                            <th class="fw-bold">@Localizer["Actions"]</th>
+        <div class="row g-4">
+            @foreach (var animal in Model.DataModel)
+            {
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm user-hover animal-bg">
+                        @{
+                            var hasImage = !string.IsNullOrEmpty(animal.Base64PngImage);
+                            var imageSrc = hasImage
+                                ? $"data:image/png;base64,{animal.Base64PngImage}"
+                                : Url.Content("~/images/animal-placeholder.png");
                         }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (ListAnimalsViewModel animal in Model.DataModel)
-                    {
-                        <tr>
-                            <td>@animal.Name</td>
-                            <td>@StaticDataLocalizer.LocalizeSpecies(animal.Species)</td>
-                            <td>@animal.Breed</td>
-                            <td>@animal.Color</td>
-                            <td>@StaticDataLocalizer.LocalizeGender(animal.Gender)</td>
-                            <td>@animal.BirthDate.ToString("yyyy-MM-dd")</td>
-                            <td>@animal.MicrochipNumber</td>
+                        <div class="position-relative">
+                            <img src="@imageSrc" class="card-img-top square-img" alt="@animal.Name" />
+                            <span class="position-absolute top-0 start-0 m-2 badge bg-primary d-flex align-items-center" style="z-index:2;">
+                                <i class="bi bi-award-fill me-1"></i> @animal.PermitNumber
+                            </span>
+                            <span class="position-absolute top-0 end-0 m-2 badge bg-secondary d-flex align-items-center" style="z-index:2;">
+                                <i class="bi bi-upc-scan me-1"></i> @animal.MicrochipNumber
+                            </span>
+                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-info d-flex align-items-center" style="z-index:2;">
+                                @StaticDataLocalizer.LocalizeSpecies(animal.Species)
+                            </span>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between h-100 position-relative py-2 px-3">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div class="w-100 text-center">
+                                        <h1 class="card-title mb-1 display-6">@animal.Name</h1>
+                                    </div>
+                                </div>
+                                <div class="w-100 mb-2">
+                                    <span class="text-start"><strong>Race</strong> @animal.PrimaryBreed</span>
+                                </div>
+                                <div class="w-100 mb-2 d-flex align-items-center">
+                                    <span class="text-start"><strong>Color</strong> @animal.Color</span>
+                                </div>
+                                <div class="w-100 mb-2">
+                                    <span class="text-start"><strong>Date of birth</strong> @animal.BirthDate</span>
+                                </div>
+                                <div class="w-100 mb-2">
+                                    <span class="text-start"><strong>Weight</strong> @animal.Weight @animal.WeightUnit</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                @{
+                                    string genderIcon = animal.Gender.ToString().ToLower() switch
+                                    {
+                                        "male" => "bi-gender-male",
+                                        "female" => "bi-gender-female",
+                                        _ => "bi-gender-ambiguous"
+                                    };
+                                }
+                                <i class="bi @genderIcon me-2" data-bs-toggle="tooltip" title="@StaticDataLocalizer.LocalizeGender(animal.Gender)"></i>
+                                @if (!string.IsNullOrEmpty(animal.DistinctiveDescription))
+                                {
+                                    <span class="ms-2" data-bs-toggle="tooltip" title="@animal.DistinctiveDescription">
+                                        <i class="bi bi-chat-left-text"></i>
+                                    </span>
+                                }
+                            </div>
                             @if (hasActions)
                             {
-                                <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="User actions">
                                     @if (canEdit)
                                     {
-                                        <a asp-page="Edit" title="@Localizer["Edit"]" aria-label="@Localizer["Edit"]" asp-route-id="@animal.Id" class="text-decoration-none p-1">
-                                            <i class="bi bi-pencil-square fs-6 btn-darker-text"></i>
+                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@animal.Id" class="btn btn-outline-secondary">
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
                                     }
                                     @if (canDelete)
                                     {
-                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" style="cursor:pointer;" class="p-1">
-                                            <i class="bi bi-trash3 fs-6"></i>
+                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary">
+                                            <i class="bi bi-trash3"></i>
                                         </span>
                                     }
-                                </td>
+                                </div>
                             }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-between align-items-center w-100 table-footer mt-1">
-                <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
-                <div class="d-flex align-items-center" style="height: 100%;">
-                    @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
-                        CurrentPage = Model.CurrentPage,
-                        TotalPages = Model.TotalPages,
-                        PageParameter = "pageNumber",
-                        //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
-                    })
+                        </div>
+                    </div>
                 </div>
+            }
+        </div>
+        <div class="d-flex justify-content-between align-items-center w-100 table-footer mt-1">
+            <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
+            <div class="d-flex align-items-center" style="height: 100%;">
+                @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
+                    CurrentPage = Model.CurrentPage,
+                    TotalPages = Model.TotalPages,
+                    PageParameter = "pageNumber",
+                    //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                })
             </div>
         </div>
     }
