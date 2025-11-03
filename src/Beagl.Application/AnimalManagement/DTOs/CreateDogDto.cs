@@ -63,4 +63,9 @@ public class CreateDogDto
     /// Gets or sets the microchip identifier.
     /// </summary>
     public string? MicrochipNumber { get; set; }
+
+    /// <summary>
+    /// Gets or sets the medal information.
+    /// </summary>
+    public string? Medal { get; set; }
 }

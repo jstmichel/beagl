@@ -71,4 +71,10 @@ public sealed class CreateDogViewModel
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_WeightUnit")]
     public int WeightUnit { get; set; } = 0;
+
+    /// <summary>
+    /// Gets or sets the medal assigned to the dog.
+    /// </summary>
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Medal")]
+    public string? Medal { get; set; }
 }

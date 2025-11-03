@@ -39,9 +39,10 @@ public sealed class Cat : Animal
         Photo? photo,
         Microchip? microchip,
         Weight weight,
+        Medal? medal,
         Audit<Guid> created,
         bool isAnUnclawnedCat)
-        : base(speciesType, name, primaryBreedId, primaryBreed, colorId, color, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, created)
+        : base(speciesType, name, primaryBreedId, primaryBreed, colorId, color, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, created)
     {
         IsAnUnclawnedCat = isAnUnclawnedCat;
     }

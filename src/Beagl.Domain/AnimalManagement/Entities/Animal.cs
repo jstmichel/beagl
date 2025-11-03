@@ -75,6 +75,11 @@ public class Animal : AuditedAggregateRoot
     public Weight Weight { get; private set; } = default!;
 
     /// <summary>
+    /// Gets or sets the medal awarded to the animal as a value object.
+    /// </summary>
+    public Medal? Medal { get; private set; }
+
+    /// <summary>
     /// Private parameterless constructor for EF Core.
     /// </summary>
     protected Animal() { }
@@ -94,6 +99,7 @@ public class Animal : AuditedAggregateRoot
     /// <param name="photo">The photo value object.</param>
     /// <param name="microchip">The microchip value object.</param>
     /// <param name="weight">The weight value object.</param>
+    /// <param name="medal">The medal value object.</param>
     /// <param name="created">The creation audit info.</param>
     public Animal(
         SpeciesType speciesType,
@@ -108,6 +114,7 @@ public class Animal : AuditedAggregateRoot
         Photo? photo,
         Microchip? microchip,
         Weight weight,
+        Medal? medal,
         Audit<Guid> created)
         : base(created)
     {
@@ -124,5 +131,6 @@ public class Animal : AuditedAggregateRoot
         Photo = photo;
         Microchip = microchip;
         Weight = weight;
+        Medal = medal;
     }
 }

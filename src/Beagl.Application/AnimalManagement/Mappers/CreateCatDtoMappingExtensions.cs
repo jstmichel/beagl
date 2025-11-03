@@ -38,6 +38,7 @@ public static class CreateCatDtoMappingExtensions
             Photo.From(createCatDto.PhotoBase64),
             Microchip.From(createCatDto.MicrochipNumber),
             Weight.From(createCatDto.Weight, EnumHelper.FromInt<WeightUnit>(createCatDto.WeightUnit)),
+            Medal.From(createCatDto.Medal),
             Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()),  //TODO: Replace with actual user ID
             createCatDto.IsAnUnclawnedCat
         );

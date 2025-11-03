@@ -136,6 +136,10 @@ public class ApplicationDbContext(
                 a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
+            entity.OwnsOne(a => a.Medal, m =>
+            {
+                m.Property(x => x.Value).HasColumnName("Medal");
+            });
         });
     }
 

@@ -33,6 +33,7 @@ internal static class CreateCatViewModelMappingExtensions
             IsAnUnclawnedCat = model.IsAnUnclawnedCat,
             Weight = model.Weight,
             WeightUnit = model.WeightUnit,
+            Medal = model.Medal
         };
     }
 }

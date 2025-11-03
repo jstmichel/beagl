@@ -32,6 +32,7 @@ internal static class CreateDogViewModelMappingExtensions
             MicrochipNumber = model.MicrochipNumber,
             Weight = model.Weight,
             WeightUnit = model.WeightUnit,
+            Medal = model.Medal
         };
     }
 }

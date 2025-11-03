@@ -63,4 +63,9 @@ public class CreateCatDto
     /// Gets or sets whether the cat is an unclawned cat.
     /// </summary>
     public bool IsAnUnclawnedCat { get; set; }
+
+    /// <summary>
+    /// Gets or sets the medal information.
+    /// </summary>
+    public string? Medal { get; set; }
 }

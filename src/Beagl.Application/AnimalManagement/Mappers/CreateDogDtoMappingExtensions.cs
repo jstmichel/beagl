@@ -43,7 +43,8 @@ public static class CreateDogDtoMappingExtensions
             null, //TODO: Missing fields
             null, //TODO: Missing fields
             false, //TODO: Missing fields
-            null //TODO: Missing fields
+            null, //TODO: Missing fields
+            Medal.From(createDogDto.Medal)
         );
     }
 }

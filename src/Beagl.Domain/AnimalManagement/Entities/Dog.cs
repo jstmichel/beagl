@@ -63,8 +63,9 @@ public sealed class Dog : Animal
         Breed? secondaryBreed,
         DangerousDog? dangerousDog,
         bool isAnAssistanceDog,
-        OriginCityInfo? originCityInfo)
-        : base(speciesType, name, primaryBreedId, primaryBreed, colorId, color, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, created)
+        OriginCityInfo? originCityInfo,
+        Medal? medal)
+        : base(speciesType, name, primaryBreedId, primaryBreed, colorId, color, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, created)
     {
         SecondaryBreedId = secondaryBreedId;
         SecondaryBreed = secondaryBreed;
