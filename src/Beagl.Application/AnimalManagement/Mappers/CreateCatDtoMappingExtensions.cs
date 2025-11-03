@@ -29,9 +29,7 @@ public static class CreateCatDtoMappingExtensions
             SpeciesType.Cat,
             createCatDto.Name,
             createCatDto.BreedPrimaryId,
-            null,
             createCatDto.ColorId,
-            null,
             createCatDto.Description ?? string.Empty,
             EnumHelper.FromInt<Gender>(createCatDto.Gender),
             createCatDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC

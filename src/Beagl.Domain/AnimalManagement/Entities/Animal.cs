@@ -90,9 +90,7 @@ public class Animal : AuditedAggregateRoot
     /// <param name="speciesType">The species type.</param>
     /// <param name="name">The name of the animal.</param>
     /// <param name="primaryBreedId">The primary breed ID.</param>
-    /// <param name="primaryBreed">The primary breed entity.</param>
     /// <param name="colorId">The color ID.</param>
-    /// <param name="color">The color entity.</param>
     /// <param name="distinctiveDescription">The distinctive description.</param>
     /// <param name="gender">The gender.</param>
     /// <param name="dateOfBirth">The date of birth.</param>
@@ -105,9 +103,7 @@ public class Animal : AuditedAggregateRoot
         SpeciesType speciesType,
         string name,
         Guid primaryBreedId,
-        Breed? primaryBreed,
         Guid colorId,
-        Color? color,
         string? distinctiveDescription,
         Gender gender,
         DateTimeOffset dateOfBirth,
@@ -122,9 +118,9 @@ public class Animal : AuditedAggregateRoot
         SpeciesType = speciesType;
         Name = name;
         PrimaryBreedId = primaryBreedId;
-        PrimaryBreed = primaryBreed;
+        PrimaryBreed = null;
         ColorId = colorId;
-        Color = color;
+        Color = null;
         DistinctiveDescription = distinctiveDescription;
         Gender = gender;
         DateOfBirth = dateOfBirth;

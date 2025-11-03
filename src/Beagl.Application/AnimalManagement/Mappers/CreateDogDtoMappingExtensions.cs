@@ -29,9 +29,7 @@ public static class CreateDogDtoMappingExtensions
             SpeciesType.Dog,
             createDogDto.Name,
             createDogDto.BreedPrimaryId,
-            null,
             createDogDto.ColorId,
-            null,
             createDogDto.Description ?? string.Empty,
             EnumHelper.FromInt<Gender>(createDogDto.Gender),
             createDogDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
@@ -40,7 +38,6 @@ public static class CreateDogDtoMappingExtensions
             Weight.From(createDogDto.Weight, EnumHelper.FromInt<WeightUnit>(createDogDto.WeightUnit)),
             Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
             createDogDto.BreedSecondaryId,
-            null, //TODO: Missing fields
             null, //TODO: Missing fields
             false, //TODO: Missing fields
             null, //TODO: Missing fields
