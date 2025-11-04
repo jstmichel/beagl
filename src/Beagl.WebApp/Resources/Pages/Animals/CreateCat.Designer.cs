@@ -106,5 +106,10 @@ namespace Beagl.WebApp.Resources.Pages.Animals
         /// Looks up a localized string similar to Is An Unclawned Cat.
         /// </summary>
         public static string Error_Required_IsAnUnclawnedCat => ResourceManager.GetString("Error_Required_IsAnUnclawnedCat", resourceCulture);
+
+        /// <summary>
+        /// Looks up a localized string similar to Medal.
+        /// </summary>
+        public static string Error_Required_Medal => ResourceManager.GetString("Error_Required_Medal", resourceCulture);
     }
 }

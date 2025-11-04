@@ -11,6 +11,11 @@ namespace Beagl.WebApp.Pages.Animals.ViewModels;
 public sealed class CreateDogViewModel
 {
     /// <summary>
+    /// Gets or sets the owner citizen ID.
+    /// </summary>
+    public Guid? OwnerCitizenId { get; set; }
+
+    /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Name")]
@@ -71,4 +76,60 @@ public sealed class CreateDogViewModel
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_WeightUnit")]
     public int WeightUnit { get; set; } = 0;
+
+    /// <summary>
+    /// Gets or sets the medal assigned to the dog.
+    /// </summary>
+    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Medal")]
+    public string? Medal { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the animal is sterilized.
+    /// </summary>
+    public bool IsSterilized { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the animal is vaccinated for rabies.
+    /// </summary>
+    public bool IsRabiesVaccinated { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date of rabies vaccination. Required if <see cref="IsRabiesVaccinated"/> is true.
+    /// </summary>
+    public DateTimeOffset? RabiesVaccinationDate { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the dog is an assistance dog.
+    /// </summary>
+    public bool IsAnAssistanceDog { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the dog is considered dangerous.
+    /// </summary>
+    public bool IsDangerousDog { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the dog has responsibility insurance.
+    /// </summary>
+    public bool HasResponsibilityInsurance { get; set; }
+
+    /// <summary>
+    /// Gets or sets an optional comment about the dangerous dog status.
+    /// </summary>
+    public string? DangerousDogComment { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the animal comes from another city.
+    /// </summary>
+    public bool ComesFromAnotherCity { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name of the city.
+    /// </summary>
+    public string? OriginCityName { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the animal had a judgment in that city.
+    /// </summary>
+    public bool HadJudgmentInThatCity { get; set; }
 }

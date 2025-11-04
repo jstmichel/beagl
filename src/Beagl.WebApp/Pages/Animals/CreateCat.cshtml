@@ -47,6 +47,16 @@
                                     <input type="file" class="form-control d-none" id="photoInput" accept="image/png, image/jpeg" />
                                     <input asp-for="Input.PhotoBase64" type="hidden" id="photoBase64Input" name="Input.PhotoBase64" />
                                 </div>
+                                <div class="mb-3">
+                                    <label asp-for="Input.OwnerCitizenId" class="form-label">@Localizer["Owner (Citizen)"]</label>
+                                    <select asp-for="Input.OwnerCitizenId" class="form-select">
+                                        <option value="">@Localizer["Select Owner"]</option>
+                                        @foreach (var citizen in Model.CitizenList)
+                                        {
+                                            <option value="@citizen.Id">@citizen.Name</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
@@ -67,10 +77,36 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="form-check mb-3">
-                                    <input asp-for="Input.IsAnUnclawnedCat" class="form-check-input" type="checkbox" />
-                                    <label asp-for="Input.IsAnUnclawnedCat" class="form-check-label">@Localizer["Is Unclawned Cat"]</label>
+                                <div class="mb-3">
+                                    <label asp-for="Input.IsAnUnclawnedCat" class="form-label">@Localizer["Is Declawed Cat"]</label>
+                                    <select asp-for="Input.IsAnUnclawnedCat" class="form-select">
+                                        <option value="false" selected>@Localizer["No"]</option>
+                                        <option value="true">@Localizer["Yes"]</option>
+                                    </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label asp-for="Input.IsSterilized" class="form-label">@Localizer["Is Sterilized"]</label>
+                                    <select asp-for="Input.IsSterilized" class="form-select">
+                                        <option value="false" selected>@Localizer["No"]</option>
+                                        <option value="true">@Localizer["Yes"]</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Input.IsRabiesVaccinated" class="form-label">@Localizer["Is Rabies Vaccinated"]</label>
+                                    <select asp-for="Input.IsRabiesVaccinated" class="form-select" id="isRabiesVaccinatedSelect">
+                                        <option value="false" selected>@Localizer["No"]</option>
+                                        <option value="true">@Localizer["Yes"]</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="rabiesVaccinationDateGroup">
+                                    <label asp-for="Input.RabiesVaccinationDate" class="form-label">@Localizer["Rabies Vaccination Date"]</label>
+                                    <input asp-for="Input.RabiesVaccinationDate" type="date" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Input.Medal" class="form-label">@Localizer["Medal"]</label>
+                                    <input asp-for="Input.Medal" class="form-control" />
+                                </div>
+
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">

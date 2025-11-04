@@ -24,6 +24,7 @@ internal static class CreateDogViewModelMappingExtensions
         {
             Name = model.Name,
             BreedPrimaryId = model.BreedPrimaryId!.Value,
+            BreedSecondaryId = model.BreedSecondaryId,
             ColorId = model.ColorId!.Value,
             Description = model.Description,
             Gender = model.Gender,
@@ -32,6 +33,17 @@ internal static class CreateDogViewModelMappingExtensions
             MicrochipNumber = model.MicrochipNumber,
             Weight = model.Weight,
             WeightUnit = model.WeightUnit,
+            Medal = model.Medal,
+            IsSterilized = model.IsSterilized,
+            RabiesVaccinationDate = model.RabiesVaccinationDate,
+            IsRabiesVaccinated = model.IsRabiesVaccinated,
+            IsAnAssistanceDog = model.IsAnAssistanceDog,
+            IsDangerousDog = model.IsDangerousDog,
+            HasResponsibilityInsurance = model.HasResponsibilityInsurance,
+            DangerousDogComment = model.DangerousDogComment,
+            ComesFromAnotherCity = model.ComesFromAnotherCity,
+            OriginCityName = model.OriginCityName,
+            HadJudgmentInThatCity = model.HadJudgmentInThatCity
         };
     }
 }

@@ -29,17 +29,18 @@ public static class CreateCatDtoMappingExtensions
             SpeciesType.Cat,
             createCatDto.Name,
             createCatDto.BreedPrimaryId,
-            null,
             createCatDto.ColorId,
-            null,
             createCatDto.Description ?? string.Empty,
             EnumHelper.FromInt<Gender>(createCatDto.Gender),
             createCatDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
             Photo.From(createCatDto.PhotoBase64),
             Microchip.From(createCatDto.MicrochipNumber),
             Weight.From(createCatDto.Weight, EnumHelper.FromInt<WeightUnit>(createCatDto.WeightUnit)),
-            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()),  //TODO: Replace with actual user ID
-            createCatDto.IsAnUnclawnedCat
+            Medal.From(createCatDto.Medal),
+            createCatDto.IsSterilized,
+            RabiesVaccination.From(createCatDto.IsRabiesVaccinated, createCatDto.RabiesVaccinationDate),
+            createCatDto.IsAnUnclawnedCat,
+            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime())  //TODO: Replace with actual user ID
         );
     }
 }

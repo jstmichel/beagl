@@ -3,6 +3,7 @@
 using System;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.CitizenManagement.Entities;
 using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
 
@@ -14,6 +15,16 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </summary>
 public class Animal : AuditedAggregateRoot
 {
+    /// <summary>
+    /// Gets or sets the optional foreign key to the owning citizen.
+    /// </summary>
+    public Guid? CitizenId { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the navigation property to the owning citizen.
+    /// </summary>
+    public Citizen? Citizen { get; private set; }
+
     /// <summary>
     /// Gets or sets the species type (discriminator for TPT).
     /// </summary>
@@ -75,6 +86,22 @@ public class Animal : AuditedAggregateRoot
     public Weight Weight { get; private set; } = default!;
 
     /// <summary>
+    /// Gets or sets the medal awarded to the animal as a value object.
+    /// </summary>
+    public Medal? Medal { get; private set; }
+
+    /// <summary>
+    /// Gets or sets whether the animal is sterilized.
+    /// </summary>
+    public bool IsSterilized { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the rabies vaccination information for the animal.
+    /// </summary>
+    public RabiesVaccination? RabiesVaccination { get; private set; }
+
+
+    /// <summary>
     /// Private parameterless constructor for EF Core.
     /// </summary>
     protected Animal() { }
@@ -85,44 +112,53 @@ public class Animal : AuditedAggregateRoot
     /// <param name="speciesType">The species type.</param>
     /// <param name="name">The name of the animal.</param>
     /// <param name="primaryBreedId">The primary breed ID.</param>
-    /// <param name="primaryBreed">The primary breed entity.</param>
     /// <param name="colorId">The color ID.</param>
-    /// <param name="color">The color entity.</param>
     /// <param name="distinctiveDescription">The distinctive description.</param>
     /// <param name="gender">The gender.</param>
     /// <param name="dateOfBirth">The date of birth.</param>
     /// <param name="photo">The photo value object.</param>
     /// <param name="microchip">The microchip value object.</param>
     /// <param name="weight">The weight value object.</param>
+    /// <param name="medal">The medal value object.</param>
+    /// <param name="isSterilized">Indicates if the animal is sterilized.</param>
+    /// <param name="rabiesVaccination">The rabies vaccination information.</param>
     /// <param name="created">The creation audit info.</param>
+    /// <param name="citizenId">The optional citizen ID.</param>
     public Animal(
         SpeciesType speciesType,
         string name,
         Guid primaryBreedId,
-        Breed? primaryBreed,
         Guid colorId,
-        Color? color,
         string? distinctiveDescription,
         Gender gender,
         DateTimeOffset dateOfBirth,
         Photo? photo,
         Microchip? microchip,
         Weight weight,
-        Audit<Guid> created)
+        Medal? medal,
+        bool isSterilized,
+        RabiesVaccination? rabiesVaccination,
+        Audit<Guid> created,
+        Guid? citizenId = null)
         : base(created)
     {
         Id = Guid.NewGuid();
         SpeciesType = speciesType;
         Name = name;
         PrimaryBreedId = primaryBreedId;
-        PrimaryBreed = primaryBreed;
+        PrimaryBreed = null;
         ColorId = colorId;
-        Color = color;
+        Color = null;
         DistinctiveDescription = distinctiveDescription;
         Gender = gender;
         DateOfBirth = dateOfBirth;
         Photo = photo;
         Microchip = microchip;
         Weight = weight;
+        Medal = medal;
+        IsSterilized = isSterilized;
+        RabiesVaccination = rabiesVaccination;
+        CitizenId = citizenId;
+        Citizen = null;
     }
 }

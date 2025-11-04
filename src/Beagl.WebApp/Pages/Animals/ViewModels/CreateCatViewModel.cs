@@ -11,6 +11,11 @@ namespace Beagl.WebApp.Pages.Animals.ViewModels;
 public sealed class CreateCatViewModel
 {
     /// <summary>
+    /// Gets or sets the owner citizen ID.
+    /// </summary>
+    public Guid? OwnerCitizenId { get; set; }
+
+    /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Name")]
@@ -72,4 +77,25 @@ public sealed class CreateCatViewModel
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_IsAnUnclawnedCat")]
     public bool IsAnUnclawnedCat { get; set; }
+
+    /// <summary>
+    /// Gets or sets the medal assigned to the cat.
+    /// </summary>
+    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Medal")]
+    public string? Medal { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the animal is sterilized.
+    /// </summary>
+    public bool IsSterilized { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the animal is vaccinated for rabies.
+    /// </summary>
+    public bool IsRabiesVaccinated { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date of rabies vaccination. Required if <see cref="IsRabiesVaccinated"/> is true.
+    /// </summary>
+    public DateTimeOffset? RabiesVaccinationDate { get; set; }
 }

@@ -49,25 +49,24 @@ public sealed class Dog : Animal
         SpeciesType speciesType,
         string name,
         Guid primaryBreedId,
-        Breed? primaryBreed,
         Guid colorId,
-        Color? color,
         string? distinctiveDescription,
         Gender gender,
         DateTimeOffset dateOfBirth,
         Photo? photo,
         Microchip? microchip,
         Weight weight,
-        Audit<Guid> created,
         Guid? secondaryBreedId,
-        Breed? secondaryBreed,
         DangerousDog? dangerousDog,
         bool isAnAssistanceDog,
-        OriginCityInfo? originCityInfo)
-        : base(speciesType, name, primaryBreedId, primaryBreed, colorId, color, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, created)
+        OriginCityInfo? originCityInfo,
+        Medal? medal,
+        bool isSterilized,
+        RabiesVaccination? rabiesVaccination,
+        Audit<Guid> created)
+        : base(speciesType, name, primaryBreedId, colorId, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, isSterilized, rabiesVaccination, created)
     {
         SecondaryBreedId = secondaryBreedId;
-        SecondaryBreed = secondaryBreed;
         DangerousDog = dangerousDog;
         IsAnAssistanceDog = isAnAssistanceDog;
         OriginCityInfo = originCityInfo;

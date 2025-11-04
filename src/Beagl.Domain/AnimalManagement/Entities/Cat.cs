@@ -30,18 +30,19 @@ public sealed class Cat : Animal
         SpeciesType speciesType,
         string name,
         Guid primaryBreedId,
-        Breed? primaryBreed,
         Guid colorId,
-        Color? color,
         string? distinctiveDescription,
         Gender gender,
         DateTimeOffset dateOfBirth,
         Photo? photo,
         Microchip? microchip,
         Weight weight,
-        Audit<Guid> created,
-        bool isAnUnclawnedCat)
-        : base(speciesType, name, primaryBreedId, primaryBreed, colorId, color, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, created)
+        Medal? medal,
+        bool isSterilized,
+        RabiesVaccination? rabiesVaccination,
+        bool isAnUnclawnedCat,
+        Audit<Guid> created)
+        : base(speciesType, name, primaryBreedId, colorId, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, isSterilized, rabiesVaccination, created)
     {
         IsAnUnclawnedCat = isAnUnclawnedCat;
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 

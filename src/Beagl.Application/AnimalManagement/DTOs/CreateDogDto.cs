@@ -7,60 +7,45 @@ namespace Beagl.Application.AnimalManagement.DTOs;
 /// <summary>
 /// Data transfer object for creating a new dog.
 /// </summary>
-public class CreateDogDto
+public class CreateDogDto : CreateAnimalDto
 {
-    /// <summary>
-    /// Gets or sets the name of the animal.
-    /// </summary>
-    public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Gets or sets the selected primary breed ID.
-    /// </summary>
-    public Guid BreedPrimaryId { get; set; }
-
     /// <summary>
     /// Gets or sets the selected secondary breed ID.
     /// </summary>
     public Guid? BreedSecondaryId { get; set; }
 
     /// <summary>
-    /// Gets or sets the selected color ID.
+    /// Gets or sets whether the dog is an assistance dog.
     /// </summary>
-    public Guid ColorId { get; set; }
+    public bool IsAnAssistanceDog { get; set; }
 
     /// <summary>
-    /// Gets or sets the distinctive description of the animal.
+    /// Gets a value indicating whether the dog is considered dangerous.
     /// </summary>
-    public string? Description { get; set; } = string.Empty;
+    public bool IsDangerousDog { get; set; }
 
     /// <summary>
-    /// Gets or sets the gender of the animal.
+    /// Gets a value indicating whether the dog has responsibility insurance.
     /// </summary>
-    public int Gender { get; set; }
+    public bool HasResponsibilityInsurance { get; set; }
 
     /// <summary>
-    /// Gets or sets the birth date of the animal.
+    /// Gets an optional comment about the dangerous dog status.
     /// </summary>
-    public DateTimeOffset BirthDate { get; set; }
+    public string? DangerousDogComment { get; set; }
 
     /// <summary>
-    /// Gets or sets the weight of the dog in pounds.
+    /// Gets a value indicating whether the animal comes from another city.
     /// </summary>
-    public decimal Weight { get; set; }
+    public bool ComesFromAnotherCity { get; set; }
 
     /// <summary>
-    /// Gets or sets the weight unit.
+    /// Gets the name of the city.
     /// </summary>
-    public int WeightUnit { get; set; }
+    public string? OriginCityName { get; set; }
 
     /// <summary>
-    /// Gets or sets the photo as a base64-encoded PNG image.
+    /// Gets a value indicating whether the animal had a judgment in that city.
     /// </summary>
-    public string? PhotoBase64 { get; set; }
-
-    /// <summary>
-    /// Gets or sets the microchip identifier.
-    /// </summary>
-    public string? MicrochipNumber { get; set; }
+    public bool HadJudgmentInThatCity { get; set; }
 }

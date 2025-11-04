@@ -36,7 +36,7 @@ public static class AnimalListDtoMappingExtensions
             DistinctiveDescription = animal.DistinctiveDescription,
             Weight = animal.Weight?.Value,
             WeightUnit = animal.Weight?.Unit ?? WeightUnit.Kilograms,
-            PermitNumber = "F_REPLACE_ME"
+            PermitNumber = animal.Medal?.Value
         };
     }
 }

@@ -15,6 +15,17 @@ public sealed class CitizenQueryService
     (ApplicationDbContext dbContext) : ICitizenQueryService
 {
     /// <inheritdoc/>
+    public async Task<IList<CitizenListDto>> GetAllAsync()
+    {
+        IQueryable<Citizen> query = dbContext.Citizens.AsNoTracking();
+        IQueryable<CitizenListDto> projected = query
+            .Select(a => a.ToListDto());
+
+        IList<CitizenListDto> result = await projected.ToListAsync();
+        return result;
+    }
+
+    /// <inheritdoc/>
     public async Task<(IList<CitizenListDto> Items, int TotalCount)> GetPagedAsync(CitizenPagedFilterDto filter)
     {
         ArgumentNullException.ThrowIfNull(filter);

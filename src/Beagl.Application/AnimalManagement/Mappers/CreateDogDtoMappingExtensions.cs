@@ -29,21 +29,21 @@ public static class CreateDogDtoMappingExtensions
             SpeciesType.Dog,
             createDogDto.Name,
             createDogDto.BreedPrimaryId,
-            null,
             createDogDto.ColorId,
-            null,
             createDogDto.Description ?? string.Empty,
             EnumHelper.FromInt<Gender>(createDogDto.Gender),
             createDogDto.BirthDate.ToUniversalTime(), //FIXME:Find a solution for the repository layer to transform to UTC
             Photo.From(createDogDto.PhotoBase64),
             Microchip.From(createDogDto.MicrochipNumber),
             Weight.From(createDogDto.Weight, EnumHelper.FromInt<WeightUnit>(createDogDto.WeightUnit)),
-            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
             createDogDto.BreedSecondaryId,
-            null, //TODO: Missing fields
-            null, //TODO: Missing fields
-            false, //TODO: Missing fields
-            null //TODO: Missing fields
+            DangerousDog.From(createDogDto.IsDangerousDog, createDogDto.HasResponsibilityInsurance, createDogDto.DangerousDogComment),
+            createDogDto.IsAnAssistanceDog,
+            OriginCityInfo.From(createDogDto.ComesFromAnotherCity, createDogDto.OriginCityName, createDogDto.HadJudgmentInThatCity),
+            Medal.From(createDogDto.Medal),
+            createDogDto.IsSterilized,
+            RabiesVaccination.From(createDogDto.IsRabiesVaccinated, createDogDto.RabiesVaccinationDate),
+            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()) //TODO: Replace with actual user ID
         );
     }
 }

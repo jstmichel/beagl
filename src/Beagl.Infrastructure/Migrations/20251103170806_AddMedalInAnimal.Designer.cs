@@ -3,6 +3,7 @@ using System;
 using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Beagl.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251103170806_AddMedalInAnimal")]
+    partial class AddMedalInAnimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +31,6 @@ namespace Beagl.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CitizenId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ColorId")
                         .HasColumnType("uuid");
 
@@ -43,9 +43,6 @@ namespace Beagl.Infrastructure.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsSterilized")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -57,8 +54,6 @@ namespace Beagl.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CitizenId");
 
                     b.HasIndex("ColorId");
 
@@ -405,11 +400,6 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Beagl.Domain.AnimalManagement.Entities.Animal", b =>
                 {
-                    b.HasOne("Beagl.Domain.CitizenManagement.Entities.Citizen", "Citizen")
-                        .WithMany("Animals")
-                        .HasForeignKey("CitizenId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("Beagl.Domain.AnimalManagement.Entities.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
@@ -500,27 +490,6 @@ namespace Beagl.Infrastructure.Migrations
                                 .HasForeignKey("AnimalId");
                         });
 
-                    b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.RabiesVaccination", "RabiesVaccination", b1 =>
-                        {
-                            b1.Property<Guid>("AnimalId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<bool>("IsVaccinated")
-                                .HasColumnType("boolean")
-                                .HasColumnName("IsRabiesVaccinated");
-
-                            b1.Property<DateTimeOffset?>("VaccinationDate")
-                                .HasColumnType("timestamp with time zone")
-                                .HasColumnName("RabiesVaccinationDate");
-
-                            b1.HasKey("AnimalId");
-
-                            b1.ToTable("Animals");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AnimalId");
-                        });
-
                     b.OwnsOne("Beagl.Domain.AnimalManagement.ValueObjects.Weight", "Weight", b1 =>
                         {
                             b1.Property<Guid>("AnimalId")
@@ -560,8 +529,6 @@ namespace Beagl.Infrastructure.Migrations
                                 .HasForeignKey("AnimalId");
                         });
 
-                    b.Navigation("Citizen");
-
                     b.Navigation("Color");
 
                     b.Navigation("Created")
@@ -576,8 +543,6 @@ namespace Beagl.Infrastructure.Migrations
                     b.Navigation("Photo");
 
                     b.Navigation("PrimaryBreed");
-
-                    b.Navigation("RabiesVaccination");
 
                     b.Navigation("Weight")
                         .IsRequired();
@@ -831,8 +796,6 @@ namespace Beagl.Infrastructure.Migrations
             modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Citizen", b =>
                 {
                     b.Navigation("Addresses");
-
-                    b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618
         }

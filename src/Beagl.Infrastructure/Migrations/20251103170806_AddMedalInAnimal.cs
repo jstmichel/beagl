@@ -7,26 +7,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Beagl.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RenameAddressIdToId : Migration
+    public partial class AddMedalInAnimal : Migration
     {
         /// <inheritdoc />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "AddressId",
-                table: "Addresses",
-                newName: "Id");
+            migrationBuilder.AddColumn<string>(
+                name: "Medal",
+                table: "Animals",
+                type: "text",
+                nullable: true);
         }
 
         /// <inheritdoc />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Id",
-                table: "Addresses",
-                newName: "AddressId");
+            migrationBuilder.DropColumn(
+                name: "Medal",
+                table: "Animals");
         }
     }
 }

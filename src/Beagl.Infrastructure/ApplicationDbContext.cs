@@ -113,6 +113,14 @@ public class ApplicationDbContext(
                 .HasForeignKey(a => a.ColorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            entity.HasOne(a => a.Citizen)
+                .WithMany(c => c.Animals)
+                .HasForeignKey(a => a.CitizenId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasIndex(a => a.CitizenId);
+
             entity.OwnsOne(a => a.Photo, p =>
             {
                 p.Property(x => x.Base64Png).HasColumnName("PhotoBase64Png");
@@ -135,6 +143,15 @@ public class ApplicationDbContext(
             {
                 a.Property(p => p.UserId).HasColumnName("ModifiedByUserId");
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
+            });
+            entity.OwnsOne(a => a.Medal, m =>
+            {
+                m.Property(x => x.Value).HasColumnName("Medal");
+            });
+            entity.OwnsOne(a => a.RabiesVaccination, m =>
+            {
+                m.Property(x => x.IsVaccinated).HasColumnName("IsRabiesVaccinated");
+                m.Property(x => x.VaccinationDate).HasColumnName("RabiesVaccinationDate");
             });
         });
     }
