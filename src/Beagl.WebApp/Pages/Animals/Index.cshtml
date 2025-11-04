@@ -104,10 +104,19 @@
                             var hasImage = !string.IsNullOrEmpty(animal.Base64PngImage);
                             var imageSrc = hasImage
                                 ? $"data:image/png;base64,{animal.Base64PngImage}"
-                                : Url.Content("~/images/animal-placeholder.png");
+                                : null;
                         }
                         <div class="position-relative">
-                            <img src="@imageSrc" class="card-img-top square-img" alt="@animal.Name" />
+                            @if (hasImage)
+                            {
+                                <img src="@imageSrc" class="card-img-top square-img" alt="@animal.Name" />
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center justify-content-center card-img-top square-img bg-light text-secondary" style="font-size: 4rem; min-height: 180px;">
+                                    <i class="bi bi-image-alt"></i>
+                                </div>
+                            }
                             <span class="position-absolute top-0 start-0 m-2 badge bg-primary d-flex align-items-center" style="z-index:2;">
                                 <i class="bi bi-award-fill me-1"></i> @animal.PermitNumber
                             </span>
@@ -162,13 +171,13 @@
                                 <div class="btn-group btn-group-sm" role="group" aria-label="User actions">
                                     @if (canEdit)
                                     {
-                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@animal.Id" class="btn btn-outline-secondary">
+                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@animal.Id" class="btn btn-outline-secondary disabled" tabindex="-1" aria-disabled="true">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     }
                                     @if (canDelete)
                                     {
-                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary">
+                                        <span role="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary disabled" tabindex="-1" aria-disabled="true">
                                             <i class="bi bi-trash3"></i>
                                         </span>
                                     }
