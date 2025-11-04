@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 

@@ -1,3 +1,5 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Domain.AnimalManagement.Enums;

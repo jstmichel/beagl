@@ -36,12 +36,14 @@ public static class CreateDogDtoMappingExtensions
             Photo.From(createDogDto.PhotoBase64),
             Microchip.From(createDogDto.MicrochipNumber),
             Weight.From(createDogDto.Weight, EnumHelper.FromInt<WeightUnit>(createDogDto.WeightUnit)),
-            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()), //TODO: Replace with actual user ID
             createDogDto.BreedSecondaryId,
-            null, //TODO: Missing fields
-            false, //TODO: Missing fields
-            null, //TODO: Missing fields
-            Medal.From(createDogDto.Medal)
+            DangerousDog.From(createDogDto.IsDangerousDog, createDogDto.HasResponsibilityInsurance, createDogDto.DangerousDogComment),
+            createDogDto.IsAnAssistanceDog,
+            OriginCityInfo.From(createDogDto.ComesFromAnotherCity, createDogDto.OriginCityName, createDogDto.HadJudgmentInThatCity),
+            Medal.From(createDogDto.Medal),
+            createDogDto.IsSterilized,
+            RabiesVaccination.From(createDogDto.IsRabiesVaccinated, createDogDto.RabiesVaccinationDate),
+            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()) //TODO: Replace with actual user ID
         );
     }
 }

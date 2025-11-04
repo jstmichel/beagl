@@ -3,6 +3,7 @@
 using System;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.ValueObjects;
+using Beagl.Domain.CitizenManagement.Entities;
 using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
 
@@ -14,6 +15,16 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </summary>
 public class Animal : AuditedAggregateRoot
 {
+    /// <summary>
+    /// Gets or sets the optional foreign key to the owning citizen.
+    /// </summary>
+    public Guid? CitizenId { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the navigation property to the owning citizen.
+    /// </summary>
+    public Citizen? Citizen { get; private set; }
+
     /// <summary>
     /// Gets or sets the species type (discriminator for TPT).
     /// </summary>
@@ -80,6 +91,17 @@ public class Animal : AuditedAggregateRoot
     public Medal? Medal { get; private set; }
 
     /// <summary>
+    /// Gets or sets whether the animal is sterilized.
+    /// </summary>
+    public bool IsSterilized { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the rabies vaccination information for the animal.
+    /// </summary>
+    public RabiesVaccination? RabiesVaccination { get; private set; }
+
+
+    /// <summary>
     /// Private parameterless constructor for EF Core.
     /// </summary>
     protected Animal() { }
@@ -98,7 +120,10 @@ public class Animal : AuditedAggregateRoot
     /// <param name="microchip">The microchip value object.</param>
     /// <param name="weight">The weight value object.</param>
     /// <param name="medal">The medal value object.</param>
+    /// <param name="isSterilized">Indicates if the animal is sterilized.</param>
+    /// <param name="rabiesVaccination">The rabies vaccination information.</param>
     /// <param name="created">The creation audit info.</param>
+    /// <param name="citizenId">The optional citizen ID.</param>
     public Animal(
         SpeciesType speciesType,
         string name,
@@ -111,7 +136,10 @@ public class Animal : AuditedAggregateRoot
         Microchip? microchip,
         Weight weight,
         Medal? medal,
-        Audit<Guid> created)
+        bool isSterilized,
+        RabiesVaccination? rabiesVaccination,
+        Audit<Guid> created,
+        Guid? citizenId = null)
         : base(created)
     {
         Id = Guid.NewGuid();
@@ -128,5 +156,9 @@ public class Animal : AuditedAggregateRoot
         Microchip = microchip;
         Weight = weight;
         Medal = medal;
+        IsSterilized = isSterilized;
+        RabiesVaccination = rabiesVaccination;
+        CitizenId = citizenId;
+        Citizen = null;
     }
 }

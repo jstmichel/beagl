@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Domain.CitizenManagement.Enums;
 using Beagl.Domain.CitizenManagement.ValueObjects;
 using Beagl.Domain.Core;
@@ -48,6 +49,11 @@ public sealed class Citizen : AuditedAggregateRoot
     /// Gets the list of addresses associated with the citizen.
     /// </summary>
     public ICollection<Address> Addresses { get; } = [];
+
+    /// <summary>
+    /// Gets the list of animals owned by the citizen.
+    /// </summary>
+    public ICollection<Animal> Animals { get; } = [];
 
     /// <summary>
     /// Private parameterless constructor for EF Core.

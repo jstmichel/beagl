@@ -37,8 +37,10 @@ public static class CreateCatDtoMappingExtensions
             Microchip.From(createCatDto.MicrochipNumber),
             Weight.From(createCatDto.Weight, EnumHelper.FromInt<WeightUnit>(createCatDto.WeightUnit)),
             Medal.From(createCatDto.Medal),
-            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()),  //TODO: Replace with actual user ID
-            createCatDto.IsAnUnclawnedCat
+            createCatDto.IsSterilized,
+            RabiesVaccination.From(createCatDto.IsRabiesVaccinated, createCatDto.RabiesVaccinationDate),
+            createCatDto.IsAnUnclawnedCat,
+            Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime())  //TODO: Replace with actual user ID
         );
     }
 }

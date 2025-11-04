@@ -78,4 +78,19 @@ public sealed class CreateCatViewModel
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Medal")]
     public string? Medal { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether the animal is sterilized.
+    /// </summary>
+    public bool IsSterilized { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the animal is vaccinated for rabies.
+    /// </summary>
+    public bool IsRabiesVaccinated { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date of rabies vaccination. Required if <see cref="IsRabiesVaccinated"/> is true.
+    /// </summary>
+    public DateTimeOffset? RabiesVaccinationDate { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using Beagl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Beagl.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251104030630_AdsRabbiesVaccinationInAnimal")]
+    partial class AdsRabbiesVaccinationInAnimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,9 +29,6 @@ namespace Beagl.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("CitizenId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("ColorId")
@@ -57,8 +57,6 @@ namespace Beagl.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CitizenId");
 
                     b.HasIndex("ColorId");
 
@@ -405,11 +403,6 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Beagl.Domain.AnimalManagement.Entities.Animal", b =>
                 {
-                    b.HasOne("Beagl.Domain.CitizenManagement.Entities.Citizen", "Citizen")
-                        .WithMany("Animals")
-                        .HasForeignKey("CitizenId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("Beagl.Domain.AnimalManagement.Entities.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
@@ -559,8 +552,6 @@ namespace Beagl.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("AnimalId");
                         });
-
-                    b.Navigation("Citizen");
 
                     b.Navigation("Color");
 
@@ -831,8 +822,6 @@ namespace Beagl.Infrastructure.Migrations
             modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Citizen", b =>
                 {
                     b.Navigation("Addresses");
-
-                    b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618
         }
