@@ -2,6 +2,8 @@
 
 using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
+using Beagl.Application.CitizenManagement.DTOs;
+using Beagl.Application.CitizenManagement.Services;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
@@ -19,7 +21,8 @@ namespace Beagl.WebApp.Pages.Animals;
 internal sealed class CreateDogModel(
     IBreedQueryService breedQueryService,
     IColorQueryService colorQueryService,
-    IDogService dogService) : PageModel
+    IDogService dogService,
+    ICitizenQueryService citizenQueryService) : PageModel
 {
     /// <summary>
     /// Gets or sets the input model for creating a dog.
@@ -28,6 +31,8 @@ internal sealed class CreateDogModel(
     public CreateDogViewModel Input { get; set; } = new CreateDogViewModel();
     public IEnumerable<BreedDto> BreedList { get; set; } = [];
     public IEnumerable<ColorDto> ColorList { get; set; } = [];
+    public IEnumerable<CitizenListDto> CitizenList { get; set; } = [];
+
 
     /// <summary>
     /// Handles GET requests.
@@ -36,6 +41,8 @@ internal sealed class CreateDogModel(
     {
         BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
         ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
+        CitizenList = await citizenQueryService.GetAllAsync();
+
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -44,6 +51,8 @@ internal sealed class CreateDogModel(
         {
             BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
             ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
+            CitizenList = await citizenQueryService.GetAllAsync();
+
             return Page();
         }
 

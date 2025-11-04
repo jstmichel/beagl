@@ -11,6 +11,11 @@ namespace Beagl.WebApp.Pages.Animals.ViewModels;
 public sealed class CreateCatViewModel
 {
     /// <summary>
+    /// Gets or sets the owner citizen ID.
+    /// </summary>
+    public Guid? OwnerCitizenId { get; set; }
+
+    /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Name")]
