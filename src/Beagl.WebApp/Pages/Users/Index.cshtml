@@ -16,6 +16,10 @@
 }
 
 <div class="container py-5">
+    @await Html.PartialAsync("~/Pages/Shared/_Alert.cshtml", new Beagl.WebApp.Pages.Shared.AlertModel {
+        Show = TempData["UserDeleteSuccess"] != null,
+        Text = Localizer["User deleted successfully."].Value
+    })
     @await Html.PartialAsync("~/Pages/Shared/_ValidationSummary.cshtml")
     @await Html.PartialAsync("~/Pages/Shared/_HeaderWithActions.cshtml", new HeaderWithActionsModel {
         Title = Localizer["User Management"].Value,

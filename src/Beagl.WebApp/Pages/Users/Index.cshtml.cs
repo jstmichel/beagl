@@ -22,27 +22,6 @@ internal sealed class IndexModel(
     IStringLocalizer<IndexModel> localizer) : PaginatedPageModel<UserDto, IndexModel.UserFilterModel>
 {
     /// <summary>
-    /// Model for filtering users in the user management view.
-    /// </summary>
-    internal sealed class UserFilterModel
-    {
-        /// <summary>
-        /// Gets or sets the username filter.
-        /// </summary>
-        public string? Username { get; set; }
-
-        /// <summary>
-        /// Gets or sets the email filter.
-        /// </summary>
-        public string? Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the phone filter.
-        /// </summary>
-        public string? Phone { get; set; }
-    }
-
-    /// <summary>
     /// Handles GET requests for the page and returns the rendered page.
     /// </summary>
     /// <param name="pageNumber">The page number to load.</param>
@@ -83,6 +62,7 @@ internal sealed class IndexModel(
         try
         {
             await userService.DeleteAsync(id);
+            TempData["UserDeleteSuccess"] = true;
         }
         catch (EntityDeleteFailedException ex)
         {
@@ -122,4 +102,25 @@ internal sealed class IndexModel(
             Email = FilterModel.Email,
             Phone = FilterModel.Phone
         };
+
+    /// <summary>
+    /// Model for filtering users in the user management view.
+    /// </summary>
+    internal sealed class UserFilterModel
+    {
+        /// <summary>
+        /// Gets or sets the username filter.
+        /// </summary>
+        public string? Username { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email filter.
+        /// </summary>
+        public string? Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone filter.
+        /// </summary>
+        public string? Phone { get; set; }
+    }
 }
