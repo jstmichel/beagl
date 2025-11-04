@@ -11,6 +11,7 @@ using Beagl.WebApp.Pages.Animals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -31,28 +32,22 @@ internal sealed class CreateDogModel(
     public CreateDogViewModel Input { get; set; } = new CreateDogViewModel();
     public IEnumerable<BreedDto> BreedList { get; set; } = [];
     public IEnumerable<ColorDto> ColorList { get; set; } = [];
-    public IEnumerable<CitizenListDto> CitizenList { get; set; } = [];
-
+    public IEnumerable<CitizenLookupDto> CitizenList { get; set; } = [];
 
     /// <summary>
     /// Handles GET requests.
     /// </summary>
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
-        BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
-        ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
-        CitizenList = await citizenQueryService.GetAllAsync();
-
+        await LoadDropdownListsAsync();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
-            ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
-            CitizenList = await citizenQueryService.GetAllAsync();
-
+            await LoadDropdownListsAsync();
             return Page();
         }
 
@@ -60,5 +55,12 @@ internal sealed class CreateDogModel(
         _ = await dogService.CreateDogAsync(dto);
 
         return RedirectToPage(LocalRedirection.Animals);
+    }
+
+    private async Task LoadDropdownListsAsync()
+    {
+        BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
+        ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Dog);
+        CitizenList = await citizenQueryService.GetAllLookupAsync();
     }
 }

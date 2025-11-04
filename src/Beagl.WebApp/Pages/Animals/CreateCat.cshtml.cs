@@ -31,25 +31,22 @@ internal sealed class CreateCatModel(
     public CreateCatViewModel Input { get; set; } = new CreateCatViewModel();
     public IEnumerable<BreedDto> BreedList { get; set; } = [];
     public IEnumerable<ColorDto> ColorList { get; set; } = [];
-    public IEnumerable<CitizenListDto> CitizenList { get; set; } = [];
+    public IEnumerable<CitizenLookupDto> CitizenList { get; set; } = [];
 
     /// <summary>
     /// Handles GET requests.
     /// </summary>
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
-        BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
-        ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
-        CitizenList = await citizenQueryService.GetAllAsync();
+        await LoadDropdownListsAsync();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
-            ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
-            CitizenList = await citizenQueryService.GetAllAsync();
+            await LoadDropdownListsAsync();
             return Page();
         }
 
@@ -57,5 +54,12 @@ internal sealed class CreateCatModel(
         _ = await catService.CreateCatAsync(catDto);
 
         return RedirectToPage(LocalRedirection.Animals);
+    }
+
+    private async Task LoadDropdownListsAsync()
+    {
+        BreedList = await breedQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
+        ColorList = await colorQueryService.GetAllBySpeciesAsync(SpeciesType.Cat);
+        CitizenList = await citizenQueryService.GetAllLookupAsync();
     }
 }

@@ -14,7 +14,7 @@ public interface ICitizenQueryService :
     IPagedService<CitizenListDto, CitizenPagedFilterDto>
 {
     /// <summary>
-    /// Retrieves all citizens as a list along with the total count.
+    /// Retrieves all citizens as a lookup list.
     /// </summary>
-    public Task<IList<CitizenListDto>> GetAllAsync();
+    public Task<IList<CitizenLookupDto>> GetAllLookupAsync();
 }
