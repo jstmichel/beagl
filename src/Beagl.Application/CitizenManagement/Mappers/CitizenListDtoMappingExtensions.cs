@@ -16,6 +16,7 @@ public static class CitizenListDtoMappingExtensions
     /// </summary>
     /// <param name="citizen">The Citizen entity to map.</param>
     /// <returns>The mapped CitizenListDto.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the citizen parameter is null.</exception>
     public static CitizenListDto ToListDto(this Citizen citizen)
     {
         ArgumentNullException.ThrowIfNull(citizen);
@@ -28,6 +29,24 @@ public static class CitizenListDtoMappingExtensions
             CellPhone = citizen.CellPhone,
             Email = citizen.Email,
             AnimalsCount = 0,
+        };
+    }
+
+    /// <summary>
+    /// Maps a Citizen entity to a CitizenLookupDto.
+    /// </summary>
+    /// <param name="citizen">The Citizen entity to map.</param>
+    /// <returns>The mapped CitizenLookupDto.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the citizen parameter is null.</exception>
+    public static CitizenLookupDto ToLookupDto(this Citizen citizen)
+    {
+        ArgumentNullException.ThrowIfNull(citizen);
+
+        return new CitizenLookupDto
+        {
+            Id = citizen.Id,
+            Civility = citizen.Person.CivilityAsString(),
+            Name = citizen.Person.ToDisplayString(),
         };
     }
 }

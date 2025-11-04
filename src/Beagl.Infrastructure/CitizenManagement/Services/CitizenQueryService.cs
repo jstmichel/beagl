@@ -15,13 +15,13 @@ public sealed class CitizenQueryService
     (ApplicationDbContext dbContext) : ICitizenQueryService
 {
     /// <inheritdoc/>
-    public async Task<IList<CitizenListDto>> GetAllAsync()
+    public async Task<IList<CitizenLookupDto>> GetAllLookupAsync()
     {
         IQueryable<Citizen> query = dbContext.Citizens.AsNoTracking();
-        IQueryable<CitizenListDto> projected = query
-            .Select(a => a.ToListDto());
+        IQueryable<CitizenLookupDto> projected = query
+            .Select(a => a.ToLookupDto());
 
-        IList<CitizenListDto> result = await projected.ToListAsync();
+        IList<CitizenLookupDto> result = await projected.ToListAsync();
         return result;
     }
 
@@ -30,7 +30,7 @@ public sealed class CitizenQueryService
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        IQueryable<Citizen> query = dbContext.Citizens;
+        IQueryable<Citizen> query = dbContext.Citizens.AsNoTracking();
         int totalCount = await query.CountAsync();
 
         IQueryable<CitizenListDto> projected = query
