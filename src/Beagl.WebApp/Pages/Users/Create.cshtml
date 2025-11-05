@@ -1,69 +1,94 @@
 @page "/Users/Create"
 @model Beagl.WebApp.Pages.Users.CreateModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-
 @{
     ViewData["Title"] = Localizer["Create User"];
 }
 
-<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
+<div class="container py-5">
+    <h2 class="fw-bold mb-4">@Localizer["Create User"]</h2>
     @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="fw-bold mb-2">@Localizer["Please fix the following errors:"]</div>
             <ul class="mb-0">
-            @foreach (var entry in ViewData.ModelState)
-            {
-                foreach (var error in entry.Value.Errors)
+                @foreach (var entry in ViewData.ModelState)
                 {
-                    <li>@error.ErrorMessage</li>
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
                 }
-            }
             </ul>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
-    <div class="col-12 col-md-10 col-lg-8 col-xl-7 mx-auto">
-        <div class="card shadow-lg border-0 rounded-4">
-            <div class="card-body p-5">
-                <h2 class="mb-5 text-center fw-bold">@Localizer["Create User"]</h2>
-                <form method="post">
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-4">
+            <div class="card mb-3">
+                <div class="card-header fw-bold">
+                    @Localizer["User Details"]
+                </div>
+                <div class="card-body">
                     <div class="row g-4">
-                        <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.UserName" class="form-label fs-6">@Localizer["Username"]</label>
-                            <input asp-for="NewUser.UserName" class="form-control form-control-lg" />
-                            <span asp-validation-for="NewUser.UserName" class="text-danger"></span>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Username"] <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Input.UserName" class="form-control" />
+                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Email"]
+                                </label>
+                                <input asp-for="Input.Email" class="form-control" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Phone Number"] <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Input.PhoneNumber" class="form-control" />
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.Email" class="form-label fs-6">@Localizer["Email"]</label>
-                            <input asp-for="NewUser.Email" class="form-control form-control-lg" />
-                            <span asp-validation-for="NewUser.Email" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.PhoneNumber" class="form-label fs-6">@Localizer["Phone Number"]</label>
-                            <input asp-for="NewUser.PhoneNumber" class="form-control form-control-lg" />
-                            <span asp-validation-for="NewUser.PhoneNumber" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label asp-for="NewUser.Password" class="form-label fs-6">@Localizer["Password"]</label>
-                            <input asp-for="NewUser.Password" class="form-control form-control-lg" type="password" autocomplete="new-password" />
-                            <span asp-validation-for="NewUser.Password" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fs-6">@Localizer["Roles"]</label>
-                            <select multiple class="form-select" name="NewUser.Roles">
-                                @foreach (var role in Model.AvailableRoles)
-                                {
-                                 <option value="@role.Name">@role.Name</option>
-                                }
-                            </select>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Password"] <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Input.Password" class="form-control" type="password" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Confirm Password"] <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control" type="password" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Roles"] <span class="text-danger">*</span>
+                                </label>
+                                <select multiple class="form-select" name="Input.Roles">
+                                    @foreach (var role in Model.AvailableRoles)
+                                    {
+                                        <option value="@role.Name">@role.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="Input.Roles" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex gap-3 justify-content-center mt-5">
-                        <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">@Localizer["Create"]</button>
-                        <a asp-page="Index" class="btn btn-outline-secondary btn-lg px-5">@Localizer["Cancel"]</a>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
+            <a asp-page="Index" class="btn btn-secondary ms-2">@Localizer["Cancel"]</a>
+        </div>
+    </form>
 </div>

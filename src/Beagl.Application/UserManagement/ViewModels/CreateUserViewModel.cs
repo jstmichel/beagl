@@ -21,7 +21,6 @@ public sealed class CreateUserViewModel
     /// <summary>
     /// Gets or sets the email address.
     /// </summary>
-    [Required]
     [DataType(DataType.EmailAddress)]
     public required string Email { get; set; } = string.Empty;
 
@@ -41,4 +40,11 @@ public sealed class CreateUserViewModel
     [Required]
     [DataType(DataType.Password)]
     public required string Password { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the password for the new user.
+    /// </summary>
+    [Required]
+    [DataType(DataType.Password)]
+    public required string ConfirmPassword { get; set; } = string.Empty;
 }

@@ -24,7 +24,7 @@ internal sealed class CreateModel(
     /// Gets or sets the new user to be created.
     /// </summary>
     [BindProperty]
-    public CreateUserViewModel? NewUser { get; set; }
+    public CreateUserViewModel? Input { get; set; }
 
     /// <summary>
     /// Gets or sets the available roles for selection.
@@ -50,15 +50,15 @@ internal sealed class CreateModel(
 
         UserDto userDto = new()
         {
-            UserName = NewUser!.UserName,
-            Email = NewUser.Email,
-            PhoneNumber = NewUser.PhoneNumber,
-            Roles = new Collection<string>(NewUser.Roles)
+            UserName = Input!.UserName,
+            Email = Input.Email,
+            PhoneNumber = Input.PhoneNumber,
+            Roles = new Collection<string>(Input.Roles)
         };
 
         try
         {
-            await userService.CreateAsync(userDto, NewUser.Password);
+            await userService.CreateAsync(userDto, Input.Password);
         }
         catch (ArgumentException aEx)
         {

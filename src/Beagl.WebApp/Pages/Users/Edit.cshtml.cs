@@ -33,7 +33,7 @@ internal sealed class EditModel(
     /// Gets or sets the user to edit.
     /// </summary>
     [BindProperty]
-    public EditUserViewModel? EditedUser { get; set; }
+    public EditUserViewModel? Input { get; set; }
 
     /// <summary>
     /// List of available roles for dropdown selection.
@@ -51,7 +51,7 @@ internal sealed class EditModel(
         {
             UserDto user = await userQueryService.GetByIdAsync(id);
             AvailableRoles = GetAvailableRoles();
-            EditedUser = MapToEditUserViewModel(user);
+            Input = MapToEditUserViewModel(user);
         }
         catch (InvalidOperationException)
         {
@@ -75,14 +75,14 @@ internal sealed class EditModel(
     /// <returns>The page result.</returns>
     public async Task<IActionResult> OnPostAsync()
     {
-        if (EditedUser == null)
+        if (Input == null)
         {
             return BadRequest();
         }
 
         try
         {
-            UserDto user = MapToUserDto(EditedUser);
+            UserDto user = MapToUserDto(Input);
             await userService.UpdateAsync(user);
         }
         catch (ArgumentException)
@@ -110,17 +110,17 @@ internal sealed class EditModel(
     {
         ArgumentException.ThrowIfNullOrEmpty(roleName);
 
-        if (EditedUser == null)
+        if (Input == null)
         {
-            throw new InvalidOperationException("EditedUser cannot be null.");
+            throw new InvalidOperationException("Input cannot be null.");
         }
 
-        if (EditedUser.Roles == null)
+        if (Input.Roles == null)
         {
             throw new InvalidOperationException("Roles cannot be null.");
         }
 
-        return EditedUser.Roles.Any(r => r == roleName);
+        return Input.Roles.Any(r => r == roleName);
     }
 
     private static UserDto MapToUserDto(EditUserViewModel editedUser)
