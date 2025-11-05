@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using System.Collections.Generic;
 using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
 
@@ -65,6 +66,31 @@ public sealed class Address : Entity
     /// Navigation property to the owning citizen.
     /// </summary>
     public Citizen? Citizen { get; private set; }
+
+    /// <summary>
+    /// Returns the address as a formatted string suitable for display.
+    /// </summary>
+    /// <returns>A formatted address string.</returns>
+    public string ToDisplayString()
+    {
+        // Compose address parts
+        string line1 = string.IsNullOrWhiteSpace(Appartment)
+            ? $"{StreetNumber} {StreetName}"
+            : $"{StreetNumber} {StreetName}, Apt. {Appartment}";
+
+        string line2 = $"{City}, {Province} {PostalCode}";
+        string country = Country;
+        string? poBox = string.IsNullOrWhiteSpace(PostOfficeBox) ? null : $"P.O. Box {PostOfficeBox}";
+
+        // Build formatted address
+        List<string> parts = [];
+        if (!string.IsNullOrWhiteSpace(poBox)) parts.Add(poBox);
+        parts.Add(line1);
+        parts.Add(line2);
+        parts.Add(country);
+
+        return string.Join("\n", parts);
+    }
 
     /// <summary>
     /// Parameterless constructor for EF Core.

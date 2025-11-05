@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using System.Linq;
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Domain.CitizenManagement.Entities;
 
@@ -29,6 +30,9 @@ public static class CitizenListDtoMappingExtensions
             CellPhone = citizen.CellPhone?.ToDisplayString(),
             Email = citizen.Email,
             AnimalsCount = 0,
+            Address = citizen.Addresses
+                .OrderByDescending(a => a.Created.At)
+                .FirstOrDefault()?.ToDisplayString()
         };
     }
 

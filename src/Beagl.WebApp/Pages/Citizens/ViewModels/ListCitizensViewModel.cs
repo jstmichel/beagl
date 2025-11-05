@@ -36,4 +36,9 @@ public class ListCitizensViewModel
     /// Gets the number of animals associated with the citizen.
     /// </summary>
     public int AnimalsCount { get; init; }
+
+    /// <summary>
+    /// Gets the most recent address of the citizen.
+    /// </summary>
+    public string? Address { get; init; }
 }

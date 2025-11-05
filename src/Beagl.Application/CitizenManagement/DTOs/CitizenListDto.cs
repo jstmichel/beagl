@@ -1,8 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Beagl.Application.CitizenManagement.DTOs;
 
@@ -40,4 +38,9 @@ public class CitizenListDto
     /// Gets the number of animals associated with the citizen.
     /// </summary>
     public int AnimalsCount { get; init; }
+
+    /// <summary>
+    /// Gets the most recent address of the citizen.
+    /// </summary>
+    public string? Address { get; init; }
 }

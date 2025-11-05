@@ -17,7 +17,9 @@ public sealed class CitizenQueryService
     /// <inheritdoc/>
     public async Task<IList<CitizenLookupDto>> GetAllLookupAsync()
     {
-        IQueryable<Citizen> query = dbContext.Citizens.AsNoTracking();
+        IQueryable<Citizen> query = dbContext.Citizens
+            .AsNoTracking();
+
         IQueryable<CitizenLookupDto> projected = query
             .Select(a => a.ToLookupDto());
 
@@ -30,7 +32,9 @@ public sealed class CitizenQueryService
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        IQueryable<Citizen> query = dbContext.Citizens.AsNoTracking();
+        IQueryable<Citizen> query = dbContext.Citizens
+            .Include(c => c.Addresses)
+            .AsNoTracking();
         int totalCount = await query.CountAsync();
 
         IQueryable<CitizenListDto> projected = query

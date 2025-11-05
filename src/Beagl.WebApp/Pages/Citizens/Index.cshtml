@@ -83,6 +83,22 @@
                                         {
                                             <div class="text-muted small"><i class="bi bi-phone"></i><span class="ms-1">@citizen.CellPhone</span></div>
                                         }
+                                        @if (!string.IsNullOrEmpty(citizen.Address))
+                                        {
+                                            @* <div class="text-muted small"><i class="bi bi-geo-alt"></i>
+                                                <span class="ms-1">
+                                                    @Html.Raw(citizen.Address.Replace("\n", "<br />"))
+                                                </span>
+                                            </div> *@
+                                            <div style="display: flex; align-items: flex-start;">
+                                                <span class="icon-class" >
+                                                    <i class="bi bi-geo-alt"></i>
+                                                </span>
+                                                <span class="text-muted small ms-1">
+                                                    @Html.Raw(citizen.Address.Replace("\n", "<br />"))
+                                                </span>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
