@@ -71,15 +71,19 @@
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
                                         <h5 class="card-title mb-1 fw-bold">@user.UserName</h5>
-                                        <div class="text-muted small">@user.Email</div>
+                                        @if (!string.IsNullOrEmpty(user.Email))
+                                        {
+                                            <div class="text-muted small"><i class="bi bi-envelope"></i><span class="ms-1">@user.Email</span></div>
+                                        }
                                         @if (user.Roles != null && user.Roles.Count > 0)
                                         {
-                                            <div class="mt-1">
+                                            <div class="text-muted small"><i class="bi bi-shield-lock"></i><span class="ms-1">@user.Roles.FirstOrDefault()</span></div>
+                                            @* <div class="mt-1">
                                                 @foreach (var role in user.Roles)
                                                 {
                                                     <span class="badge bg-secondary me-1">@role</span>
                                                 }
-                                            </div>
+                                            </div> *@
                                         }
                                     </div>
                                     @{
