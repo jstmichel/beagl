@@ -9,7 +9,7 @@
     <h2 class="fw-bold mb-4">@Localizer["Create Citizen"]</h2>
     @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
     {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <div class="fw-bold mb-2">@Localizer["Please fix the following errors:"]</div>
             <ul class="mb-0">
                 @foreach (var entry in ViewData.ModelState)
@@ -20,140 +20,141 @@
                     }
                 }
             </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
     <form method="post" enctype="multipart/form-data">
-        <div class="accordion mb-4" id="citizenAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="citizenDetailsHeading">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#citizenDetailsCollapse" aria-expanded="true" aria-controls="citizenDetailsCollapse">
-                        @Localizer["Citizen Details"]
-                    </button>
-                </h2>
-                <div id="citizenDetailsCollapse" class="accordion-collapse collapse show" aria-labelledby="citizenDetailsHeading" data-bs-parent="#citizenAccordion">
-                    <div class="accordion-body">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="mb-3 d-flex flex-column">
-                                    <label class="form-label">@Localizer["Name"]</label>
-                                    <div class="input-group mb-3">
-                                        <select class="form-select" style="max-width: 140px;" asp-for="Input.Civility">
-                                            <option value="0">@Localizer["Civility"]</option>
-                                            <option value="1">@Localizer["Mr."]</option>
-                                            <option value="2">@Localizer["Mrs."]</option>
-                                            <option value="3">@Localizer["Ms."]</option>
-                                            <option value="4">@Localizer["Mx."]</option>
-                                            <option value="5">@Localizer["Dr."]</option>
-                                            <option value="6">@Localizer["Prof."]</option>
-                                        </select>
-                                        <input type="text" class="form-control" aria-label="First name" placeholder="@Localizer["First Name"]" asp-for="Input.FirstName">
-                                        <input type="text" class="form-control" aria-label="Last name" placeholder="@Localizer["Last Name"]" asp-for="Input.LastName">
-                                    </div>
+        <div class="mb-4">
+            <div class="card mb-3">
+                <div class="card-header fw-bold">
+                    @Localizer["Citizen Details"]
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3 d-flex flex-column">
+                                <label class="form-label">
+                                    @Localizer["Name"] <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" style="max-width: 140px;" asp-for="Input.Civility">
+                                        <option value="0">@Localizer["Civility"]</option>
+                                        <option value="1">@Localizer["Mr."]</option>
+                                        <option value="2">@Localizer["Mrs."]</option>
+                                        <option value="3">@Localizer["Ms."]</option>
+                                        <option value="4">@Localizer["Mx."]</option>
+                                        <option value="5">@Localizer["Dr."]</option>
+                                        <option value="6">@Localizer["Prof."]</option>
+                                    </select>
+                                    <input type="text" class="form-control" aria-label="First name" placeholder="@Localizer["First Name"]" asp-for="Input.FirstName">
+                                    <input type="text" class="form-control" aria-label="Last name" placeholder="@Localizer["Last Name"]" asp-for="Input.LastName">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="communicationPreferencesHeading">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#communicationPreferencesCollapse" aria-expanded="false" aria-controls="communicationPreferencesCollapse">
-                        @Localizer["Communication Preferences"]
-                    </button>
-                </h2>
-                <div id="communicationPreferencesCollapse" class="accordion-collapse collapse" aria-labelledby="communicationPreferencesHeading" data-bs-parent="#citizenAccordion">
-                    <div class="accordion-body">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="Phone">@Localizer["Phone Number"]</label>
-                                    <input type="tel" class="form-control" id="Phone" asp-for="Input.Phone" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="CellPhone">@Localizer["Cell Phone"]</label>
-                                    <input type="tel" class="form-control" id="CellPhone" asp-for="Input.CellPhone" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="Email">@Localizer["Email"]</label>
-                                    <input type="email" class="form-control" id="Email" asp-for="Input.Email" />
-                                </div>
+            <div class="card mb-3">
+                <div class="card-header fw-bold">
+                    @Localizer["Communication Preferences"]
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="Phone">@Localizer["Phone Number"]</label>
+                                <input type="tel" class="form-control" id="Phone" asp-for="Input.Phone" />
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="CommunicationPreference">@Localizer["Communication Preference"]</label>
-                                    <select class="form-select" id="CommunicationPreference" asp-for="Input.CommunicationPreference">
-                                        <option value="0">@Localizer["Select Preference"]</option>
-                                        <option value="1">@Localizer["Phone"]</option>
-                                        <option value="2">@Localizer["Cell Phone"]</option>
-                                        <option value="3">@Localizer["Email"]</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="LanguagePreference">@Localizer["Language Preference"]</label>
-                                    <select class="form-select" id="LanguagePreference" asp-for="Input.LanguagePreference">
-                                        <option value="0">@Localizer["Select Language"]</option>
-                                        <option value="1">@Localizer["French"]</option>
-                                        <option value="2">@Localizer["English"]</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="CellPhone">@Localizer["Cell Phone"]</label>
+                                <input type="tel" class="form-control" id="CellPhone" asp-for="Input.CellPhone" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="Email">@Localizer["Email"]</label>
+                                <input type="email" class="form-control" id="Email" asp-for="Input.Email" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="CommunicationPreference">
+                                    @Localizer["Communication Preference"] <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="CommunicationPreference" asp-for="Input.CommunicationPreference">
+                                    <option value="0">@Localizer["Select Preference"]</option>
+                                    <option value="1">@Localizer["Phone"]</option>
+                                    <option value="2">@Localizer["Cell Phone"]</option>
+                                    <option value="3">@Localizer["Email"]</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="LanguagePreference">
+                                    @Localizer["Language Preference"] <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="LanguagePreference" asp-for="Input.LanguagePreference">
+                                    <option value="0">@Localizer["Select Language"]</option>
+                                    <option value="1">@Localizer["French"]</option>
+                                    <option value="2">@Localizer["English"]</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="addressHeading">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#addressCollapse" aria-expanded="false" aria-controls="addressCollapse">
-                        @Localizer["Address"]
-                    </button>
-                </h2>
-                <div id="addressCollapse" class="accordion-collapse collapse" aria-labelledby="addressHeading" data-bs-parent="#citizenAccordion">
-                    <div class="accordion-body">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">@Localizer["Street Address"]</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" style="max-width: 100px;" placeholder="@Localizer["No."]" id="StreetNumber" asp-for="Input.StreetNumber" />
-                                        <input type="text" class="form-control" placeholder="@Localizer["Street Name"]" id="StreetName" asp-for="Input.StreetName" />
-                                        <input type="text" class="form-control" style="max-width: 120px;" placeholder="@Localizer["Apt."]" id="Appartment" asp-for="Input.Appartment" />
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="City">@Localizer["City"]</label>
-                                    <input type="text" class="form-control" id="City" asp-for="Input.City" />
+            <div class="card mb-3">
+                <div class="card-header fw-bold">
+                    @Localizer["Address"]
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Localizer["Street Address"] <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" style="max-width: 100px;" placeholder="@Localizer["No."]" id="StreetNumber" asp-for="Input.StreetNumber" />
+                                    <input type="text" class="form-control" placeholder="@Localizer["Street Name"]" id="StreetName" asp-for="Input.StreetName" />
+                                    <input type="text" class="form-control" style="max-width: 120px;" placeholder="@Localizer["Apt."]" id="Appartment" asp-for="Input.Appartment" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label class="form-label" for="Province">@Localizer["Province"]</label>
-                                    <select class="form-select" id="Province" asp-for="Input.Province">
-                                        <option value="QC" selected>@Localizer["Quebec"]</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="Country">@Localizer["Country"]</label>
-                                    <select class="form-select" id="Country" asp-for="Input.Country">
-                                        <option value="CA" selected>@Localizer["Canada"]</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="City">
+                                    @Localizer["City"] <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="City" asp-for="Input.City" />
                             </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label class="form-label" for="PostalCode">@Localizer["Postal Code"]</label>
-                                    <input type="text" class="form-control" id="PostalCode" asp-for="Input.PostalCode" maxlength="7" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="PostOfficeBox">@Localizer["PostOfficeBox"]</label>
-                                    <input type="text" class="form-control" id="PostOfficeBox" asp-for="Input.PostOfficeBox" />
-                                </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="Province">@Localizer["Province"]</label>
+                                <select class="form-select" id="Province" asp-for="Input.Province">
+                                    <option value="QC" selected>@Localizer["Quebec"]</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="Country">@Localizer["Country"]</label>
+                                <select class="form-select" id="Country" asp-for="Input.Country">
+                                    <option value="CA" selected>@Localizer["Canada"]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label" for="PostalCode">
+                                    @Localizer["Postal Code"] <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="PostalCode" asp-for="Input.PostalCode" maxlength="7" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="PostOfficeBox">@Localizer["PostOfficeBox"]</label>
+                                <input type="text" class="form-control" id="PostOfficeBox" asp-for="Input.PostOfficeBox" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mt-4">
+        <div class="mt-4 text-end">
             <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
             <a asp-page="Index" class="btn btn-secondary ms-2">@Localizer["Cancel"]</a>
         </div>
