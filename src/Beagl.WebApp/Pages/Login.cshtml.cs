@@ -45,7 +45,7 @@ internal sealed class LoginModel(
             Email, Password, RememberMe);
         if (result.Succeeded)
         {
-            return LocalRedirect(returnUrl ?? LocalRedirection.Index);
+            return LocalRedirect(returnUrl ?? Redirection.ToIndex);
         }
 
         ModelState.AddModelError(

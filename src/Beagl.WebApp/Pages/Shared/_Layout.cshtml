@@ -46,7 +46,7 @@
             <div class="navbar-collapse collapse" id="navbar" style="">
                 <ul class="navbar-nav mx-auto justify-content-center mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a asp-page="@LocalRedirection.Index" class="nav-link @(IsActive(LocalRedirection.Index))">@L["Home"]</a>
+                        <a asp-page="@Redirection.ToIndex" class="nav-link @(IsActive(Redirection.ToIndex))">@L["Home"]</a>
                     </li>
                 </ul>
                 <div class="d-flex gap-2">
@@ -58,7 +58,7 @@
                     }
                     else
                     {
-                        <a asp-page="@LocalRedirection.Login" class="btn btn-primary">@L["Sign In"]</a>
+                        <a asp-page="@Redirection.ToLogin" class="btn btn-primary">@L["Sign In"]</a>
                     }
                 </div>
             </div>
@@ -90,13 +90,13 @@
                                                     @if (canViewCitizens)
                                                     {
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.Citizens" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Citizens))">@L["Citizens List"]</a>
+                                                            <a asp-page="@Redirection.ToCitizenList" class="nav-link link-body-emphasis @(IsActive(Redirection.ToCitizenList))">@L["Citizens List"]</a>
                                                         </li>
                                                     }
                                                     @if (canCreateCitizens)
                                                     {
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.AddCitizens" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.AddCitizens))">@L["Add Citizen"]</a>
+                                                            <a asp-page="@Redirection.ToCreateCitizen" class="nav-link link-body-emphasis @(IsActive(Redirection.ToCreateCitizen))">@L["Add Citizen"]</a>
                                                         </li>
                                                     }
                                                 </ul>
@@ -112,16 +112,16 @@
                                                     @if (canViewAnimals)
                                                     {
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.Animals" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Animals))">@L["Animals List"]</a>
+                                                            <a asp-page="@Redirection.ToAnimalList" class="nav-link link-body-emphasis @(IsActive(Redirection.ToAnimalList))">@L["Animals List"]</a>
                                                         </li>
                                                     }
                                                     @if (canCreateAnimals)
                                                     {
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.CreateCat" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateCat))">@L["Add Cat"]</a>
+                                                            <a asp-page="@Redirection.ToCreateCat" class="nav-link link-body-emphasis @(IsActive(Redirection.ToCreateCat))">@L["Add Cat"]</a>
                                                         </li>
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.CreateDog" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateDog))">@L["Add Dog"]</a>
+                                                            <a asp-page="@Redirection.ToCreateDog" class="nav-link link-body-emphasis @(IsActive(Redirection.ToCreateDog))">@L["Add Dog"]</a>
                                                         </li>
                                                     }
                                                 </ul>
@@ -137,13 +137,13 @@
                                                     @if (canViewUsers)
                                                     {
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.Users" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.Users))">@L["User List"]</a>
+                                                            <a asp-page="@Redirection.ToUserList" class="nav-link link-body-emphasis @(IsActive(Redirection.ToUserList))">@L["User List"]</a>
                                                         </li>
                                                     }
                                                     @if (canCreateCitizens)
                                                     {
                                                         <li>
-                                                            <a asp-page="@LocalRedirection.CreateUser" class="nav-link link-body-emphasis @(IsActive(LocalRedirection.CreateUser))">@L["Add User"]</a>
+                                                            <a asp-page="@Redirection.ToCreateUser" class="nav-link link-body-emphasis @(IsActive(Redirection.ToCreateUser))">@L["Add User"]</a>
                                                         </li>
                                                     }
                                                 </ul>

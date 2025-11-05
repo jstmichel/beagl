@@ -53,7 +53,7 @@ internal sealed class CreateCatModel(
         CreateCatDto catDto = Input.ToDto();
         _ = await catService.CreateCatAsync(catDto);
 
-        return RedirectToPage(LocalRedirection.Animals);
+        return RedirectToPage(Redirection.ToAnimalList);
     }
 
     private async Task LoadDropdownListsAsync()

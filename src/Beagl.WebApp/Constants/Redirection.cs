@@ -5,55 +5,55 @@ namespace Beagl.WebApp.Constants;
 /// <summary>
 /// Constants for local redirection paths.
 /// </summary>
-public sealed class LocalRedirection
+internal sealed class Redirection
 {
     /// <summary>
     /// Gets the login page path.
     /// </summary>
-    public const string Login = "/Login";
+    public const string ToLogin = "/Login";
 
     /// <summary>
     /// Gets the register page path.
     /// </summary>
-    public const string Register = "/Register";
+    public const string ToRegistration = "/Register";
 
     /// <summary>
     /// Gets the index page path.
     /// </summary>
-    public const string Index = "/Index";
+    public const string ToIndex = "/Index";
 
     /// <summary>
     /// Gets the users management page path.
     /// </summary>
-    public const string Users = "/Users/Index";
+    public const string ToUserList = "/Users/Index";
 
     /// <summary>
     /// Gets the create user page path.
     /// </summary>
-    public const string CreateUser = "/Users/Create";
+    public const string ToCreateUser = "/Users/Create";
 
     /// <summary>
     /// Gets the roles management page path.
     /// </summary>
-    public const string Animals = "/Animals/Index";
+    public const string ToAnimalList = "/Animals/Index";
 
     /// <summary>
     /// Gets the roles management page path.
     /// </summary>
-    public const string CreateCat = "/Animals/CreateCat";
+    public const string ToCreateCat = "/Animals/CreateCat";
 
     /// <summary>
     /// Gets the roles management page path.
     /// </summary>
-    public const string CreateDog = "/Animals/CreateDog";
+    public const string ToCreateDog = "/Animals/CreateDog";
 
     /// <summary>
     /// Gets the roles management page path.
     /// </summary>
-    public const string Citizens = "/Citizens/Index";
+    public const string ToCitizenList = "/Citizens/Index";
 
     /// <summary>
     /// Gets the roles management page path.
     /// </summary>
-    public const string AddCitizens = "/Citizens/Create";
+    public const string ToCreateCitizen = "/Citizens/Create";
 }

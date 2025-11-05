@@ -11,7 +11,6 @@ using Beagl.WebApp.Pages.Animals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -54,7 +53,7 @@ internal sealed class CreateDogModel(
         CreateDogDto dto = Input.ToDto();
         _ = await dogService.CreateDogAsync(dto);
 
-        return RedirectToPage(LocalRedirection.Animals);
+        return RedirectToPage(Redirection.ToAnimalList);
     }
 
     private async Task LoadDropdownListsAsync()

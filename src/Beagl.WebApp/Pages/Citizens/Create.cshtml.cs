@@ -36,6 +36,6 @@ internal sealed class CreateCitizenModel(
         CreateCitizenDto createCitizenDto = Input.ToDto();
         _ = citizenService.CreateAsync(createCitizenDto);
 
-        return RedirectToPage(LocalRedirection.Citizens);
+        return RedirectToPage(Redirection.ToCitizenList);
     }
 }

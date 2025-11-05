@@ -55,12 +55,12 @@
         SubCreateActions = new List<ButtonAction> {
             new ButtonAction {
                 Text = Localizer["Create Cat"].Value,
-                Link = LocalRedirection.CreateCat,
+                Link = Redirection.ToCreateCat,
                 IsShown = canCreate
             },
             new ButtonAction {
                 Text = Localizer["Create Dog"].Value,
-                Link = LocalRedirection.CreateDog,
+                Link = Redirection.ToCreateDog,
                 IsShown = canCreate
             }
         }
