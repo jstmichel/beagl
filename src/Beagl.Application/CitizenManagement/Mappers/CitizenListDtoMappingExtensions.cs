@@ -24,7 +24,7 @@ public static class CitizenListDtoMappingExtensions
         return new CitizenListDto
         {
             Id = citizen.Id,
-            Name = citizen.Person.FirstName,
+            Name = citizen.Person.ToDisplayString(),
             Phone = citizen.Phone,
             CellPhone = citizen.CellPhone,
             Email = citizen.Email,
