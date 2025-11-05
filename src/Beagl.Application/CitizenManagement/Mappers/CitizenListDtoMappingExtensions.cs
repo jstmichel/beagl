@@ -25,8 +25,8 @@ public static class CitizenListDtoMappingExtensions
         {
             Id = citizen.Id,
             Name = citizen.Person.ToDisplayString(),
-            Phone = citizen.Phone,
-            CellPhone = citizen.CellPhone,
+            Phone = citizen.Phone?.ToDisplayString(),
+            CellPhone = citizen.CellPhone?.ToDisplayString(),
             Email = citizen.Email,
             AnimalsCount = 0,
         };

@@ -170,6 +170,15 @@ public class ApplicationDbContext(
                 pn.Property(p => p.LastName).HasColumnName("LastName");
             });
 
+            entity.OwnsOne(c => c.Phone, p =>
+            {
+                p.Property(x => x.Value).HasColumnName("Phone");
+            });
+            entity.OwnsOne(c => c.CellPhone, p =>
+            {
+                p.Property(x => x.Value).HasColumnName("CellPhone");
+            });
+
             entity.OwnsOne(c => c.Created, a =>
             {
                 a.Property(p => p.UserId).HasColumnName("CreatedByUserId");

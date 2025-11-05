@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using Beagl.Domain.AnimalManagement.Entities;
 using Beagl.Domain.CitizenManagement.Enums;
-using Beagl.Domain.CitizenManagement.ValueObjects;
 using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
+using Beagl.Domain.CitizenManagement.ValueObjects;
 
 namespace Beagl.Domain.CitizenManagement.Entities;
 
@@ -23,12 +23,12 @@ public sealed class Citizen : AuditedAggregateRoot
     /// <summary>
     /// Gets or sets the phone number.
     /// </summary>
-    public string? Phone { get; private set; }
+    public PhoneNumber? Phone { get; private set; }
 
     /// <summary>
     /// Gets or sets the cell phone number.
     /// </summary>
-    public string? CellPhone { get; private set; }
+    public PhoneNumber? CellPhone { get; private set; }
 
     /// <summary>
     /// Gets or sets the communication preference (Phone, CellPhone, Email).
@@ -73,8 +73,8 @@ public sealed class Citizen : AuditedAggregateRoot
     /// <param name="created">The audit information for creation.</param>
     public Citizen(
         PersonName person,
-        string? phone,
-        string? cellPhone,
+        PhoneNumber? phone,
+        PhoneNumber? cellPhone,
         CommunicationPreference communicationPreference,
         LanguagePreference languagePreference,
         string? email,
