@@ -78,49 +78,6 @@
                                 <label asp-for="Input.Medal" class="form-label">@Localizer["Medal"] <span class="text-danger">*</span></label>
                                 <input asp-for="Input.Medal" class="form-control" />
                             </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.IsAnAssistanceDog" class="form-label">@Localizer["Is Assistance Dog"]</label>
-                                <select asp-for="Input.IsAnAssistanceDog" class="form-select">
-                                    <option value="false" selected>@Localizer["No"]</option>
-                                    <option value="true">@Localizer["Yes"]</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.IsDangerousDog" class="form-label">@Localizer["Is Dangerous Dog"]</label>
-                                <select asp-for="Input.IsDangerousDog" class="form-select">
-                                    <option value="false" selected>@Localizer["No"]</option>
-                                    <option value="true">@Localizer["Yes"]</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.HasResponsibilityInsurance" class="form-label">@Localizer["Has Responsibility Insurance"]</label>
-                                <select asp-for="Input.HasResponsibilityInsurance" class="form-select">
-                                    <option value="false" selected>@Localizer["No"]</option>
-                                    <option value="true">@Localizer["Yes"]</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.DangerousDogComment" class="form-label">@Localizer["Dangerous Dog Comment"]</label>
-                                <input asp-for="Input.DangerousDogComment" class="form-control" />
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.ComesFromAnotherCity" class="form-label">@Localizer["Comes From Another City"]</label>
-                                <select asp-for="Input.ComesFromAnotherCity" class="form-select">
-                                    <option value="false" selected>@Localizer["No"]</option>
-                                    <option value="true">@Localizer["Yes"]</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.OriginCityName" class="form-label">@Localizer["Origin City Name"]</label>
-                                <input asp-for="Input.OriginCityName" class="form-control" />
-                            </div>
-                            <div class="mb-3">
-                                <label asp-for="Input.HadJudgmentInThatCity" class="form-label">@Localizer["Had Judgment In That City"]</label>
-                                <select asp-for="Input.HadJudgmentInThatCity" class="form-select">
-                                    <option value="false" selected>@Localizer["No"]</option>
-                                    <option value="true">@Localizer["Yes"]</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
@@ -197,6 +154,62 @@
                                         <option value="0">@Localizer["kg"]</option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header fw-bold">
+                    @Localizer["Additional Information"]
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Input.IsAnAssistanceDog" class="form-label">@Localizer["Is Assistance Dog"]</label>
+                                <select asp-for="Input.IsAnAssistanceDog" class="form-select">
+                                    <option value="false" selected>@Localizer["No"]</option>
+                                    <option value="true">@Localizer["Yes"]</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Input.IsDangerousDog" class="form-label">@Localizer["Is Dangerous Dog"]</label>
+                                <select asp-for="Input.IsDangerousDog" class="form-select">
+                                    <option value="false" selected>@Localizer["No"]</option>
+                                    <option value="true">@Localizer["Yes"]</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Input.HasResponsibilityInsurance" class="form-label">@Localizer["Has Responsibility Insurance"]</label>
+                                <select asp-for="Input.HasResponsibilityInsurance" class="form-select">
+                                    <option value="false" selected>@Localizer["No"]</option>
+                                    <option value="true">@Localizer["Yes"]</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Input.DangerousDogComment" class="form-label">@Localizer["Dangerous Dog Comment"]</label>
+                                <input asp-for="Input.DangerousDogComment" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Input.ComesFromAnotherCity" class="form-label">@Localizer["Comes From Another City"]</label>
+                                <select asp-for="Input.ComesFromAnotherCity" class="form-select">
+                                    <option value="false" selected>@Localizer["No"]</option>
+                                    <option value="true">@Localizer["Yes"]</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Input.OriginCityName" class="form-label">@Localizer["Origin City Name"]</label>
+                                <input asp-for="Input.OriginCityName" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Input.HadJudgmentInThatCity" class="form-label">@Localizer["Had Judgment In That City"]</label>
+                                <select asp-for="Input.HadJudgmentInThatCity" class="form-select">
+                                    <option value="false" selected>@Localizer["No"]</option>
+                                    <option value="true">@Localizer["Yes"]</option>
+                                </select>
                             </div>
                         </div>
                     </div>
