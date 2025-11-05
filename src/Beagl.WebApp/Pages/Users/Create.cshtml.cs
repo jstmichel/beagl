@@ -73,7 +73,7 @@ internal sealed class CreateModel(
             return Page();
         }
 
-        return RedirectToPage("/Users/Index");
+        return RedirectToPage(LocalRedirection.Users);
     }
 
     private List<RoleViewModel> GetAvailableRoles()

@@ -98,7 +98,7 @@ internal sealed class EditModel(
             return StatusCode((int)HttpStatusCode.InternalServerError);
         }
 
-        return RedirectToPage("Index");
+        return RedirectToPage(LocalRedirection.Users);
     }
 
     /// <summary>
