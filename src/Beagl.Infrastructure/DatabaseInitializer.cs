@@ -38,14 +38,8 @@ public static class DatabaseInitializer
 
         // Create default roles
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Administrator);
-        await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Control);
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Employee);
-        await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Security);
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Development);
-        await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Marketing);
-        await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Finance);
-        await CreateRoleIfNotExistsAsync(roleManager, RoleNames.BoardMember);
-        await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Sales);
         await CreateRoleIfNotExistsAsync(roleManager, RoleNames.Citizen);
 
         // Create default user

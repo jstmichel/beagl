@@ -73,7 +73,8 @@
                                 <label class="form-label">
                                     @Localizer["Roles"] <span class="text-danger">*</span>
                                 </label>
-                                <select multiple class="form-select" name="Input.Roles">
+                                <select class="form-select selectpicker" name="Input.Roles" data-live-search="true">
+                                    <option value="">@Localizer["Select Role"]</option>
                                     @foreach (var role in Model.AvailableRoles)
                                     {
                                         <option value="@role.Name">@role.Name</option>

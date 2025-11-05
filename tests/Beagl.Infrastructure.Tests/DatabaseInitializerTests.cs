@@ -65,14 +65,8 @@ public class DatabaseInitializerTests
 
         // Assert
         roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Administrator)), Times.Once);
-        roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Control)), Times.Once);
         roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Employee)), Times.Once);
-        roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Security)), Times.Once);
         roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Development)), Times.Once);
-        roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Marketing)), Times.Once);
-        roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Finance)), Times.Once);
-        roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.BoardMember)), Times.Once);
-        roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Sales)), Times.Once);
         roleManagerMock.Verify(rm => rm.CreateAsync(It.Is<ApplicationRole>(r => r.Name == RoleNames.Citizen)), Times.Once);
         await dbContext.DisposeAsync();
         roleManagerMock.Object.Dispose();
