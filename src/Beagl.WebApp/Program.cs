@@ -55,6 +55,8 @@ builder.Services.AddWebAppServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 WebApplication app = builder.Build();
 
 // Ensure database is created and migrations are applied at startup
