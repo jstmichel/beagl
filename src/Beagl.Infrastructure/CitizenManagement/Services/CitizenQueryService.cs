@@ -34,6 +34,7 @@ public sealed class CitizenQueryService
 
         IQueryable<Citizen> query = dbContext.Citizens
             .Include(c => c.Addresses)
+            .Include(c => c.Animals)
             .AsNoTracking();
         int totalCount = await query.CountAsync();
 
