@@ -111,11 +111,7 @@
                                 <label class="form-label">
                                     @Localizer["Street Address"] <span class="text-danger">*</span>
                                 </label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" style="max-width: 100px;" placeholder="@Localizer["No."]" id="StreetNumber" asp-for="Input.StreetNumber" />
-                                    <input type="text" class="form-control" placeholder="@Localizer["Street Name"]" id="StreetName" asp-for="Input.StreetName" />
-                                    <input type="text" class="form-control" style="max-width: 120px;" placeholder="@Localizer["Apt."]" id="Appartment" asp-for="Input.Appartment" />
-                                </div>
+                                <input type="text" class="form-control" id="StreetAddress" asp-for="Input.StreetAddress" />
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="City">

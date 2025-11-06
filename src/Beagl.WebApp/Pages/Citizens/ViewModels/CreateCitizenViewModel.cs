@@ -68,22 +68,9 @@ public class CreateCitizenViewModel
     /// <summary>
 	/// Street number.
 	/// </summary>
-	[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "StreetNumber_Required")]
-	[Display(Name = "Street Number")]
-    public string? StreetNumber { get; set; }
-
-	/// <summary>
-	/// Street name.
-	/// </summary>
-	[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "StreetName_Required")]
-	[Display(Name = "Street Name")]
-	public string? StreetName { get; set; }
-
-	/// <summary>
-	/// Apartment number.
-	/// </summary>
-	[Display(Name = "Appartment")]
-    public string? Appartment { get; set; }
+	[Required(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "StreetAddress_Required")]
+	[Display(Name = "Street Address")]
+    public string StreetAddress { get; set; } = string.Empty;
 
 	/// <summary>
 	/// City.

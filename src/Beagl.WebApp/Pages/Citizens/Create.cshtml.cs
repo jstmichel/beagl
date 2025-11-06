@@ -1,5 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System.Threading.Tasks;
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.WebApp.Constants;
@@ -26,7 +27,7 @@ internal sealed class CreateCitizenModel(
 
     public IActionResult OnGet() => Page();
 
-    public IActionResult OnPostAsync()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
@@ -34,7 +35,7 @@ internal sealed class CreateCitizenModel(
         }
 
         CreateCitizenDto createCitizenDto = Input.ToDto();
-        _ = citizenService.CreateAsync(createCitizenDto);
+        _ = await citizenService.CreateAsync(createCitizenDto);
 
         return RedirectToPage(Redirection.ToCitizenList);
     }

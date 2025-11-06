@@ -78,6 +78,8 @@ namespace Beagl.WebApp.Resources.Pages.Citizens
         public static string Province_Required => ResourceManager.GetString("Province_Required", resourceCulture);
         public static string Country_Required => ResourceManager.GetString("Country_Required", resourceCulture);
         public static string PostalCode_Required => ResourceManager.GetString("PostalCode_Required", resourceCulture);
+        public static string StreetAddress_Required => ResourceManager.GetString("StreetAddress_Required", resourceCulture);
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

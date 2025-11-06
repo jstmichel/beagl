@@ -203,8 +203,7 @@ public class ApplicationDbContext(
         {
             entity.ToTable("Addresses");
             entity.HasKey(a => a.Id);
-            entity.Property(a => a.StreetNumber).IsRequired();
-            entity.Property(a => a.StreetName).IsRequired();
+            entity.Property(a => a.StreetAddress).IsRequired();
             entity.Property(a => a.City).IsRequired();
             entity.Property(a => a.Province).IsRequired();
             entity.Property(a => a.Country).IsRequired();

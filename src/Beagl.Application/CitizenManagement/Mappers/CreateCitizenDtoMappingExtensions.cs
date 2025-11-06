@@ -35,9 +35,7 @@ public static class CreateCitizenDtoMappingExtensions
             EnumHelper.FromInt<LanguagePreference>(createCitizenDto.LanguagePreference),
             createCitizenDto.Email,
             new Address(
-                createCitizenDto.StreetNumber,
-                createCitizenDto.StreetName,
-                createCitizenDto.Appartment,
+                createCitizenDto.StreetAddress,
                 createCitizenDto.City,
                 createCitizenDto.Province,
                 createCitizenDto.Country,

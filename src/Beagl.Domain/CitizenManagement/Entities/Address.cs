@@ -15,17 +15,7 @@ public sealed class Address : Entity
     /// <summary>
     /// Gets or sets the street number.
     /// </summary>
-    public string StreetNumber { get; private set; } = string.Empty;
-
-    /// <summary>
-    /// Gets or sets the street name.
-    /// </summary>
-    public string StreetName { get; private set; } = string.Empty;
-
-    /// <summary>
-    /// Gets or sets the apartment number.
-    /// </summary>
-    public string? Appartment { get; private set; }
+    public string StreetAddress { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the city.
@@ -74,10 +64,7 @@ public sealed class Address : Entity
     public string ToDisplayString()
     {
         // Compose address parts
-        string line1 = string.IsNullOrWhiteSpace(Appartment)
-            ? $"{StreetNumber} {StreetName}"
-            : $"{StreetNumber} {StreetName}, Apt. {Appartment}";
-
+        string line1 = StreetAddress;
         string line2 = $"{City}, {Province} {PostalCode}";
         string country = Country;
         string? poBox = string.IsNullOrWhiteSpace(PostOfficeBox) ? null : $"P.O. Box {PostOfficeBox}";
@@ -101,9 +88,7 @@ public sealed class Address : Entity
     /// Initializes a new instance of the <see cref="Address"/> class.
     /// </summary>
     public Address(
-        string streetNumber,
-        string streetName,
-        string? appartment,
+        string streetAddress,
         string city,
         string province,
         string country,
@@ -112,9 +97,7 @@ public sealed class Address : Entity
         Audit<Guid> created)
     {
         Id = Guid.NewGuid();
-        StreetNumber = streetNumber;
-        StreetName = streetName;
-        Appartment = appartment;
+        StreetAddress = streetAddress;
         City = city;
         Province = province;
         Country = country;
