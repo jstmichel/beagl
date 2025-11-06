@@ -136,6 +136,10 @@
                                 <div class="text-muted small"><i class="bi bi-brush"></i><span class="ms-1">@animal.Color</span></div>
                                 <div class="text-muted small"><i class="bi bi-calendar-date"></i><span class="ms-1">@animal.BirthDate</span></div>
                                 <div class="text-muted small"><i class="bi bi-clipboard-plus"></i><span class="ms-1">@animal.Weight @animal.WeightUnit</span></div>
+                                @if (!string.IsNullOrEmpty(animal.OwnerName))
+                                {
+                                    <div class="text-muted small"><i class="bi bi-person"></i><span class="ms-1">@animal.OwnerName</span></div>
+                                }
                                 @if (!string.IsNullOrEmpty(animal.MicrochipNumber))
                                 {
                                     <div class="text-muted small"><i class="bi bi-upc-scan"></i><span class="ms-1">@animal.MicrochipNumber</span></div>

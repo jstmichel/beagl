@@ -33,7 +33,8 @@ internal static class ListAnimalsViewModelMappingExtensions
             DistinctiveDescription = dto.DistinctiveDescription,
             Weight = dto.Weight,
             WeightUnit = dto.WeightUnit,
-            PermitNumber = dto.PermitNumber
+            PermitNumber = dto.PermitNumber,
+            OwnerName = dto.OwnerName,
         };
     }
 }

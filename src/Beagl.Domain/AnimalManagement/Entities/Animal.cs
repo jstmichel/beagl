@@ -126,6 +126,7 @@ public class Animal : AuditedAggregateRoot
     /// <param name="citizenId">The optional citizen ID.</param>
     public Animal(
         SpeciesType speciesType,
+        Guid? citizenId,
         string name,
         Guid primaryBreedId,
         Guid colorId,
@@ -138,8 +139,7 @@ public class Animal : AuditedAggregateRoot
         Medal? medal,
         bool isSterilized,
         RabiesVaccination? rabiesVaccination,
-        Audit<Guid> created,
-        Guid? citizenId = null)
+        Audit<Guid> created)
         : base(created)
     {
         Id = Guid.NewGuid();

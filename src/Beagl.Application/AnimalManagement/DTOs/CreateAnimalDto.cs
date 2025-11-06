@@ -10,6 +10,10 @@ namespace Beagl.Application.AnimalManagement.DTOs;
 public abstract class CreateAnimalDto
 {
     /// <summary>
+    /// Gets or sets the optional citizen ID of the owner.
+    /// </summary>
+    public Guid? CitizenId { get; set; }
+    /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
     public string Name { get; set; } = string.Empty;

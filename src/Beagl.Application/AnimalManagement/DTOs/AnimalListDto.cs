@@ -75,4 +75,9 @@ public class AnimalListDto : AuditedDtoBase
     /// Gets or sets the permit number of the animal.
     /// </summary>
     public string? PermitNumber { get; set; }
+
+    /// <summary>
+    /// Gets the name of the owner associated with the animal.
+    /// </summary>
+    public string? OwnerName { get; init; }
 }

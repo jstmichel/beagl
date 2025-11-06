@@ -22,6 +22,7 @@ internal static class CreateCatViewModelMappingExtensions
 
         return new CreateCatDto
         {
+            CitizenId = model.OwnerCitizenId,
             Name = model.Name,
             BreedPrimaryId = model.BreedPrimaryId!.Value,
             ColorId = model.ColorId!.Value,

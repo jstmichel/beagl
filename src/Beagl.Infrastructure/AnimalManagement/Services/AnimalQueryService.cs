@@ -23,6 +23,7 @@ public sealed class AnimalQueryService (
             .Animals
             .Include(a => a.PrimaryBreed)
             .Include(a => a.Color)
+            .Include(a => a.Citizen)
             .AsNoTracking();
 
         int totalCount = await query.CountAsync();
