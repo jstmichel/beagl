@@ -46,10 +46,7 @@ public class ApplicationDbContext(
     /// </summary>
     public DbSet<Citizen> Citizens { get; set; } = null!;
 
-    /// <summary>
-    /// Gets or sets the Addresses table.
-    /// </summary>
-    public DbSet<Address> Addresses { get; set; } = null!;
+
 
     /// <summary>
     /// Configures the model for Animal, HealthRecord, and complex types.
@@ -65,7 +62,6 @@ public class ApplicationDbContext(
         ConfigureColorEntity(builder);
         ConfigureAnimalEntity(builder);
         ConfigureCitizenEntity(builder);
-        ConfigureAddressEntity(builder);
         ConfigureDogEntity(builder);
         ConfigureCatEntity(builder);
     }
@@ -190,29 +186,15 @@ public class ApplicationDbContext(
                 a.Property(p => p.At).HasColumnName("ModifiedAt");
             });
 
-            entity.HasMany(c => c.Addresses)
-                .WithOne(a => a.Citizen)
-                .HasForeignKey(a => a.CitizenId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-    }
-
-    private static void ConfigureAddressEntity(ModelBuilder builder)
-    {
-        builder.Entity<Address>(entity =>
-        {
-            entity.ToTable("Addresses");
-            entity.HasKey(a => a.Id);
-            entity.Property(a => a.StreetAddress).IsRequired();
-            entity.Property(a => a.City).IsRequired();
-            entity.Property(a => a.Province).IsRequired();
-            entity.Property(a => a.Country).IsRequired();
-            entity.Property(a => a.PostalCode).IsRequired();
-            entity.OwnsOne(a => a.Created, a =>
-            {
-                a.Property(p => p.UserId).HasColumnName("CreatedByUserId");
-                a.Property(p => p.At).HasColumnName("CreatedAt");
-            });
+                entity.OwnsOne(c => c.Address, a =>
+                {
+                    a.Property(x => x.StreetAddress).HasColumnName("StreetAddress").IsRequired();
+                    a.Property(x => x.City).HasColumnName("City").IsRequired();
+                    a.Property(x => x.Province).HasColumnName("Province").IsRequired();
+                    a.Property(x => x.Country).HasColumnName("Country").IsRequired();
+                    a.Property(x => x.PostalCode).HasColumnName("PostalCode").IsRequired();
+                    a.Property(x => x.PostOfficeBox).HasColumnName("PostOfficeBox");
+                });
         });
     }
 

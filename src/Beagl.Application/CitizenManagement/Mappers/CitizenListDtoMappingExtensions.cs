@@ -30,9 +30,7 @@ public static class CitizenListDtoMappingExtensions
             CellPhone = citizen.CellPhone?.ToDisplayString(),
             Email = citizen.Email,
             AnimalsCount = citizen.Animals?.Count ?? 0,
-            Address = citizen.Addresses
-                .OrderByDescending(a => a.Created.At)
-                .FirstOrDefault()?.ToDisplayString()
+            Address = citizen.Address.ToDisplayString(),
         };
     }
 

@@ -33,7 +33,6 @@ public sealed class CitizenQueryService
         ArgumentNullException.ThrowIfNull(filter);
 
         IQueryable<Citizen> query = dbContext.Citizens
-            .Include(c => c.Addresses)
             .Include(c => c.Animals)
             .AsNoTracking();
 
@@ -114,7 +113,7 @@ public sealed class CitizenQueryService
     {
         if (!string.IsNullOrWhiteSpace(streetAddress))
         {
-            query = query.Where(u => u.Addresses!.Any(a => a.StreetAddress.Contains(streetAddress)));
+            query = query.Where(u => u.Address!.StreetAddress.Contains(streetAddress));
         }
 
         return query;
@@ -127,7 +126,7 @@ public sealed class CitizenQueryService
     {
         if (!string.IsNullOrWhiteSpace(city))
         {
-            query = query.Where(u => u.Addresses!.Any(a => a.City!.Contains(city)));
+            query = query.Where(u => u.Address!.City!.Contains(city));
         }
 
         return query;
@@ -140,7 +139,7 @@ public sealed class CitizenQueryService
     {
         if (!string.IsNullOrWhiteSpace(postalCode))
         {
-            query = query.Where(u => u.Addresses!.Any(a => a.PostalCode!.Contains(postalCode)));
+            query = query.Where(u => u.Address!.PostalCode!.Contains(postalCode));
         }
 
         return query;

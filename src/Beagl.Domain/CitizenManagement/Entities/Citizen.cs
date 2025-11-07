@@ -45,10 +45,11 @@ public sealed class Citizen : AuditedAggregateRoot
     /// </summary>
     public string? Email { get; private set; }
 
+
     /// <summary>
-    /// Gets the list of addresses associated with the citizen.
+    /// Gets the address associated with the citizen.
     /// </summary>
-    public ICollection<Address> Addresses { get; } = [];
+    public Address Address { get; private set; } = default!;
 
     /// <summary>
     /// Gets the list of animals owned by the citizen.
@@ -88,6 +89,6 @@ public sealed class Citizen : AuditedAggregateRoot
         CommunicationPreference = communicationPreference;
         LanguagePreference = languagePreference;
         Email = email;
-        Addresses = [address];
+        Address = address;
     }
 }

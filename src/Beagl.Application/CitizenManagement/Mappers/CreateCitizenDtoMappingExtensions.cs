@@ -40,9 +40,7 @@ public static class CreateCitizenDtoMappingExtensions
                 createCitizenDto.Province,
                 createCitizenDto.Country,
                 createCitizenDto.PostalCode,
-                createCitizenDto.PostOfficeBox,
-                Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime())
-            ),
+                createCitizenDto.PostOfficeBox),
             Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()));
     }
 }
