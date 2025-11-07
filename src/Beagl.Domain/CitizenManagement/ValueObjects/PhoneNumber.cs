@@ -42,13 +42,29 @@ public sealed class PhoneNumber : IEquatable<PhoneNumber>
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => Equals(obj as PhoneNumber);
-
-    /// <inheritdoc/>
     public bool Equals(PhoneNumber? other) => other is not null && Value == other.Value;
 
     /// <inheritdoc/>
+    public override bool Equals(object? obj) => Equals(obj as PhoneNumber);
+
+    /// <inheritdoc/>
     public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+
+    /// <summary>
+    /// Equality operator for PhoneNumber.
+    /// </summary>
+    public static bool operator ==(PhoneNumber? left, PhoneNumber? right)
+    {
+        return Equals(left, right);
+    }
+
+    /// <summary>
+    /// Inequality operator for PhoneNumber.
+    /// </summary>
+    public static bool operator !=(PhoneNumber? left, PhoneNumber? right)
+    {
+        return !Equals(left, right);
+    }
 
     /// <summary>
     /// Returns the formatted phone number for display.
@@ -73,12 +89,11 @@ public sealed class PhoneNumber : IEquatable<PhoneNumber>
         return Value;
     }
 
-    /// <inheritdoc/>
-    public override string ToString() => Value;
-
     /// <summary>
     /// Creates a PhoneNumber instance from a string, returning null if the string is null or whitespace.
     /// </summary>
+    /// <param name="value">The phone number string.</param>
+    /// <returns>A PhoneNumber instance or null.</returns>
     public static PhoneNumber? From(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))

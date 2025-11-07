@@ -1,5 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using System;
 using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
@@ -7,22 +8,69 @@ namespace Beagl.Domain.AnimalManagement.ValueObjects;
 /// <summary>
 /// Represents the weight of an animal, including value and unit.
 /// </summary>
-public class Weight
+public class Weight : IEquatable<Weight>
 {
     /// <summary>
     /// Gets the weight value.
     /// </summary>
-	public decimal Value { get; private set; }
+	public decimal Value { get; }
 
     /// <summary>
     /// Gets the weight unit.
     /// </summary>
-	public WeightUnit Unit { get; private set; }
+	public WeightUnit Unit { get; }
 
-    private Weight(decimal value, WeightUnit unit)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Weight"/> class.
+    /// </summary>
+    /// <param name="value">The weight value.</param>
+    /// <param name="unit">The weight unit.</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when value is less than or equal to zero.</exception>
+    public Weight(decimal value, WeightUnit unit)
     {
+        if (value <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(value), "Weight must be positive.");
+        }
+
         Value = value;
         Unit = unit;
+    }
+
+    /// <inheritdoc/>
+    public bool Equals(Weight? other) =>
+        other is not null &&
+        Value == other.Value &&
+        Unit == other.Unit;
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) => Equals(obj as Weight);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(
+        Value,
+        Unit);
+
+    /// <summary>
+    /// Equality operator for Weight value objects.
+    /// </summary>
+    /// <param name="left">The left Weight value.</param>
+    /// <param name="right">The right Weight value.</param>
+    /// <returns>True if both Weight values are equal; otherwise, false.</returns>
+    public static bool operator ==(Weight? left, Weight? right)
+    {
+        return Equals(left, right);
+    }
+
+    /// <summary>
+    /// Inequality operator for Weight value objects.
+    /// </summary>
+    /// <param name="left">The left Weight value.</param>
+    /// <param name="right">The right Weight value.</param>
+    /// <returns>True if both Weight values are not equal; otherwise, false.</returns>
+    public static bool operator !=(Weight? left, Weight? right)
+    {
+        return !Equals(left, right);
     }
 
     /// <summary>

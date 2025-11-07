@@ -30,19 +30,14 @@ public sealed partial class Medal : IEquatable<Medal>
     }
 
     /// <summary>
-    /// Returns the string representation of the medal.
+    /// Determines whether the specified medal is equal to the current medal.
     /// </summary>
-    public override string ToString() => Value;
+    public bool Equals(Medal? other) => other is not null && Value == other.Value;
 
     /// <summary>
     /// Determines whether the specified object is equal to the current medal.
     /// </summary>
     public override bool Equals(object? obj) => Equals(obj as Medal);
-
-    /// <summary>
-    /// Determines whether the specified medal is equal to the current medal.
-    /// </summary>
-    public bool Equals(Medal? other) => other is not null && Value == other.Value;
 
     /// <summary>
     /// Returns the hash code for the medal.
