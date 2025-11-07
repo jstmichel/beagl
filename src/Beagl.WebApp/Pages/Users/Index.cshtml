@@ -40,17 +40,33 @@
             <form method="get">
                 <div class="mb-3">
                     <label asp-for="FilterModel.Username" class="form-label">@Localizer["Username"]</label>
-                    <input type="text" asp-for="FilterModel.Username" class="form-control" />
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.Username" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label asp-for="FilterModel.Email" class="form-label">@Localizer["Email"]</label>
-                    <input type="text" asp-for="FilterModel.Email" class="form-control" />
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.Email" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label asp-for="FilterModel.Phone" class="form-label">@Localizer["Phone"]</label>
-                    <input type="text" asp-for="FilterModel.Phone" class="form-control" />
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.Phone" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-outline-primary w-100">@Localizer["Apply Filters"]</button>
+                <button type="submit" class="btn btn-primary w-100">@Localizer["Apply Filters"]</button>
+                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="this.form.reset();">@Localizer["Clear Filters"]</button>
             </form>
         </div>
     </div>
@@ -152,3 +168,9 @@
     FilterModel = Model.FilterModel,
     BodyHtml = Localizer["Deletion confirmation"].Value + " <strong id=\"deleteDescription\"></strong>?"
 })
+
+<script>
+function clearCitizenFilters(form) {
+    Array.from(form.querySelectorAll('input[type="text"]')).forEach(input => input.value = '');
+}
+</script>

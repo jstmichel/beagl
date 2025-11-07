@@ -85,7 +85,8 @@
                     <label asp-for="FilterModel.Phone" class="form-label">@Localizer["Phone"]</label>
                     <input type="text" asp-for="FilterModel.Phone" class="form-control" />
                 </div> *@
-                <button type="submit" class="btn btn-outline-primary w-100">@Localizer["Apply Filters"]</button>
+                <button type="submit" class="btn btn-primary w-100">@Localizer["Apply Filters"]</button>
+                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="this.form.reset();">@Localizer["Clear Filters"]</button>
             </form>
         </div>
     </div>
@@ -205,3 +206,9 @@
     FilterModel = Model.FilterModel,
     BodyHtml = Localizer["Deletion confirmation"].Value + " <strong id=\"deleteDescription\"></strong>?"
 })
+
+<script>
+function clearCitizenFilters(form) {
+    Array.from(form.querySelectorAll('input[type="text"]')).forEach(input => input.value = '');
+}
+</script>
