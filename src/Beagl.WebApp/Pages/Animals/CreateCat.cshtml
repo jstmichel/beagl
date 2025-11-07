@@ -188,74 +188,91 @@
         </div>
     </form>
 </div>
-<script>
-    var fileTooLargeMsg = '@Localizer["Image file is too large."]';
-    document.addEventListener('DOMContentLoaded', function () {
-        var photoInput = document.getElementById('photoInput');
-        var photoPreview = document.getElementById('photoPreview');
-        var photoPreviewContainer = document.getElementById('photoPreviewContainer');
-        var choosePhotoBtn = document.getElementById('choosePhotoBtn');
-        var base64Input = document.querySelector('input[name="Input.PhotoBase64"]');
-        var placeholder = document.getElementById('photoPlaceholder');
+    <script>
+        // Improved image resizing: JPEG, quality, smaller max size, file type check
+        const fileTooLargeMsg = '@Localizer["Image file is too large."]';
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoInput = document.getElementById('photoInput');
+            const photoPreview = document.getElementById('photoPreview');
+            const photoPreviewContainer = document.getElementById('photoPreviewContainer');
+            const base64Input = document.querySelector('input[name="Input.PhotoBase64"]');
+            const placeholder = document.getElementById('photoPlaceholder');
+            const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+            const MAX_DIM = 512; // 512x512 px
+            const JPEG_QUALITY = 0.75;
 
-        if (base64Input && base64Input.value) {
-            photoPreview.src = 'data:image/png;base64,' + base64Input.value;
-            photoPreview.style.display = 'block';
-            if (placeholder) placeholder.style.display = 'none';
-        }
+            if (base64Input && base64Input.value) {
+                photoPreview.src = 'data:image/jpeg;base64,' + base64Input.value;
+                photoPreview.style.display = 'block';
+                if (placeholder) placeholder.style.display = 'none';
+            }
 
-        function triggerFileInput() {
-            photoInput.click();
-        }
+            function triggerFileInput() {
+                photoInput.click();
+            }
+            photoPreviewContainer.addEventListener('click', triggerFileInput);
 
-        photoPreviewContainer.addEventListener('click', triggerFileInput);
+            photoInput.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                const errorMsg = document.getElementById('photoErrorMsg');
+                if (errorMsg) errorMsg.remove();
+                if (file) {
+                    if (!file.type.match(/^image\/(jpeg|png)$/)) {
+                        showError('Only JPEG or PNG images are allowed.');
+                        resetPreview();
+                        return;
+                    }
+                    if (file.size > MAX_SIZE) {
+                        showError(fileTooLargeMsg);
+                        resetPreview();
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function (evt) {
+                        const img = new window.Image();
+                        img.onload = function () {
+                            const scale = Math.min(MAX_DIM / img.width, MAX_DIM / img.height, 1);
+                            const canvas = document.createElement('canvas');
+                            canvas.width = Math.round(img.width * scale);
+                            canvas.height = Math.round(img.height * scale);
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            // Always export as JPEG for smaller size
+                            const dataUrl = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
+                            photoPreview.src = dataUrl;
+                            photoPreview.style.display = 'block';
+                            if (placeholder) placeholder.style.display = 'none';
+                            if (base64Input) base64Input.value = dataUrl.split(',')[1];
+                        };
+                        img.onerror = function () {
+                            showError('Invalid image file.');
+                            resetPreview();
+                        };
+                        img.src = evt.target.result;
+                    };
+                    reader.onerror = function () {
+                        showError('Could not read file.');
+                        resetPreview();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    resetPreview();
+                }
 
-        photoInput.addEventListener('change', function (e) {
-            var file = e.target.files[0];
-            var maxSize = 10 * 1024 * 1024; // 10MB
-            var maxWidth = 1024;
-            var maxHeight = 1024;
-            var errorMsg = document.getElementById('photoErrorMsg');
-            if (errorMsg) errorMsg.remove();
-            if (file) {
-                if (file.size > maxSize) {
-                    var err = document.createElement('div');
+                function showError(msg) {
+                    const err = document.createElement('div');
                     err.id = 'photoErrorMsg';
                     err.className = 'text-danger mt-2';
-                    err.innerText = fileTooLargeMsg;
+                    err.innerText = msg;
                     photoPreviewContainer.parentNode.appendChild(err);
+                }
+                function resetPreview() {
                     photoInput.value = '';
                     photoPreview.src = '';
                     photoPreview.style.display = 'none';
                     if (placeholder) placeholder.style.display = 'flex';
-                    return;
+                    if (base64Input) base64Input.value = '';
                 }
-                var reader = new FileReader();
-                reader.onload = function (evt) {
-                    var img = new window.Image();
-                    img.onload = function () {
-                        var width = img.width;
-                        var height = img.height;
-                        var scale = Math.min(maxWidth / width, maxHeight / height, 1);
-                        var canvas = document.createElement('canvas');
-                        canvas.width = Math.round(width * scale);
-                        canvas.height = Math.round(height * scale);
-                        var ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        var dataUrl = canvas.toDataURL('image/png');
-                        photoPreview.src = dataUrl;
-                        photoPreview.style.display = 'block';
-                        if (placeholder) placeholder.style.display = 'none';
-                        if (base64Input) base64Input.value = dataUrl.split(',')[1];
-                    };
-                    img.src = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                photoPreview.src = '';
-                photoPreview.style.display = 'none';
-                if (placeholder) placeholder.style.display = 'flex';
-            }
+            });
         });
-    });
-</script>
+    </script>
