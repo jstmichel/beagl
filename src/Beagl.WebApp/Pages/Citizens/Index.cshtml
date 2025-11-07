@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">@Localizer["Apply Filters"]</button>
-                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="clearCitizenFilters(this.form);">@Localizer["Clear Filters"]</button>
+                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="clearFilters(this.form);">@Localizer["Clear Filters"]</button>
             </form>
         </div>
     </div>
@@ -190,7 +190,7 @@
 })
 
 <script>
-function clearCitizenFilters(form) {
+function clearFilters(form) {
     Array.from(form.querySelectorAll('input[type="text"]')).forEach(input => input.value = '');
 }
 </script>

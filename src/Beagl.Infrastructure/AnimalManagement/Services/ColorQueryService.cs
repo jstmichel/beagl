@@ -20,8 +20,16 @@ public sealed class ColorQueryService(ApplicationDbContext dbContext) : IColorQu
     /// <inheritdoc/>
     public async Task<IList<ColorDto>> GetAllBySpeciesAsync(SpeciesType species)
     {
-        return await dbContext.Colors
+        return await dbContext.Colors.AsNoTracking()
             .Where(c => c.SpeciesType == species)
+            .Select(c => c.ToDto())
+            .ToListAsync();
+    }
+
+    /// <inheritdoc/>
+    public async Task<IList<ColorDto>> GetAllAsync()
+    {
+        return await dbContext.Colors.AsNoTracking()
             .Select(c => c.ToDto())
             .ToListAsync();
     }

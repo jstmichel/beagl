@@ -17,4 +17,10 @@ public interface IBreedQueryService
     /// </summary>
     /// <returns>List of breed DTOs.</returns>
     public Task<IList<BreedDto>> GetAllBySpeciesAsync(SpeciesType species);
+
+    /// <summary>
+    /// Gets all available breeds.
+    /// </summary>
+    /// <returns>List of breed DTOs.</returns>
+    public Task<IList<BreedDto>> GetAllAsync();
 }

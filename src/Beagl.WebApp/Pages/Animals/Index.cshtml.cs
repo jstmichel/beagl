@@ -8,6 +8,7 @@ using Beagl.WebApp.Pages.Animals.ViewModels;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Beagl.Domain.AnimalManagement.Enums;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -16,8 +17,13 @@ namespace Beagl.WebApp.Pages.Animals;
 /// </summary>
 [Authorize(Policy = Policies.Animals.CanView)]
 internal sealed class IndexModel(
+    IBreedQueryService breedQueryService,
+    IColorQueryService colorQueryService,
     IAnimalQueryService animalQueryService) : PaginatedPageModel<ListAnimalsViewModel, IndexModel.AnimalsFilterModel>
 {
+    public IEnumerable<BreedDto> AllBreedList { get; set; } = [];
+    public IEnumerable<ColorDto> AllColorList { get; set; } = [];
+
     /// <summary>
     /// Handles the GET request to load the list of animals.
     /// </summary>
@@ -34,6 +40,7 @@ internal sealed class IndexModel(
     /// <param name="pageNumber">The page number to load.</param>
     protected override async Task LoadPageAsync(int pageNumber = 1)
     {
+        await LoadDropdownListsAsync();
         AnimalPagedFilterDto animalPagedFilterDto = CreatePagedFilterDto(pageNumber);
         (IList<AnimalListDto>? dto, TotalItems) = await animalQueryService.GetPagedAsync(animalPagedFilterDto);
         DataModel = MapDtoToViewModelList(dto);
@@ -51,12 +58,38 @@ internal sealed class IndexModel(
         {
             PageNumber = pageNumber,
             PageSize = PageSize,
+            Name = FilterModel.Name,
+            Species = FilterModel.Species,
+            PrimaryBreed = FilterModel.PrimaryBreed,
+            Color = FilterModel.Color,
+            Gender = FilterModel.Gender,
+            MicrochipNumber = FilterModel.MicrochipNumber,
+            PermitNumber = FilterModel.PermitNumber
         };
+
+    private async Task LoadDropdownListsAsync()
+    {
+        AllBreedList = await breedQueryService.GetAllAsync();
+        AllColorList = await colorQueryService.GetAllAsync();
+    }
 
     /// <summary>
     /// Model for filtering animals in the animal management view.
     /// </summary>
     internal sealed class AnimalsFilterModel
     {
+        public string? Name { get; set; }
+
+        public SpeciesType? Species { get; set; }
+
+        public Guid? PrimaryBreed { get; set; }
+
+        public Guid? Color { get; set; }
+
+        public Gender? Gender { get; set; }
+
+        public string? MicrochipNumber { get; set; }
+
+        public string? PermitNumber { get; set; }
     }
 }
