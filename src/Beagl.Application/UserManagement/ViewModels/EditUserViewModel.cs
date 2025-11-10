@@ -14,7 +14,7 @@ public sealed class EditUserViewModel
     /// <summary>
     /// Gets or sets the unique identifier for the user.
     /// </summary>
-    public required string Id { get; set; }
+    public string? Id { get; set; }
 
     /// <summary>
     /// Gets the username.

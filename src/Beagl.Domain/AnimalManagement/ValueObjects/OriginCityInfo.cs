@@ -78,4 +78,9 @@ public class OriginCityInfo : IEquatable<OriginCityInfo>
             return null;
         return new OriginCityInfo(comesFromAnotherCity.Value, cityName, hadJudgmentInThatCity.Value);
     }
+
+    private OriginCityInfo()
+    {
+        CityName = string.Empty;
+    }
 }

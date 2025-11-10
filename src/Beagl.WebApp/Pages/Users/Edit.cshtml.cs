@@ -3,13 +3,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
-using System.Collections.ObjectModel;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
 using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Beagl.WebApp.Mappers;
 
 namespace Beagl.WebApp.Pages.Users;
 
@@ -33,7 +33,7 @@ internal sealed class EditModel(
     /// Gets or sets the user to edit.
     /// </summary>
     [BindProperty]
-    public EditUserViewModel? Input { get; set; }
+    public EditUserViewModel? Input { get; set; } = new EditUserViewModel();
 
     /// <summary>
     /// List of available roles for dropdown selection.
@@ -51,7 +51,7 @@ internal sealed class EditModel(
         {
             UserDto user = await userQueryService.GetByIdAsync(id);
             AvailableRoles = GetAvailableRoles();
-            Input = MapToEditUserViewModel(user);
+            Input = MapToEditUserViewModel(user); //TODO: To replace with mapper
         }
         catch (InvalidOperationException)
         {
@@ -82,8 +82,8 @@ internal sealed class EditModel(
 
         try
         {
-            UserDto user = MapToUserDto(Input);
-            await userService.UpdateAsync(user);
+            UserDto dto = Input.ToDto();
+            await userService.UpdateAsync(dto);
         }
         catch (ArgumentException)
         {
@@ -121,20 +121,6 @@ internal sealed class EditModel(
         }
 
         return Input.Roles.Any(r => r == roleName);
-    }
-
-    private static UserDto MapToUserDto(EditUserViewModel editedUser)
-    {
-        ArgumentNullException.ThrowIfNull(editedUser);
-
-        return new UserDto
-        {
-            Id = editedUser.Id,
-            UserName = editedUser.UserName,
-            Email = editedUser.Email,
-            PhoneNumber = editedUser.PhoneNumber,
-            Roles = new Collection<string>(editedUser.Roles)
-        };
     }
 
     private static EditUserViewModel MapToEditUserViewModel(UserDto user)

@@ -16,13 +16,13 @@ public sealed class CreateUserViewModel
     /// </summary>
     [Required]
     [DataType(DataType.Text)]
-    public required string UserName { get; set; } = string.Empty;
+    public string UserName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the email address.
     /// </summary>
     [DataType(DataType.EmailAddress)]
-    public required string Email { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the phone number.
@@ -39,12 +39,12 @@ public sealed class CreateUserViewModel
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
-    public required string Password { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the password for the new user.
     /// </summary>
     [Required]
     [DataType(DataType.Password)]
-    public required string ConfirmPassword { get; set; } = string.Empty;
+    public string ConfirmPassword { get; set; } = string.Empty;
 }

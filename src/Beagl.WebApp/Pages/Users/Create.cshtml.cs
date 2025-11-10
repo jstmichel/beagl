@@ -6,6 +6,7 @@ using Beagl.Application.UserManagement.ViewModels;
 using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -24,7 +25,7 @@ internal sealed class CreateModel(
     /// Gets or sets the new user to be created.
     /// </summary>
     [BindProperty]
-    public CreateUserViewModel? Input { get; set; }
+    public CreateUserViewModel Input { get; set; } = new CreateUserViewModel();
 
     /// <summary>
     /// Gets or sets the available roles for selection.
@@ -48,17 +49,19 @@ internal sealed class CreateModel(
             return Page();
         }
 
-        UserDto userDto = new()
-        {
-            UserName = Input!.UserName,
-            Email = Input.Email,
-            PhoneNumber = Input.PhoneNumber,
-            Roles = new Collection<string>(Input.Roles)
-        };
+        UserDto dto = Input.ToDto();
+
+        // UserDto userDto = new()
+        // {
+        //     UserName = Input!.UserName,
+        //     Email = Input.Email,
+        //     PhoneNumber = Input.PhoneNumber,
+        //     Roles = new Collection<string>(Input.Roles)
+        // };
 
         try
         {
-            await userService.CreateAsync(userDto, Input.Password);
+            await userService.CreateAsync(dto, Input.Password);
         }
         catch (ArgumentException aEx)
         {

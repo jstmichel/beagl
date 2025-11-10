@@ -5,7 +5,9 @@ using Beagl.Domain.Core.Exceptions;
 using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Shared.Models;
+using Beagl.WebApp.Pages.Users.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -19,7 +21,7 @@ namespace Beagl.WebApp.Pages.Users;
 internal sealed class IndexModel(
     IUserService userService,
     IUserQueryService userQueryService,
-    IStringLocalizer<IndexModel> localizer) : PaginatedPageModel<UserDto, IndexModel.UserFilterModel>
+    IStringLocalizer<IndexModel> localizer) : PaginatedPageModel<ListUsersViewModel, IndexModel.UserFilterModel>
 {
     /// <summary>
     /// Handles GET requests for the page and returns the rendered page.
@@ -40,8 +42,15 @@ internal sealed class IndexModel(
     protected override async Task LoadPageAsync(int pageNumber = 1)
     {
         UserPagedFilterDto userPagedFilterDto = CreatePagedFilterDto(pageNumber);
-        (DataModel, TotalItems) = await userQueryService.GetPagedAsync(userPagedFilterDto);
+        (IList<UserDto>? dto, TotalItems) = await userQueryService.GetPagedAsync(userPagedFilterDto);
+        DataModel = MapDtoToViewModelList(dto);
         SetPagination(pageNumber);
+    }
+
+    private static List<ListUsersViewModel> MapDtoToViewModelList(IList<UserDto>? dto)
+    {
+        if (dto == null) return [];
+        return [.. dto.Select(user => user.ToViewModel())];
     }
 
     /// <summary>
