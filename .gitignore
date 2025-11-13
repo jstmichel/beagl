@@ -116,6 +116,7 @@ Desktop.ini
 # Environment variables
 .env
 .env.*
+!.env.example
 
 # Visual Studio Code Server
 .vscode-server/
