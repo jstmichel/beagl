@@ -5,7 +5,7 @@ Beagl is a modern CRM for animal centers. It centralizes management of animals, 
 
 ## Technologies Used
 
-- .NET 10
+- .NET 8
 - ASP.NET Core
 - Blazor and Razor Pages
 - Entity Framework Core
