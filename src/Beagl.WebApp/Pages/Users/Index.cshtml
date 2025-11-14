@@ -91,15 +91,13 @@
                                         {
                                             <div class="text-muted small"><i class="bi bi-envelope"></i><span class="ms-1">@user.Email</span></div>
                                         }
+                                        @if (!string.IsNullOrEmpty(user.PhoneNumber))
+                                        {
+                                            <div class="text-muted small"><i class="bi bi-telephone"></i><span class="ms-1">@user.PhoneNumber</span></div>
+                                        }
                                         @if (user.Roles != null && user.Roles.Count > 0)
                                         {
                                             <div class="text-muted small"><i class="bi bi-shield-lock"></i><span class="ms-1">@user.Roles.FirstOrDefault()</span></div>
-                                            @* <div class="mt-1">
-                                                @foreach (var role in user.Roles)
-                                                {
-                                                    <span class="badge bg-secondary me-1">@role</span>
-                                                }
-                                            </div> *@
                                         }
                                     </div>
                                     @{
