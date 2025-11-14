@@ -22,7 +22,6 @@ internal static class CreateDogViewModelMappingExtensions
 
         return new CreateDogDto
         {
-            CitizenId = model.OwnerCitizenId,
             Name = model.Name,
             BreedPrimaryId = model.BreedPrimaryId!.Value,
             BreedSecondaryId = model.BreedSecondaryId,

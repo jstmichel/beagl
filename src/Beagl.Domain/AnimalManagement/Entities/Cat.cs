@@ -28,7 +28,6 @@ public sealed class Cat : Animal
     /// </summary>
     public Cat(
         SpeciesType speciesType,
-        Guid? citizenId,
         string name,
         Guid primaryBreedId,
         Guid colorId,
@@ -43,7 +42,7 @@ public sealed class Cat : Animal
         RabiesVaccination? rabiesVaccination,
         bool isAnUnclawnedCat,
         Audit<Guid> created)
-        : base(speciesType, citizenId, name, primaryBreedId, colorId, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, isSterilized, rabiesVaccination, created)
+        : base(speciesType, name, primaryBreedId, colorId, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, isSterilized, rabiesVaccination, created)
     {
         IsAnUnclawnedCat = isAnUnclawnedCat;
     }

@@ -26,27 +26,6 @@
         <div class="mb-4">
             <div class="card mb-3">
                 <div class="card-header fw-bold">
-                    @Localizer["Ownership"]
-                </div>
-                <div class="card-body">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label asp-for="Input.OwnerCitizenId" class="form-label">@Localizer["Owner (Citizen)"]</label>
-                                <select asp-for="Input.OwnerCitizenId" class="form-select">
-                                    <option value="">@Localizer["Select Owner"]</option>
-                                    @foreach (var citizen in Model.CitizenList)
-                                    {
-                                        <option value="@citizen.Id">@citizen.Name</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-header fw-bold">
                     @Localizer["Cat Details"]
                 </div>
                 <div class="card-body">

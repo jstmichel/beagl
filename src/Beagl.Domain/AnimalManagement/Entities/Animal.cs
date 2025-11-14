@@ -123,10 +123,8 @@ public class Animal : AuditedAggregateRoot
     /// <param name="isSterilized">Indicates if the animal is sterilized.</param>
     /// <param name="rabiesVaccination">The rabies vaccination information.</param>
     /// <param name="created">The creation audit info.</param>
-    /// <param name="citizenId">The optional citizen ID.</param>
     public Animal(
         SpeciesType speciesType,
-        Guid? citizenId,
         string name,
         Guid primaryBreedId,
         Guid colorId,
@@ -158,7 +156,7 @@ public class Animal : AuditedAggregateRoot
         Medal = medal;
         IsSterilized = isSterilized;
         RabiesVaccination = rabiesVaccination;
-        CitizenId = citizenId;
+        CitizenId = null;
         Citizen = null;
     }
 }

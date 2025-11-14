@@ -47,7 +47,6 @@ public sealed class Dog : Animal
     /// </summary>
     public Dog(
         SpeciesType speciesType,
-        Guid? citizenId,
         string name,
         Guid primaryBreedId,
         Guid colorId,
@@ -65,7 +64,7 @@ public sealed class Dog : Animal
         bool isSterilized,
         RabiesVaccination? rabiesVaccination,
         Audit<Guid> created)
-        : base(speciesType, citizenId, name, primaryBreedId, colorId, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, isSterilized, rabiesVaccination, created)
+        : base(speciesType, name, primaryBreedId, colorId, distinctiveDescription, gender, dateOfBirth, photo, microchip, weight, medal, isSterilized, rabiesVaccination, created)
     {
         SecondaryBreedId = secondaryBreedId;
         DangerousDog = dangerousDog;

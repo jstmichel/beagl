@@ -27,7 +27,6 @@ public static class CreateDogDtoMappingExtensions
 
         return new(
             SpeciesType.Dog,
-            createDogDto.CitizenId,
             createDogDto.Name,
             createDogDto.BreedPrimaryId,
             createDogDto.ColorId,

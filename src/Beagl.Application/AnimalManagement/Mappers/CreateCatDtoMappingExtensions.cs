@@ -27,7 +27,6 @@ public static class CreateCatDtoMappingExtensions
 
         return new(
             SpeciesType.Cat,
-            createCatDto.CitizenId,
             createCatDto.Name,
             createCatDto.BreedPrimaryId,
             createCatDto.ColorId,
