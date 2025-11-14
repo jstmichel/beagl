@@ -80,7 +80,6 @@ public sealed class CreateDogViewModel
     /// <summary>
     /// Gets or sets the medal assigned to the dog.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Medal")]
     public string? Medal { get; set; }
 
     /// <summary>

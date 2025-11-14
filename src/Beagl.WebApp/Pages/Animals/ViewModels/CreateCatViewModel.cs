@@ -81,7 +81,6 @@ public sealed class CreateCatViewModel
     /// <summary>
     /// Gets or sets the medal assigned to the cat.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateCat), ErrorMessageResourceName = "Error_Required_Medal")]
     public string? Medal { get; set; }
 
     /// <summary>
