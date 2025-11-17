@@ -3,6 +3,7 @@
 using System;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.Core;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.AnimalManagement.Entities;
 
@@ -34,7 +35,7 @@ public sealed class Breed : Entity
     /// <returns>A new instance of <see cref="Breed"/>.</returns>
     public Breed(string name, SpeciesType speciesType)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        InvalidBreedException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
         Id = Guid.NewGuid();
         Name = name;

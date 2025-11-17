@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
 
@@ -21,7 +22,7 @@ public sealed class Microchip : IEquatable<Microchip>
     /// <exception cref="ArgumentNullException">Thrown when value is null or empty.</exception>
     public Microchip(string value)
     {
-        ArgumentException.ThrowIfNullOrEmpty(value, nameof(value));
+        InvalidMicrochipException.ThrowIfNullOrEmpty(value, nameof(value));
         Value = value;
     }
 

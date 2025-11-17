@@ -213,7 +213,7 @@ public class Animal : AuditedAggregateRoot
             throw new InvalidAnimalException("Date of birth cannot be in the future.");
         }
 
-        if (dateOfBirth < dateOfBirth.AddYears(-MaximumAnimalAgeInYears))
+        if (dateOfBirth < DateTimeOffset.Now.AddYears(-MaximumAnimalAgeInYears))
         {
             throw new InvalidAnimalException("Date of birth is unreasonably old.");
         }

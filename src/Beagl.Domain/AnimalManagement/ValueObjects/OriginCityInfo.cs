@@ -1,8 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
-using Beagl.Domain.AnimalManagement.Exceptions;
 using Beagl.Domain.AnimalManagement.Specifications;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
 

@@ -5,6 +5,7 @@ using Beagl.Application.AnimalManagement.Services;
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Domain.Core.Exceptions;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Animals.ViewModels;
@@ -51,7 +52,16 @@ internal sealed class CreateDogModel(
         }
 
         CreateDogDto dto = Input.ToDto();
-        _ = await dogService.CreateDogAsync(dto);
+        try
+        {
+            _ = await dogService.CreateDogAsync(dto);
+        }
+        catch(DomainException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            await LoadDropdownListsAsync();
+            return Page();
+        }
 
         return RedirectToPage(Redirection.ToAnimalList);
     }

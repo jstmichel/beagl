@@ -2,6 +2,7 @@
 
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
+using Beagl.Domain.Core.Exceptions;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
@@ -34,7 +35,16 @@ internal sealed class CreateCitizenModel(
         }
 
         CreateCitizenDto dto = Input.ToDto();
-        _ = await citizenService.CreateAsync(dto);
+
+        try
+        {
+            _ = await citizenService.CreateAsync(dto);
+        }
+        catch(DomainException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return Page();
+        }
 
         return RedirectToPage(Redirection.ToCitizenList);
     }

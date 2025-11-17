@@ -2,6 +2,7 @@
 
 using System;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
 
@@ -25,7 +26,7 @@ public class Weight : IEquatable<Weight>
     /// </summary>
     /// <param name="value">The weight value.</param>
     /// <param name="unit">The weight unit.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when value is less than or equal to zero.</exception>
+    /// <exception cref="InvalidWeightException">Thrown when value is less than or equal to zero.</exception>
     public Weight(decimal value, WeightUnit unit)
     {
         ValidateWeightIsPositive(value);
@@ -38,7 +39,7 @@ public class Weight : IEquatable<Weight>
     {
         if (value <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(value), "Weight must be positive.");
+            throw new InvalidWeightException("Weight must be positive.");
         }
     }
 
