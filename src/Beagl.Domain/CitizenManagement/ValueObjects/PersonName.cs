@@ -2,6 +2,7 @@
 
 using System;
 using Beagl.Domain.CitizenManagement.Enums;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.CitizenManagement.ValueObjects;
 
@@ -35,11 +36,13 @@ public sealed class PersonName : IEquatable<PersonName>
     /// <param name="civility">The civility (title) of the person.</param>
     /// <param name="firstName">The first name.</param>
     /// <param name="lastName">The last name.</param>
-    /// <exception cref="ArgumentNullException">Thrown when firstName or lastName is null or empty.</exception>
+    /// <exception cref="PersonNameDomainException">Thrown when firstName or lastName is null or empty.</exception>
     public PersonName(Civility civility, string firstName, string lastName)
     {
-        ArgumentException.ThrowIfNullOrEmpty(firstName, nameof(firstName));
-        ArgumentException.ThrowIfNullOrEmpty(lastName, nameof(lastName));
+        PersonNameDomainException.ThrowIfNullOrEmpty(firstName, nameof(firstName));
+        PersonNameDomainException.ThrowIfNullOrEmpty(lastName, nameof(lastName));
+        ValidateFirstName(firstName);
+        ValidateLastName(lastName);
 
         Civility = civility;
         FirstName = firstName;
@@ -114,5 +117,21 @@ public sealed class PersonName : IEquatable<PersonName>
         }
 
         return new PersonName(civility, firstName, lastName);
+    }
+
+    private static void ValidateLastName(string lastName)
+    {
+        if (lastName.Length > 100)
+        {
+            throw new PersonNameDomainException("Last name cannot exceed 100 characters.");
+        }
+    }
+
+    private static void ValidateFirstName(string firstName)
+    {
+        if (firstName.Length > 100)
+        {
+            throw new PersonNameDomainException("First name cannot exceed 100 characters.");
+        }
     }
 }

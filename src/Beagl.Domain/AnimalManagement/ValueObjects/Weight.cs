@@ -28,13 +28,18 @@ public class Weight : IEquatable<Weight>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when value is less than or equal to zero.</exception>
     public Weight(decimal value, WeightUnit unit)
     {
+        ValidateWeightIsPositive(value);
+
+        Value = value;
+        Unit = unit;
+    }
+
+    private static void ValidateWeightIsPositive(decimal value)
+    {
         if (value <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(value), "Weight must be positive.");
         }
-
-        Value = value;
-        Unit = unit;
     }
 
     /// <inheritdoc/>

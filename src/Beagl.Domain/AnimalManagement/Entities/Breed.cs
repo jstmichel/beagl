@@ -34,6 +34,8 @@ public sealed class Breed : Entity
     /// <returns>A new instance of <see cref="Breed"/>.</returns>
     public Breed(string name, SpeciesType speciesType)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+
         Id = Guid.NewGuid();
         Name = name;
         SpeciesType = speciesType;

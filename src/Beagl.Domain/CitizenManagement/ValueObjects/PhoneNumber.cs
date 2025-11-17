@@ -2,13 +2,14 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.CitizenManagement.ValueObjects;
 
 /// <summary>
 /// Value object representing a phone number.
 /// </summary>
-public sealed class PhoneNumber : IEquatable<PhoneNumber>
+public sealed partial class PhoneNumber : IEquatable<PhoneNumber>
 {
     /// <summary>
     /// Gets the phone number as a string.
@@ -19,26 +20,54 @@ public sealed class PhoneNumber : IEquatable<PhoneNumber>
     /// Initializes a new instance of the <see cref="PhoneNumber"/> class.
     /// </summary>
     /// <param name="value">The phone number string.</param>
-    /// <exception cref="ArgumentException">Thrown if the phone number is invalid.</exception>
+    /// <exception cref="PhoneNumberDomainException">Thrown if the phone number is invalid.</exception>
     public PhoneNumber(string value)
+    {
+        ValidatePhoneNumberIsNotNullOrEmpty(value);
+        ValidatePhoneNumberContainsOnlyValidCharacters(value);
+        string extension = ExtractExtension(value);
+        string mainDigits = TrimPhoneNumber(value);
+        ValidatePhoneNumberLength(mainDigits);
+
+        Value = string.IsNullOrEmpty(extension) ? mainDigits : $"{mainDigits}x{extension}";
+    }
+
+    /// <summary>
+    /// Returns the formatted phone number for display.
+    /// </summary>
+    public string? ToDisplayString()
+    {
+        if (string.IsNullOrWhiteSpace(Value))
+        {
+            return null;
+        }
+
+        if (Value.Length == 11 && Value.StartsWith('1'))
+        {
+            return $"+1 ({Value.Substring(1, 3)}) {Value.Substring(4, 3)}-{Value[7..]}";
+        }
+
+        if (Value.Length == 10)
+        {
+            return $"({Value[..3]}) {Value[3..6]}-{Value[6..]}";
+        }
+
+        return Value;
+    }
+
+    /// <summary>
+    /// Creates a PhoneNumber instance from a string, returning null if the string is null or whitespace.
+    /// </summary>
+    /// <param name="value">The phone number string.</param>
+    /// <returns>A PhoneNumber instance or null.</returns>
+    public static PhoneNumber? From(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("Phone number cannot be null or empty.", nameof(value));
+            return null;
         }
 
-        if (!Regex.IsMatch(value, @"^[\d\s\-\(\)\+xXextEXT\./]+$"))
-        {
-            throw new ArgumentException("Phone number contains invalid characters.", nameof(value));
-        }
-
-        string digits = Regex.Replace(value, "[^0-9]", "");
-        if (string.IsNullOrWhiteSpace(digits))
-        {
-            throw new ArgumentException("Phone number must contain at least one digit.", nameof(value));
-        }
-
-        Value = digits;
+        return new PhoneNumber(value);
     }
 
     /// <inheritdoc/>
@@ -66,41 +95,48 @@ public sealed class PhoneNumber : IEquatable<PhoneNumber>
         return !Equals(left, right);
     }
 
-    /// <summary>
-    /// Returns the formatted phone number for display.
-    /// </summary>
-    public string? ToDisplayString()
-    {
-        if (string.IsNullOrWhiteSpace(Value))
-        {
-            return null;
-        }
-
-        if (Value.Length == 11 && Value.StartsWith('1'))
-        {
-            return $"+1 ({Value.Substring(1, 3)}) {Value.Substring(4, 3)}-{Value.Substring(7, 4)}";
-        }
-
-        if (Value.Length == 10)
-        {
-            return $"({Value[..3]}) {Value[3..6]}-{Value[6..]}";
-        }
-
-        return Value;
-    }
-
-    /// <summary>
-    /// Creates a PhoneNumber instance from a string, returning null if the string is null or whitespace.
-    /// </summary>
-    /// <param name="value">The phone number string.</param>
-    /// <returns>A PhoneNumber instance or null.</returns>
-    public static PhoneNumber? From(string? value)
+    private static void ValidatePhoneNumberIsNotNullOrEmpty(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return null;
+            throw new PhoneNumberDomainException("Phone number cannot be null or empty.");
         }
-
-        return new PhoneNumber(value);
     }
+
+    private static void ValidatePhoneNumberContainsOnlyValidCharacters(string value)
+    {
+        if (!PhoneValidationRegex().IsMatch(value))
+        {
+            throw new PhoneNumberDomainException("Phone number contains invalid characters.");
+        }
+    }
+
+    private static string TrimPhoneNumber(string value)
+    {
+        return PhoneTrimmerRegex().Replace(value, "");
+    }
+
+    private static string ExtractExtension(string value)
+    {
+        Match extMatch = ExtensionRegex().Match(value);
+        string extension = extMatch.Success ? extMatch.Groups[1].Value : string.Empty;
+        return extension;
+    }
+
+    private static void ValidatePhoneNumberLength(string mainDigits)
+    {
+        if (mainDigits.Length is not 10 and not 11)
+        {
+            throw new PhoneNumberDomainException("Phone number must be 10 or 11 digits.");
+        }
+    }
+
+    [GeneratedRegex(@"^[\d\s\-\(\)\+xXextEXT\./]+$")]
+    private static partial Regex PhoneValidationRegex();
+
+    [GeneratedRegex("[^0-9]")]
+    private static partial Regex PhoneTrimmerRegex();
+
+    [GeneratedRegex(@"(?:x|ext)\s*(\d+)", RegexOptions.IgnoreCase)]
+    private static partial Regex ExtensionRegex();
 }

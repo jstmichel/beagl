@@ -44,12 +44,14 @@ Beagl is a modern CRM for animal centers. It centralizes management of animals, 
 
 ## Error Handling and Logging
 
-- Use exceptions for errors
-- Only catch exceptions if handled
-- Use custom exception types if relevant
-- Logging via ASP.NET Core `ILogger<T>`
-- Do not log sensitive information
-- Use structured logging for complex data
+Use exceptions for errors
+Only catch exceptions if handled
+Use custom exception types if relevant
+Domain exceptions must inherit from `DomainException` (see `src/Beagl.Domain/Core/Exceptions/DomainException.cs`).
+Domain exceptions must be placed in the `src/Beagl.Domain/Core/Exceptions/` folder.
+Logging via ASP.NET Core `ILogger<T>`
+Do not log sensitive information
+Use structured logging for complex data
 
 ## Data Sources
 
@@ -67,14 +69,12 @@ Beagl is a modern CRM for animal centers. It centralizes management of animals, 
 - Include a clear summary of the change
 - For breaking changes, add `BREAKING CHANGE:` in the message body and describe the impact
 
-**Important: The commit type prefix must be in English (feat, fix, chore, etc.), but the summary and description should be written in French.**
-
 Example: `feat: ajout du formulaire d’adoption`
 
 ## Code Standards and Style
 
 - Source code must be written in English (variable, function, class names, etc.)
-- Comments and documentation must be in French, clear and precise
+- Comments and documentation must be in English, clear and precise
 - Follow clean code principles: simplicity, readability, modularity, avoid duplication
 - Follow Microsoft style recommendations for the language used
 - Indentation must be tabs, per `.editorconfig`
@@ -91,6 +91,7 @@ Example: `feat: ajout du formulaire d’adoption`
 - Document entry points and public APIs
 - Respect commit conventions (e.g., Conventional Commits) if applicable
 - Commit messages must follow Conventional Commits for clarity and traceability
+- Use file-scoped namespace declarations for C# source files
 
 ## Folder and Project Structure
 
@@ -154,7 +155,7 @@ See the `README.md` files in each project for additional specific instructions.
 
 ## Documentation and Copilot Guidelines
 
-- All technical and functional documentation must be written in French, in the `docs/` folder or in each project's `README.md`
+- All technical and functional documentation must be written in English, in the `docs/` folder or in each project's `README.md`
 - Highlight important points or architectural choices in comments
 - For Copilot: avoid generating code in folders not listed in the structure, follow the conventions and standards above
 - Prefer recommended libraries and tools for the project

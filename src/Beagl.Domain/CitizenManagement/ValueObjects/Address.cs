@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.CitizenManagement.ValueObjects;
 
@@ -27,7 +28,6 @@ public sealed class Address : IEquatable<Address>
     /// Gets the province.
     /// </summary>
     public string Province { get; }
-
 
     /// <summary>
     /// Gets the country.
@@ -62,11 +62,12 @@ public sealed class Address : IEquatable<Address>
         string postalCode,
         string? postOfficeBox = null)
     {
-        ArgumentException.ThrowIfNullOrEmpty(streetAddress, nameof(streetAddress));
-        ArgumentException.ThrowIfNullOrEmpty(city, nameof(city));
-        ArgumentException.ThrowIfNullOrEmpty(province, nameof(province));
-        ArgumentException.ThrowIfNullOrEmpty(country, nameof(country));
-        ArgumentException.ThrowIfNullOrEmpty(postalCode, nameof(postalCode));
+        InvalidAddressException.ThrowIfNullOrWhiteSpace(streetAddress, nameof(streetAddress));
+        InvalidAddressException.ThrowIfNullOrWhiteSpace(city, nameof(city));
+        InvalidAddressException.ThrowIfNullOrWhiteSpace(province, nameof(province));
+        InvalidAddressException.ThrowIfNullOrWhiteSpace(country, nameof(country));
+
+        ValidatePostalCode(postalCode);
 
         StreetAddress = streetAddress;
         City = city;
@@ -74,6 +75,36 @@ public sealed class Address : IEquatable<Address>
         Country = country;
         PostalCode = postalCode;
         PostOfficeBox = postOfficeBox;
+    }
+
+    private static void ValidatePostalCode(string postalCode)
+    {
+        if (!IsValidPostalCode(postalCode))
+        {
+            throw new InvalidAddressException($"The postal code '{postalCode}' is not in a valid format.");
+        }
+    }
+
+    /// <summary>
+    /// Validates the postal code format (supports Canadian and US formats).
+    /// </summary>
+    /// <param name="postalCode">The postal code to validate.</param>
+    /// <returns>True if valid, otherwise false.</returns>
+    /// <exception cref="InvalidAddressException">Thrown when the postal code is null or whitespace.</exception>
+    private static bool IsValidPostalCode(string postalCode)
+    {
+        if (string.IsNullOrWhiteSpace(postalCode))
+        {
+            return false;
+        }
+
+        // Canadian postal code: A1A 1A1 or A1A-1A1 or A1A1A1
+        string canadianPattern = @"^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$";
+        // US ZIP code: 12345 or 12345-6789
+        string usPattern = @"^\d{5}(-\d{4})?$";
+
+        return System.Text.RegularExpressions.Regex.IsMatch(postalCode, canadianPattern)
+            || System.Text.RegularExpressions.Regex.IsMatch(postalCode, usPattern);
     }
 
     /// <inheritdoc/>
@@ -160,7 +191,8 @@ public sealed class Address : IEquatable<Address>
             string.IsNullOrWhiteSpace(city) ||
             string.IsNullOrWhiteSpace(province) ||
             string.IsNullOrWhiteSpace(country) ||
-            string.IsNullOrWhiteSpace(postalCode))
+            string.IsNullOrWhiteSpace(postalCode) ||
+            !IsValidPostalCode(postalCode))
         {
             return null;
         }

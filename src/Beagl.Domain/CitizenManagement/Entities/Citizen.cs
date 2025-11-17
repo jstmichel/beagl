@@ -7,6 +7,7 @@ using Beagl.Domain.CitizenManagement.Enums;
 using Beagl.Domain.Core;
 using Beagl.Domain.Core.ValueObjects;
 using Beagl.Domain.CitizenManagement.ValueObjects;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.CitizenManagement.Entities;
 
@@ -83,6 +84,12 @@ public sealed class Citizen : AuditedAggregateRoot
         Audit<Guid> created)
         : base(created)
     {
+        ValidatePersonName(person);
+        ValidateAddress(address);
+        ValidateAtLeastOnePhoneIsProvided(phone, cellPhone);
+        ValidateCommunicationPreference(communicationPreference, phone, cellPhone, email);
+        ValidateEmail(email);
+
         Person = person;
         Phone = phone;
         CellPhone = cellPhone;
@@ -90,5 +97,87 @@ public sealed class Citizen : AuditedAggregateRoot
         LanguagePreference = languagePreference;
         Email = email;
         Address = address;
+    }
+
+    private static void ValidateEmail(string? email)
+    {
+        if (!string.IsNullOrWhiteSpace(email) && !IsValidEmail(email))
+        {
+            throw new InvalidCitizenException($"The email address '{email}' is not in a valid format.");
+        }
+    }
+
+    private static void ValidateCommunicationPreference(
+        CommunicationPreference communicationPreference,
+        PhoneNumber? phone,
+        PhoneNumber? cellPhone,
+        string? email)
+    {
+        switch (communicationPreference)
+        {
+            case CommunicationPreference.Phone:
+                ValidatePhoneIsProvided(phone);
+                break;
+            case CommunicationPreference.CellPhone:
+                ValidateCellPhoneIsProvided(cellPhone);
+                break;
+            case CommunicationPreference.Email:
+                ValidateEmailIsProvided(email);
+                break;
+        }
+    }
+
+    private static void ValidateEmailIsProvided(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new InvalidCitizenException("Communication preference is set to Email, but no email address is provided.");
+        }
+    }
+
+    private static void ValidateCellPhoneIsProvided(PhoneNumber? cellPhone)
+    {
+        if (cellPhone == null)
+        {
+            throw new InvalidCitizenException("Communication preference is set to CellPhone, but no cell phone number is provided.");
+        }
+    }
+
+    private static void ValidatePhoneIsProvided(PhoneNumber? phone)
+    {
+        if (phone == null)
+        {
+            throw new InvalidCitizenException("Communication preference is set to Phone, but no phone number is provided.");
+        }
+    }
+
+    private static void ValidateAtLeastOnePhoneIsProvided(PhoneNumber? phone, PhoneNumber? cellPhone)
+    {
+        if (phone == null && cellPhone == null)
+        {
+            throw new InvalidCitizenException("At least one phone number (phone or cell phone) must be provided.");
+        }
+    }
+
+    private static void ValidatePersonName(PersonName person)
+    {
+        if (person == null)
+        {
+            throw new InvalidCitizenException("Person name cannot be null.");
+        }
+    }
+
+    private static void ValidateAddress(Address address)
+    {
+        if (address == null)
+        {
+            throw new InvalidCitizenException("Address cannot be null.");
+        }
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
     }
 }

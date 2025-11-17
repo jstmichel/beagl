@@ -1,6 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using Beagl.Domain.AnimalManagement.Exceptions;
+using Beagl.Domain.AnimalManagement.Specifications;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
 
@@ -32,9 +34,19 @@ public class OriginCityInfo : IEquatable<OriginCityInfo>
     /// <param name="hadJudgmentInThatCity">Indicates if the animal had a judgment in that city.</param>
     public OriginCityInfo(bool comesFromAnotherCity, string cityName, bool hadJudgmentInThatCity)
     {
+        ValidateSpecification(comesFromAnotherCity, cityName, hadJudgmentInThatCity);
+
         ComesFromAnotherCity = comesFromAnotherCity;
         CityName = cityName;
         HadJudgmentInThatCity = hadJudgmentInThatCity;
+    }
+
+    private static void ValidateSpecification(bool comesFromAnotherCity, string cityName, bool hadJudgmentInThatCity)
+    {
+        if (!OriginCityInfoSpecification.IsSatisfiedBy(comesFromAnotherCity, cityName, hadJudgmentInThatCity))
+        {
+            throw new OriginCityInfoDomainException("The provided origin city information does not satisfy business rules.");
+        }
     }
 
     /// <inheritdoc/>

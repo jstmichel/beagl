@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.Core.ValueObjects;
 
@@ -29,7 +30,8 @@ public sealed class Audit<TId> : IEquatable<Audit<TId>>
     public Audit(TId userId, DateTimeOffset at)
     {
         ArgumentNullException.ThrowIfNull(userId, nameof(userId));
-        //TODO: Invalid date exception
+        ValidateDateTime(at);
+
         UserId = userId;
         At = at.ToUniversalTime();
     }
@@ -69,6 +71,24 @@ public sealed class Audit<TId> : IEquatable<Audit<TId>>
     public static bool operator !=(Audit<TId>? left, Audit<TId>? right)
     {
         return !Equals(left, right);
+    }
+
+    private static void ValidateDateTime(DateTimeOffset at)
+    {
+        if (at == DateTimeOffset.MinValue || at == DateTimeOffset.MaxValue)
+        {
+            throw new InvalidAuditException("Audit date is not valid.");
+        }
+
+        if (at > DateTimeOffset.UtcNow)
+        {
+            throw new InvalidAuditException("Audit date cannot be in the future.");
+        }
+
+        if (at < new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero))
+        {
+            throw new InvalidAuditException("Audit date is unreasonably old.");
+        }
     }
 }
 

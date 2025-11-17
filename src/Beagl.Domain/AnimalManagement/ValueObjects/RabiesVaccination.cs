@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
 
@@ -27,13 +28,18 @@ public sealed class RabiesVaccination : IEquatable<RabiesVaccination>
     /// <exception cref="ArgumentException">Thrown if <paramref name="isVaccinated"/> is true and <paramref name="vaccinationDate"/> is null.</exception>
     public RabiesVaccination(bool isVaccinated, DateTimeOffset? vaccinationDate)
     {
-        if (isVaccinated && vaccinationDate is null)
-        {
-            throw new ArgumentException("Vaccination date is required when vaccinated is true.", nameof(vaccinationDate));
-        }
+        ValidateVaccinatedDateIsProvided(isVaccinated, vaccinationDate);
 
         IsVaccinated = isVaccinated;
         VaccinationDate = vaccinationDate;
+    }
+
+    private static void ValidateVaccinatedDateIsProvided(bool isVaccinated, DateTimeOffset? vaccinationDate)
+    {
+        if (isVaccinated && vaccinationDate is null)
+        {
+            throw new RabiesVaccinationDomainException("Vaccination date is required when vaccinated is true.");
+        }
     }
 
     /// <inheritdoc/>
