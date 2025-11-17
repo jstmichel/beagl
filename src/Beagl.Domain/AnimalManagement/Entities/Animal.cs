@@ -5,6 +5,7 @@ using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.CitizenManagement.Entities;
 using Beagl.Domain.Core;
+using Beagl.Domain.Core.Exceptions;
 using Beagl.Domain.Core.ValueObjects;
 
 
@@ -15,6 +16,8 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </summary>
 public class Animal : AuditedAggregateRoot
 {
+    private const int MaximumAnimalAgeInYears = 30;
+
     /// <summary>
     /// Gets or sets the optional foreign key to the owning citizen.
     /// </summary>
@@ -140,6 +143,12 @@ public class Animal : AuditedAggregateRoot
         Audit<Guid> created)
         : base(created)
     {
+        ValidateSpeciesTypeIsKnown(speciesType);
+        ValidateNameIsNotNullOrWhitespace(name);
+        ValidatePrimaryBreedIdIsNotEmpty(primaryBreedId);
+        ValidateColorIdIsNotEmpty(colorId);
+        ValidateDateOfBirth(dateOfBirth);
+
         Id = Guid.NewGuid();
         SpeciesType = speciesType;
         Name = name;
@@ -158,5 +167,55 @@ public class Animal : AuditedAggregateRoot
         RabiesVaccination = rabiesVaccination;
         CitizenId = null;
         Citizen = null;
+    }
+
+    private static void ValidateNameIsNotNullOrWhitespace(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new InvalidAnimalException("Animal name cannot be null or whitespace.");
+        }
+    }
+
+    private static void ValidatePrimaryBreedIdIsNotEmpty(Guid primaryBreedId)
+    {
+        if (primaryBreedId == Guid.Empty)
+        {
+            throw new InvalidAnimalException("Primary breed ID cannot be empty.");
+        }
+    }
+
+    private static void ValidateColorIdIsNotEmpty(Guid colorId)
+    {
+        if (colorId == Guid.Empty)
+        {
+            throw new InvalidAnimalException("Color ID cannot be empty.");
+        }
+    }
+
+    private static void ValidateSpeciesTypeIsKnown(SpeciesType speciesType)
+    {
+        if (speciesType == SpeciesType.Unknown)
+        {
+            throw new InvalidAnimalException("Species type must be a known value.");
+        }
+    }
+
+    private static void ValidateDateOfBirth(DateTimeOffset dateOfBirth)
+    {
+        if (dateOfBirth == DateTimeOffset.MinValue)
+        {
+            throw new InvalidAnimalException("Date of birth must be specified.");
+        }
+
+        if (dateOfBirth > DateTimeOffset.UtcNow)
+        {
+            throw new InvalidAnimalException("Date of birth cannot be in the future.");
+        }
+
+        if (dateOfBirth < dateOfBirth.AddYears(-MaximumAnimalAgeInYears))
+        {
+            throw new InvalidAnimalException("Date of birth is unreasonably old.");
+        }
     }
 }
