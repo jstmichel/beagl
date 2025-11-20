@@ -36,11 +36,9 @@ public sealed class PersonName : IEquatable<PersonName>
     /// <param name="civility">The civility (title) of the person.</param>
     /// <param name="firstName">The first name.</param>
     /// <param name="lastName">The last name.</param>
-    /// <exception cref="PersonNameDomainException">Thrown when firstName or lastName is null or empty.</exception>
+    /// <exception cref="DomainException">Thrown when firstName or lastName is null or empty.</exception>
     public PersonName(Civility civility, string firstName, string lastName)
     {
-        PersonNameDomainException.ThrowIfNullOrEmpty(firstName, nameof(firstName));
-        PersonNameDomainException.ThrowIfNullOrEmpty(lastName, nameof(lastName));
         ValidateFirstName(firstName);
         ValidateLastName(lastName);
 
@@ -121,17 +119,27 @@ public sealed class PersonName : IEquatable<PersonName>
 
     private static void ValidateLastName(string lastName)
     {
+        if (string.IsNullOrWhiteSpace(lastName))
+        {
+            throw new DomainException(DomainErrorCode.PersonNameInvalidLastName, "Last name cannot be null or empty.");
+        }
+
         if (lastName.Length > 100)
         {
-            throw new PersonNameDomainException("Last name cannot exceed 100 characters.");
+            throw new DomainException(DomainErrorCode.PersonNameLastNameTooLong, "Last name cannot exceed 100 characters.");
         }
     }
 
     private static void ValidateFirstName(string firstName)
     {
+        if (string.IsNullOrWhiteSpace(firstName))
+        {
+            throw new DomainException(DomainErrorCode.PersonNameInvalidFirstName, "First name cannot be null or empty.");
+        }
+
         if (firstName.Length > 100)
         {
-            throw new PersonNameDomainException("First name cannot exceed 100 characters.");
+            throw new DomainException(DomainErrorCode.PersonNameFirstNameTooLong, "First name cannot exceed 100 characters.");
         }
     }
 }
