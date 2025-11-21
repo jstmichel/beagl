@@ -61,10 +61,10 @@ internal sealed class EditModel(
         {
             return BadRequest();
         }
-        catch (EntityNotFoundException)
-        {
-            return NotFound();
-        }
+        // catch (EntityNotFoundException)
+        // {
+        //     return NotFound();
+        // }
 
         return Page();
     }
@@ -89,10 +89,10 @@ internal sealed class EditModel(
         {
             return BadRequest();
         }
-        catch (EntityNotFoundException)
-        {
-            return NotFound();
-        }
+        // catch (EntityNotFoundException)
+        // {
+        //     return NotFound();
+        // }
         catch (InvalidOperationException)
         {
             return StatusCode((int)HttpStatusCode.InternalServerError);

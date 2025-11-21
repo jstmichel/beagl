@@ -173,7 +173,7 @@ public class Animal : AuditedAggregateRoot
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new InvalidAnimalException("Animal name cannot be null or whitespace.");
+            throw new DomainException(DomainErrorCode.AnimalNameCannotBeNullOrWhitespace, "Animal name cannot be null or whitespace.");
         }
     }
 
@@ -181,7 +181,7 @@ public class Animal : AuditedAggregateRoot
     {
         if (primaryBreedId == Guid.Empty)
         {
-            throw new InvalidAnimalException("Primary breed ID cannot be empty.");
+            throw new DomainException(DomainErrorCode.AnimalPrimaryBreedIdCannotBeEmpty, "Primary breed ID cannot be empty.");
         }
     }
 
@@ -189,7 +189,7 @@ public class Animal : AuditedAggregateRoot
     {
         if (colorId == Guid.Empty)
         {
-            throw new InvalidAnimalException("Color ID cannot be empty.");
+            throw new DomainException(DomainErrorCode.AnimalColorIdCannotBeEmpty, "Color ID cannot be empty.");
         }
     }
 
@@ -197,7 +197,7 @@ public class Animal : AuditedAggregateRoot
     {
         if (speciesType == SpeciesType.Unknown)
         {
-            throw new InvalidAnimalException("Species type must be a known value.");
+            throw new DomainException(DomainErrorCode.AnimalSpeciesTypeMustBeKnown, "Species type must be a known value.");
         }
     }
 
@@ -205,17 +205,17 @@ public class Animal : AuditedAggregateRoot
     {
         if (dateOfBirth == DateTimeOffset.MinValue)
         {
-            throw new InvalidAnimalException("Date of birth must be specified.");
+            throw new DomainException(DomainErrorCode.AnimalDateOfBirthMustBeSpecified, "Date of birth must be specified.");
         }
 
         if (dateOfBirth > DateTimeOffset.UtcNow)
         {
-            throw new InvalidAnimalException("Date of birth cannot be in the future.");
+            throw new DomainException(DomainErrorCode.AnimalDateOfBirthCannotBeInTheFuture, "Date of birth cannot be in the future.");
         }
 
         if (dateOfBirth < DateTimeOffset.Now.AddYears(-MaximumAnimalAgeInYears))
         {
-            throw new InvalidAnimalException("Date of birth is unreasonably old.");
+            throw new DomainException(DomainErrorCode.AnimalDateOfBirthIsUnreasonablyOld, "Date of birth is unreasonably old.");
         }
     }
 }

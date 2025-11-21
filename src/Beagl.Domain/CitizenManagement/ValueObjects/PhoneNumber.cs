@@ -20,7 +20,6 @@ public sealed partial class PhoneNumber : IEquatable<PhoneNumber>
     /// Initializes a new instance of the <see cref="PhoneNumber"/> class.
     /// </summary>
     /// <param name="value">The phone number string.</param>
-    /// <exception cref="PhoneNumberDomainException">Thrown if the phone number is invalid.</exception>
     public PhoneNumber(string value)
     {
         ValidatePhoneNumberIsNotNullOrEmpty(value);
@@ -99,7 +98,7 @@ public sealed partial class PhoneNumber : IEquatable<PhoneNumber>
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new PhoneNumberDomainException("Phone number cannot be null or empty.");
+            throw new DomainException(DomainErrorCode.PhoneCannotBeNullOrEmpty, "Phone number cannot be null or empty.");
         }
     }
 
@@ -107,7 +106,7 @@ public sealed partial class PhoneNumber : IEquatable<PhoneNumber>
     {
         if (!PhoneValidationRegex().IsMatch(value))
         {
-            throw new PhoneNumberDomainException("Phone number contains invalid characters.");
+            throw new DomainException(DomainErrorCode.PhoneMustNotContainInvalidCharacters, "Phone number contains invalid characters.");
         }
     }
 
@@ -127,7 +126,7 @@ public sealed partial class PhoneNumber : IEquatable<PhoneNumber>
     {
         if (mainDigits.Length is not 10 and not 11)
         {
-            throw new PhoneNumberDomainException("Phone number must be 10 or 11 digits.");
+            throw new DomainException(DomainErrorCode.PhoneMustBe10Or11Digits, "Phone number must be 10 or 11 digits.");
         }
     }
 

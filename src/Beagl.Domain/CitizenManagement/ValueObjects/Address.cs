@@ -62,10 +62,10 @@ public sealed class Address : IEquatable<Address>
         string postalCode,
         string? postOfficeBox = null)
     {
-        InvalidAddressException.ThrowIfNullOrWhiteSpace(streetAddress, nameof(streetAddress));
-        InvalidAddressException.ThrowIfNullOrWhiteSpace(city, nameof(city));
-        InvalidAddressException.ThrowIfNullOrWhiteSpace(province, nameof(province));
-        InvalidAddressException.ThrowIfNullOrWhiteSpace(country, nameof(country));
+        DomainException.ThrowIfNullOrWhiteSpace(streetAddress, nameof(streetAddress), DomainErrorCode.AddressStreetAddressRequired);
+        DomainException.ThrowIfNullOrWhiteSpace(city, nameof(city), DomainErrorCode.AddressCityRequired);
+        DomainException.ThrowIfNullOrWhiteSpace(province, nameof(province), DomainErrorCode.AddressProvinceRequired);
+        DomainException.ThrowIfNullOrWhiteSpace(country, nameof(country), DomainErrorCode.AddressCountryRequired);
 
         ValidatePostalCode(postalCode);
 
@@ -81,7 +81,7 @@ public sealed class Address : IEquatable<Address>
     {
         if (!IsValidPostalCode(postalCode))
         {
-            throw new InvalidAddressException($"The postal code '{postalCode}' is not in a valid format.");
+            throw new DomainException(DomainErrorCode.AddressPostalCodeRequired, $"The postal code '{postalCode}' is not in a valid format.");
         }
     }
 
@@ -90,7 +90,6 @@ public sealed class Address : IEquatable<Address>
     /// </summary>
     /// <param name="postalCode">The postal code to validate.</param>
     /// <returns>True if valid, otherwise false.</returns>
-    /// <exception cref="InvalidAddressException">Thrown when the postal code is null or whitespace.</exception>
     private static bool IsValidPostalCode(string postalCode)
     {
         if (string.IsNullOrWhiteSpace(postalCode))

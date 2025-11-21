@@ -35,10 +35,18 @@ public sealed class Breed : Entity
     /// <returns>A new instance of <see cref="Breed"/>.</returns>
     public Breed(string name, SpeciesType speciesType)
     {
-        InvalidBreedException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        ValidateNameIsNotNullOrWhitespace(name);
 
         Id = Guid.NewGuid();
         Name = name;
         SpeciesType = speciesType;
+    }
+
+    private static void ValidateNameIsNotNullOrWhitespace(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new DomainException(DomainErrorCode.BreedNameCannotBeNullOrWhitespace, "Breed name cannot be null or whitespace.");
+        }
     }
 }

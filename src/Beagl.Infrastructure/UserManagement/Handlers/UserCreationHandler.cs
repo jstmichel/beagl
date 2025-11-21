@@ -2,7 +2,6 @@
 
 using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Beagl.Infrastructure.UserManagement.Mappers;
@@ -60,7 +59,7 @@ public class UserCreationHandler(
     {
         ApplicationUser newUser = UserMapper.ToEntity(user);
         IdentityResult result = await userManager.CreateAsync(newUser, password);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
         await SetRolesAsync(user.Roles, newUser);
     }
 
@@ -68,6 +67,6 @@ public class UserCreationHandler(
     private async Task SetRolesAsync(Collection<string> roles, ApplicationUser userEntity)
     {
         IdentityResult result = await userManager.AddToRolesAsync(userEntity, roles);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
     }
 }

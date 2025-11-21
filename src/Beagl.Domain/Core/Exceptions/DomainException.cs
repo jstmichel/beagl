@@ -61,4 +61,19 @@ public class DomainException : Exception
     {
         ErrorCode = DomainErrorCode.Unknown;
     }
+
+    /// <summary>
+    /// Throws a <see cref="DomainException"/> if the provided string is null or whitespace.
+    /// </summary>
+    /// <param name="value">The string to check.</param>
+    /// <param name="paramName">The name of the parameter.</param>
+    /// <param name="errorCode">The error code.</param>
+    /// <exception cref="DomainException">Thrown when the string is null or whitespace.</exception>
+    public static void ThrowIfNullOrWhiteSpace(string? value, string paramName, DomainErrorCode errorCode)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new DomainException(errorCode, $"{paramName} cannot be null or empty.");
+        }
+    }
 }

@@ -77,17 +77,17 @@ public sealed class Audit<TId> : IEquatable<Audit<TId>>
     {
         if (at == DateTimeOffset.MinValue || at == DateTimeOffset.MaxValue)
         {
-            throw new InvalidAuditException("Audit date is not valid.");
+            throw new DomainException(DomainErrorCode.AuditDateIsNotValid, "Audit date is not valid.");
         }
 
         if (at > DateTimeOffset.UtcNow)
         {
-            throw new InvalidAuditException("Audit date cannot be in the future.");
+            throw new DomainException(DomainErrorCode.AuditDateCannotBeInTheFuture, "Audit date cannot be in the future.");
         }
 
         if (at < new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero))
         {
-            throw new InvalidAuditException("Audit date is unreasonably old.");
+            throw new DomainException(DomainErrorCode.AuditDateIsUnreasonablyOld, "Audit date is unreasonably old.");
         }
     }
 }

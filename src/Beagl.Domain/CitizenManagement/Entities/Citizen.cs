@@ -103,7 +103,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (!string.IsNullOrWhiteSpace(email) && !IsValidEmail(email))
         {
-            throw new InvalidCitizenException($"The email address '{email}' is not in a valid format.");
+            throw new DomainException(DomainErrorCode.CitizenInvalidEmail, $"The email address '{email}' is not in a valid format.");
         }
     }
 
@@ -131,7 +131,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (string.IsNullOrWhiteSpace(email))
         {
-            throw new InvalidCitizenException("Communication preference is set to Email, but no email address is provided.");
+            throw new DomainException(DomainErrorCode.CitizenEmailMustBeProvided, "Communication preference is set to Email, but no email address is provided.");
         }
     }
 
@@ -139,7 +139,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (cellPhone == null)
         {
-            throw new InvalidCitizenException("Communication preference is set to CellPhone, but no cell phone number is provided.");
+            throw new DomainException(DomainErrorCode.CitizenCellPhoneMustBeProvided, "Communication preference is set to CellPhone, but no cell phone number is provided.");
         }
     }
 
@@ -147,7 +147,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (phone == null)
         {
-            throw new InvalidCitizenException("Communication preference is set to Phone, but no phone number is provided.");
+            throw new DomainException(DomainErrorCode.CitizenPhoneMustBeProvided, "Communication preference is set to Phone, but no phone number is provided.");
         }
     }
 
@@ -155,7 +155,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (phone == null && cellPhone == null)
         {
-            throw new InvalidCitizenException("At least one phone number (phone or cell phone) must be provided.");
+            throw new DomainException(DomainErrorCode.CitizenAtLeastOnePhoneMustBeProvided, "At least one phone number (phone or cell phone) must be provided.");
         }
     }
 
@@ -163,7 +163,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (person == null)
         {
-            throw new InvalidCitizenException("Person name cannot be null.");
+            throw new DomainException(DomainErrorCode.CitizenInvalidPersonName, "Person name cannot be null.");
         }
     }
 
@@ -171,7 +171,7 @@ public sealed class Citizen : AuditedAggregateRoot
     {
         if (address == null)
         {
-            throw new InvalidCitizenException("Address cannot be null.");
+            throw new DomainException(DomainErrorCode.CitizenInvalidAddress, "Address cannot be null.");
         }
     }
 

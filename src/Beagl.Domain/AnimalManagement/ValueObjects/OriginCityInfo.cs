@@ -45,7 +45,7 @@ public class OriginCityInfo : IEquatable<OriginCityInfo>
     {
         if (!OriginCityInfoSpecification.IsSatisfiedBy(comesFromAnotherCity, cityName, hadJudgmentInThatCity))
         {
-            throw new OriginCityInfoDomainException("The provided origin city information does not satisfy business rules.");
+            throw new DomainException(DomainErrorCode.OriginCityInfoInvalid, "The provided origin city information does not satisfy business rules.");
         }
     }
 

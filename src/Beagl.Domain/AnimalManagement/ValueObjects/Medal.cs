@@ -1,7 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
-using System.Text.RegularExpressions;
 using Beagl.Domain.Core.Exceptions;
 
 namespace Beagl.Domain.AnimalManagement.ValueObjects;
@@ -64,7 +63,7 @@ public sealed partial class Medal : IEquatable<Medal>
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new InvalidMedalException("Medal value cannot be null or empty.");
+            throw new DomainException(DomainErrorCode.MedalValueCannotBeNullOrEmpty, "Medal value cannot be null or empty.");
         }
     }
 }

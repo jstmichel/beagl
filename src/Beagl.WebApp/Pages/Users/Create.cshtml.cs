@@ -3,7 +3,6 @@
 using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
-using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
@@ -69,12 +68,12 @@ internal sealed class CreateModel(
             AvailableRoles = GetAvailableRoles();
             return Page();
         }
-        catch (IdentityUpdateFailedException)
-        {
-            ModelState.AddModelError(string.Empty, "An error occurred while creating the user.");
-            AvailableRoles = GetAvailableRoles();
-            return Page();
-        }
+        // catch (IdentityUpdateFailedException)
+        // {
+        //     ModelState.AddModelError(string.Empty, "An error occurred while creating the user.");
+        //     AvailableRoles = GetAvailableRoles();
+        //     return Page();
+        // }
 
         return RedirectToPage(Redirection.ToUserList);
     }

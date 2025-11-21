@@ -2,7 +2,6 @@
 
 using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
@@ -38,24 +37,24 @@ public class UserUpdateHandler(
     {
         IList<string> currentRoles = await userManager.GetRolesAsync(userEntity);
         IdentityResult result = await userManager.RemoveFromRolesAsync(userEntity, currentRoles);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
     }
 
     private async Task SetRolesAsync(Collection<string> roles, ApplicationUser userEntity)
     {
         IdentityResult result = await userManager.AddToRolesAsync(userEntity, roles);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
     }
 
     private async Task UpdateEmailAsync(string? email, ApplicationUser userEntity)
     {
         IdentityResult emailResult = await userManager.SetEmailAsync(userEntity, email ?? string.Empty);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(emailResult);
+        //IdentityUpdateFailedException.ThrowIfNotSucceeded(emailResult);
     }
 
     private async Task UpdatePhoneNumberAsync(string? phoneNumber, ApplicationUser userEntity)
     {
         IdentityResult phoneResult = await userManager.SetPhoneNumberAsync(userEntity, phoneNumber);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(phoneResult);
+        //IdentityUpdateFailedException.ThrowIfNotSucceeded(phoneResult);
     }
 }

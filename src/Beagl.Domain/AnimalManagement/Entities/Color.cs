@@ -35,10 +35,18 @@ public sealed class Color : Entity
     /// <returns>A new instance of <see cref="Color"/>.</returns>
     public Color(string name, SpeciesType speciesType)
     {
-        InvalidColorException.ThrowIfNullOrWhiteSpace(name, nameof(name));
+        ValidateNameIsNotNullOrWhitespace(name);
 
         Id = Guid.NewGuid();
         Name = name;
         SpeciesType = speciesType;
+    }
+
+    private static void ValidateNameIsNotNullOrWhitespace(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new DomainException(DomainErrorCode.ColorNameCannotBeNullOrWhitespace, "Color name cannot be null or whitespace.");
+        }
     }
 }

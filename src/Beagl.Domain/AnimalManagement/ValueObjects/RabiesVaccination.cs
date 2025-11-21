@@ -38,7 +38,7 @@ public sealed class RabiesVaccination : IEquatable<RabiesVaccination>
     {
         if (isVaccinated && vaccinationDate is null)
         {
-            throw new RabiesVaccinationDomainException("Vaccination date is required when vaccinated is true.");
+            throw new DomainException(DomainErrorCode.RabiesVaccinationDateRequired, "Vaccination date is required when vaccinated is true.");
         }
     }
 

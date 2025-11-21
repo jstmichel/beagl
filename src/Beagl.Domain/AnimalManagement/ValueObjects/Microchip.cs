@@ -22,7 +22,7 @@ public sealed class Microchip : IEquatable<Microchip>
     /// <exception cref="ArgumentNullException">Thrown when value is null or empty.</exception>
     public Microchip(string value)
     {
-        InvalidMicrochipException.ThrowIfNullOrEmpty(value, nameof(value));
+        DomainException.ThrowIfNullOrWhiteSpace(value, nameof(value), DomainErrorCode.MicrochipInvalidValue);
         Value = value;
     }
 

@@ -1,8 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Domain.Core.Exceptions;
-using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
@@ -68,23 +66,26 @@ internal sealed class IndexModel(
             return Page();
         }
 
-        try
-        {
-            await userService.DeleteAsync(id);
-            TempData["UserDeleteSuccess"] = true;
-        }
-        catch (EntityDeleteFailedException ex)
-        {
-            HandleUserDeleteFailed(ex);
-        }
-        catch (LastUserDeleteException ex)
-        {
-            HandleLastUserDelete(ex);
-        }
-        catch (EntityNotFoundException ex)
-        {
-            HandleUserNotFound(ex);
-        }
+        await userService.DeleteAsync(id);
+        TempData["UserDeleteSuccess"] = true;
+
+        // try
+        // {
+        //     await userService.DeleteAsync(id);
+        //     TempData["UserDeleteSuccess"] = true;
+        // }
+        // catch (EntityDeleteFailedException ex)
+        // {
+        //     HandleUserDeleteFailed(ex);
+        // }
+        // catch (LastUserDeleteException ex)
+        // {
+        //     HandleLastUserDelete(ex);
+        // }
+        // catch (EntityNotFoundException ex)
+        // {
+        //     HandleUserNotFound(ex);
+        // }
 
         await LoadPageAsync(pageNumber);
         return Page();
@@ -93,14 +94,14 @@ internal sealed class IndexModel(
     private void HandleInvalidUserId() =>
         AddGlobalError(localizer["User ID cannot be empty"].Value);
 
-    private void HandleUserNotFound(EntityNotFoundException ex) =>
-        AddGlobalError(localizer["User was not found", ex.Message].Value);
+    // private void HandleUserNotFound(EntityNotFoundException ex) =>
+    //     AddGlobalError(localizer["User was not found", ex.Message].Value);
 
-    private void HandleUserDeleteFailed(EntityDeleteFailedException ex) =>
-        AddGlobalError(localizer["User deletion failed", ex.Message].Value);
+    // private void HandleUserDeleteFailed(EntityDeleteFailedException ex) =>
+    //     AddGlobalError(localizer["User deletion failed", ex.Message].Value);
 
-    private void HandleLastUserDelete(LastUserDeleteException ex) =>
-        AddGlobalError(localizer["Last user deletion error", ex.Message].Value);
+    // private void HandleLastUserDelete(LastUserDeleteException ex) =>
+    //     AddGlobalError(localizer["Last user deletion error", ex.Message].Value);
 
     private UserPagedFilterDto CreatePagedFilterDto(int pageNumber) =>
         new()
