@@ -136,7 +136,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                <label asp-for="Input.Weight" class="form-label">@Localizer["Weight"]</label>
+                                <label asp-for="Input.Weight" class="form-label">@Localizer["Weight"] <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <input asp-for="Input.Weight" class="form-control" />
                                     <select asp-for="Input.WeightUnit" class="form-select" style="max-width: 100px;">
