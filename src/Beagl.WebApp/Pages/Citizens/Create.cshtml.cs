@@ -2,8 +2,9 @@
 
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
-using Beagl.Domain.Core.Exceptions;
+using Beagl.Application.Core.Helpers;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Extensions;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -35,14 +36,11 @@ internal sealed class CreateCitizenModel(
         }
 
         CreateCitizenDto dto = Input.ToDto();
+        Result<Guid> result = await citizenService.CreateAsync(dto);
 
-        try
+        if (!result.Success)
         {
-            _ = await citizenService.CreateAsync(dto);
-        }
-        catch(DomainException ex)
-        {
-            ModelState.AddModelError(string.Empty, ex.Message);
+            ModelState.AddResultErrors(result);
             return Page();
         }
 
