@@ -10,7 +10,7 @@ public static class DomainErrorCode
     /// <summary>
     /// Unknown error.
     /// </summary>
-    public const string Unknown = "Unknown";
+    public const string None = "None";
 
     /// <summary>
     /// Invalid first name in PersonName value object.

@@ -12,14 +12,14 @@ public class DomainException : Exception
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainException"/> class.
     /// </summary>
-    public string? ErrorCode { get; }
+    public string ErrorCode { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainException"/> class.
     /// </summary>
     protected DomainException() : base()
     {
-        ErrorCode = DomainErrorCode.Unknown;
+        ErrorCode = DomainErrorCode.None;
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class DomainException : Exception
     /// <param name="message">The exception message.</param>
     protected DomainException(string message) : base(message)
     {
-        ErrorCode = DomainErrorCode.Unknown;
+        ErrorCode = DomainErrorCode.None;
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class DomainException : Exception
     /// <param name="innerException">The inner exception.</param>
     protected DomainException(string message, Exception innerException) : base(message, innerException)
     {
-        ErrorCode = DomainErrorCode.Unknown;
+        ErrorCode = DomainErrorCode.None;
     }
 
     /// <summary>

@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.Core.Helpers;
 
 namespace Beagl.Application.AnimalManagement.Services;
 
@@ -16,5 +17,5 @@ public interface ICatService
     /// </summary>
     /// <param name="createCatDto">The data transfer object containing cat creation details.</param>
     /// <returns>The unique identifier of the newly created cat.</returns>
-    public Task<Guid> CreateCatAsync(CreateCatDto createCatDto);
+    public Task<Result<Guid>> CreateCatAsync(CreateCatDto createCatDto);
 }

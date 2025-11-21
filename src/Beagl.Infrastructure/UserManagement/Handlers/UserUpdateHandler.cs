@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Infrastructure.UserManagement.DTOs;
+using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;

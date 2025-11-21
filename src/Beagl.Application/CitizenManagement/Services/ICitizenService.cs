@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using Beagl.Application.CitizenManagement.DTOs;
+using Beagl.Application.Core.Helpers;
 
 namespace Beagl.Application.CitizenManagement.Services;
 
@@ -16,5 +17,5 @@ public interface ICitizenService
     /// </summary>
     /// <param name="createCitizenDto">The data transfer object containing citizen creation details.</param>
     /// <returns>The unique identifier of the newly created citizen.</returns>
-    public Task<Guid> CreateAsync(CreateCitizenDto createCitizenDto);
+    public Task<Result<Guid>> CreateAsync(CreateCitizenDto createCitizenDto);
 }

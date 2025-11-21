@@ -3,8 +3,8 @@
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
+using Beagl.Infrastructure.Core.Helpers;
 
 namespace Beagl.Infrastructure.UserManagement.Handlers;
 
