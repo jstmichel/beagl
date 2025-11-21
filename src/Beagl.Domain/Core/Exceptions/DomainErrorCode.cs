@@ -5,200 +5,224 @@ namespace Beagl.Domain.Core.Exceptions;
 /// <summary>
 /// Enumeration of domain error codes.
 /// </summary>
-public enum DomainErrorCode
+public static class DomainErrorCode
 {
     /// <summary>
     /// Unknown error.
     /// </summary>
-    Unknown = 0,
+    public const string Unknown = "Unknown";
 
     /// <summary>
     /// Invalid first name in PersonName value object.
     /// </summary>
-    PersonNameInvalidFirstName = 101,
+    public const string PersonNameInvalidFirstName = "PersonNameInvalidFirstName";
 
     /// <summary>
     /// Invalid last name in PersonName value object.
     /// </summary>
-    PersonNameInvalidLastName = 102,
+    public const string PersonNameInvalidLastName = "PersonNameInvalidLastName";
 
     /// <summary>
     /// First name too long in PersonName value object.
     /// </summary>
-    PersonNameFirstNameTooLong = 104,
+    public const string PersonNameFirstNameTooLong = "PersonNameFirstNameTooLong";
 
     /// <summary>
     /// Last name too long in PersonName value object.
     /// </summary>
-    PersonNameLastNameTooLong = 103,
+    public const string PersonNameLastNameTooLong = "PersonNameLastNameTooLong";
 
     /// <summary>
     /// Invalid phone number in PhoneNumber value object.
     /// </summary>
-    CitizenInvalidEmail = 201,
+    public const string CitizenInvalidEmail = "CitizenInvalidEmail";
 
     /// <summary>
     /// Email must be provided when communication preference is Email.
     /// </summary>
-    CitizenEmailMustBeProvided = 202,
-
+    public const string CitizenEmailMustBeProvided = "CitizenEmailMustBeProvided";
     /// <summary>
     /// Cell phone must be provided when communication preference is CellPhone.
     /// </summary>
-    CitizenCellPhoneMustBeProvided = 203,
-
+    public const string CitizenCellPhoneMustBeProvided = "CitizenCellPhoneMustBeProvided";
     /// <summary>
     /// Phone must be provided when communication preference is Phone.
     /// </summary>
-    CitizenPhoneMustBeProvided = 204,
-
+    public const string CitizenPhoneMustBeProvided = "CitizenPhoneMustBeProvided";
     /// <summary>
     /// At least one phone number (phone or cell phone) must be provided.
     /// </summary>
-    CitizenAtLeastOnePhoneMustBeProvided = 205,
-
+    public const string CitizenAtLeastOnePhoneMustBeProvided = "CitizenAtLeastOnePhoneMustBeProvided";
     /// <summary>
     /// Invalid person name in Citizen entity.
     /// </summary>
-    CitizenInvalidPersonName = 206,
-
+    public const string CitizenInvalidPersonName = "CitizenInvalidPersonName";
     /// <summary>
     /// Invalid address in Citizen entity.
     /// </summary>
-    CitizenInvalidAddress = 207,
-
+    public const string CitizenInvalidAddress = "CitizenInvalidAddress";
     /// <summary>
     /// Animal name cannot be null or whitespace.
     /// </summary>
-    AnimalNameCannotBeNullOrWhitespace = 301,
-
+    public const string AnimalNameCannotBeNullOrWhitespace = "AnimalNameCannotBeNullOrWhitespace";
     /// <summary>
     /// Primary breed ID cannot be empty.
     /// </summary>
-    AnimalPrimaryBreedIdCannotBeEmpty = 302,
-
+    public const string AnimalPrimaryBreedIdCannotBeEmpty = "AnimalPrimaryBreedIdCannotBeEmpty";
     /// <summary>
     /// Color ID cannot be empty.
     /// </summary>
-    AnimalColorIdCannotBeEmpty = 303,
-
+    public const string AnimalColorIdCannotBeEmpty = "AnimalColorIdCannotBeEmpty";
     /// <summary>
     /// Species type must be known.
     /// </summary>
-    AnimalSpeciesTypeMustBeKnown = 304,
-
+    public const string AnimalSpeciesTypeMustBeKnown = "AnimalSpeciesTypeMustBeKnown";
     /// <summary>
     /// Date of birth must be specified.
     /// </summary>
-    AnimalDateOfBirthMustBeSpecified = 305,
-
+    public const string AnimalDateOfBirthMustBeSpecified = "AnimalDateOfBirthMustBeSpecified";
     /// <summary>
     /// Date of birth cannot be in the future.
     /// </summary>
-    AnimalDateOfBirthCannotBeInTheFuture = 306,
+    public const string AnimalDateOfBirthCannotBeInTheFuture = "AnimalDateOfBirthCannotBeInTheFuture";
 
     /// <summary>
     /// Date of birth is unreasonably old.
     /// </summary>
-    AnimalDateOfBirthIsUnreasonablyOld = 307,
+    public const string AnimalDateOfBirthIsUnreasonablyOld = "AnimalDateOfBirthIsUnreasonablyOld";
 
     /// <summary>
     /// Color name cannot be null or whitespace.
     /// </summary>
-    ColorNameCannotBeNullOrWhitespace = 401,
+    public const string ColorNameCannotBeNullOrWhitespace = "ColorNameCannotBeNullOrWhitespace";
 
     /// <summary>
     /// Breed name cannot be null or whitespace.
     /// </summary>
-    BreedNameCannotBeNullOrWhitespace = 501,
+    public const string BreedNameCannotBeNullOrWhitespace = "BreedNameCannotBeNullOrWhitespace";
 
     /// <summary>
     /// Medal value cannot be null or empty.
     /// </summary>
-    AddressStreetAddressRequired = 601,
+    public const string AddressStreetAddressRequired = "AddressStreetAddressRequired";
 
     /// <summary>
     /// City cannot be null or whitespace.
     /// </summary>
-    AddressCityRequired = 602,
+    public const string AddressCityRequired = "AddressCityRequired";
 
     /// <summary>
     /// Province cannot be null or whitespace.
     /// </summary>
-    AddressProvinceRequired = 603,
+    public const string AddressProvinceRequired = "AddressProvinceRequired";
 
     /// <summary>
     /// Country cannot be null or whitespace.
     /// </summary>
-    AddressCountryRequired = 604,
+    public const string AddressCountryRequired = "AddressCountryRequired";
 
     /// <summary>
     /// Postal code cannot be null or whitespace.
     /// </summary>
-    AddressPostalCodeRequired = 605,
+    public const string AddressPostalCodeRequired = "AddressPostalCodeRequired";
 
     /// <summary>
     /// Phone number cannot be null or empty.
     /// </summary>
-    PhoneCannotBeNullOrEmpty = 701,
+    public const string PhoneCannotBeNullOrEmpty = "PhoneCannotBeNullOrEmpty";
 
     /// <summary>
     /// Phone number must not contain invalid characters.
     /// </summary>
-    PhoneMustNotContainInvalidCharacters = 702,
+    public const string PhoneMustNotContainInvalidCharacters = "PhoneMustNotContainInvalidCharacters";
 
     /// <summary>
     /// Phone number must be 10 or 11 digits.
     /// </summary>
-    PhoneMustBe10Or11Digits = 703,
+    public const string PhoneMustBe10Or11Digits = "PhoneMustBe10Or11Digits";
 
     /// <summary>
     /// Medal value cannot be null or empty.
     /// </summary>
-    MedalValueCannotBeNullOrEmpty = 801,
+    public const string MedalValueCannotBeNullOrEmpty = "MedalValueCannotBeNullOrEmpty";
 
     /// <summary>
     /// Audit date is not valid.
     /// </summary>
-    AuditDateIsNotValid = 901,
+    public const string AuditDateIsNotValid = "AuditDateIsNotValid";
 
     /// <summary>
     /// Audit date cannot be in the future.
     /// </summary>
-    AuditDateCannotBeInTheFuture = 902,
+    public const string AuditDateCannotBeInTheFuture = "AuditDateCannotBeInTheFuture";
 
     /// <summary>
     /// Audit date is unreasonably old.
     /// </summary>
-    AuditDateIsUnreasonablyOld = 903,
+    public const string AuditDateIsUnreasonablyOld = "AuditDateIsUnreasonablyOld";
 
     /// <summary>
     /// Weight must be positive.
     /// </summary>
-    WeightMustBePositive = 1001,
+    public const string WeightMustBePositive = "WeightMustBePositive";
 
     /// <summary>
     /// Vaccination date is required when vaccinated is true.
     /// </summary>
-    RabiesVaccinationDateRequired = 1101,
+    public const string RabiesVaccinationDateRequired = "RabiesVaccinationDateRequired";
 
     /// <summary>
     /// The provided origin city information does not satisfy business rules.
     /// </summary>
-    OriginCityInfoInvalid = 1201,
+    public const string OriginCityInfoInvalid = "OriginCityInfoInvalid";
 
     /// <summary>
     /// The microchip value is invalid.
     /// </summary>
-    MicrochipInvalidValue = 1301,
+    public const string MicrochipInvalidValue = "MicrochipInvalidValue";
 
     /// <summary>
     /// User not found.
     /// </summary>
-    UserNotFound = 1401,
+    public const string UserNotFound = "UserNotFound";
 
     /// <summary>
     /// Cannot delete the last user.
     /// </summary>
-    UserCannotDeleteLastUser = 1402
+    public const string UserCannotDeleteLastUser = "UserCannotDeleteLastUser";
+
+    /// <summary>
+    /// User data is invalid.
+    /// </summary>
+    public const string UserDataIsInvalid = "UserDataIsInvalid";
+
+    /// <summary>
+    /// User password is invalid.
+    /// </summary>
+    public const string UserPasswordIsInvalid = "UserPasswordIsInvalid";
+
+    /// <summary>
+    /// User roles data is invalid.
+    /// </summary>
+    public const string UserRolesDataIsInvalid = "UserRolesDataIsInvalid";
+
+    /// <summary>
+    /// At least one role must be specified for the user.
+    /// </summary>
+    public const string UserAtLeastOneRoleMustBeSpecified = "UserAtLeastOneRoleMustBeSpecified";
+
+    /// <summary>
+    /// User email is invalid.
+    /// </summary>
+    public const string UserEmailIsInvalid = "UserEmailIsInvalid";
+
+    /// <summary>
+    /// User email already exists.
+    /// </summary>
+    public const string UserEmailAlreadyExists = "UserEmailAlreadyExists";
+
+    /// <summary>
+    /// Username already exists.
+    /// </summary>
+    public const string UserNameAlreadyExists = "UserNameAlreadyExists";
 }

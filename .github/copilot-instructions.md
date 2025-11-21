@@ -44,14 +44,15 @@ Beagl is a modern CRM for animal centers. It centralizes management of animals, 
 
 ## Error Handling and Logging
 
-Use exceptions for errors
-Only catch exceptions if handled
-Use custom exception types if relevant
-Domain exceptions must inherit from `DomainException` (see `src/Beagl.Domain/Core/Exceptions/DomainException.cs`).
-Domain exceptions must be placed in the `src/Beagl.Domain/Core/Exceptions/` folder.
-Logging via ASP.NET Core `ILogger<T>`
-Do not log sensitive information
-Use structured logging for complex data
+**Error Handling Guidelines:**
+- Aggregates, entities, and value objects must use exceptions for validation and business rule enforcement. Domain exceptions should be thrown for invariant violations and must inherit from `DomainException` (see `src/Beagl.Domain/Core/Exceptions/DomainException.cs`).
+- Application services, use cases, and handlers must use the result pattern (e.g., `Result<T>`, `OperationResult`) to communicate success, failure, and error details. Do not use exceptions for expected business or validation errors in these layers.
+- Only catch exceptions if handled.
+- Use custom exception types if relevant.
+- Domain exceptions must be placed in the `src/Beagl.Domain/Core/Exceptions/` folder.
+- Logging via ASP.NET Core `ILogger<T>`.
+- Do not log sensitive information.
+- Use structured logging for complex data.
 
 ## Data Sources
 

@@ -51,6 +51,7 @@ builder.Services.AddRepositories();
 builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddWebAppServices();
+builder.Services.AddValidators();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();

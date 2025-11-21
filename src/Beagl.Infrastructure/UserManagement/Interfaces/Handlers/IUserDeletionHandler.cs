@@ -1,5 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Infrastructure.UserManagement.DTOs;
+
 namespace Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 
 /// <summary>
@@ -12,5 +14,5 @@ public interface IUserDeletionHandler
     /// </summary>
     /// <param name="userId">The unique identifier of the user to delete.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task HandleAsync(string userId);
+    public Task<OperationResult> HandleAsync(string userId);
 }

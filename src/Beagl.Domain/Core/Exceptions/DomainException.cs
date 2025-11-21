@@ -12,7 +12,7 @@ public class DomainException : Exception
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainException"/> class.
     /// </summary>
-    public DomainErrorCode ErrorCode { get; }
+    public string? ErrorCode { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DomainException"/> class.
@@ -36,7 +36,7 @@ public class DomainException : Exception
     /// </summary>
     /// <param name="errorCode">The error code.</param>
     /// <param name="message">The exception message.</param>
-    public DomainException(DomainErrorCode errorCode, string message) : base(message)
+    public DomainException(string errorCode, string message) : base(message)
     {
         ErrorCode = errorCode;
     }
@@ -47,7 +47,7 @@ public class DomainException : Exception
     /// <param name="errorCode">The error code.</param>
     /// <param name="message">The exception message.</param>
     /// <param name="innerException">The inner exception.</param>
-    protected DomainException(DomainErrorCode errorCode, string message, Exception innerException) : base(message, innerException)
+    protected DomainException(string errorCode, string message, Exception innerException) : base(message, innerException)
     {
         ErrorCode = errorCode;
     }
@@ -69,9 +69,24 @@ public class DomainException : Exception
     /// <param name="paramName">The name of the parameter.</param>
     /// <param name="errorCode">The error code.</param>
     /// <exception cref="DomainException">Thrown when the string is null or whitespace.</exception>
-    public static void ThrowIfNullOrWhiteSpace(string? value, string paramName, DomainErrorCode errorCode)
+    public static void ThrowIfNullOrWhiteSpace(string? value, string paramName, string errorCode)
     {
         if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new DomainException(errorCode, $"{paramName} cannot be null or empty.");
+        }
+    }
+
+    /// <summary>
+    /// Throws a <see cref="DomainException"/> if the provided object is null.
+    /// </summary>
+    /// <param name="value">The object to check.</param>
+    /// <param name="paramName">The name of the parameter.</param>
+    /// <param name="errorCode">The error code.</param>
+    /// <exception cref="DomainException">Thrown when the object is null.</exception>
+    public static void ThrowIfNull(object? value, string paramName, string errorCode)
+    {
+        if (value == null)
         {
             throw new DomainException(errorCode, $"{paramName} cannot be null or empty.");
         }

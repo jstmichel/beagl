@@ -19,6 +19,8 @@ public class UserUpdateHandler(
     /// <inheritdoc/>
     public async Task HandleAsync(UserDto user)
     {
+        //TODO: Trap errors and return a result pattern instead of throwing exceptions
+        //TODO: Replace with domain exceptions with proper error codes
         ArgumentNullException.ThrowIfNull(user);
         ArgumentNullException.ThrowIfNull(user.Id);
         ApplicationUser userEntity = await userQueryService.FindUserByIdAsync(user.Id);
@@ -38,23 +40,30 @@ public class UserUpdateHandler(
         IList<string> currentRoles = await userManager.GetRolesAsync(userEntity);
         IdentityResult result = await userManager.RemoveFromRolesAsync(userEntity, currentRoles);
         //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        //TODO: Return a result pattern instead of throwing exceptions
     }
 
     private async Task SetRolesAsync(Collection<string> roles, ApplicationUser userEntity)
     {
         IdentityResult result = await userManager.AddToRolesAsync(userEntity, roles);
         //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
+        //TODO: Return a result pattern instead of throwing exceptions
+
     }
 
     private async Task UpdateEmailAsync(string? email, ApplicationUser userEntity)
     {
         IdentityResult emailResult = await userManager.SetEmailAsync(userEntity, email ?? string.Empty);
         //IdentityUpdateFailedException.ThrowIfNotSucceeded(emailResult);
+        //TODO: Return a result pattern instead of throwing exceptions
+
     }
 
     private async Task UpdatePhoneNumberAsync(string? phoneNumber, ApplicationUser userEntity)
     {
         IdentityResult phoneResult = await userManager.SetPhoneNumberAsync(userEntity, phoneNumber);
         //IdentityUpdateFailedException.ThrowIfNotSucceeded(phoneResult);
+        //TODO: Return a result pattern instead of throwing exceptions
+
     }
 }
