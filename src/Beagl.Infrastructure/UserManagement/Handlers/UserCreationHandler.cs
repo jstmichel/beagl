@@ -1,8 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Domain.Core.Exceptions;
+using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Beagl.Infrastructure.UserManagement.Mappers;
@@ -13,64 +12,46 @@ namespace Beagl.Infrastructure.UserManagement.Handlers;
 /// <summary>
 /// Handler for user creation logic.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="UserCreationHandler"/> class.
+/// </remarks>
+/// <param name="userManager">The user manager instance.</param>
+/// <param name="userCreationValidator">The user creation validator instance.</param>
 public class UserCreationHandler(
-    UserManager<ApplicationUser> userManager) : IUserCreationHandler
+    UserManager<ApplicationUser> userManager,
+    IUserCreationValidator userCreationValidator) : IUserCreationHandler
 {
-    /// <inheritdoc/>
-    public async Task HandleAsync(UserDto user, string password)
-    {
+	/// <inheritdoc/>
+	public async Task<OperationResult> HandleAsync(UserDto user, string password)
+	{
         ArgumentNullException.ThrowIfNull(user);
-        ValidateUserForCreation(user!, password);
-        await ValidateUsernameNotExistsAsync(user.UserName);
-        await ValidateEmailNotExistsAsync(user.Email);
-        await CreateUserAndSetRolesAsync(user, password);
-        //TODO: Return a result pattern instead of throwing exceptions
-    }
 
-    private async Task ValidateUsernameNotExistsAsync(string? username)
-    {
-        DomainException.ThrowIfNullOrWhiteSpace(username, nameof(username), DomainErrorCode.UserNameAlreadyExists);
-        ApplicationUser? existingUser = await userManager.FindByNameAsync(username!);
-        if (existingUser != null)
-        {
-            throw new DomainException(DomainErrorCode.UserNameAlreadyExists, "Username already exists.");
-        }
-    }
+        ApplicationUser? existingUserByName = await userManager.FindByNameAsync(user.UserName);
+		ApplicationUser? existingUserByEmail = await userManager.FindByEmailAsync(user.Email);
 
-    private async Task ValidateEmailNotExistsAsync(string? email)
-    {
-        ArgumentNullException.ThrowIfNullOrWhiteSpace(email, nameof(email));
-        ApplicationUser? existingUser = await userManager.FindByEmailAsync(email);
-        if (existingUser != null)
-        {
-            throw new DomainException(DomainErrorCode.UserEmailIsInvalid, "Email already exists.");
-        }
-    }
+        IReadOnlyList<(string ErrorCode, string ErrorMessage)> errors =
+            await userCreationValidator.ValidateAsync(user, password, existingUserByName, existingUserByEmail);
 
-    private static void ValidateUserForCreation(UserDto user, string password)
-    {
-        DomainException.ThrowIfNull(password, nameof(password), DomainErrorCode.UserPasswordIsInvalid);
-        DomainException.ThrowIfNull(user.Roles, nameof(user.Roles), DomainErrorCode.UserRolesDataIsInvalid);
-        if (user.Roles.Count == 0)
-        {
-            throw new DomainException(DomainErrorCode.UserAtLeastOneRoleMustBeSpecified, "At least one role must be specified.");
-        }
-    }
+        if (errors.Count > 0)
+			return OperationResult.Fail(errors);
 
-    private async Task CreateUserAndSetRolesAsync(UserDto user, string password)
-    {
-        ApplicationUser newUser = UserMapper.ToEntity(user);
-        IdentityResult result = await userManager.CreateAsync(newUser, password);
-        //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
-        await SetRolesAsync(user.Roles, newUser);
-        //TODO: Return a result pattern instead of throwing exceptions
+		ApplicationUser newUser = UserMapper.ToEntity(user);
+		IdentityResult createResult = await userManager.CreateAsync(newUser, password);
+		if (!createResult.Succeeded)
+		{
+            List<(string Code, string Description)> identityErrors =
+                [.. createResult.Errors.Select(e => (e.Code, e.Description))];
+			return OperationResult.Fail(identityErrors);
+		}
 
-    }
+		IdentityResult rolesResult = await userManager.AddToRolesAsync(newUser, user.Roles);
+		if (!rolesResult.Succeeded)
+		{
+            List<(string Code, string Description)> identityErrors =
+                [.. rolesResult.Errors.Select(e => (e.Code, e.Description))];
+			return OperationResult.Fail(identityErrors);
+		}
 
-    private async Task SetRolesAsync(Collection<string> roles, ApplicationUser userEntity)
-    {
-        IdentityResult result = await userManager.AddToRolesAsync(userEntity, roles);
-        //IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
-        //TODO: Return a result pattern instead of throwing exceptions
-    }
+		return OperationResult.Ok();
+	}
 }

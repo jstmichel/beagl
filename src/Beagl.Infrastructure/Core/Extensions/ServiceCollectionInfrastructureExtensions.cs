@@ -89,6 +89,8 @@ public static class ServiceCollectionInfrastructureExtensions
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
         services.AddScoped<IUserDeletionValidator, UserDeletionValidator>();
+        services.AddScoped<IUserCreationValidator, UserCreationValidator>();
+        services.AddScoped<IUserUpdateValidator, UserUpdateValidator>();
         return services;
     }
 }
