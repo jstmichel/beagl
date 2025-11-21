@@ -9,18 +9,20 @@
 
 <main class="form-signin w-100 m-auto">
     <form method="post">
-        <img class="mb-4 d-block mx-auto" src="images/logo-square.svg" alt="Logo" width="128">
+        <img class="mb-4 d-block mx-auto" src="images/beagl_logo.png" alt="Logo" width="128">
         <h1 class="h3 mb-3 fw-normal text-center">@L["Please sign in"]</h1>
         <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-floating mb-2">
-            <input asp-for="Email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
-            <label for="floatingInput">@L["Email address"]</label>
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-floating mb-2">
-            <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password" />
-            <label for="floatingPassword">@L["Password"]</label>
-            <span asp-validation-for="Password" class="text-danger"></span>
+        <div class="stacked-inputs">
+            <div class="form-floating">
+                <input asp-for="Email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
+                <label for="floatingInput">@L["Email address"]</label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+                <label for="floatingPassword">@L["Password"]</label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
         </div>
         <div class="form-check text-start my-3">
             <input asp-for="RememberMe" class="form-check-input" type="checkbox" id="rememberMe" value="true">
@@ -32,3 +34,17 @@
         <p class="mt-5 mb-3 text-body-secondary">@L["All rights reserved © Service animalier Pierre-De-Saurel et régions 2024"]</p>
     </form>
 </main>
+
+<style>
+.stacked-inputs .form-floating:first-child .form-control {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.stacked-inputs .form-floating:last-child .form-control {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+.stacked-inputs .form-floating {
+    margin-bottom: 0;
+}
+</style>
