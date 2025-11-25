@@ -133,11 +133,11 @@
                         {
                             @if(Model.FilterModel.Gender == gender)
                             {
-                                <option value="@gender" selected>@Localizer[gender.ToString()]</option>
+                                <option value="@gender" selected>gender.ToString()</option>
                             }
                             else
                             {
-                                <option value="@gender">@Localizer[gender.ToString()]</option>
+                                <option value="@gender">gender.ToString()</option>
                             }
                         }
                     </select>
