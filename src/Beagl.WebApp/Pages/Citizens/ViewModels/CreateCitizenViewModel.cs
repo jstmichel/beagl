@@ -61,7 +61,7 @@ public class CreateCitizenViewModel
 	/// <summary>
 	/// Email address.
 	/// </summary>
-	[EmailAddress]
+	[EmailAddress(ErrorMessage = "")]
 	[Display(Name = "Email")]
 	public string? Email { get; set; }
 

@@ -19,7 +19,7 @@ internal static class ModelStateExtensions
     {
         foreach ((string ErrorCode, string ErrorMessage) in result.Errors)
         {
-            modelState.AddModelError(ErrorCode, ErrorMessage);
+            modelState.AddModelError(ErrorCode, ErrorCode);
         }
     }
 }
