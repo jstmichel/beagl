@@ -168,4 +168,7 @@
     <data name="Add Dog" xml:space="preserve">
       <value>Ajouter un chien</value>
     </data>
+    <data name="Add User" xml:space="preserve">
+      <value>Ajouter un utilisateur</value>
+    </data>
   </root>
