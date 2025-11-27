@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Authorization
 @model Beagl.WebApp.Pages.Users.IndexModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Beagl.WebApp.Services.IStaticDataLocalizerService StaticDataLocalizer
 @inject IAuthorizationService AuthorizationService
 
 @{
@@ -97,7 +98,7 @@
                                         }
                                         @if (user.Roles != null && user.Roles.Count > 0)
                                         {
-                                            <div class="text-muted small"><i class="bi bi-shield-lock"></i><span class="ms-1">@user.Roles.FirstOrDefault()</span></div>
+                                            <div class="text-muted small"><i class="bi bi-shield-lock"></i><span class="ms-1">@StaticDataLocalizer.LocalizeString(user.Roles.FirstOrDefault() ?? string.Empty)</span></div>
                                         }
                                     </div>
                                     @{
