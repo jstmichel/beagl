@@ -141,4 +141,16 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="Please fix the following errors:" xml:space="preserve">
+    <value>Veuillez corriger les erreurs suivantes:</value>
+  </data>
+  <data name="User Details" xml:space="preserve">
+    <value>Détails de l'utilisateur</value>
+  </data>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>Confirmer le mot de passe</value>
+  </data>
+  <data name="Select Role" xml:space="preserve">
+    <value>Sélectionner un rôle</value>
+  </data>
 </root>
