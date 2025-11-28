@@ -230,6 +230,9 @@
 <script>
     // Improved image resizing: JPEG, quality, smaller max size, file type check
     const fileTooLargeMsg = '@Localizer["Image file is too large."]';
+    const onlyJpegOrPngMsg = '@Localizer["Only JPEG or PNG images are allowed."]';
+    const invalidImageFileMsg = '@Localizer["Invalid image file."]';
+    const couldNotReadFileMsg = '@Localizer["Could not read file."]';
     document.addEventListener('DOMContentLoaded', function () {
         const photoInput = document.getElementById('photoInput');
         const photoPreview = document.getElementById('photoPreview');
@@ -257,7 +260,7 @@
             if (errorMsg) errorMsg.remove();
             if (file) {
                 if (!file.type.match(/^image\/(jpeg|png)$/)) {
-                    showError('Only JPEG or PNG images are allowed.');
+                    showError(onlyJpegOrPngMsg);
                     resetPreview();
                     return;
                 }
@@ -284,13 +287,13 @@
                         if (base64Input) base64Input.value = dataUrl.split(',')[1];
                     };
                     img.onerror = function () {
-                        showError('Invalid image file.');
+                        showError(invalidImageFileMsg);
                         resetPreview();
                     };
                     img.src = evt.target.result;
                 };
                 reader.onerror = function () {
-                    showError('Could not read file.');
+                    showError(couldNotReadFileMsg);
                     resetPreview();
                 };
                 reader.readAsDataURL(file);

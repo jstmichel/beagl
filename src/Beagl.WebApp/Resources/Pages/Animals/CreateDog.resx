@@ -210,4 +210,58 @@
   <data name="Error_Required_Medal" xml:space="preserve">
     <value>Error_Required_Medal</value>
   </data>
+  <data name="Medal" xml:space="preserve">
+    <value>Medal</value>
+  </data>
+  <data name="Health Record" xml:space="preserve">
+    <value>Health Record</value>
+  </data>
+  <data name="Is Sterilized" xml:space="preserve">
+    <value>Is Sterilized</value>
+  </data>
+  <data name="Is Rabies Vaccinated" xml:space="preserve">
+    <value>Is Rabies Vaccinated</value>
+  </data>
+  <data name="Rabies Vaccination Date" xml:space="preserve">
+    <value>Rabies Vaccination Date</value>
+  </data>
+  <data name="Additional Information" xml:space="preserve">
+    <value>Additional Information</value>
+  </data>
+  <data name="Is Assistance Dog" xml:space="preserve">
+    <value>Is Assistance Dog</value>
+  </data>
+  <data name="Is Dangerous Dog" xml:space="preserve">
+    <value>Is Dangerous Dog</value>
+  </data>
+  <data name="Has Responsibility Insurance" xml:space="preserve">
+    <value>Has Responsibility Insurance</value>
+  </data>
+  <data name="Dangerous Dog Comment" xml:space="preserve">
+    <value>Dangerous Dog Comment</value>
+  </data>
+  <data name="Comes From Another City" xml:space="preserve">
+    <value>Comes From Another City</value>
+  </data>
+  <data name="Origin City Name" xml:space="preserve">
+    <value>Origin City Name</value>
+  </data>
+  <data name="Had Judgment In That City" xml:space="preserve">
+    <value>Had Judgment In That City</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Only JPEG or PNG images are allowed." xml:space="preserve">
+    <value>Only JPEG or PNG images are allowed.</value>
+  </data>
+  <data name="Invalid image file." xml:space="preserve">
+    <value>Invalid image file.</value>
+  </data>
+  <data name="Could not read file." xml:space="preserve">
+    <value>Could not read file.</value>
+  </data>
 </root>

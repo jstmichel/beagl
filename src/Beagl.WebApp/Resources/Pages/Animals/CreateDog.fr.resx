@@ -210,4 +210,58 @@
   <data name="Error_Required_Medal" xml:space="preserve">
     <value>Error_Required_Medal</value>
   </data>
+  <data name="Medal" xml:space="preserve">
+    <value>Médaille</value>
+  </data>
+  <data name="Health Record" xml:space="preserve">
+    <value>Dossier de santé</value>
+  </data>
+  <data name="Is Sterilized" xml:space="preserve">
+    <value>Stérilisé</value>
+  </data>
+  <data name="Is Rabies Vaccinated" xml:space="preserve">
+    <value>Vacciné contre la rage</value>
+  </data>
+  <data name="Rabies Vaccination Date" xml:space="preserve">
+    <value>Date de vaccination contre la rage</value>
+  </data>
+  <data name="Additional Information" xml:space="preserve">
+    <value>Informations supplémentaires</value>
+  </data>
+  <data name="Is Assistance Dog" xml:space="preserve">
+    <value>Chien d'assistance</value>
+  </data>
+  <data name="Is Dangerous Dog" xml:space="preserve">
+    <value>Chien dangereux</value>
+  </data>
+  <data name="Has Responsibility Insurance" xml:space="preserve">
+    <value>Assurance responsabilité</value>
+  </data>
+  <data name="Dangerous Dog Comment" xml:space="preserve">
+    <value>Commentaire sur le chien dangereux</value>
+  </data>
+  <data name="Comes From Another City" xml:space="preserve">
+    <value>Vient d'une autre ville</value>
+  </data>
+  <data name="Origin City Name" xml:space="preserve">
+    <value>Nom de la ville d'origine</value>
+  </data>
+  <data name="Had Judgment In That City" xml:space="preserve">
+    <value>A eu un jugement dans cette ville</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="Only JPEG or PNG images are allowed." xml:space="preserve">
+    <value>Seules les images JPEG ou PNG sont autorisées.</value>
+  </data>
+  <data name="Invalid image file." xml:space="preserve">
+    <value>Fichier image invalide.</value>
+  </data>
+  <data name="Could not read file." xml:space="preserve">
+    <value>Impossible de lire le fichier.</value>
+  </data>
 </root>
