@@ -79,6 +79,9 @@ namespace Beagl.WebApp.Resources.Pages.Citizens
         public static string Country_Required => ResourceManager.GetString("Country_Required", resourceCulture);
         public static string PostalCode_Required => ResourceManager.GetString("PostalCode_Required", resourceCulture);
         public static string StreetAddress_Required => ResourceManager.GetString("StreetAddress_Required", resourceCulture);
+        public static string Email_Required => ResourceManager.GetString("Email_Required", resourceCulture);
+        public static string PhoneFormat_Invalid => ResourceManager.GetString("PhoneFormat_Invalid", resourceCulture);
+        public static string CellPhoneFormat_Invalid => ResourceManager.GetString("CellPhoneFormat_Invalid", resourceCulture);
 
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }

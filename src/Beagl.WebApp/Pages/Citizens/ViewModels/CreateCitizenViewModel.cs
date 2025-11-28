@@ -33,14 +33,14 @@ public class CreateCitizenViewModel
 	/// <summary>
 	/// Phone number.
 	/// </summary>
-	[Phone]
+    [Phone(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "PhoneFormat_Invalid")]
 	[Display(Name = "Phone Number")]
 	public string? Phone { get; set; }
 
     /// <summary>
     /// Cell phone number.
     /// </summary>
-    [Phone]
+    [Phone(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "CellPhoneFormat_Invalid")]
     [Display(Name = "Cell Phone")]
     public string? CellPhone { get; set; }
 
@@ -61,7 +61,7 @@ public class CreateCitizenViewModel
 	/// <summary>
 	/// Email address.
 	/// </summary>
-	[EmailAddress(ErrorMessage = "")]
+	[EmailAddress(ErrorMessageResourceType = typeof(Create), ErrorMessageResourceName = "Email_Required")]
 	[Display(Name = "Email")]
 	public string? Email { get; set; }
 

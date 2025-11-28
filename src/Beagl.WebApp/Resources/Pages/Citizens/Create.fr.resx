@@ -256,6 +256,24 @@
     <value>Le code postal est requis.</value>
   </data>
   <data name="StreetAddress_Required" xml:space="preserve">
+    <value>L'adresse est requise.</value>
+  </data>
+  <data name="StreetAddress_Required" xml:space="preserve">
     <value>StreetAddress_Required</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Nom de famille</value>
+  </data>
+  <data name="Email_Required" xml:space="preserve">
+    <value>Le courriel est requis.</value>
+  </data>
+  <data name="PhoneFormat_Invalid" xml:space="preserve">
+    <value>Le format du numéro de téléphone est invalide.</value>
+  </data>
+  <data name="CellPhoneFormat_Invalid" xml:space="preserve">
+    <value>Le format du numéro de téléphone cellulaire est invalide.</value>
   </data>
 </root>
