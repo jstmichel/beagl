@@ -2,7 +2,7 @@
 
 using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Application.UserManagement.ViewModels;
+using Beagl.WebApp.Pages.Users.ViewModels;
 
 namespace Beagl.WebApp.Mappers;
 

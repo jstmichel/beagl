@@ -6,6 +6,7 @@ using Beagl.Application.UserManagement.ViewModels;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
+using Beagl.WebApp.Pages.Users.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

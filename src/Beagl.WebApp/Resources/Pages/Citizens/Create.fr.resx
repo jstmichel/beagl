@@ -258,9 +258,6 @@
   <data name="StreetAddress_Required" xml:space="preserve">
     <value>L'adresse est requise.</value>
   </data>
-  <data name="StreetAddress_Required" xml:space="preserve">
-    <value>StreetAddress_Required</value>
-  </data>
   <data name="First Name" xml:space="preserve">
     <value>Prénom</value>
   </data>

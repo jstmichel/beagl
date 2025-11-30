@@ -28,7 +28,7 @@ public class UserDto
     /// <summary>
     /// Gets or sets the phone number.
     /// </summary>
-    public string? PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the lockout end date for the user, if any.

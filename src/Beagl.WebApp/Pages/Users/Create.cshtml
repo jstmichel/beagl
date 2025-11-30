@@ -38,21 +38,18 @@
                                     @Localizer["Username"] <span class="text-danger">*</span>
                                 </label>
                                 <input asp-for="Input.UserName" class="form-control" />
-                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">
-                                    @Localizer["Email"]
+                                    @Localizer["Email"] <span class="text-danger">*</span>
                                 </label>
                                 <input asp-for="Input.Email" class="form-control" />
-                                <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">
                                     @Localizer["Phone Number"] <span class="text-danger">*</span>
                                 </label>
                                 <input asp-for="Input.PhoneNumber" class="form-control" />
-                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -61,14 +58,12 @@
                                     @Localizer["Password"] <span class="text-danger">*</span>
                                 </label>
                                 <input asp-for="Input.Password" class="form-control" type="password" />
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">
                                     @Localizer["Confirm Password"] <span class="text-danger">*</span>
                                 </label>
                                 <input asp-for="Input.ConfirmPassword" class="form-control" type="password" />
-                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">
@@ -81,7 +76,6 @@
                                         <option value="@role.Name">@StaticDataLocalizer.LocalizeString(role.Name)</option>
                                     }
                                 </select>
-                                <span asp-validation-for="Input.Roles" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

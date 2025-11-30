@@ -153,4 +153,25 @@
   <data name="Select Role" xml:space="preserve">
     <value>Select Role</value>
   </data>
+  <data name="EmailFormat_Invalid" xml:space="preserve">
+    <value>Email format is invalid.</value>
+  </data>
+  <data name="PhoneFormat_Invalid" xml:space="preserve">
+    <value>Phone number format is invalid.</value>
+  </data>
+  <data name="UserName_Required" xml:space="preserve">
+    <value>Username is required.</value>
+  </data>
+  <data name="Password_Required" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="ConfirmPassword_Required" xml:space="preserve">
+    <value>Confirm password is required.</value>
+  </data>
+  <data name="Phone_Required" xml:space="preserve">
+    <value>Phone number is required.</value>
+  </data>
+  <data name="Email_Required" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
 </root>

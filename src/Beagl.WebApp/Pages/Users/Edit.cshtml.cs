@@ -10,6 +10,7 @@ using Beagl.Application.UserManagement.ViewModels;
 using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Beagl.WebApp.Mappers;
+using Beagl.WebApp.Pages.Users.ViewModels;
 
 namespace Beagl.WebApp.Pages.Users;
 
