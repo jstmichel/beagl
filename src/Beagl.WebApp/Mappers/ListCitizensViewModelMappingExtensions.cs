@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.CitizenManagement.DTOs;
+using Beagl.Infrastructure.CitizenManagement.DTOs;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
 
 namespace Beagl.WebApp.Mappers;

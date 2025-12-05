@@ -28,9 +28,10 @@ Beagl is a modern CRM for animal centers. It centralizes management of animals, 
 
 ## Design Patterns & Architecture
 
-- Layered architecture: Domain, Infrastructure, Application, WebApp
+- Layered architecture: Domain, Infrastructure (merged with Application/services), WebApp
 - SOLID principles and Clean Architecture
-- Patterns used: Repository, Dependency Injection, Factory, Singleton, Strategy, Adapter, Observer, Mediator, Command, CQRS, Specification
+- Patterns used: Dependency Injection, Factory, Singleton, Strategy, Adapter, Observer, Mediator, Command, CQRS, Specification
+- Aggregates and value objects are used for domain modeling. Repositories and DTOs are not used; domain models are mapped directly to ViewModels.
 
 ## Naming and Formatting Conventions
 
@@ -87,6 +88,7 @@ Example: `feat: ajout du formulaire d’adoption`
 - Modularize code: separate responsibilities into distinct modules or classes
 - Respect Single Responsibility Principle
 - Use explicit names for variables, functions, and classes
+- Map aggregates/value objects directly to ViewModels
 - Add unit tests for critical functions
 - Limit file and function size for maintainability
 - Document entry points and public APIs
@@ -96,23 +98,20 @@ Example: `feat: ajout du formulaire d’adoption`
 
 ## Folder and Project Structure
 
-The repository contains the following projects:
+- The repository contains the following projects:
+-
+- - `src/Beagl.Saas.WebApp`: main web app (hybrid Blazor and Razor Pages)
+-     - Should contain: controllers, viewmodels, pages, UI components, integration services, UI-specific config
+- - `src/Beagl.Saas.Infrastructure`: merged infrastructure and application layer (data access, business/application services, external integrations, technical config)
+-     - Should contain: data contexts, business/application services, external integrations, technical config
+- - `src/Beagl.Saas.Domain`: domain model and business rules
+-     - Should contain: entities, aggregates, value objects, business rules, domain exceptions
 
-- `src/Beagl.Saas.WebApp`: main web app (hybrid Blazor and Razor Pages)
-    - Should contain: controllers, viewmodels, pages, UI components, integration services, UI-specific config
-- `src/Beagl.Saas.Infrastructure`: infrastructure layer (data access, external services)
-    - Should contain: repositories, data contexts, persistence DTOs, external integrations, technical config
-- `src/Beagl.Saas.Application`: application logic (use cases, business services)
-    - Should contain: application services, exchange DTOs, use case management, domain/infrastructure mapping
-- `src/Beagl.Saas.Domain`: domain model and business rules
-    - Should contain: entities, aggregates, value objects, repository interfaces, business rules, domain exceptions
-
-Tests are organized similarly:
-
-- `tests/Beagl.Saas.WebApp.Tests`: web app tests (controllers, UI, integration)
-- `tests/Beagl.Saas.Infrastructure.Tests`: infrastructure tests (repositories, data access)
-- `tests/Beagl.Saas.Application.Tests`: application logic tests (services, use cases)
-- `tests/Beagl.Saas.Domain.Tests`: domain tests (entities, aggregates, business rules)
+- Tests are organized similarly:
+-
+- - `tests/Beagl.Saas.WebApp.Tests`: web app tests (controllers, UI, integration)
+- - `tests/Beagl.Saas.Infrastructure.Tests`: infrastructure and application tests (services, data access)
+- - `tests/Beagl.Saas.Domain.Tests`: domain tests (entities, aggregates, business rules)
 
 Each project must include:
 All projects must include:
@@ -160,6 +159,7 @@ See the `README.md` files in each project for additional specific instructions.
 - Highlight important points or architectural choices in comments
 - For Copilot: avoid generating code in folders not listed in the structure, follow the conventions and standards above
 - Prefer recommended libraries and tools for the project
+- Do not use repositories or DTOs; use domain models and aggregates directly for mapping to ViewModels.
 
 **Important: All code generation must strictly follow the rules defined in the `.editorconfig` file at the project root.**
 This includes:

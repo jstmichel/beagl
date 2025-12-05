@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.UserManagement.DTOs;
+using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.WebApp.Pages.Users.ViewModels;
 
 namespace Beagl.WebApp.Mappers;

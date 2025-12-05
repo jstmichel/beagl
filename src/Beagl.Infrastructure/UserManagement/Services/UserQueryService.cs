@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.UserManagement.DTOs;
+using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.Core.Extensions;
 using Beagl.Infrastructure.UserManagement.Entities;

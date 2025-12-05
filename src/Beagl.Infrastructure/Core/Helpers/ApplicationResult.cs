@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.Core.Helpers;
+using Beagl.Infrastructure.Core.Helpers;
 
 namespace Beagl.Infrastructure.Core.Helpers;
 

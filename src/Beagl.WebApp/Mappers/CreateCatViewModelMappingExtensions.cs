@@ -3,7 +3,7 @@
 namespace Beagl.WebApp.Mappers;
 
 using System;
-using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Infrastructure.AnimalManagement.DTOs;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 
 /// <summary>

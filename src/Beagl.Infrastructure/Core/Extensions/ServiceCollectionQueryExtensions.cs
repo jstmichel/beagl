@@ -1,7 +1,5 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.AnimalManagement.Services;
-using Beagl.Application.CitizenManagement.Services;
 using Beagl.Infrastructure.AnimalManagement.Services;
 using Beagl.Infrastructure.CitizenManagement.Services;
 using Beagl.Infrastructure.UserManagement.Interfaces;

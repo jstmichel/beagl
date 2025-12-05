@@ -3,7 +3,7 @@
 namespace Beagl.WebApp.Mappers;
 
 using System;
-using Beagl.Application.CitizenManagement.DTOs;
+using Beagl.Infrastructure.CitizenManagement.DTOs;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
 
 /// <summary>

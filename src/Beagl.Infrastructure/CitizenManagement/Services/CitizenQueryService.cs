@@ -1,9 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.CitizenManagement.DTOs;
-using Beagl.Application.CitizenManagement.Mappers;
-using Beagl.Application.CitizenManagement.Services;
 using Beagl.Domain.CitizenManagement.Entities;
+using Beagl.Infrastructure.CitizenManagement.DTOs;
+using Beagl.Infrastructure.CitizenManagement.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beagl.Infrastructure.CitizenManagement.Services;

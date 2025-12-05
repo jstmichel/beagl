@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.Core.Interfaces;
+using Beagl.Infrastructure.Core.Interfaces;
 using Beagl.Infrastructure;
 using Beagl.Infrastructure.Core.Extensions;
 using Beagl.Infrastructure.UserManagement.Entities;

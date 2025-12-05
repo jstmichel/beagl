@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Beagl.Application.Core.Helpers;
+using Beagl.Infrastructure.Core.Helpers;
 
 namespace Beagl.WebApp.Extensions;
 

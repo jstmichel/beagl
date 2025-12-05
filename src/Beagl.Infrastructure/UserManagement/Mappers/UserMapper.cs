@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System.Collections.ObjectModel;
-using Beagl.Application.UserManagement.DTOs;
+using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Infrastructure.UserManagement.Entities;
 
 namespace Beagl.Infrastructure.UserManagement.Mappers;

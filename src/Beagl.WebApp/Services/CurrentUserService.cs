@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System.Security.Claims;
-using Beagl.Application.Core.Interfaces;
+using Beagl.Infrastructure.Core.Interfaces;
 
 namespace Beagl.WebApp.Services;
 

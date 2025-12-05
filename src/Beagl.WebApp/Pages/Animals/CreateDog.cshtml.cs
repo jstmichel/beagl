@@ -1,11 +1,11 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.AnimalManagement.DTOs;
-using Beagl.Application.AnimalManagement.Services;
-using Beagl.Application.CitizenManagement.DTOs;
-using Beagl.Application.CitizenManagement.Services;
-using Beagl.Application.Core.Helpers;
+using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Infrastructure.AnimalManagement.DTOs;
+using Beagl.Infrastructure.AnimalManagement.Services;
+using Beagl.Infrastructure.CitizenManagement.DTOs;
+using Beagl.Infrastructure.CitizenManagement.Services;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Extensions;
 using Beagl.WebApp.Mappers;

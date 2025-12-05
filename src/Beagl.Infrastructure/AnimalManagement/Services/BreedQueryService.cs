@@ -1,9 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.AnimalManagement.DTOs;
-using Beagl.Application.AnimalManagement.Mappers;
-using Beagl.Application.AnimalManagement.Services;
+using Beagl.Infrastructure.AnimalManagement.Mappers;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Infrastructure.AnimalManagement.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beagl.Infrastructure.AnimalManagement.Services;

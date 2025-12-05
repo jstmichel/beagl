@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.Core.DTOs;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Infrastructure.Core.DTOs;
 
 namespace Beagl.WebApp.Pages.Animals.ViewModels;
 

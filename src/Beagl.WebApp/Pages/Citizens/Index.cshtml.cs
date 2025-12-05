@@ -3,11 +3,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Beagl.WebApp.Pages.Shared.Models;
 using Beagl.WebApp.Pages.Citizens.ViewModels;
-using Beagl.Application.CitizenManagement.Services;
-using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.WebApp.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Beagl.WebApp.Constants;
+using Beagl.Infrastructure.CitizenManagement.DTOs;
+using Beagl.Infrastructure.CitizenManagement.Services;
 
 namespace Beagl.WebApp.Pages.Citizens;
 

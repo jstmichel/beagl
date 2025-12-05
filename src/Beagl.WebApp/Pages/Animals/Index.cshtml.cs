@@ -2,13 +2,13 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Beagl.WebApp.Pages.Shared.Models;
-using Beagl.Application.AnimalManagement.DTOs;
-using Beagl.Application.AnimalManagement.Services;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Beagl.Domain.AnimalManagement.Enums;
+using Beagl.Infrastructure.AnimalManagement.DTOs;
+using Beagl.Infrastructure.AnimalManagement.Services;
 
 namespace Beagl.WebApp.Pages.Animals;
 

@@ -1,6 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Infrastructure.AnimalManagement.DTOs;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 
 namespace Beagl.WebApp.Mappers;
