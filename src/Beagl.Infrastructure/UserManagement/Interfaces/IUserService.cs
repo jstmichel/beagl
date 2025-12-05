@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.UserManagement.DTOs;
+using Beagl.Infrastructure.Core.Helpers;
 
 namespace Beagl.Infrastructure.UserManagement.Interfaces;
 
@@ -15,26 +16,19 @@ public interface IUserService
     /// <param name="user">The user to create.</param>
     /// <param name="password">The user's password.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task CreateAsync(UserDto user, string password);
+    public Task<OperationResult> CreateAsync(UserDto user, string password);
 
     /// <summary>
     /// Updates an existing user.
     /// </summary>
     /// <param name="user">The user to update.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task UpdateAsync(UserDto user);
+    public Task<OperationResult> UpdateAsync(UserDto user);
 
     /// <summary>
     /// Deletes a user account.
     /// </summary>
     /// <param name="id">The user's unique identifier.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task DeleteAsync(string id);
-
-    /// <summary>
-    /// Sends an invitation to the user to activate their account.
-    /// </summary>
-    /// <param name="id">The user's unique identifier.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public Task SendInvitationAsync(string id);
+    public Task<OperationResult> DeleteAsync(string id);
 }

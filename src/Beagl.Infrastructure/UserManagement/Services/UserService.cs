@@ -1,6 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+using Beagl.Application.Core.Helpers;
 using Beagl.Application.UserManagement.DTOs;
+using Beagl.Domain.Core.Exceptions;
+using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 
@@ -16,23 +19,45 @@ public class UserService(
     IUserUpdateHandler userUpdateHandler) : IUserService
 {
     /// <inheritdoc/>
-    public async Task CreateAsync(UserDto user, string password)
+    public async Task<OperationResult> CreateAsync(UserDto user, string password)
     {
-        await userCreationHandler.HandleAsync(user, password);
+        ArgumentNullException.ThrowIfNull(user);
+
+        try
+        {
+            return await userCreationHandler.HandleAsync(user, password);
+        }
+        catch (DomainException ex)
+        {
+            return OperationResult.Fail(ex.ErrorCode, ex.Message);
+        }
     }
 
     /// <inheritdoc/>
-    public async Task DeleteAsync(string id)
+    public async Task<OperationResult> DeleteAsync(string id)
     {
-        await userDeletionHandler.HandleAsync(id);
+        ArgumentNullException.ThrowIfNull(id);
+        try
+        {
+            return await userDeletionHandler.HandleAsync(id);
+        }
+        catch (DomainException ex)
+        {
+            return OperationResult.Fail(ex.ErrorCode, ex.Message);
+        }
     }
 
     /// <inheritdoc/>
-    public Task SendInvitationAsync(string id) => throw new NotImplementedException();
-
-    /// <inheritdoc/>
-    public async Task UpdateAsync(UserDto user)
+    public async Task<OperationResult> UpdateAsync(UserDto user)
     {
-        await userUpdateHandler.HandleAsync(user);
+        ArgumentNullException.ThrowIfNull(user);
+        try
+        {
+            return await userUpdateHandler.HandleAsync(user);
+        }
+        catch (DomainException ex)
+        {
+            return OperationResult.Fail(ex.ErrorCode, ex.Message);
+        }
     }
 }

@@ -15,6 +15,7 @@ public class UserUpdateValidator : IUserUpdateValidator
     /// <inheritdoc/>
 	public Task<IReadOnlyList<(string ErrorCode, string ErrorMessage)>> ValidateAsync(UserDto user, ApplicationUser? userEntity)
 	{
+        //TODO: Add more validations (ex. unique email, phone number, etc.)
         List<(string, string)> errors = [];
 
 		if (user == null)

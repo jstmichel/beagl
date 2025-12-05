@@ -1,10 +1,12 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System.Collections.ObjectModel;
+using Beagl.Application.Core.Helpers;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
+using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Extensions;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Users.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +44,6 @@ internal sealed class CreateModel(
 
     public async Task<IActionResult> OnPost()
     {
-        //TODO: ugly, needs refactor
         if (!ModelState.IsValid)
         {
             AvailableRoles = GetAvailableRoles();
@@ -50,31 +51,13 @@ internal sealed class CreateModel(
         }
 
         UserDto dto = Input.ToDto();
-
-        // UserDto userDto = new()
-        // {
-        //     UserName = Input!.UserName,
-        //     Email = Input.Email,
-        //     PhoneNumber = Input.PhoneNumber,
-        //     Roles = new Collection<string>(Input.Roles)
-        // };
-
-        try
+        OperationResult result = await userService.CreateAsync(dto, Input.Password);
+        if (!result.Success)
         {
-            await userService.CreateAsync(dto, Input.Password);
-        }
-        catch (ArgumentException aEx)
-        {
-            ModelState.AddModelError(string.Empty, aEx.Message);
+            ModelState.AddResultErrors(result);
             AvailableRoles = GetAvailableRoles();
             return Page();
         }
-        // catch (IdentityUpdateFailedException)
-        // {
-        //     ModelState.AddModelError(string.Empty, "An error occurred while creating the user.");
-        //     AvailableRoles = GetAvailableRoles();
-        //     return Page();
-        // }
 
         return RedirectToPage(Redirection.ToUserList);
     }

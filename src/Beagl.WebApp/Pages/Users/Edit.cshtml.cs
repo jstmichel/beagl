@@ -3,7 +3,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
-using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
@@ -11,6 +10,8 @@ using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Users.ViewModels;
+using Beagl.Infrastructure.Core.Helpers;
+using Beagl.WebApp.Extensions;
 
 namespace Beagl.WebApp.Pages.Users;
 
@@ -34,7 +35,7 @@ internal sealed class EditModel(
     /// Gets or sets the user to edit.
     /// </summary>
     [BindProperty]
-    public EditUserViewModel? Input { get; set; } = new EditUserViewModel();
+    public EditUserViewModel Input { get; set; } = new EditUserViewModel();
 
     /// <summary>
     /// List of available roles for dropdown selection.
@@ -62,10 +63,6 @@ internal sealed class EditModel(
         {
             return BadRequest();
         }
-        // catch (EntityNotFoundException)
-        // {
-        //     return NotFound();
-        // }
 
         return Page();
     }
@@ -76,27 +73,20 @@ internal sealed class EditModel(
     /// <returns>The page result.</returns>
     public async Task<IActionResult> OnPostAsync()
     {
-        if (Input == null)
+        if (!ModelState.IsValid)
         {
-            return BadRequest();
+            AvailableRoles = GetAvailableRoles();
+            return Page();
         }
 
-        try
+        UserDto dto = Input.ToDto();
+        OperationResult result = await userService.UpdateAsync(dto);
+
+        if (!result.Success)
         {
-            UserDto dto = Input.ToDto();
-            await userService.UpdateAsync(dto);
-        }
-        catch (ArgumentException)
-        {
-            return BadRequest();
-        }
-        // catch (EntityNotFoundException)
-        // {
-        //     return NotFound();
-        // }
-        catch (InvalidOperationException)
-        {
-            return StatusCode((int)HttpStatusCode.InternalServerError);
+            ModelState.AddResultErrors(result);
+            AvailableRoles = GetAvailableRoles();
+            return Page();
         }
 
         return RedirectToPage(Redirection.ToUserList);
