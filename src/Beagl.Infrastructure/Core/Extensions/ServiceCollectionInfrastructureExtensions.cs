@@ -27,35 +27,21 @@ public static class ServiceCollectionInfrastructureExtensions
     }
 
     /// <summary>
-    /// Adds entity mappers to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddMappers(this IServiceCollection services)
-    {
-        return services;
-    }
-
-    /// <summary>
-    /// Adds domain services to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddDomainServices(this IServiceCollection services)
-    {
-        return services;
-    }
-
-    /// <summary>
     /// Adds application services to the service collection.
     /// </summary>
     /// <param name="services"></param>
     /// <returns></returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<ICatService, CatService>();
-        services.AddScoped<IDogService, DogService>();
+        services.AddScoped<IAnimalService, AnimalService>();
+        services.AddScoped<IAnimalQueryService, AnimalQueryService>();
+
         services.AddScoped<ICitizenService, CitizenService>();
+        services.AddScoped<ICitizenQueryService, CitizenQueryService>();
+
+        services.AddScoped<IUserQueryService, UserQueryService>();
+        services.AddScoped<IBreedQueryService, BreedQueryService>();
+        services.AddScoped<IColorQueryService, ColorQueryService>();
 
         return services;
     }

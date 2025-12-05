@@ -23,7 +23,7 @@ namespace Beagl.WebApp.Pages.Animals;
 internal sealed class CreateDogModel(
     IBreedQueryService breedQueryService,
     IColorQueryService colorQueryService,
-    IDogService dogService,
+    IAnimalService animalService,
     ICitizenQueryService citizenQueryService) : PageModel
 {
     /// <summary>
@@ -53,7 +53,7 @@ internal sealed class CreateDogModel(
         }
 
         CreateDogDto dto = Input.ToDto();
-        Result<Guid> result = await dogService.CreateDogAsync(dto);
+        Result<Guid> result = await animalService.CreateDogAsync(dto);
         if (!result.Success)
         {
             ModelState.AddResultErrors(result);

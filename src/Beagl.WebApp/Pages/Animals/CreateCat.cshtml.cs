@@ -23,7 +23,7 @@ namespace Beagl.WebApp.Pages.Animals;
 internal sealed class CreateCatModel(
     IBreedQueryService breedQueryService,
     IColorQueryService colorQueryService,
-    ICatService catService,
+    IAnimalService animalService,
     ICitizenQueryService citizenQueryService) : PageModel
 {
     /// <summary>
@@ -53,7 +53,7 @@ internal sealed class CreateCatModel(
         }
 
         CreateCatDto catDto = Input.ToDto();
-        Result<Guid> result = await catService.CreateCatAsync(catDto);
+        Result<Guid> result = await animalService.CreateCatAsync(catDto);
         if (!result.Success)
         {
             ModelState.AddResultErrors(result);
