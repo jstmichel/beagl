@@ -3,7 +3,7 @@
 using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Infrastructure.UserManagement.Entities;
 
-namespace Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
+namespace Beagl.Infrastructure.UserManagement.Handlers;
 
 /// <summary>
 /// Validates user creation business rules.

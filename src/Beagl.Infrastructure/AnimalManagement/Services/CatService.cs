@@ -3,7 +3,6 @@
 using Beagl.Infrastructure.AnimalManagement.Mappers;
 using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Domain.AnimalManagement.Entities;
-using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.AnimalManagement.DTOs;
 
@@ -13,7 +12,7 @@ namespace Beagl.Infrastructure.AnimalManagement.Services;
 /// Implementation of cat-related operations.
 /// </summary>
 public sealed class CatService(
-    ICatRepository catRepository) : ICatService
+    ApplicationDbContext dbContext) : ICatService
 {
     /// <inheritdoc />
     public async Task<Result<Guid>> CreateCatAsync(CreateCatDto createCatDto)
@@ -23,8 +22,9 @@ public sealed class CatService(
         try
         {
             Cat newCat = createCatDto.ToDomain();
-            Guid catId = await catRepository.CreateAsync(newCat);
-            return ApplicationResult.Ok(catId);
+            dbContext.Cats.Add(newCat);
+            await dbContext.SaveChangesAsync();
+            return ApplicationResult.Ok(newCat.Id);
         }
         catch (DomainException ex)
         {

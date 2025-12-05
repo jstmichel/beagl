@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 using Beagl.Domain.Core.Exceptions;
-using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Users.ViewModels;
+using Beagl.Infrastructure.UserManagement.Services;
 
 namespace Beagl.WebApp.Pages.Users;
 

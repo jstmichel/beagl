@@ -3,7 +3,7 @@
 using Beagl.Infrastructure.UserManagement.DTOs;
 using Beagl.Infrastructure.UserManagement.Entities;
 
-namespace Beagl.Infrastructure.UserManagement.Interfaces;
+namespace Beagl.Infrastructure.UserManagement.Services;
 
 /// <summary>
 /// Provides methods to retrieve application roles.

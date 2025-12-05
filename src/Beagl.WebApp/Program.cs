@@ -47,7 +47,6 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddHandlerServices();
 builder.Services.AddQueryServices();
 builder.Services.AddMappers();
-builder.Services.AddRepositories();
 builder.Services.AddDomainServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddWebAppServices();

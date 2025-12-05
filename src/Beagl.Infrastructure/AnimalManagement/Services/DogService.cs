@@ -2,7 +2,6 @@
 
 using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Domain.AnimalManagement.Entities;
-using Beagl.Domain.AnimalManagement.Repositories;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.AnimalManagement.DTOs;
 using Beagl.Infrastructure.AnimalManagement.Mappers;
@@ -13,7 +12,7 @@ namespace Beagl.Infrastructure.AnimalManagement.Services;
 /// Implementation of dog-related operations.
 /// </summary>
 public sealed class DogService(
-    IDogRepository dogRepository) : IDogService
+    ApplicationDbContext dbContext) : IDogService
 {
     /// <inheritdoc />
     public async Task<Result<Guid>> CreateDogAsync(CreateDogDto createDogDto)
@@ -23,8 +22,9 @@ public sealed class DogService(
         try
         {
             Dog newDog = createDogDto.ToDomain();
-            Guid dogId = await dogRepository.CreateAsync(newDog);
-            return ApplicationResult.Ok(dogId);
+            dbContext.Dogs.Add(newDog);
+            await dbContext.SaveChangesAsync();
+            return ApplicationResult.Ok(newDog.Id);
         }
         catch (DomainException ex)
         {

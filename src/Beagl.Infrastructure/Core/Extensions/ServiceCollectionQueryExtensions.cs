@@ -2,7 +2,6 @@
 
 using Beagl.Infrastructure.AnimalManagement.Services;
 using Beagl.Infrastructure.CitizenManagement.Services;
-using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
 

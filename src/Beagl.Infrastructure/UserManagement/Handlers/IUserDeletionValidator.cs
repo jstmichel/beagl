@@ -1,9 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Infrastructure.Core.Extensions;
 using Beagl.Infrastructure.UserManagement.Entities;
 
-namespace Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
+namespace Beagl.Infrastructure.UserManagement.Handlers;
 
 /// <summary>
 /// Validates user deletion business rules.

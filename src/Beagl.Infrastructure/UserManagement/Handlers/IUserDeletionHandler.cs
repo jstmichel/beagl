@@ -1,8 +1,11 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
+
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
 using Beagl.Infrastructure.Core.Helpers;
 
-namespace Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
+namespace Beagl.Infrastructure.UserManagement.Handlers;
 
 /// <summary>
 /// Handler for user deletion logic.

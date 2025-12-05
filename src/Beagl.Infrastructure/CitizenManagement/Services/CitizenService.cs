@@ -2,7 +2,6 @@
 
 using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Domain.CitizenManagement.Entities;
-using Beagl.Domain.CitizenManagement.Repositories;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.CitizenManagement.DTOs;
 using Beagl.Infrastructure.CitizenManagement.Mappers;
@@ -14,7 +13,7 @@ namespace Beagl.Infrastructure.CitizenManagement.Services;
 /// </summary>
 /// <seealso cref="ICitizenService"/>
 public class CitizenService(
-    ICitizenRepository citizenRepository) : ICitizenService
+    ApplicationDbContext dbContext) : ICitizenService
 {
     /// <inheritdoc/>
     public async Task<Result<Guid>> CreateAsync(CreateCitizenDto createCitizenDto)
@@ -24,8 +23,9 @@ public class CitizenService(
         try
         {
             Citizen newCitizen = createCitizenDto.ToDomain();
-            Guid citizenId = await citizenRepository.CreateAsync(newCitizen);
-            return ApplicationResult.Ok(citizenId);
+            dbContext.Citizens.Add(newCitizen);
+            await dbContext.SaveChangesAsync();
+            return ApplicationResult.Ok(newCitizen.Id);
         }
         catch (DomainException ex)
         {

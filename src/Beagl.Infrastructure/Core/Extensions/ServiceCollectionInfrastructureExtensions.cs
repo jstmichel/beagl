@@ -1,14 +1,8 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using Beagl.Domain.AnimalManagement.Repositories;
-using Beagl.Domain.CitizenManagement.Repositories;
-using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Services;
-using Beagl.Infrastructure.CitizenManagement.Repositories;
 using Beagl.Infrastructure.CitizenManagement.Services;
 using Beagl.Infrastructure.UserManagement.Handlers;
-using Beagl.Infrastructure.UserManagement.Interfaces;
-using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -63,19 +57,6 @@ public static class ServiceCollectionInfrastructureExtensions
         services.AddScoped<IDogService, DogService>();
         services.AddScoped<ICitizenService, CitizenService>();
 
-        return services;
-    }
-
-    /// <summary>
-    /// Adds repositories to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        services.AddScoped<ICatRepository, CatRepository>();
-        services.AddScoped<IDogRepository, DogRepository>();
-        services.AddScoped<ICitizenRepository, CitizenRepository>();
         return services;
     }
 

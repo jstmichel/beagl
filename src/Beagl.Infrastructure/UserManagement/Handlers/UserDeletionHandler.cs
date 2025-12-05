@@ -1,10 +1,9 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Infrastructure.UserManagement.Entities;
-using Beagl.Infrastructure.UserManagement.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Beagl.Infrastructure.Core.Helpers;
+using Beagl.Infrastructure.UserManagement.Services;
 
 namespace Beagl.Infrastructure.UserManagement.Handlers;
 

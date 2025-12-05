@@ -1,7 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Infrastructure.UserManagement.DTOs;
-using Beagl.Infrastructure.UserManagement.Interfaces;
+using Beagl.Infrastructure.UserManagement.Services;
 using Beagl.WebApp.Constants;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Shared.Models;

@@ -2,7 +2,7 @@
 
 using Beagl.Infrastructure.UserManagement.DTOs;
 
-namespace Beagl.Infrastructure.UserManagement.Interfaces;
+namespace Beagl.Infrastructure.UserManagement.Services;
 
 /// <summary>
 /// Defines CRUD operations for application users.

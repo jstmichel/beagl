@@ -1,7 +1,6 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Infrastructure.UserManagement.Handlers;
-using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Beagl.Infrastructure.Core.Extensions;

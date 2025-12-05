@@ -5,7 +5,7 @@ using Beagl.Domain.Core.Exceptions;
 using Beagl.Domain.Core.Interfaces;
 using Beagl.Infrastructure.UserManagement.Entities;
 
-namespace Beagl.Infrastructure.UserManagement.Interfaces;
+namespace Beagl.Infrastructure.UserManagement.Services;
 
 /// <summary>
 /// Service for querying user information.

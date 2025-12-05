@@ -1,7 +1,5 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System;
-
 namespace Beagl.Infrastructure.Core.Interfaces;
 
 /// <summary>
