@@ -33,4 +33,13 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="Please fix the following errors:" xml:space="preserve">
+    <value>Veuillez corriger les erreurs suivantes :</value>
+  </data>
+  <data name="User Details" xml:space="preserve">
+    <value>Détails de l'utilisateur</value>
+  </data>
 </root>

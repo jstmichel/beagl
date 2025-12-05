@@ -17,4 +17,11 @@ public interface IColorQueryService
     /// </summary>
     /// <returns>List of color DTOs.</returns>
     public Task<IList<ColorDto>> GetAllBySpeciesAsync(SpeciesType species);
+
+    /// <summary>
+    /// Gets all available colors.
+    /// </summary>
+    /// <returns>List of color DTOs.</returns>
+    public Task<IList<ColorDto>> GetAllAsync();
+
 }

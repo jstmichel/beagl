@@ -3,9 +3,10 @@
 using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
-using Beagl.Domain.UserManagement.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Mappers;
+using Beagl.WebApp.Pages.Users.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -24,7 +25,7 @@ internal sealed class CreateModel(
     /// Gets or sets the new user to be created.
     /// </summary>
     [BindProperty]
-    public CreateUserViewModel? NewUser { get; set; }
+    public CreateUserViewModel Input { get; set; } = new CreateUserViewModel();
 
     /// <summary>
     /// Gets or sets the available roles for selection.
@@ -48,17 +49,19 @@ internal sealed class CreateModel(
             return Page();
         }
 
-        UserDto userDto = new()
-        {
-            UserName = NewUser!.UserName,
-            Email = NewUser.Email,
-            PhoneNumber = NewUser.PhoneNumber,
-            Roles = new Collection<string>(NewUser.Roles)
-        };
+        UserDto dto = Input.ToDto();
+
+        // UserDto userDto = new()
+        // {
+        //     UserName = Input!.UserName,
+        //     Email = Input.Email,
+        //     PhoneNumber = Input.PhoneNumber,
+        //     Roles = new Collection<string>(Input.Roles)
+        // };
 
         try
         {
-            await userService.CreateAsync(userDto, NewUser.Password);
+            await userService.CreateAsync(dto, Input.Password);
         }
         catch (ArgumentException aEx)
         {
@@ -66,14 +69,14 @@ internal sealed class CreateModel(
             AvailableRoles = GetAvailableRoles();
             return Page();
         }
-        catch (IdentityUpdateFailedException)
-        {
-            ModelState.AddModelError(string.Empty, "An error occurred while creating the user.");
-            AvailableRoles = GetAvailableRoles();
-            return Page();
-        }
+        // catch (IdentityUpdateFailedException)
+        // {
+        //     ModelState.AddModelError(string.Empty, "An error occurred while creating the user.");
+        //     AvailableRoles = GetAvailableRoles();
+        //     return Page();
+        // }
 
-        return RedirectToPage("/Users/Index");
+        return RedirectToPage(Redirection.ToUserList);
     }
 
     private List<RoleViewModel> GetAvailableRoles()

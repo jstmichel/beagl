@@ -138,8 +138,23 @@
   <data name="Select Breed" xml:space="preserve">
     <value>Select Breed</value>
   </data>
-  <data name="Is Unclawned Cat" xml:space="preserve">
-    <value>Is Unclawned Cat</value>
+  <data name="Is Declawed Cat" xml:space="preserve">
+    <value>Is Declawed Cat</value>
+  </data>
+  <data name="Medal" xml:space="preserve">
+    <value>Medal</value>
+  </data>
+  <data name="Health Record" xml:space="preserve">
+    <value>Health Record</value>
+  </data>
+  <data name="Is Sterilized" xml:space="preserve">
+    <value>Is Sterilized</value>
+  </data>
+  <data name="Is Rabies Vaccinated" xml:space="preserve">
+    <value>Is Rabies Vaccinated</value>
+  </data>
+  <data name="Rabies Vaccination Date" xml:space="preserve">
+    <value>Rabies Vaccination Date</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
@@ -209,5 +224,14 @@
   </data>
   <data name="Error_Required_Medal" xml:space="preserve">
     <value>Error_Required_Medal</value>
+  </data>
+  <data name="Only JPEG or PNG images are allowed." xml:space="preserve">
+    <value>Only JPEG or PNG images are allowed.</value>
+  </data>
+  <data name="Invalid image file." xml:space="preserve">
+    <value>Invalid image file.</value>
+  </data>
+  <data name="Could not read file." xml:space="preserve">
+    <value>Could not read file.</value>
   </data>
 </root>

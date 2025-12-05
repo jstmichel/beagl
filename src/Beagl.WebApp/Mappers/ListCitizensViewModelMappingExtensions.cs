@@ -26,7 +26,8 @@ internal static class ListCitizensViewModelMappingExtensions
             Phone = dto.Phone,
             CellPhone = dto.CellPhone,
             Email = dto.Email,
-            AnimalsCount = dto.AnimalsCount
+            AnimalsCount = dto.AnimalsCount,
+            Address = dto.Address
         };
     }
 }

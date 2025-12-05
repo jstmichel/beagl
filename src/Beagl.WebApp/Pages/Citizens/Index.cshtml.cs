@@ -51,6 +51,12 @@ internal sealed class IndexModel(
         {
             PageNumber = pageNumber,
             PageSize = PageSize,
+            Name = FilterModel.Name,
+            Email = FilterModel.Email,
+            PhoneNumber = FilterModel.PhoneNumber,
+            StreetAddress = FilterModel.StreetAddress,
+            City = FilterModel.City,
+            PostalCode = FilterModel.PostalCode
         };
 
     /// <summary>
@@ -58,5 +64,11 @@ internal sealed class IndexModel(
     /// </summary>
     internal sealed class CitizenFilterModel
     {
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? City { get; set; }
+        public string? PostalCode { get; set; }
     }
 }

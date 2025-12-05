@@ -138,7 +138,7 @@
   <data name="Apply Filters" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="Not found" xml:space="preserve">
+  <data name="Not found." xml:space="preserve">
     <value>No users found.</value>
   </data>
   <data name="Username Header" xml:space="preserve">
@@ -184,5 +184,23 @@
   </data>
   <data name="Unconfirmed" xml:space="preserve">
     <value>Unconfirmed</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Clear Filters" xml:space="preserve">
+    <value>Clear Filters</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="User deleted successfully." xml:space="preserve">
+    <value>User deleted successfully.</value>
   </data>
 </root>

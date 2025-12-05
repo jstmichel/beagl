@@ -25,8 +25,8 @@ public static class UserMapper
         return new UserDto
         {
             Id = user.Id,
-            UserName = user.UserName,
-            Email = user.Email,
+            UserName = user.UserName!,
+            Email = user.Email!,
             PhoneNumber = user.PhoneNumber,
             IsDeleted = user.IsDeleted,
             Roles = new Collection<string>(roles),

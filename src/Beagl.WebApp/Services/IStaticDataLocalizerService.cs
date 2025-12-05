@@ -22,4 +22,11 @@ public interface IStaticDataLocalizerService
     /// <param name="species">The species to localize.</param>
     /// <returns>The localized species string.</returns>
     public string LocalizeSpecies(SpeciesType species);
+
+    /// <summary>
+    /// Localizes a string based on the provided key.
+    /// </summary>
+    /// <param name="key">The key of the string to localize.</param>
+    /// <returns>The localized string.</returns>
+    public string LocalizeString(string key);
 }

@@ -4,14 +4,15 @@ using Beagl.Application.AnimalManagement.DTOs;
 using Beagl.Application.AnimalManagement.Services;
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Application.CitizenManagement.Services;
+using Beagl.Application.Core.Helpers;
 using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.WebApp.Constants;
+using Beagl.WebApp.Extensions;
 using Beagl.WebApp.Mappers;
 using Beagl.WebApp.Pages.Animals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Beagl.WebApp.Pages.Animals;
 
@@ -52,9 +53,15 @@ internal sealed class CreateDogModel(
         }
 
         CreateDogDto dto = Input.ToDto();
-        _ = await dogService.CreateDogAsync(dto);
+        Result<Guid> result = await dogService.CreateDogAsync(dto);
+        if (!result.Success)
+        {
+            ModelState.AddResultErrors(result);
+            await LoadDropdownListsAsync();
+            return Page();
+        }
 
-        return RedirectToPage(LocalRedirection.Animals);
+        return RedirectToPage(Redirection.ToAnimalList);
     }
 
     private async Task LoadDropdownListsAsync()

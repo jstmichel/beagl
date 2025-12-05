@@ -30,7 +30,7 @@ public interface IUserQueryService: IPagedService<UserDto, UserPagedFilterDto>
     /// </summary>
     /// <param name="id">The unique identifier of the user.</param>
     /// <returns>The user entity if found; otherwise, null.</returns>
-    /// <exception cref="EntityNotFoundException">Thrown when the user is not found.</exception>
+    /// <exception cref="DomainException">Thrown when the user is not found.</exception>
     public Task<ApplicationUser> FindUserByIdAsync(string id);
 
     /// <summary>

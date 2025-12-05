@@ -1,8 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
-using System.Collections.ObjectModel;
 using Beagl.Application.UserManagement.DTOs;
-using Beagl.Domain.UserManagement.Exceptions;
+using Beagl.Infrastructure.Core.Helpers;
 using Beagl.Infrastructure.UserManagement.Entities;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
@@ -13,49 +12,54 @@ namespace Beagl.Infrastructure.UserManagement.Handlers;
 /// <summary>
 /// Handles the update of user information.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="UserUpdateHandler"/> class.
+/// </remarks>
 public class UserUpdateHandler(
     IUserQueryService userQueryService,
-    UserManager<ApplicationUser> userManager) : IUserUpdateHandler
+    UserManager<ApplicationUser> userManager,
+    IUserUpdateValidator userUpdateValidator) : IUserUpdateHandler
 {
     /// <inheritdoc/>
-    public async Task HandleAsync(UserDto user)
+    public async Task<OperationResult> HandleAsync(UserDto user)
     {
         ArgumentNullException.ThrowIfNull(user);
-        ArgumentNullException.ThrowIfNull(user.Id);
-        ApplicationUser userEntity = await userQueryService.FindUserByIdAsync(user.Id);
-        await UpdatePhoneNumberAsync(user.PhoneNumber, userEntity);
-        await UpdateEmailAsync(user.Email, userEntity);
-        await UpdateRolesAsync(user.Roles, userEntity);
+
+        ApplicationUser? userEntity = null;
+        if (user != null && user.Id != null)
+            userEntity = await userQueryService.FindUserByIdAsync(user.Id);
+
+        IReadOnlyList<(string ErrorCode, string ErrorMessage)> errors = await userUpdateValidator.ValidateAsync(user!, userEntity);
+        if (errors.Count > 0)
+            return OperationResult.Fail(errors);
+
+        List<(string, string)> allErrors = [];
+
+        IdentityResult phoneResult = await userManager.SetPhoneNumberAsync(userEntity!, user!.PhoneNumber);
+        if (!phoneResult.Succeeded)
+            allErrors.AddRange(phoneResult.Errors.Select(e => (e.Code, e.Description)));
+
+        IdentityResult emailResult = await userManager.SetEmailAsync(userEntity!, user.Email ?? string.Empty);
+        if (!emailResult.Succeeded)
+            allErrors.AddRange(emailResult.Errors.Select(e => (e.Code, e.Description)));
+
+        IdentityResult rolesRemoveResult = await RemoveAllRolesAsync(userEntity!);
+        if (!rolesRemoveResult.Succeeded)
+            allErrors.AddRange(rolesRemoveResult.Errors.Select(e => (e.Code, e.Description)));
+
+        IdentityResult rolesAddResult = await userManager.AddToRolesAsync(userEntity!, user.Roles);
+        if (!rolesAddResult.Succeeded)
+            allErrors.AddRange(rolesAddResult.Errors.Select(e => (e.Code, e.Description)));
+
+        if (allErrors.Count > 0)
+            return OperationResult.Fail(allErrors);
+
+        return OperationResult.Ok();
     }
 
-    private async Task UpdateRolesAsync(Collection<string> roles, ApplicationUser userEntity)
-    {
-        await RemoveAllRolesAsync(userEntity);
-        await SetRolesAsync(roles, userEntity);
-    }
-
-    private async Task RemoveAllRolesAsync(ApplicationUser userEntity)
+    private async Task<IdentityResult> RemoveAllRolesAsync(ApplicationUser userEntity)
     {
         IList<string> currentRoles = await userManager.GetRolesAsync(userEntity);
-        IdentityResult result = await userManager.RemoveFromRolesAsync(userEntity, currentRoles);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
-    }
-
-    private async Task SetRolesAsync(Collection<string> roles, ApplicationUser userEntity)
-    {
-        IdentityResult result = await userManager.AddToRolesAsync(userEntity, roles);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(result);
-    }
-
-    private async Task UpdateEmailAsync(string? email, ApplicationUser userEntity)
-    {
-        IdentityResult emailResult = await userManager.SetEmailAsync(userEntity, email ?? string.Empty);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(emailResult);
-    }
-
-    private async Task UpdatePhoneNumberAsync(string? phoneNumber, ApplicationUser userEntity)
-    {
-        IdentityResult phoneResult = await userManager.SetPhoneNumberAsync(userEntity, phoneNumber);
-        IdentityUpdateFailedException.ThrowIfNotSucceeded(phoneResult);
+        return await userManager.RemoveFromRolesAsync(userEntity, currentRoles);
     }
 }

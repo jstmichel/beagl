@@ -48,19 +48,9 @@ public class CreateCitizenDto
 	public string? Email { get; set; }
 
     /// <summary>
-	/// Street number.
+	/// Street address.
 	/// </summary>
-    public string StreetNumber { get; set; } = default!;
-
-	/// <summary>
-	/// Street name.
-	/// </summary>
-	public string StreetName { get; set; } = default!;
-
-	/// <summary>
-	/// Apartment number.
-	/// </summary>
-    public string? Appartment { get; set; }
+    public string StreetAddress { get; set; } = default!;
 
 	/// <summary>
 	/// City.

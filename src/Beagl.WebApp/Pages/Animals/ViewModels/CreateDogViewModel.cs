@@ -11,11 +11,6 @@ namespace Beagl.WebApp.Pages.Animals.ViewModels;
 public sealed class CreateDogViewModel
 {
     /// <summary>
-    /// Gets or sets the owner citizen ID.
-    /// </summary>
-    public Guid? OwnerCitizenId { get; set; }
-
-    /// <summary>
     /// Gets or sets the name of the animal.
     /// </summary>
     [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Name")]
@@ -80,7 +75,6 @@ public sealed class CreateDogViewModel
     /// <summary>
     /// Gets or sets the medal assigned to the dog.
     /// </summary>
-    [Required(ErrorMessageResourceType = typeof(CreateDog), ErrorMessageResourceName = "Error_Required_Medal")]
     public string? Medal { get; set; }
 
     /// <summary>

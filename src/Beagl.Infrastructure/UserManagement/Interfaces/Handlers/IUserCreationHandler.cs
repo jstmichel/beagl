@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using Beagl.Application.UserManagement.DTOs;
+using Beagl.Infrastructure.Core.Helpers;
 
 namespace Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 
@@ -14,6 +15,7 @@ public interface IUserCreationHandler
     /// </summary>
     /// <param name="user">The user data transfer object containing user information.</param>
     /// <param name="password">The password for the new user.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    public Task HandleAsync(UserDto user, string password);
+    /// <returns>A task that represents the asynchronous operation.</returns><throws cref="ArgumentNullException">Thrown when a required argument is null.</throws>
+    /// <throws cref="ArgumentNullException">Thrown when a required argument is null.</throws>
+    public Task<OperationResult> HandleAsync(UserDto user, string password);
 }

@@ -29,22 +29,18 @@ public static class CreateCitizenDtoMappingExtensions
                 EnumHelper.FromInt<Civility>(createCitizenDto.Civility),
                 createCitizenDto.FirstName,
                 createCitizenDto.LastName),
-            createCitizenDto.Phone,
-            createCitizenDto.CellPhone,
+            PhoneNumber.From(createCitizenDto.Phone),
+            PhoneNumber.From(createCitizenDto.CellPhone),
             EnumHelper.FromInt<CommunicationPreference>(createCitizenDto.CommunicationPreference),
             EnumHelper.FromInt<LanguagePreference>(createCitizenDto.LanguagePreference),
             createCitizenDto.Email,
             new Address(
-                createCitizenDto.StreetNumber,
-                createCitizenDto.StreetName,
-                createCitizenDto.Appartment,
+                createCitizenDto.StreetAddress,
                 createCitizenDto.City,
                 createCitizenDto.Province,
                 createCitizenDto.Country,
                 createCitizenDto.PostalCode,
-                createCitizenDto.PostOfficeBox,
-                Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime())
-            ),
+                createCitizenDto.PostOfficeBox),
             Audit.From(Guid.Empty, DateTimeOffset.UtcNow.ToUniversalTime()));
     }
 }

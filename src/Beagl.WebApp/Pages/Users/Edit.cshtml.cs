@@ -3,13 +3,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
-using System.Collections.ObjectModel;
 using Beagl.Domain.Core.Exceptions;
 using Beagl.Infrastructure.UserManagement.Interfaces;
 using Beagl.Application.UserManagement.DTOs;
 using Beagl.Application.UserManagement.ViewModels;
 using Beagl.WebApp.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Beagl.WebApp.Mappers;
+using Beagl.WebApp.Pages.Users.ViewModels;
 
 namespace Beagl.WebApp.Pages.Users;
 
@@ -33,7 +34,7 @@ internal sealed class EditModel(
     /// Gets or sets the user to edit.
     /// </summary>
     [BindProperty]
-    public EditUserViewModel? EditedUser { get; set; }
+    public EditUserViewModel? Input { get; set; } = new EditUserViewModel();
 
     /// <summary>
     /// List of available roles for dropdown selection.
@@ -51,7 +52,7 @@ internal sealed class EditModel(
         {
             UserDto user = await userQueryService.GetByIdAsync(id);
             AvailableRoles = GetAvailableRoles();
-            EditedUser = MapToEditUserViewModel(user);
+            Input = MapToEditUserViewModel(user); //TODO: To replace with mapper
         }
         catch (InvalidOperationException)
         {
@@ -61,10 +62,10 @@ internal sealed class EditModel(
         {
             return BadRequest();
         }
-        catch (EntityNotFoundException)
-        {
-            return NotFound();
-        }
+        // catch (EntityNotFoundException)
+        // {
+        //     return NotFound();
+        // }
 
         return Page();
     }
@@ -75,30 +76,30 @@ internal sealed class EditModel(
     /// <returns>The page result.</returns>
     public async Task<IActionResult> OnPostAsync()
     {
-        if (EditedUser == null)
+        if (Input == null)
         {
             return BadRequest();
         }
 
         try
         {
-            UserDto user = MapToUserDto(EditedUser);
-            await userService.UpdateAsync(user);
+            UserDto dto = Input.ToDto();
+            await userService.UpdateAsync(dto);
         }
         catch (ArgumentException)
         {
             return BadRequest();
         }
-        catch (EntityNotFoundException)
-        {
-            return NotFound();
-        }
+        // catch (EntityNotFoundException)
+        // {
+        //     return NotFound();
+        // }
         catch (InvalidOperationException)
         {
             return StatusCode((int)HttpStatusCode.InternalServerError);
         }
 
-        return RedirectToPage("Index");
+        return RedirectToPage(Redirection.ToUserList);
     }
 
     /// <summary>
@@ -110,31 +111,17 @@ internal sealed class EditModel(
     {
         ArgumentException.ThrowIfNullOrEmpty(roleName);
 
-        if (EditedUser == null)
+        if (Input == null)
         {
-            throw new InvalidOperationException("EditedUser cannot be null.");
+            throw new InvalidOperationException("Input cannot be null.");
         }
 
-        if (EditedUser.Roles == null)
+        if (Input.Roles == null)
         {
             throw new InvalidOperationException("Roles cannot be null.");
         }
 
-        return EditedUser.Roles.Any(r => r == roleName);
-    }
-
-    private static UserDto MapToUserDto(EditUserViewModel editedUser)
-    {
-        ArgumentNullException.ThrowIfNull(editedUser);
-
-        return new UserDto
-        {
-            Id = editedUser.Id,
-            UserName = editedUser.UserName,
-            Email = editedUser.Email,
-            PhoneNumber = editedUser.PhoneNumber,
-            Roles = new Collection<string>(editedUser.Roles)
-        };
+        return Input.Roles.Any(r => r == roleName);
     }
 
     private static EditUserViewModel MapToEditUserViewModel(UserDto user)

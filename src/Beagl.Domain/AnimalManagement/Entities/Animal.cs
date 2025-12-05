@@ -5,6 +5,7 @@ using Beagl.Domain.AnimalManagement.Enums;
 using Beagl.Domain.AnimalManagement.ValueObjects;
 using Beagl.Domain.CitizenManagement.Entities;
 using Beagl.Domain.Core;
+using Beagl.Domain.Core.Exceptions;
 using Beagl.Domain.Core.ValueObjects;
 
 
@@ -15,6 +16,8 @@ namespace Beagl.Domain.AnimalManagement.Entities;
 /// </summary>
 public class Animal : AuditedAggregateRoot
 {
+    private const int MaximumAnimalAgeInYears = 30;
+
     /// <summary>
     /// Gets or sets the optional foreign key to the owning citizen.
     /// </summary>
@@ -123,7 +126,6 @@ public class Animal : AuditedAggregateRoot
     /// <param name="isSterilized">Indicates if the animal is sterilized.</param>
     /// <param name="rabiesVaccination">The rabies vaccination information.</param>
     /// <param name="created">The creation audit info.</param>
-    /// <param name="citizenId">The optional citizen ID.</param>
     public Animal(
         SpeciesType speciesType,
         string name,
@@ -138,10 +140,15 @@ public class Animal : AuditedAggregateRoot
         Medal? medal,
         bool isSterilized,
         RabiesVaccination? rabiesVaccination,
-        Audit<Guid> created,
-        Guid? citizenId = null)
+        Audit<Guid> created)
         : base(created)
     {
+        ValidateSpeciesTypeIsKnown(speciesType);
+        ValidateNameIsNotNullOrWhitespace(name);
+        ValidatePrimaryBreedIdIsNotEmpty(primaryBreedId);
+        ValidateColorIdIsNotEmpty(colorId);
+        ValidateDateOfBirth(dateOfBirth);
+
         Id = Guid.NewGuid();
         SpeciesType = speciesType;
         Name = name;
@@ -158,7 +165,57 @@ public class Animal : AuditedAggregateRoot
         Medal = medal;
         IsSterilized = isSterilized;
         RabiesVaccination = rabiesVaccination;
-        CitizenId = citizenId;
+        CitizenId = null;
         Citizen = null;
+    }
+
+    private static void ValidateNameIsNotNullOrWhitespace(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new DomainException(DomainErrorCode.AnimalNameCannotBeNullOrWhitespace, "Animal name cannot be null or whitespace.");
+        }
+    }
+
+    private static void ValidatePrimaryBreedIdIsNotEmpty(Guid primaryBreedId)
+    {
+        if (primaryBreedId == Guid.Empty)
+        {
+            throw new DomainException(DomainErrorCode.AnimalPrimaryBreedIdCannotBeEmpty, "Primary breed ID cannot be empty.");
+        }
+    }
+
+    private static void ValidateColorIdIsNotEmpty(Guid colorId)
+    {
+        if (colorId == Guid.Empty)
+        {
+            throw new DomainException(DomainErrorCode.AnimalColorIdCannotBeEmpty, "Color ID cannot be empty.");
+        }
+    }
+
+    private static void ValidateSpeciesTypeIsKnown(SpeciesType speciesType)
+    {
+        if (speciesType == SpeciesType.Unknown)
+        {
+            throw new DomainException(DomainErrorCode.AnimalSpeciesTypeMustBeKnown, "Species type must be a known value.");
+        }
+    }
+
+    private static void ValidateDateOfBirth(DateTimeOffset dateOfBirth)
+    {
+        if (dateOfBirth == DateTimeOffset.MinValue)
+        {
+            throw new DomainException(DomainErrorCode.AnimalDateOfBirthMustBeSpecified, "Date of birth must be specified.");
+        }
+
+        if (dateOfBirth > DateTimeOffset.UtcNow)
+        {
+            throw new DomainException(DomainErrorCode.AnimalDateOfBirthCannotBeInTheFuture, "Date of birth cannot be in the future.");
+        }
+
+        if (dateOfBirth < DateTimeOffset.Now.AddYears(-MaximumAnimalAgeInYears))
+        {
+            throw new DomainException(DomainErrorCode.AnimalDateOfBirthIsUnreasonablyOld, "Date of birth is unreasonably old.");
+        }
     }
 }

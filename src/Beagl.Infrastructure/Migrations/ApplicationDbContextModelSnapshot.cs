@@ -107,60 +107,11 @@ namespace Beagl.Infrastructure.Migrations
                     b.ToTable("Colors", (string)null);
                 });
 
-            modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Address", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Appartment")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("CitizenId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostOfficeBox")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StreetName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StreetNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CitizenId");
-
-                    b.ToTable("Addresses", (string)null);
-                });
-
             modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Citizen", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("CellPhone")
-                        .HasColumnType("text");
 
                     b.Property<int>("CommunicationPreference")
                         .HasColumnType("integer");
@@ -170,9 +121,6 @@ namespace Beagl.Infrastructure.Migrations
 
                     b.Property<int>("LanguagePreference")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -583,43 +531,26 @@ namespace Beagl.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Address", b =>
-                {
-                    b.HasOne("Beagl.Domain.CitizenManagement.Entities.Citizen", "Citizen")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CitizenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Created", b1 =>
-                        {
-                            b1.Property<Guid>("AddressId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<DateTimeOffset>("At")
-                                .HasColumnType("timestamp with time zone")
-                                .HasColumnName("CreatedAt");
-
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("CreatedByUserId");
-
-                            b1.HasKey("AddressId");
-
-                            b1.ToTable("Addresses");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AddressId");
-                        });
-
-                    b.Navigation("Citizen");
-
-                    b.Navigation("Created")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Citizen", b =>
                 {
+                    b.OwnsOne("Beagl.Domain.CitizenManagement.ValueObjects.PhoneNumber", "CellPhone", b1 =>
+                        {
+                            b1.Property<Guid>("CitizenId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("CellPhone");
+
+                            b1.HasKey("CitizenId");
+
+                            b1.ToTable("Citizens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CitizenId");
+                        });
+
                     b.OwnsOne("Beagl.Domain.Core.ValueObjects.Audit<System.Guid>", "Created", b1 =>
                         {
                             b1.Property<Guid>("CitizenId")
@@ -662,6 +593,66 @@ namespace Beagl.Infrastructure.Migrations
                                 .HasForeignKey("CitizenId");
                         });
 
+                    b.OwnsOne("Beagl.Domain.CitizenManagement.ValueObjects.PhoneNumber", "Phone", b1 =>
+                        {
+                            b1.Property<Guid>("CitizenId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Phone");
+
+                            b1.HasKey("CitizenId");
+
+                            b1.ToTable("Citizens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CitizenId");
+                        });
+
+                    b.OwnsOne("Beagl.Domain.CitizenManagement.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("CitizenId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Country");
+
+                            b1.Property<string>("PostOfficeBox")
+                                .HasColumnType("text")
+                                .HasColumnName("PostOfficeBox");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("Province")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Province");
+
+                            b1.Property<string>("StreetAddress")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("StreetAddress");
+
+                            b1.HasKey("CitizenId");
+
+                            b1.ToTable("Citizens");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CitizenId");
+                        });
+
                     b.OwnsOne("Beagl.Domain.CitizenManagement.ValueObjects.PersonName", "Person", b1 =>
                         {
                             b1.Property<Guid>("CitizenId")
@@ -689,6 +680,11 @@ namespace Beagl.Infrastructure.Migrations
                                 .HasForeignKey("CitizenId");
                         });
 
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("CellPhone");
+
                     b.Navigation("Created")
                         .IsRequired();
 
@@ -696,6 +692,8 @@ namespace Beagl.Infrastructure.Migrations
 
                     b.Navigation("Person")
                         .IsRequired();
+
+                    b.Navigation("Phone");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -830,8 +828,6 @@ namespace Beagl.Infrastructure.Migrations
 
             modelBuilder.Entity("Beagl.Domain.CitizenManagement.Entities.Citizen", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618

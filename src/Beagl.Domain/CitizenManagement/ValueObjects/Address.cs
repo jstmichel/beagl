@@ -1,0 +1,207 @@
+// MIT License - Copyright (c) 2025 Jonathan St-Michel
+
+using System;
+using System.Collections.Generic;
+using Beagl.Domain.Core.Exceptions;
+
+namespace Beagl.Domain.CitizenManagement.ValueObjects;
+
+/// <summary>
+/// Value object representing a postal address for a citizen.
+/// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="Address"/> value object.
+/// </remarks>
+public sealed class Address : IEquatable<Address>
+{
+    /// <summary>
+    /// Gets the street address (number, street, apartment/unit).
+    /// </summary>
+    public string StreetAddress { get; }
+
+    /// <summary>
+    /// Gets the city.
+    /// </summary>
+    public string City { get; }
+
+    /// <summary>
+    /// Gets the province.
+    /// </summary>
+    public string Province { get; }
+
+    /// <summary>
+    /// Gets the country.
+    /// </summary>
+    public string Country { get; }
+
+    /// <summary>
+    /// Gets the postal code.
+    /// </summary>
+    public string PostalCode { get; }
+
+    /// <summary>
+    /// Gets the post office box (optional).
+    /// </summary>
+    public string? PostOfficeBox { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Address"/> class.
+    /// </summary>
+    /// <param name="streetAddress">The street address (number, street, apartment/unit).</param>
+    /// <param name="city">The city.</param>
+    /// <param name="province">The province.</param>
+    /// <param name="country">The country.</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="postOfficeBox">The post office box (optional).</param>
+    /// <exception cref="ArgumentNullException">Thrown when any required parameter is null or empty.</exception>
+    public Address(
+        string streetAddress,
+        string city,
+        string province,
+        string country,
+        string postalCode,
+        string? postOfficeBox = null)
+    {
+        DomainException.ThrowIfNullOrWhiteSpace(streetAddress, nameof(streetAddress), DomainErrorCode.AddressStreetAddressRequired);
+        DomainException.ThrowIfNullOrWhiteSpace(city, nameof(city), DomainErrorCode.AddressCityRequired);
+        DomainException.ThrowIfNullOrWhiteSpace(province, nameof(province), DomainErrorCode.AddressProvinceRequired);
+        DomainException.ThrowIfNullOrWhiteSpace(country, nameof(country), DomainErrorCode.AddressCountryRequired);
+
+        ValidatePostalCode(postalCode);
+
+        StreetAddress = streetAddress;
+        City = city;
+        Province = province;
+        Country = country;
+        PostalCode = postalCode;
+        PostOfficeBox = postOfficeBox;
+    }
+
+    private static void ValidatePostalCode(string postalCode)
+    {
+        if (!IsValidPostalCode(postalCode))
+        {
+            throw new DomainException(DomainErrorCode.AddressPostalCodeRequired, $"The postal code '{postalCode}' is not in a valid format.");
+        }
+    }
+
+    /// <summary>
+    /// Validates the postal code format (supports Canadian and US formats).
+    /// </summary>
+    /// <param name="postalCode">The postal code to validate.</param>
+    /// <returns>True if valid, otherwise false.</returns>
+    private static bool IsValidPostalCode(string postalCode)
+    {
+        if (string.IsNullOrWhiteSpace(postalCode))
+        {
+            return false;
+        }
+
+        // Canadian postal code: A1A 1A1 or A1A-1A1 or A1A1A1
+        string canadianPattern = @"^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$";
+        // US ZIP code: 12345 or 12345-6789
+        string usPattern = @"^\d{5}(-\d{4})?$";
+
+        return System.Text.RegularExpressions.Regex.IsMatch(postalCode, canadianPattern)
+            || System.Text.RegularExpressions.Regex.IsMatch(postalCode, usPattern);
+    }
+
+    /// <inheritdoc/>
+    public bool Equals(Address? other)
+    {
+        if (other is null)
+            return false;
+
+        return StreetAddress == other.StreetAddress &&
+               City == other.City &&
+               Province == other.Province &&
+               Country == other.Country &&
+               PostalCode == other.PostalCode &&
+               PostOfficeBox == other.PostOfficeBox;
+    }
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) => Equals(obj as Address);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(
+        StreetAddress,
+        City,
+        Province,
+        Country,
+        PostalCode,
+        PostOfficeBox);
+
+    /// <summary>
+    /// Equality operator for Address.
+    /// </summary>
+    public static bool operator ==(Address? left, Address? right)
+    {
+        return Equals(left, right);
+    }
+
+    /// <summary>
+    /// Inequality operator for Address.
+    /// </summary>
+    public static bool operator !=(Address? left, Address? right)
+    {
+        return !Equals(left, right);
+    }
+
+    /// <summary>
+    /// Returns the address as a formatted string suitable for display.
+    /// </summary>
+    /// <returns>A formatted address string.</returns>
+    public string ToDisplayString()
+    {
+        string line1 = StreetAddress;
+        string line2 = $"{City}, {Province} {PostalCode}";
+        string country = Country;
+        string? poBox = string.IsNullOrWhiteSpace(PostOfficeBox) ? null : $"P.O. Box {PostOfficeBox}";
+
+        List<string> parts = [];
+        if (!string.IsNullOrWhiteSpace(poBox)) parts.Add(poBox);
+        parts.Add(line1);
+        parts.Add(line2);
+        parts.Add(country);
+
+        return string.Join("\n", parts);
+    }
+
+    /// <summary>
+    /// Creates an Address value object from the given parameters.
+    /// </summary>
+    /// <param name="streetAddress">The street address (number, street, apartment/unit).</param>
+    /// <param name="city">The city.</param>
+    /// <param name="province">The province.</param>
+    /// <param name="country">The country.</param>
+    /// <param name="postalCode">The postal code.</param>
+    /// <param name="postOfficeBox">The post office box (optional).</param>
+    /// <returns>An Address value object or null if any required input is invalid.</returns>
+    public static Address? From(
+        string streetAddress,
+        string city,
+        string province,
+        string country,
+        string postalCode,
+        string? postOfficeBox = null)
+    {
+        if (string.IsNullOrWhiteSpace(streetAddress) ||
+            string.IsNullOrWhiteSpace(city) ||
+            string.IsNullOrWhiteSpace(province) ||
+            string.IsNullOrWhiteSpace(country) ||
+            string.IsNullOrWhiteSpace(postalCode) ||
+            !IsValidPostalCode(postalCode))
+        {
+            return null;
+        }
+
+        return new Address(
+            streetAddress,
+            city,
+            province,
+            country,
+            postalCode,
+            postOfficeBox);
+    }
+}

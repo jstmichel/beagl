@@ -1,6 +1,7 @@
 // MIT License - Copyright (c) 2025 Jonathan St-Michel
 
 using System;
+using System.Linq;
 using Beagl.Application.CitizenManagement.DTOs;
 using Beagl.Domain.CitizenManagement.Entities;
 
@@ -24,11 +25,12 @@ public static class CitizenListDtoMappingExtensions
         return new CitizenListDto
         {
             Id = citizen.Id,
-            Name = citizen.Person.FirstName,
-            Phone = citizen.Phone,
-            CellPhone = citizen.CellPhone,
+            Name = citizen.Person.ToDisplayString(),
+            Phone = citizen.Phone?.ToDisplayString(),
+            CellPhone = citizen.CellPhone?.ToDisplayString(),
             Email = citizen.Email,
-            AnimalsCount = 0,
+            AnimalsCount = citizen.Animals?.Count ?? 0,
+            Address = citizen.Address.ToDisplayString(),
         };
     }
 

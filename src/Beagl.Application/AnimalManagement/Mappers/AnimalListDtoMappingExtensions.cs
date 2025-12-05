@@ -36,7 +36,8 @@ public static class AnimalListDtoMappingExtensions
             DistinctiveDescription = animal.DistinctiveDescription,
             Weight = animal.Weight?.Value,
             WeightUnit = animal.Weight?.Unit ?? WeightUnit.Kilograms,
-            PermitNumber = animal.Medal?.Value
+            PermitNumber = animal.Medal?.Value,
+            OwnerName = animal.Citizen?.Person.ToDisplayString()
         };
     }
 }

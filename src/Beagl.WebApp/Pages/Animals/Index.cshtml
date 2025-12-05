@@ -1,9 +1,11 @@
 @page "/Animals/Index"
 @using Beagl.Application.AnimalManagement.DTOs
+@using Beagl.Domain.AnimalManagement.Enums
 @using Beagl.WebApp.Constants
 @using Beagl.WebApp.Pages.Animals.ViewModels
 @using Beagl.WebApp.Pages.Shared
 @using Microsoft.AspNetCore.Authorization
+@using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal
 @model Beagl.WebApp.Pages.Animals.IndexModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @inject Beagl.WebApp.Services.IStaticDataLocalizerService StaticDataLocalizer
@@ -54,12 +56,12 @@
         SubCreateActions = new List<ButtonAction> {
             new ButtonAction {
                 Text = Localizer["Create Cat"].Value,
-                Link = LocalRedirection.CreateCat,
+                Link = Redirection.ToCreateCat,
                 IsShown = canCreate
             },
             new ButtonAction {
                 Text = Localizer["Create Dog"].Value,
-                Link = LocalRedirection.CreateDog,
+                Link = Redirection.ToCreateDog,
                 IsShown = canCreate
             }
         }
@@ -72,19 +74,94 @@
         </div>
         <div class="offcanvas-body">
             <form method="get">
-                @* <div class="mb-3">
-                    <label asp-for="FilterModel.Username" class="form-label">@Localizer["Username"]</label>
-                    <input type="text" asp-for="FilterModel.Username" class="form-control" />
+                <div class="mb-3">
+                    <label asp-for="FilterModel.Name" class="form-label">@Localizer["Name"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.Name" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="FilterModel.Email" class="form-label">@Localizer["Email"]</label>
-                    <input type="text" asp-for="FilterModel.Email" class="form-control" />
+                    <label asp-for="FilterModel.Species" class="form-label">@Localizer["Species"]</label>
+                    <select asp-for="FilterModel.Species" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        <option value="1">@StaticDataLocalizer.LocalizeSpecies(Beagl.Domain.AnimalManagement.Enums.SpeciesType.Cat)</option>
+                        <option value="2">@StaticDataLocalizer.LocalizeSpecies(Beagl.Domain.AnimalManagement.Enums.SpeciesType.Dog)</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="FilterModel.Phone" class="form-label">@Localizer["Phone"]</label>
-                    <input type="text" asp-for="FilterModel.Phone" class="form-control" />
-                </div> *@
-                <button type="submit" class="btn btn-outline-primary w-100">@Localizer["Apply Filters"]</button>
+                    <label asp-for="FilterModel.PrimaryBreed" class="form-label">@Localizer["Primary Breed"]</label>
+                    <select asp-for="FilterModel.PrimaryBreed" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var breed in Model.AllBreedList)
+                        {
+                            @if(Model.FilterModel.PrimaryBreed == breed.Id)
+                            {
+                                <option value="@breed.Id" selected>@breed.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@breed.Id">@breed.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.Color" class="form-label">@Localizer["Color"]</label>
+                    <select asp-for="FilterModel.Color" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var color in Model.AllColorList)
+                        {
+                            @if(Model.FilterModel.Color == color.Id)
+                            {
+                                <option value="@color.Id" selected>@color.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@color.Id">@color.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.Gender" class="form-label">@Localizer["Gender"]</label>
+                    <select asp-for="FilterModel.Gender" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>())
+                        {
+                            @if(Model.FilterModel.Gender == gender)
+                            {
+                                <option value="@gender" selected>gender.ToString()</option>
+                            }
+                            else
+                            {
+                                <option value="@gender">gender.ToString()</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.MicrochipNumber" class="form-label">@Localizer["Microchip Number"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.MicrochipNumber" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.PermitNumber" class="form-label">@Localizer["Permit Number"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.PermitNumber" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">@Localizer["Apply Filters"]</button>
+                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="clearFilters(this.form);">@Localizer["Clear Filters"]</button>
             </form>
         </div>
     </div>
@@ -104,39 +181,45 @@
                             var hasImage = !string.IsNullOrEmpty(animal.Base64PngImage);
                             var imageSrc = hasImage
                                 ? $"data:image/png;base64,{animal.Base64PngImage}"
-                                : Url.Content("~/images/animal-placeholder.png");
+                                : null;
                         }
                         <div class="position-relative">
-                            <img src="@imageSrc" class="card-img-top square-img" alt="@animal.Name" />
+                            @if (hasImage)
+                            {
+                                <img src="@imageSrc" class="card-img-top square-img" alt="@animal.Name" />
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center justify-content-center card-img-top square-img bg-light text-secondary" style="font-size: 4rem; min-height: 180px;">
+                                    <i class="bi bi-image-alt"></i>
+                                </div>
+                            }
                             <span class="position-absolute top-0 start-0 m-2 badge bg-primary d-flex align-items-center" style="z-index:2;">
-                                <i class="bi bi-award-fill me-1"></i> @animal.PermitNumber
+                                <i class="bi bi-award-fill"></i>
+                                @if (!string.IsNullOrEmpty(animal.PermitNumber))
+                                {
+                                    <span class="ms-1">@animal.PermitNumber</span>
+                                }
                             </span>
-                            <span class="position-absolute top-0 end-0 m-2 badge bg-secondary d-flex align-items-center" style="z-index:2;">
-                                <i class="bi bi-upc-scan me-1"></i> @animal.MicrochipNumber
-                            </span>
-                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-info d-flex align-items-center" style="z-index:2;">
+                            <span class="position-absolute top-0 end-0 m-2 badge bg-info d-flex align-items-center" style="z-index:2;">
                                 @StaticDataLocalizer.LocalizeSpecies(animal.Species)
                             </span>
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between h-100 position-relative py-2 px-3">
                             <div>
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div class="w-100 text-center">
-                                        <h1 class="card-title mb-1 display-6">@animal.Name</h1>
-                                    </div>
-                                </div>
-                                <div class="w-100 mb-2">
-                                    <span class="text-start"><strong>Race</strong> @animal.PrimaryBreed</span>
-                                </div>
-                                <div class="w-100 mb-2 d-flex align-items-center">
-                                    <span class="text-start"><strong>Color</strong> @animal.Color</span>
-                                </div>
-                                <div class="w-100 mb-2">
-                                    <span class="text-start"><strong>Date of birth</strong> @animal.BirthDate</span>
-                                </div>
-                                <div class="w-100 mb-2">
-                                    <span class="text-start"><strong>Weight</strong> @animal.Weight @animal.WeightUnit</span>
-                                </div>
+                                <h5 class="card-title mb-1 fw-bold">@animal.Name</h5>
+                                <div class="text-muted small"><i class="bi bi-fingerprint"></i><span class="ms-1">@animal.PrimaryBreed</span></div>
+                                <div class="text-muted small"><i class="bi bi-brush"></i><span class="ms-1">@animal.Color</span></div>
+                                <div class="text-muted small"><i class="bi bi-calendar-date"></i><span class="ms-1">@animal.BirthDate</span></div>
+                                <div class="text-muted small"><i class="bi bi-clipboard-plus"></i><span class="ms-1">@animal.Weight @animal.WeightUnit</span></div>
+                                @if (!string.IsNullOrEmpty(animal.OwnerName))
+                                {
+                                    <div class="text-muted small"><i class="bi bi-person"></i><span class="ms-1">@animal.OwnerName</span></div>
+                                }
+                                @if (!string.IsNullOrEmpty(animal.MicrochipNumber))
+                                {
+                                    <div class="text-muted small"><i class="bi bi-upc-scan"></i><span class="ms-1">@animal.MicrochipNumber</span></div>
+                                }
                             </div>
                         </div>
                         <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
@@ -162,13 +245,13 @@
                                 <div class="btn-group btn-group-sm" role="group" aria-label="User actions">
                                     @if (canEdit)
                                     {
-                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@animal.Id" class="btn btn-outline-secondary">
+                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@animal.Id" class="btn btn-outline-secondary disabled" tabindex="-1" aria-disabled="true">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     }
                                     @if (canDelete)
                                     {
-                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary">
+                                        <span role="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@animal.Id" data-entity-description="@animal.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary disabled" tabindex="-1" aria-disabled="true">
                                             <i class="bi bi-trash3"></i>
                                         </span>
                                     }
@@ -186,7 +269,7 @@
                     CurrentPage = Model.CurrentPage,
                     TotalPages = Model.TotalPages,
                     PageParameter = "pageNumber",
-                    //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                    AdditionalQuery = $"&FilterModel.Name={Model.FilterModel?.Name}&FilterModel.Species={Model.FilterModel?.Species}&FilterModel.PrimaryBreed={Model.FilterModel?.PrimaryBreed}&FilterModel.Color={Model.FilterModel?.Color}&FilterModel.Gender={Model.FilterModel?.Gender}&FilterModel.MicrochipNumber={Model.FilterModel?.MicrochipNumber}&FilterModel.PermitNumber={Model.FilterModel?.PermitNumber}"
                 })
             </div>
         </div>
@@ -198,3 +281,9 @@
     FilterModel = Model.FilterModel,
     BodyHtml = Localizer["Deletion confirmation"].Value + " <strong id=\"deleteDescription\"></strong>?"
 })
+
+<script>
+function clearFilters(form) {
+    Array.from(form.querySelectorAll('input[type="text"]')).forEach(input => input.value = '');
+}
+</script>

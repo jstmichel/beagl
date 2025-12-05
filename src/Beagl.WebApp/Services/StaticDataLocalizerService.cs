@@ -44,4 +44,14 @@ public class StaticDataLocalizerService(
             _ => throw new ArgumentOutOfRangeException(nameof(species), species, null)
         };
     }
+
+    /// <summary>
+    /// Localizes a string based on the provided key.
+    /// </summary>
+    /// <param name="key">The key of the string to localize.</param>
+    /// <returns>The localized string.</returns>
+    public string LocalizeString(string key)
+    {
+        return localizer[key];
+    }
 }

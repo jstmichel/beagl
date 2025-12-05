@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using Beagl.Application.AnimalManagement.DTOs;
+using Beagl.Application.Core.Helpers;
 
 namespace Beagl.Application.AnimalManagement.Services;
 
@@ -16,5 +17,5 @@ public interface IDogService
     /// </summary>
     /// <param name="createDogDto">The data transfer object containing dog creation details.</param>
     /// <returns>The unique identifier of the newly created dog.</returns>
-    public Task<Guid> CreateDogAsync(CreateDogDto createDogDto);
+    public Task<Result<Guid>> CreateDogAsync(CreateDogDto createDogDto);
 }

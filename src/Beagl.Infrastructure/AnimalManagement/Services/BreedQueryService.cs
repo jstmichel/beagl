@@ -20,8 +20,16 @@ public sealed class BreedQueryService(ApplicationDbContext dbContext) : IBreedQu
     /// <inheritdoc/>
     public async Task<IList<BreedDto>> GetAllBySpeciesAsync(SpeciesType species)
     {
-        return await dbContext.Breeds
+        return await dbContext.Breeds.AsNoTracking()
             .Where(b => b.SpeciesType == species)
+            .Select(b => b.ToDto())
+            .ToListAsync();
+    }
+
+    /// <inheritdoc/>
+    public async Task<IList<BreedDto>> GetAllAsync()
+    {
+        return await dbContext.Breeds.AsNoTracking()
             .Select(b => b.ToDto())
             .ToListAsync();
     }

@@ -8,7 +8,9 @@ using Beagl.Infrastructure.AnimalManagement.Repositories;
 using Beagl.Infrastructure.AnimalManagement.Services;
 using Beagl.Infrastructure.CitizenManagement.Repositories;
 using Beagl.Infrastructure.CitizenManagement.Services;
+using Beagl.Infrastructure.UserManagement.Handlers;
 using Beagl.Infrastructure.UserManagement.Interfaces;
+using Beagl.Infrastructure.UserManagement.Interfaces.Handlers;
 using Beagl.Infrastructure.UserManagement.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -76,6 +78,19 @@ public static class ServiceCollectionInfrastructureExtensions
         services.AddScoped<ICatRepository, CatRepository>();
         services.AddScoped<IDogRepository, DogRepository>();
         services.AddScoped<ICitizenRepository, CitizenRepository>();
+        return services;
+    }
+
+    /// <summary>
+    /// Adds handler services to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The updated service collection.</returns>
+    public static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IUserDeletionValidator, UserDeletionValidator>();
+        services.AddScoped<IUserCreationValidator, UserCreationValidator>();
+        services.AddScoped<IUserUpdateValidator, UserUpdateValidator>();
         return services;
     }
 }

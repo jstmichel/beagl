@@ -26,7 +26,7 @@
         FilterButtonText = Localizer["Filters"].Value,
         CreateAction = new ButtonAction {
             Text = Localizer["Add Citizen"].Value,
-            Link = LocalRedirection.AddCitizens,
+            Link = Redirection.ToCreateCitizen,
             IsShown = canCreate
         }
     })
@@ -38,19 +38,62 @@
         </div>
         <div class="offcanvas-body">
             <form method="get">
-                @* <div class="mb-3">
-                    <label asp-for="FilterModel.Username" class="form-label">@Localizer["Username"]</label>
-                    <input type="text" asp-for="FilterModel.Username" class="form-control" />
+                <div class="mb-3">
+                    <label asp-for="FilterModel.Name" class="form-label">@Localizer["Name"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.Name" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label asp-for="FilterModel.Email" class="form-label">@Localizer["Email"]</label>
-                    <input type="text" asp-for="FilterModel.Email" class="form-control" />
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.Email" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="FilterModel.Phone" class="form-label">@Localizer["Phone"]</label>
-                    <input type="text" asp-for="FilterModel.Phone" class="form-control" />
-                </div> *@
-                <button type="submit" class="btn btn-outline-primary w-100">@Localizer["Apply Filters"]</button>
+                    <label asp-for="FilterModel.PhoneNumber" class="form-label">@Localizer["Phone Number"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.PhoneNumber" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.StreetAddress" class="form-label">@Localizer["Street Address"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.StreetAddress" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.City" class="form-label">@Localizer["City"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.City" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FilterModel.PostalCode" class="form-label">@Localizer["Postal Code"]</label>
+                    <div class="input-group">
+                        <input type="text" asp-for="FilterModel.PostalCode" class="form-control" />
+                        <button type="button" class="btn btn-outline-secondary" onclick="this.parentElement.querySelector('input').value=''; this.parentElement.querySelector('input').focus(); event.preventDefault();" title="@Localizer["Clear"]">
+                            <i class="bi bi-eraser"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">@Localizer["Apply Filters"]</button>
+                <button type="button" class="btn btn-secondary w-100 mt-2" onclick="clearFilters(this.form);">@Localizer["Clear Filters"]</button>
             </form>
         </div>
     </div>
@@ -71,27 +114,51 @@
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
                                         <h5 class="card-title mb-1 fw-bold">@citizen.Name</h5>
-                                        <div class="text-muted small">@citizen.Email</div>
+                                        @if (!string.IsNullOrEmpty(citizen.Email))
+                                        {
+                                            <div class="text-muted small"><i class="bi bi-envelope"></i><span class="ms-1">@citizen.Email</span></div>
+                                        }
+                                        @if (!string.IsNullOrEmpty(citizen.Phone))
+                                        {
+                                            <div class="text-muted small"><i class="bi bi-telephone"></i><span class="ms-1">@citizen.Phone</span></div>
+                                        }
+                                        @if (!string.IsNullOrEmpty(citizen.CellPhone))
+                                        {
+                                            <div class="text-muted small"><i class="bi bi-phone"></i><span class="ms-1">@citizen.CellPhone</span></div>
+                                        }
+                                        @if (!string.IsNullOrEmpty(citizen.Address))
+                                        {
+                                            <div style="display: flex; align-items: flex-start;">
+                                                <span class="icon-class" >
+                                                    <i class="bi bi-geo-alt"></i>
+                                                </span>
+                                                <span class="text-muted small ms-1">
+                                                    @Html.Raw(citizen.Address.Replace("\n", "<br />"))
+                                                </span>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-
+                                <div class="badge bg-secondary">
+                                    <span>@citizen.AnimalsCount @Localizer["Animals"]</span>
+                                </div>
                             </div>
                             @if (hasActions)
                             {
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Citizen actions">
                                     @if (canEdit)
                                     {
-                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@citizen.Id" class="btn btn-outline-secondary">
+                                        <a asp-page="Edit" title="@Localizer["Edit Page Title"]" aria-label="@Localizer["Edit Page Title"]" asp-route-id="@citizen.Id" class="btn btn-outline-secondary disabled" tabindex="-1" aria-disabled="true">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     }
                                     @if (canDelete)
                                     {
-                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@citizen.Id" data-entity-description="@citizen.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary">
+                                        <span role="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@citizen.Id" data-entity-description="@citizen.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" class="btn btn-outline-secondary disabled" tabindex="-1" aria-disabled="true">
                                             <i class="bi bi-trash3"></i>
                                         </span>
                                     }
@@ -109,78 +176,10 @@
                     CurrentPage = Model.CurrentPage,
                     TotalPages = Model.TotalPages,
                     PageParameter = "pageNumber",
-                    //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
+                    AdditionalQuery = $"&FilterModel.Name={Model.FilterModel?.Name}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.PhoneNumber={Model.FilterModel?.PhoneNumber}&FilterModel.StreetAddress={Model.FilterModel?.StreetAddress}&FilterModel.City={Model.FilterModel?.City}&FilterModel.PostalCode={Model.FilterModel?.PostalCode}"
                 })
             </div>
         </div>
-        @* <div class="table-responsive">
-            <table class="table table-hover table-sm table-bordered align-middle bg-white">
-                <colgroup>
-                    <col style="width: 20%;">
-                    <col style="width: 20%;">
-                    <col style="width: 15%;">
-                    <col class="width: 15%;">
-                    <col class="width: 30%;">
-                    @if (hasActions)
-                    {
-                        <col class="tight">
-                    }
-                </colgroup>
-                <thead class="table-light">
-                    <tr>
-                        <th class="fw-bold">@Localizer["Name"]</th>
-                        <th class="fw-bold">@Localizer["Phone"]</th>
-                        <th class="fw-bold">@Localizer["Cell Phone"]</th>
-                        <th class="fw-bold">@Localizer["Email"]</th>
-                        <th class="fw-bold">@Localizer["Animal Count"]</th>
-                        @if (hasActions)
-                        {
-                            <th class="fw-bold">@Localizer["Actions"]</th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (ListCitizensViewModel citizen in Model.DataModel)
-                    {
-                        <tr>
-                            <td>@citizen.Name</td>
-                            <td>@citizen.Phone</td>
-                            <td>@citizen.CellPhone</td>
-                            <td>@citizen.Email</td>
-                            <td>@citizen.AnimalsCount</td>
-                            @if (hasActions)
-                            {
-                                <td>
-                                    @if (canEdit)
-                                    {
-                                        <a asp-page="Edit" title="@Localizer["Edit"]" aria-label="@Localizer["Edit"]" asp-route-id="@citizen.Id" class="text-decoration-none p-1">
-                                            <i class="bi bi-pencil-square fs-6 btn-darker-text"></i>
-                                        </a>
-                                    }
-                                    @if (canDelete)
-                                    {
-                                        <span role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-entity-id="@citizen.Id" data-entity-description="@citizen.Name" title="@Localizer["Delete"]" aria-label="@Localizer["Delete"]" style="cursor:pointer;" class="p-1">
-                                            <i class="bi bi-trash3 fs-6"></i>
-                                        </span>
-                                    }
-                                </td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-between align-items-center w-100 table-footer mt-1">
-                <span class="fw-bold">@Model.TotalItems @Localizer["Total"]</span>
-                <div class="d-flex align-items-center" style="height: 100%;">
-                    @await Html.PartialAsync("~/Pages/Shared/_Pagination.cshtml", new PaginationModel {
-                        CurrentPage = Model.CurrentPage,
-                        TotalPages = Model.TotalPages,
-                        PageParameter = "pageNumber",
-                        //AdditionalQuery = $"&FilterModel.Username={Model.FilterModel?.Username}&FilterModel.Email={Model.FilterModel?.Email}&FilterModel.Phone={Model.FilterModel?.Phone}"
-                    })
-                </div>
-            </div>
-        </div> *@
     }
 </div>
 
@@ -189,3 +188,9 @@
     FilterModel = Model.FilterModel,
     BodyHtml = Localizer["Deletion confirmation"].Value + " <strong id=\"deleteDescription\"></strong>?"
 })
+
+<script>
+function clearFilters(form) {
+    Array.from(form.querySelectorAll('input[type="text"]')).forEach(input => input.value = '');
+}
+</script>

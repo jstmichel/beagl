@@ -29,7 +29,7 @@ public class UserQueryService(
     public async Task<ApplicationUser> FindUserByIdAsync(string id)
     {
         ApplicationUser? user = await userManager.FindByIdAsync(id)
-            ?? throw new EntityNotFoundException("User not found.");
+            ?? throw new DomainException(DomainErrorCode.UserNotFound, "User not found.");
 
         return user;
     }
