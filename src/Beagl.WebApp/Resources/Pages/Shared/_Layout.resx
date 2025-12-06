@@ -132,15 +132,15 @@
   <data name="Sign Out" xml:space="preserve">
     <value>Sign Out</value>
   </data>
-    <data name="Navigation" xml:space="preserve">
-      <value>Navigation</value>
-    </data>
-    <data name="Users" xml:space="preserve">
-      <value>Users</value>
-    </data>
-    <data name="Animals" xml:space="preserve">
-      <value>Animals</value>
-    </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Animals" xml:space="preserve">
+    <value>Animals</value>
+  </data>
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
   </data>
@@ -153,15 +153,15 @@
   <data name="Animals List" xml:space="preserve">
     <value>Animals List</value>
   </data>
-    <data name="Citizens" xml:space="preserve">
-      <value>Citizens</value>
-    </data>
-    <data name="Add Citizen" xml:space="preserve">
-      <value>Add Citizen</value>
-    </data>
-    <data name="Citizens List" xml:space="preserve">
-      <value>Citizens List</value>
-    </data>
+  <data name="Citizens" xml:space="preserve">
+    <value>Citizens</value>
+  </data>
+  <data name="Add Citizen" xml:space="preserve">
+    <value>Add Citizen</value>
+  </data>
+  <data name="Citizens List" xml:space="preserve">
+    <value>Citizens List</value>
+  </data>
   <data name="Add Cat" xml:space="preserve">
     <value>Add Cat</value>
   </data>
@@ -170,5 +170,8 @@
   </data>
   <data name="Add User" xml:space="preserve">
     <value>Add User</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+    <value>© 2025 Jonathan St-Michel. Released under the MIT License.</value>
   </data>
 </root>

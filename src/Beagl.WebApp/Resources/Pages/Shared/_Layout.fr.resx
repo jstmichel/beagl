@@ -129,46 +129,49 @@
   <data name="Toggle navigation" xml:space="preserve">
     <value>Basculer la navigation</value>
   </data>
-    <data name="Navigation" xml:space="preserve">
-      <value>Navigation</value>
-    </data>
-    <data name="Users" xml:space="preserve">
-      <value>Utilisateurs</value>
-    </data>
-    <data name="Animals" xml:space="preserve">
-      <value>Animaux</value>
-    </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="Animals" xml:space="preserve">
+    <value>Animaux</value>
+  </data>
   <data name="Sign Out" xml:space="preserve">
     <value>Se déconnecter</value>
   </data>
-    <data name="Previous" xml:space="preserve">
-      <value>Précédent</value>
-    </data>
-    <data name="Next" xml:space="preserve">
-      <value>Suivant</value>
-    </data>
-    <data name="User List" xml:space="preserve">
-      <value>Liste des utilisateurs</value>
-    </data>
-    <data name="Animals List" xml:space="preserve">
-      <value>Liste des animaux</value>
-    </data>
-      <data name="Citizens" xml:space="preserve">
-        <value>Citoyens</value>
-      </data>
-      <data name="Add Citizen" xml:space="preserve">
-        <value>Ajouter un citoyen</value>
-      </data>
-      <data name="Citizens List" xml:space="preserve">
-        <value>Liste des citoyens</value>
-      </data>
-    <data name="Add Cat" xml:space="preserve">
-      <value>Ajouter un chat</value>
-    </data>
-    <data name="Add Dog" xml:space="preserve">
-      <value>Ajouter un chien</value>
-    </data>
-    <data name="Add User" xml:space="preserve">
-      <value>Ajouter un utilisateur</value>
-    </data>
-  </root>
+  <data name="Previous" xml:space="preserve">
+    <value>Précédent</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Suivant</value>
+  </data>
+  <data name="User List" xml:space="preserve">
+    <value>Liste des utilisateurs</value>
+  </data>
+  <data name="Animals List" xml:space="preserve">
+    <value>Liste des animaux</value>
+  </data>
+  <data name="Citizens" xml:space="preserve">
+    <value>Citoyens</value>
+  </data>
+  <data name="Add Citizen" xml:space="preserve">
+    <value>Ajouter un citoyen</value>
+  </data>
+  <data name="Citizens List" xml:space="preserve">
+    <value>Liste des citoyens</value>
+  </data>
+  <data name="Add Cat" xml:space="preserve">
+    <value>Ajouter un chat</value>
+  </data>
+  <data name="Add Dog" xml:space="preserve">
+    <value>Ajouter un chien</value>
+  </data>
+  <data name="Add User" xml:space="preserve">
+    <value>Ajouter un utilisateur</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+    <value>© 2025 Jonathan St-Michel. Publié sous licence MIT.</value>
+  </data>
+</root>
